@@ -1,43 +1,37 @@
 package com.zxjz.dto.excution;
 
+import com.zxjz.base.BaseExcution;
+import com.zxjz.entity.UserInfo;
 import com.zxjz.enums.UserInfoEnum;
 
 /**
  * Created by sunzhongyuan on 2017/9/20.
  */
-public class UserInfoExcution {
+public class UserInfoExcution extends BaseExcution{
 
-    private int state;
+    private UserInfo userInfo;
 
-    private UserInfoEnum userInfoEnum;
-
-    public UserInfoExcution(int state, UserInfoEnum userInfoEnum) {
-        this.state = state;
-        this.userInfoEnum = userInfoEnum;
+    public UserInfoExcution(UserInfoEnum userInfoEnum, UserInfo userInfo) {
+        super(userInfoEnum);
+        this.userInfo = userInfo;
     }
 
-    public int getState() {
-        return state;
+    public UserInfoExcution(UserInfoEnum userInfoEnum) {
+        super(userInfoEnum);
     }
 
-    public void setState(int state) {
-        this.state = state;
+    public UserInfo getUserInfo() {
+        return userInfo;
     }
 
-
-    public UserInfoEnum getUserInfoEnum() {
-        return userInfoEnum;
-    }
-
-    public void setUserInfoEnum(UserInfoEnum userInfoEnum) {
-        this.userInfoEnum = userInfoEnum;
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
     }
 
     @Override
     public String toString() {
         return "UserInfoExcution{" +
-                "state=" + state +
-                ", userInfoEnum=" + userInfoEnum +
+                "userInfo=" + userInfo +
                 '}';
     }
 }

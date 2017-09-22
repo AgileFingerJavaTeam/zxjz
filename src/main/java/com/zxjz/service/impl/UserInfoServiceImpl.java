@@ -30,12 +30,12 @@ public class UserInfoServiceImpl implements UserInfoService{
         try{
             UserInfo userInfo = userInfoDao.getUserInfoByName(username);
             if (userInfo == null) {
-                return new UserInfoExcution(0, UserInfoEnum.ACCOUNT_NOT_EXIST);
+                return new UserInfoExcution(UserInfoEnum.INNER_ERROR);
             }
             if (!password.equals(userInfo.getPassword())) {
-                return new UserInfoExcution(0,UserInfoEnum.PSW_ERROR);
+                return new UserInfoExcution(UserInfoEnum.PSW_ERROR);
             }
-            return new UserInfoExcution(1,UserInfoEnum.LOGIN_SUCCESS);
+            return new UserInfoExcution(UserInfoEnum.LOGIN_SUCCESS,userInfo);
         } catch (Exception e) {
             logger.error(e.getMessage(),e);
             throw new BaseException(e.getMessage());

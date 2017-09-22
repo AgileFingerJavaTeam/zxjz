@@ -5,17 +5,22 @@ package com.zxjz.base;
  */
 public class BaseResult<T> {
 
+    //接口状态  0:失败 1:成功
     private int state;
 
+    //错误信息
     private String error;
 
+    //携带数据
     private T data;
 
+    //接口失败时的构造方法
     public BaseResult(int state, String error) {
         this.state = state;
         this.error = error;
     }
 
+    //接口成功时的构造方法
     public BaseResult(int state, T data) {
         this.state = state;
         this.data = data;
