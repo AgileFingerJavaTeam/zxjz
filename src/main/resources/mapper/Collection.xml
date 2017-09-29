@@ -1,0 +1,30 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.CollectionInfoDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+    <!-- 添加收藏状态 -->
+    <insert id="addCollection">
+        INSERT ignore INTO zx_recruitment_information_collection
+        (recruiting_id,student_user_id,collection_time)
+        VALUES (#{recruiting_id},#{student_user_id},#{collection_time})
+    </insert>
+    <!-- 删除收藏状态 -->
+    <delete id="deleteCollection">
+     DELETE FROM zx_recruitment_information_collection
+     WHERE recruiting_id = #{recruiting_id}
+     AND student_user_id = #{student_user_id}
+    </delete>
+    <!-- 获取收藏列表 -->
+    <select id="collectionList" parameterType="int"  resultType="ListCollection">
+        SELECT * FROM zx_merchants_account a
+        left join zx_recruitment_information_collection b on
+        a.user_id=b.student_user_id
+        left join zx_recruitment_information c on
+        b.recruiting_id=c.recruiting_id
+        WHERE a.user_id=#{user_id}
+    </select>
+
+</mapper>

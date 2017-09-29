@@ -1,0 +1,97 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.EnrollJobStatusInfoDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+    <!-- 查询兼职状态 -->
+    <select id="findEnrollJobStatus"  resultType="EnrollJobStatus">
+        SELECT *
+        FROM  zx_recruitment_registration_information  a
+		LEFT JOIN zx_recruitment_information b ON
+		a.recruiting_id=b.recruiting_id
+		LEFT JOIN zx_merchants_account c ON
+		b.releases_user_id=c.user_id
+		LEFT JOIN zx_work_base_info d ON
+		a.student_user_id = d.college_user_id AND a.recruiting_id = d.recruit_id
+		WHERE a.recruiting_id=#{recruiting_id} AND a.student_user_id=#{student_user_id}
+    </select>
+
+	<!-- 查兼职次数 -->
+	<select id="findJobNumber"  resultType="String">
+		SELECT number_job+1 as number_jobS
+		FROM  zx_cstudents_personal_info
+		WHERE user_id=#{student_user_id}
+	</select>
+
+	<!-- 学生修改入职状态  兼职次数+1 -->
+	<update id="findJobNumberS">
+		UPDATE  zx_cstudents_personal_info
+		SET number_job=#{findJobNumber}
+		WHERE  user_id=#{student_user_id}
+	</update>
+	<!-- 商家是否已经查看 -->
+	<select id="findIsBusinessSee"  resultType="String">
+		SELECT merchant_checked
+		FROM  zx_recruitment_registration_information
+		WHERE recruiting_id=#{recruiting_id}
+		AND student_user_id=#{student_user_id}
+	</select>
+
+	<!-- 学生修改入职状态 -->
+	<update id="updateJobStatus">
+		UPDATE  zx_recruitment_registration_information
+		SET students_confirmed=#{students_confirmed},students_time=now()
+		WHERE recruiting_id=#{recruiting_id}
+		AND student_user_id=#{student_user_id}
+	</update>
+
+	<!-- 学生修改入职状态1 -->
+	<update id="updateJobStatus1">
+		UPDATE  zx_recruitment_registration_information
+		SET students_confirmed=#{students_confirmed}
+		WHERE recruiting_id=#{recruiting_id}
+		AND student_user_id=#{student_user_id}
+	</update>
+
+	<!-- 查报名表，是否重复报名 -->
+	<select id="findRepeatSignUp" resultType="QuickSignUp">
+		SELECT *
+		FROM  zx_recruitment_registration_information
+		WHERE recruiting_id=#{recruiting_id}
+		AND student_user_id=#{student_user_id}
+	</select>
+
+	<!-- 快速报名 -->
+	<insert id="addQuickSignUp">
+		INSERT
+		INTO zx_recruitment_registration_information
+		(recruiting_id,student_user_id,student_name,contact_phone,leave_message_merchant,code,school,sex,registration_time)
+		VALUES
+		(#{recruiting_id},#{student_user_id},#{student_name},#{contact_phone},#{leave_message_merchant},#{code},#{school},#{sex},now())
+	</insert>
+
+	<!--  快速报名查发布人ID -->
+	<select id="selectInfor" resultType="String">
+		SELECT releases_user_id
+		FROM  zx_recruitment_information
+		WHERE recruiting_id=#{recruiting_id}
+	</select>
+
+	<!-- 快速报名插入work表 -->
+	<insert id="insertWork">
+		INSERT
+		INTO  zx_work_base_info
+		(merchant_user_id,college_user_id,recruit_id)
+		VALUES
+		(#{selectInfor},#{student_user_id},#{recruiting_id})
+	</insert>
+
+	<!-- 更新报名人数 -->
+	<update id="updatePeopleNum">
+		UPDATE zx_recruitment_information
+		SET people_num = people_num+1
+		WHERE recruiting_id = #{recruiting_id}
+	</update>
+</mapper>

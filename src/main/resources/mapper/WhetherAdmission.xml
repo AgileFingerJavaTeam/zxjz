@@ -1,0 +1,24 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.WhetherAdmissionDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+    <!-- 确认录取 -->
+    <update id="updateAdmission">
+        UPDATE zx_recruitment_registration_information
+        SET hired=#{hired},after_confirmation=#{after_confirmation}
+        WHERE recruiting_id=#{recruiting_id}
+        AND student_user_id=#{student_user_id}
+    </update>
+    <!-- 确认录取2 -->
+    <update id="updateAdmissionT">
+        UPDATE zx_recruitment_registration_information
+        SET hired=#{hired}
+        WHERE recruiting_id=#{recruiting_id}
+        AND student_user_id=#{student_user_id}
+    </update>
+
+
+</mapper>
