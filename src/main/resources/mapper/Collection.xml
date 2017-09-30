@@ -14,9 +14,9 @@
     <!-- 删除收藏状态 -->
     <delete id="deleteCollection">
      DELETE FROM zx_recruitment_information_collection
-     WHERE recruiting_id = #{recruiting_id}
-     AND student_user_id = #{student_user_id}
-    </delete>
+     WHERE recruiting_id =d = #{student_user_id}
+    </delete> #{recruiting_id}
+     AND student_user_i
     <!-- 获取收藏列表 -->
     <select id="collectionList" parameterType="int"  resultType="ListCollection">
         SELECT * FROM zx_merchants_account a

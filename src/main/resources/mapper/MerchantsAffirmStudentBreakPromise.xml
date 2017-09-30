@@ -1,0 +1,29 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zxjz.dao.MerchantsInfoDao">
+    <!--根据ID更新学生爽约状态-->
+    <update id="UpdateStateById">
+        UPDATE zx_recruitment_registration_information
+        SET is_miss=1
+        WHERE `id`=#{id}
+    </update>
+    <!--根据ID查找招聘ID和学生ID-->
+    <select id="findRecruitingIdAndStudentIdById"  resultType="MerchantsAccount">
+        SELECT recruiting_id,student_user_id
+        FROM `zx_recruitment_registration_information`
+        WHERE `id`=#{id}
+    </select>
+    <!--根据学生ID和招聘ID更新工作状态：关闭工作-->
+    <update id="updateWorkBaseInfo">
+        UPDATE zx_work_base_info
+        SET is_over='是',end_time=NOW()
+        WHERE recruit_id=#{recriut_id} AND college_user_id=#{student_user_id}
+    </update>
+    <!--根据学生ID更新学生爽约次数-->
+    <update id="updateStudentMissNumber" >
+        UPDATE `zx_cstudents_personal_info`
+        SET 	miss_number = miss_number + 1
+        WHERE `user_id`=#{student_user_id}
+    </update>
+</mapper>

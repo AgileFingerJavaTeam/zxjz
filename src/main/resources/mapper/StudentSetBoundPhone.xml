@@ -1,0 +1,35 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zxjz.dao.StudentSetBoundPhoneDao">
+    <!--第一次绑定手机号：更新绑定手机号和密码字段设置绑定手机号-->
+    <update id="AddBoundPhoneById">
+        UPDATE zx_user_count_info
+        SET bound_phone=#{phone},phone_password=#{phone_password}
+        WHERE `user_id`=#{user_id}
+    </update>
+    <!--修改绑定手机号-->
+    <update id="recomposeBoundPhone" >
+        UPDATE zx_user_count_info
+        SET bound_phone=#{phone}
+        WHERE `user_id`=#{user_id}
+    </update>
+    <!--查询新手机号有无绑定信息-->
+    <select id="findUserByPhone"  resultType="UserCountInfo">
+        SELECT *
+        FROM `zx_user_count_info`
+        WHERE bound_phone=#{phone}
+    </select>
+    <!--查询原绑定手机号和密码-->
+    <select id="findOldPhoneAndPasswordById"  resultType="UserCountInfo">
+        SELECT phone_password,bound_phone
+        FROM  zx_user_count_info
+        WHERE user_id=#{user_id}
+    </select>
+    <!--查询验证码-->
+    <select id="findVerifyCode"  resultType="String">
+        SELECT verify_code
+        FROM zx_verify_code
+        WHERE phone=#{phone}
+    </select>
+</mapper>

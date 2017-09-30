@@ -1,0 +1,11 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zxjz.dao.MerchantsInfoDao">
+    <!--变更负责人接口：通过userId来变更新的负责人信息-->
+    <update id="updateHeadInfoByUserId"  >
+        UPDATE zx_merchants_account
+        SET head=#{head},job=#{job},phone=#{phone}
+        WHERE `user_id`= #{user_id}
+    </update>
+</mapper>

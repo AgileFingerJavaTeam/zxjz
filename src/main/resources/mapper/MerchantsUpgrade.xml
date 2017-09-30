@@ -1,0 +1,18 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zxjz.dao.MerchantsInfoDao">
+    <!--目的:为dao接口方法提供sql语句配置
+        即针对dao接口中的方法编写我们的sql语句-->
+
+    <!--账户升级接口:将需要升级的商户信息添加到商户升级表里-->
+    <insert id="addADataById">
+        INSERT INTO `zx_merchants_upgrade`(user_id,apply_time)
+        VALUES (#{user_id},now())
+    </insert>
+    <select id="findUserById"  resultType ="MerchantsUpgrade">
+        SELECT user_id
+        FROM zx_merchants_upgrade
+        WHERE user_id = #{user_id}
+    </select>
+</mapper>

@@ -16,6 +16,7 @@ public enum  CollectionEnum {
 
     private int code;
 
+
     private String codeInfo;
 
     CollectionEnum(int code, String codeInfo) {

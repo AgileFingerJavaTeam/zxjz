@@ -1,0 +1,50 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zxjz.dao.SystemParameterDao">
+    <select id="findSystemInfoByParameterName"  resultType="SystemParameter">
+        SELECT *
+        FROM `zx_system_parameter`
+        WHERE parameter_name = #{parameter_name}
+    </select>
+    <!--商家对学生发表评价-->
+    <insert id="addEvaluate">
+        INSERT INTO
+        zx_job_college_students_evaluation (user_id,job_id,merchant_id,words_evaluate,descriptive_corre,punctuality_idea,conscientiousness,working_ability,compre_evaluation,comment_time)
+        VALUES (#{user_id},#{job_id},#{merchant_id},#{words_evaluate},#{descriptive_corre},#{punctuality_idea},#{conscientiousness},#{working_ability},#{compre_evaluation},now())
+    </insert>
+    <update id="addEvaluateInStudentTable">
+        UPDATE zx_cstudents_personal_info SET
+
+        working_ability=(working_ability+#{working_ability})/2.0,
+        descriptive_corre=(descriptive_corre+#{descriptive_corre})/2.0,
+        compre_evaluation=(compre_evaluation+#{compre_evaluation})/2.0,
+        punctuality_idea=(punctuality_idea+#{punctuality_idea})/2.0,
+        conscientiousness=(conscientiousness+#{conscientiousness})/2.0,
+        general_evaluation=
+        (working_ability+descriptive_corre+compre_evaluation+punctuality_idea+conscientiousness)/5
+        WHERE user_id=#{user_id}
+
+    </update>
+    <!--查询职位详情-->
+    <select id="findStatusResult"  resultType="JobDetails"><!--苏瑞涛 查询职位状态（已通过 未审核....） -->
+        SELECT (audit_status)
+        FROM `zx_recruitment_information_apply`
+        WHERE recruiting_id=#{recruiting_id}
+    </select>
+    <select id="findPassedJobDetail" resultType="JobDetails"><!--苏瑞涛 查询已通过审核职位详情 -->
+        SELECT ri.*, uc.*, station.station_name as text, mer_acc.head, mer_acc.phone, city.city_name
+        FROM zx_recruitment_information ri
+        LEFT JOIN `zx_user_count_info` uc on uc.user_id=ri.releases_user_id
+        left join zx_station station on ri.post_classification = station.station_id
+        left join zx_merchants_account mer_acc on ri.releases_user_id = mer_acc.user_id
+        left join zx_city city on ri.city = city.city_id
+        WHERE uc.user_id= #{user_id} and ri.recruiting_id=#{recruiting_id}
+    </select>
+    <select id="findOtherJobDetail" resultType="JobDetails"><!--苏瑞涛 查询除通过之外状态职位详情 -->
+        SELECT *
+        FROM zx_recruitment_information_apply ria
+        LEFT JOIN `zx_user_count_info` uc on uc.user_id=ria.releases_user_id
+        WHERE uc.user_id= #{user_id} and ria.recruiting_id=#{recruiting_id}
+    </select>
+</mapper>

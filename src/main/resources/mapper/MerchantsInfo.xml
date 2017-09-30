@@ -1,0 +1,15 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zxjz.dao.MerchantsInfoDao">
+    <!--查询商户个人信息-->
+    <select id="findEmpolyerInfoById" resultType="MerchantsInfo">
+        SELECT uci.portrait_url,
+        ma.merchants_name,ma.head,
+        mmb.account_balance,mmb.credit_total,mmb.Payment_days,state
+        FROM zx_user_count_info uci
+        LEFT JOIN zx_merchants_money_basic mmb ON uci.user_id = mmb.user_id
+        LEFT JOIN zx_merchants_account ma ON  uci.user_id = ma.user_id
+        WHERE uci.user_id=#{user_id}
+    </select>
+</mapper>
