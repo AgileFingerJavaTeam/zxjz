@@ -5,6 +5,10 @@ import com.zxjz.base.BaseResult;
 import com.zxjz.dto.excution.CollectionExcution;
 import com.zxjz.dto.in.CollectionDto;
 import com.zxjz.dto.in.CollectionListDto;
+import com.zxjz.enums.CollectionEnum;
+import com.zxjz.exception.db.DeleteInnerErrorException;
+import com.zxjz.exception.db.InsertInnerErrorException;
+import com.zxjz.exception.db.QueryInnerErrorException;
 import com.zxjz.service.CollectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,7 +35,11 @@ public class CollectionController extends BaseController {
         try {
             CollectionExcution collectionExcution = collectionService.addConllection(collectionDto);
             return new BaseResult<CollectionExcution>(1,collectionExcution);
-        } catch (Exception e) {
+        } catch (InsertInnerErrorException e) {
+             CollectionExcution collectionExcution = new CollectionExcution(CollectionEnum.COLLECTION_NOT_STATE);
+            return new BaseResult<CollectionExcution>(0,collectionExcution);
+        }
+          catch (Exception e) {
             logger.error(e.getMessage(), e);
             return new BaseResult<CollectionExcution>(0,e.getMessage());
         }
@@ -47,7 +55,11 @@ public class CollectionController extends BaseController {
         try {
             CollectionExcution collectionExcution = collectionService.deleteConllection(collectionDto);
             return new BaseResult<CollectionExcution>(1,collectionExcution);
-        } catch (Exception e) {
+        } catch (DeleteInnerErrorException e) {
+            CollectionExcution collectionExcution = new CollectionExcution(CollectionEnum.DELETE_COLLECTION_NOT_STATE);
+            return new BaseResult<CollectionExcution>(0,collectionExcution);
+        }
+          catch (Exception e) {
             logger.error(e.getMessage(), e);
             return new BaseResult<CollectionExcution>(0,e.getMessage());
         }
@@ -62,7 +74,11 @@ public class CollectionController extends BaseController {
         try {
             CollectionExcution collectionExcution = collectionService.collectionList(collectionListDto);
             return new BaseResult<CollectionExcution>(1,collectionExcution);
-        } catch (Exception e) {
+        }catch (QueryInnerErrorException e) {
+            CollectionExcution collectionExcution = new CollectionExcution(CollectionEnum.FIND_COLLECTIONLIST_NOT_STATE);
+            return new BaseResult<CollectionExcution>(0,collectionExcution);
+        }
+         catch (Exception e) {
             logger.error(e.getMessage(), e);
             return new BaseResult<CollectionExcution>(0,e.getMessage());
         }

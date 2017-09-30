@@ -4,6 +4,7 @@ import com.zxjz.base.BaseController;
 import com.zxjz.base.BaseResult;
 import com.zxjz.dto.excution.StudentRegistrationExcution;
 import com.zxjz.dto.in.StudentRegistrationDto;
+import com.zxjz.exception.db.QueryInnerErrorException;
 import com.zxjz.service.StudentRegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,7 +29,11 @@ public class StudentRegistrationController extends BaseController{
         try {
             StudentRegistrationExcution studentRegistrationExcution = studentRegistrationService.studentRegistration(studentRegistrationDto);
             return new BaseResult<StudentRegistrationExcution>(1,studentRegistrationExcution);
-        } catch (Exception e) {
+        }catch (QueryInnerErrorException e) {
+            logger.error(e.getMessage(), e);
+            return new BaseResult<StudentRegistrationExcution>(0,e.getMessage());
+        }
+        catch (Exception e) {
             logger.error(e.getMessage(), e);
             return new BaseResult<StudentRegistrationExcution>(0,e.getMessage());
         }

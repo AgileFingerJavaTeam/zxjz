@@ -6,6 +6,7 @@ import com.zxjz.dto.excution.StudentRegistrationExcution;
 import com.zxjz.dto.in.StudentRegistrationDto;
 import com.zxjz.entity.StudentRegistration;
 import com.zxjz.enums.EnrollJobStatusEnum;
+import com.zxjz.exception.db.QueryInnerErrorException;
 import com.zxjz.service.StudentRegistrationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,11 +29,14 @@ public class StudentRegistrationServiceImpl implements StudentRegistrationServic
         try {
             StudentRegistration studentRegistration = studentRegistrationDao.findStudentRegistration(work_id,recruit_id,user_id);
             if(studentRegistration == null){
-                return new StudentRegistrationExcution(EnrollJobStatusEnum.STUDENT_EDIT_FAIL);
+                throw new QueryInnerErrorException("获取学生兼职详情页失败");
             }else{
                 return new StudentRegistrationExcution(EnrollJobStatusEnum.STUDENT_EDIT_SUCCESS,studentRegistration);
             }
-        }catch (Exception e) {
+        }catch (QueryInnerErrorException e1) {
+            throw e1;
+        }
+         catch (Exception e) {
             logger.error(e.getMessage(), e);
             throw new BaseException(e.getMessage());
         }

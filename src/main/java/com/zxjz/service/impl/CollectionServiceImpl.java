@@ -6,6 +6,9 @@ import com.zxjz.dto.in.CollectionDto;
 import com.zxjz.dto.in.CollectionListDto;
 import com.zxjz.entity.ListCollection;
 import com.zxjz.enums.CollectionEnum;
+import com.zxjz.exception.db.DeleteInnerErrorException;
+import com.zxjz.exception.db.InsertInnerErrorException;
+import com.zxjz.exception.db.QueryInnerErrorException;
 import com.zxjz.service.CollectionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,10 +35,13 @@ public class CollectionServiceImpl implements CollectionService {
         try {
             int collection = collectionInfoDao.addCollection(recruiting_id, student_user_id, collection_time);
             if (collection <= 0) {
-                return new CollectionExcution(CollectionEnum.COLLECTION_NOT_STATE);
+                throw new InsertInnerErrorException("添加收藏失败");
             }
-            return new CollectionExcution(CollectionEnum.COLLECTION_SUCCESS);
-        } catch (Exception e) {
+                return new CollectionExcution(CollectionEnum.COLLECTION_SUCCESS);
+        }catch (InsertInnerErrorException e1) {
+            throw e1;
+        }
+         catch (Exception e) {
             logger.error(e.getMessage(), e);
             throw new BaseException(e.getMessage());
         }
@@ -47,10 +53,13 @@ public class CollectionServiceImpl implements CollectionService {
         try {
             int collection = collectionInfoDao.deleteCollection(recruiting_id, student_user_id);
             if (collection <= 0) {
-                return new CollectionExcution(CollectionEnum.DELETE_COLLECTION_NOT_STATE);
+                throw new DeleteInnerErrorException("删除收藏失败");
             }
                 return new CollectionExcution(CollectionEnum.DELETE_COLLECTION_SUCCESS);
-        } catch (Exception e) {
+        }catch (DeleteInnerErrorException e1) {
+          throw e1;
+        }
+         catch (Exception e) {
                 logger.error(e.getMessage(), e);
                 throw new BaseException(e.getMessage());
         }
@@ -60,10 +69,13 @@ public class CollectionServiceImpl implements CollectionService {
         try {
             List<ListCollection> listCollection = collectionInfoDao.collectionList(user_id);
             if (listCollection.size() == 0) {
-                return new CollectionExcution(CollectionEnum.FIND_COLLECTIONLIST_NOT_STATE);
+                throw new QueryInnerErrorException("查询收藏列表失败");
             }
                 return new CollectionExcution(CollectionEnum.FIND_COLLECTIONLIST_SUCCESS,listCollection);
-        } catch (Exception e) {
+        }catch (QueryInnerErrorException e1) {
+            throw e1;
+        }
+         catch (Exception e) {
             logger.error(e.getMessage(), e);
             throw new BaseException(e.getMessage());
         }

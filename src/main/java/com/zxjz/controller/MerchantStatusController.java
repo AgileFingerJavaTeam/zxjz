@@ -4,6 +4,8 @@ import com.zxjz.base.BaseController;
 import com.zxjz.base.BaseResult;
 import com.zxjz.dto.excution.MerchantStatusExcution;
 import com.zxjz.dto.in.MerchantStatusDto;
+import com.zxjz.exception.MerchantStatusException;
+import com.zxjz.exception.db.QueryInnerErrorException;
 import com.zxjz.service.MerchantStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,7 +34,15 @@ public class MerchantStatusController extends BaseController {
         try {
             MerchantStatusExcution merchantStatusExcution = merchantStatusService.findMerchantStatus(merchantStatusDto);
             return new BaseResult<MerchantStatusExcution>(1,merchantStatusExcution);
-        } catch (Exception e) {
+        }catch (QueryInnerErrorException e) {
+            logger.error(e.getMessage(), e);
+            return new BaseResult<MerchantStatusExcution>(0,e.getMessage());
+        }
+        catch (MerchantStatusException e) {
+            logger.error(e.getMessage(), e);
+            return new BaseResult<MerchantStatusExcution>(0,e.getMessage());
+        }
+         catch (Exception e) {
             logger.error(e.getMessage(), e);
             return new BaseResult<MerchantStatusExcution>(0,e.getMessage());
         }

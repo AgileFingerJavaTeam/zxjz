@@ -10,6 +10,12 @@ import com.zxjz.dto.in.EnrollJobStatusDto;
 import com.zxjz.dto.in.QuickSignUpDto;
 import com.zxjz.dto.in.UpdateJobStatusDto;
 import com.zxjz.dto.in.WhetherAdmissionDto;
+import com.zxjz.enums.EnrollJobStatusEnum;
+import com.zxjz.exception.EnrollJobStatusException;
+import com.zxjz.exception.WhetherAdmissionException;
+import com.zxjz.exception.db.InsertInnerErrorException;
+import com.zxjz.exception.db.QueryInnerErrorException;
+import com.zxjz.exception.db.UpdateInnerErrorException;
 import com.zxjz.service.EnrollJobStatusService;
 import com.zxjz.service.WhetherAdmissionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +45,11 @@ public class EnrollJobStatusController extends BaseController {
         try {
             EnrollJobStatusExcution enrollJobStatusExcution = enrollJobStatusService.findEnrollJobStatus(enrollJobStatusDto);
             return new BaseResult<EnrollJobStatusExcution>(1,enrollJobStatusExcution);
-        } catch (Exception e) {
+        }catch (QueryInnerErrorException e) {
+             EnrollJobStatusExcution enrollJobStatusExcution = new EnrollJobStatusExcution(EnrollJobStatusEnum.FIND_ENROLLJOBSTATUS_FAIL);
+            return new BaseResult<EnrollJobStatusExcution>(0,enrollJobStatusExcution);
+        }
+         catch (BaseException e) {
             logger.error(e.getMessage(), e);
             return new BaseResult<EnrollJobStatusExcution>(0,e.getMessage());
         }
@@ -54,7 +64,23 @@ public class EnrollJobStatusController extends BaseController {
         try {
             UpdateJobStatusExcution updateJobStatusExcution = enrollJobStatusService.updateJobStatus(updateJobStatusDto);
             return new BaseResult<UpdateJobStatusExcution>(1,updateJobStatusExcution);
-        } catch (BaseException e) {
+        }catch (EnrollJobStatusException e) {
+            logger.error(e.getMessage(), e);
+            return new BaseResult<UpdateJobStatusExcution>(0,e.getMessage());
+        }
+        catch (QueryInnerErrorException e) {
+            logger.error(e.getMessage(), e);
+            return new BaseResult<UpdateJobStatusExcution>(0,e.getMessage());
+        }
+        catch (InsertInnerErrorException e) {
+            logger.error(e.getMessage(), e);
+            return new BaseResult<UpdateJobStatusExcution>(0,e.getMessage());
+        }
+        catch (UpdateInnerErrorException e) {
+            logger.error(e.getMessage(), e);
+            return new BaseResult<UpdateJobStatusExcution>(0,e.getMessage());
+        }
+        catch (BaseException e) {
             logger.error(e.getMessage(), e);
             return new BaseResult<UpdateJobStatusExcution>(0,e.getMessage());
         }
@@ -71,7 +97,19 @@ public class EnrollJobStatusController extends BaseController {
         try {
             QuickSignUpExcution quickSignUpExcution = enrollJobStatusService.quickSignUp(quickSignUpDto);
             return new BaseResult<QuickSignUpExcution>(1,quickSignUpExcution);
-        } catch (BaseException e) {
+        }catch (EnrollJobStatusException e) {
+            logger.error(e.getMessage(), e);
+            return new BaseResult<QuickSignUpExcution>(0,e.getMessage());
+        }
+         catch (QueryInnerErrorException e) {
+            logger.error(e.getMessage(), e);
+            return new BaseResult<QuickSignUpExcution>(0,e.getMessage());
+        }
+         catch (InsertInnerErrorException e) {
+            logger.error(e.getMessage(), e);
+            return new BaseResult<QuickSignUpExcution>(0,e.getMessage());
+        }
+        catch (BaseException e) {
             logger.error(e.getMessage(), e);
             return new BaseResult<QuickSignUpExcution>(0,e.getMessage());
         }
@@ -86,7 +124,15 @@ public class EnrollJobStatusController extends BaseController {
         try {
             WhetherAdmissionExcution whetherAdmissionExcution = whetherAdmissionService.whetherAdmission(whetherAdmissionDto);
             return new BaseResult<WhetherAdmissionExcution>(1,whetherAdmissionExcution);
-        } catch (BaseException e) {
+        }catch (WhetherAdmissionException e) {
+            logger.error(e.getMessage(), e);
+            return new BaseResult<WhetherAdmissionExcution>(0,e.getMessage());
+        }
+        catch (UpdateInnerErrorException e) {
+            logger.error(e.getMessage(), e);
+            return new BaseResult<WhetherAdmissionExcution>(0,e.getMessage());
+        }
+        catch (BaseException e) {
             logger.error(e.getMessage(), e);
             return new BaseResult<WhetherAdmissionExcution>(0,e.getMessage());
         }

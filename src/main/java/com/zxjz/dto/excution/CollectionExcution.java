@@ -14,6 +14,7 @@ public class CollectionExcution {
     private int code;
     private String codeInfo;
 
+
     public CollectionExcution(CollectionEnum collectionEnum) {
         this.code = collectionEnum.getCode();
         this.codeInfo = collectionEnum.getCodeInfo();
