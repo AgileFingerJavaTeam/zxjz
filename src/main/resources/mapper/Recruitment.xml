@@ -1,0 +1,161 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.RecruitmentDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+    <!-- 发布职位 -->
+    <!--<insert id="addRecruitment" >
+        INSERT
+        INTO `zx_recruitment_information_apply`
+        (audit_status,apply_time,releases_user_id,post_name,settlement_method,salary_treatment,commission,benefits,position_longitude,position_latitude,work_location,work_date,work_time,recruitment,gender_requirements,work_content,hiring_expiration_date,leader,leader_phone,post_classification,apply_num)
+        values
+        ('待审核',now(),#{user_id},#{post_name},#{settlement_method},#{salary_treatment},#{commission},#{benefits},#{position_longitude},#{position_latitude},#{work_location},#{work_date},#{work_time},#{recruitment},#{gender_requirements},#{work_content},#{hiring_expiration_date},#{leader},#{leader_phone},#{post_classification},'1')
+    </insert>
+
+    &lt;!&ndash; 获取城市名称 &ndash;&gt;
+    <select id="findCityList"  resultType="CityList">
+        SELECT *
+        FROM zx_city
+    </select>
+
+    &lt;!&ndash; 更新城市 &ndash;&gt;
+    <update id="updateCtiy" >
+        UPDATE zx_recruitment_information_apply
+        SET city = #{city_id}
+        WHERE recruiting_id = #{recruiting_id}
+    </update>-->
+    <insert id="addPsostJob">
+        INSERT INTO `zx_recruitment_information_apply`
+	           (audit_status,apply_time,releases_user_id,post_name,settlement_method,salary_treatment,commission,benefits,position_longitude,position_latitude,work_location,work_date,work_time,recruitment,gender_requirements,work_content,hiring_expiration_date,leader,leader_phone,post_classification,apply_num,city)
+	    VALUES ('待审核',now(),#{user_id},#{post_name},#{settlement_method},#{salary_treatment},#{commission},#{benefits},#{position_longitude},#{position_latitude},#{work_location},#{work_date},#{work_time},#{recruitment},#{gender_requirements},#{work_content},#{hiring_expiration_date},#{leader},#{leader_phone},#{post_classification},'1',#{city})
+    </insert>
+    <select id="findRecruID" resultType="Recruitment">
+        SELECT *
+        FROM zx_recruitment_information_apply
+        WHERE recruiting_id=#{recruiting_id}
+    </select>
+    <update id="updateJobcopy" >
+        UPDATE zx_recruitment_information_apply
+        SET audit_status = '待审核'
+        WHERE recruiting_id = #{recruiting_id}
+    </update>
+    <insert id="addPostJobcopy" >
+        INSERT INTO `zx_recruitment_information_apply`
+        (audit_status,apply_time,releases_user_id,post_name,settlement_method,salary_treatment,commission,benefits,position_longitude,position_latitude,work_location,work_date,work_time,recruitment,gender_requirements,work_content,hiring_expiration_date,leader,leader_phone,post_classification,apply_num,city)
+        values('草稿',now(),#{user_id},#{post_name},#{settlement_method},#{salary_treatment},#{commission},#{benefits},#{position_longitude},#{position_latitude},#{work_location},#{work_date},#{work_time},#{recruitment},#{gender_requirements},#{work_content},#{hiring_expiration_date},#{leader},#{leader_phone},#{post_classification},'1',#{city})
+    </insert>
+
+    <select id="findStatus" resultType="Recruitment">
+        SELECT audit_status
+        FROM zx_recruitment_information_apply
+        WHERE recruiting_id=#{recruiting_id}
+    </select>
+    <update id="updateStatus">
+        UPDATE zx_recruitment_information_apply
+        SET apply_time=now(), post_name=#{post_name}, post_classification=#{post_classification},
+        work_date=#{work_date}, work_time=#{work_time}, work_location=#{work_location}, position_longitude=#{position_longitude},
+        position_latitude=#{position_latitude}, work_content=#{work_content}, settlement_method=#{settlement_method},
+        salary_treatment=#{salary_treatment}, commission=#{commission}, benefits=#{benefits}, gender_requirements=#{gender_requirements},
+        recruitment=#{recruitment}, hiring_expiration_date=#{hiring_expiration_date},
+        status_time=#{status_time}, status_result=#{status_result}, dismissed_reason=#{dismissed_reason},
+        audit_status = '待审核' ,leader=#{leader}, leader_phone=#{leader_phone}, city=#{city}
+        WHERE recruiting_id = #{recruiting_id}
+    </update>
+    <update id="updataStatusC" >
+        UPDATE zx_recruitment_information_apply
+        SET apply_time=now(), post_name=#{post_name}, post_classification=#{post_classification},
+        work_date=#{work_date}, work_time=#{work_time}, work_location=#{work_location}, position_longitude=#{position_longitude},
+        position_latitude=#{position_latitude}, work_content=#{work_content}, settlement_method=#{settlement_method},
+        salary_treatment=#{salary_treatment}, commission=#{commission}, benefits=#{benefits}, gender_requirements=#{gender_requirements},
+        recruitment=#{recruitment}, hiring_expiration_date=#{hiring_expiration_date},
+        status_time=#{status_time}, status_result=#{status_result}, dismissed_reason=#{dismissed_reason},
+        audit_status = '草稿' ,leader=#{leader}, leader_phone=#{leader_phone}, city=#{city}
+        WHERE recruiting_id = #{recruiting_id}
+    </update>
+    <insert id="addData">
+        INSERT INTO `zx_recruitment_information_apply`
+        (audit_status,apply_time,releases_user_id,post_name,settlement_method,salary_treatment,commission,benefits,position_longitude,position_latitude,work_location,work_date,work_time,recruitment,gender_requirements,work_content,hiring_expiration_date,leader,leader_phone,post_classification,apply_num,city)
+        values ('待审核',now(),#{user_id},#{post_name},#{settlement_method},#{salary_treatment},#{commission},#{benefits},#{position_longitude},#{position_latitude},#{work_location},#{work_date},#{work_time},#{recruitment},#{gender_requirements},#{work_content},#{hiring_expiration_date},#{leader},#{leader_phone},#{post_classification},'1',#{city})
+    </insert>
+    <insert id="updatejob">
+        INSERT INTO `zx_recruitment_information_apply`
+        (audit_status,apply_time,releases_user_id,post_name,settlement_method,salary_treatment,commission,benefits,position_longitude,position_latitude,work_location,work_date,work_time,recruitment,gender_requirements,work_content,hiring_expiration_date,leader,leader_phone,post_classification,apply_num,city)
+        values ('待审核',now(),#{user_id},#{post_name},#{settlement_method},#{salary_treatment},#{commission},#{benefits},#{position_longitude},#{position_latitude},#{work_location},#{work_date},#{work_time},#{recruitment},#{gender_requirements},#{work_content},#{hiring_expiration_date},#{leader},#{leader_phone},#{post_classification},'1',#{city})
+    </insert>
+    <update id="updatepostjob">
+        UPDATE  zx_recruitment_information set recruitment_status='已经结束' where recruiting_id=#{recruiting_id}
+    </update>
+
+
+    <!-- 判断是否设置支付密码 -->
+    <select id="findIsPayPswByUserId" parameterType="int" resultType="IsSetPassword">
+        SELECT *
+        FROM zx_merchants_money_basic
+        WHERE user_id=#{user_id}
+    </select>
+    <!-- 设置免密时长以及密码接口 -->
+    <update id="updatePayPswByUserId">
+        UPDATE`zx_merchants_money_basic`
+        SET pay_psw=#{pay_psw},not_need_psw_period=#{not_need_psw_period},is_need_psw=#{is_need_psw}
+        WHERE user_id=#{user_id}
+    </update>
+    <insert id="savePayPswByUserId">
+        insert
+        into zx_merchants_money_basic
+        (pay_psw,not_need_psw_period,is_need_psw,user_id)
+        values(#{pay_psw},#{not_need_psw_period},#{is_need_psw},#{user_id})
+    </insert>
+
+    <!-- 获取商户流水账信息 -->
+    <select id="findListTradingRecord"  resultType="MerchantFundsCurrentAccount">
+        SELECT *
+        FROM zx_merchant_funds_current_account
+        WHERE user_id = #{user_id}
+        order by accounting_time desc
+    </select>
+
+    <!-- 获取学生信息 -->
+    <select id="findTradingRecord" resultType="MerchantFundsCurrentAccount">
+        SELECT
+        name,head_pic
+        FROM zx_cstudents_personal_info
+        WHERE user_id = #{student_id}
+    </select>
+    <!-- 获取职位信息 -->
+    <select id="findTradingRecords" resultType="MerchantFundsCurrentAccount">
+        SELECT recruitment_information.post_name
+        FROM zx_work_base_info work_base_info
+        LEFT JOIN zx_recruitment_information recruitment_information
+        ON work_base_info.recruit_id = recruitment_information.recruiting_id
+        WHERE work_base_info.work_id = #{work_id}
+    </select>
+
+    <!-- 获取商户充值信息 -->
+    <select id="findMerchantRecharge" resultType="MerchantFundsCurrentAccount">
+        SELECT recharge_mode
+        FROM zx_merchant_funds_recharge_record
+        WHERE user_id = #{references_the_bill_id} AND recharge_sequence_number=#{references_the_internal_serial_number1}
+        order by recharge_time desc
+    </select>
+    <!-- 获取商户提现信息 -->
+    <select id="findMerchantTX" resultType="MerchantFundsCurrentAccount">
+        SELECT cash_withdrawal
+        FROM zx_merchant_funds_withdrawal_record
+        WHERE user_id = #{references_the_bill_id} AND withdrawal_sequence_number=#{references_the_internal_serial_number1}
+        order by withdrawal_time desc
+    </select>
+
+    <!-- 查看账单 -->
+    <select id="findListCheckBill"  resultType="CheckBill">
+        select * from zx_work_base_info a
+        left join zx_pay_calculation b ON
+        a.work_id=b.work_id
+        left join zx_recruitment_information c ON
+        c.recruiting_id=a.recruit_id
+        left join zx_cstudents_personal_info d ON
+        a.college_user_id=d.user_id
+        where a.college_user_id=#{student_user_id} and user_id=#{user_id}
+    </select>
+</mapper>

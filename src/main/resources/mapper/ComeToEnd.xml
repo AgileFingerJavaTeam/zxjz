@@ -1,0 +1,15 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.ComeToEndDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+
+    <update id="updateComeToEnd" parameterType="int">
+        UPDATE zx_work_base_info
+        SET is_over = '是' , end_party = '商户'
+        WHERE work_id = #{work_id}
+    </update>
+
+</mapper>

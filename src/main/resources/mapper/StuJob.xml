@@ -1,0 +1,52 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.StuJobDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+    <select id="findJob" resultType="StuJob">
+        SELECT a.number_job,
+        SUM( b.amount_of_money ) total
+        FROM zx_cstudents_personal_info a
+        LEFT JOIN zx_students_wallet_running_account  b
+        ON a.user_id=b.user_id
+        WHERE b.classification=3
+        AND a.user_id=#{userid}
+    </select>
+
+
+
+    <select id="findjoblist" resultType="StuJob">
+        SELECT b.portrait_url,
+        a.post_name,a.work_date,a.salary_treatment,a.work_location,
+        c.hired,c.recruiting_id,c.student_user_id,c.students_confirmed,d.is_over
+        FROM zx_recruitment_information a
+        LEFT JOIN zx_user_count_info b
+        ON a.releases_user_id=b.user_id
+        LEFT JOIN zx_recruitment_registration_information c
+        ON a.recruiting_id=c.recruiting_id
+        LEFT JOIN zx_work_base_info d
+        ON c.recruiting_id=d.recruit_id
+        AND c.student_user_id=d.college_user_id
+        <where>
+            <choose>
+                <when test="type==0">
+                    c.student_user_id=#{userid}
+                </when>
+                <when test="type==1">
+                    c.student_user_id=#{userid} and c.students_confirmed='0' and d.is_over='否'
+                </when>
+                <when test="type==2">
+                    c.student_user_id=#{userid} and c.hired='1' and c.students_confirmed='1' and c.is_miss='0' and d.is_over='否'
+                </when>
+                <when test="type==3">
+                    c.student_user_id=#{userid} and d.is_over='是'
+                    or (c.hired='1' and c.students_confirmed='1'
+                    and c.is_miss='1')
+                </when>
+            </choose>
+        </where>
+    </select>
+
+</mapper>

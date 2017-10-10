@@ -1,0 +1,56 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.MerchantDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+
+    <!--查询精品-->
+    <select id="findBoutique"  resultType="GuaranteePositionInfo">
+        SELECT recru.*, recruadd.*, sta.station_name
+        FROM `zx_recruitment_information` recru
+        LEFT JOIN `zx_recruitment_additional_information` recruadd
+        ON recru.recruiting_id = recruadd.recruiting_id
+        LEFT JOIN `zx_station` sta
+        ON recru.post_classification = sta.station_id
+        WHERE recru.recruiting_id=#{recruiting_id}
+    </select>
+    <!--查询是否已报名-->
+    <select id="findReinfo" resultType="RegistrationInfo">
+        SELECT *
+        FROM zx_recruitment_registration_information
+        where (zx_recruitment_registration_information.recruiting_id = #{recruiting_id}
+        AND zx_recruitment_registration_information.student_user_id = #{student_user_id})
+    </select>
+    <!--查询是否已收藏-->
+    <select id="findMainfo"  resultType="InformationCollectionInfo">
+        SELECT *
+        FROM zx_recruitment_information_collection
+        WHERE (zx_recruitment_information_collection.recruiting_id = #{recruiting_id}
+        AND zx_recruitment_information_collection.student_user_id = #{student_user_id})
+    </select>
+
+    <!--查询普通-->
+    <select id="findGuaRec" resultType="RecruitmentInfo">
+        SELECT recruinfor.*,sta.station_name , merac.merchants_name
+        FROM zx_recruitment_information recruinfor
+        LEFT JOIN zx_station sta ON recruinfor.post_classification = sta.station_id
+        LEFT JOIN zx_merchants_account merac ON recruinfor.releases_user_id = merac.user_id
+        WHERE recruinfor.recruiting_id = #{recruiting_id}
+    </select>
+
+    <!--查询商家信息-->
+    <select id="findMerchantInformation"  resultType="GetMerchantInfo">
+        SELECT mera.user_id ,merpic.url ,mera.job_id ,mera.company_scale ,
+        mera.address,mera.merchants_name ,mera.introduce,indus.text ,userinfo.portrait_url
+        FROM zx_merchants_account mera
+        LEFT JOIN zx_industry_category indus
+        ON mera.job_id = indus.value
+        LEFT JOIN zx_merchants_pic merpic
+        ON mera.user_id = merpic.user_id
+        LEFT JOIN zx_user_count_info userinfo
+        ON mera.user_id = userinfo.user_id
+        WHERE mera.user_id = #{user_id}
+    </select>
+</mapper>

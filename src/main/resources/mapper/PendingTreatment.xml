@@ -1,0 +1,64 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.PendingTreatmentDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+
+    <!-- 获取进行中和已结束的兼职列表 -->
+    <select id="getPendingTreatmentList" resultType="PendingTreatment">
+        SELECT work_base_info.work_id,work_base_info.college_user_id,work_base_info.recruit_id,
+        student_info.head_pic,
+        recruitment_registration_information.id,
+        recruitment_registration_information.registration_time,
+        recruitment_registration_information.recently_paid_time,
+        recruitment_registration_information.after_confirmation,
+        recruitment_registration_information.student_name,
+        recruitment_registration_information.sex,
+        recruitment_information.post_name,
+        recruitment_information.settlement_method,recruitment_information.salary_treatment
+        FROM zx_work_base_info work_base_info
+        LEFT JOIN zx_recruitment_information recruitment_information
+        ON work_base_info.recruit_id=recruitment_information.recruiting_id
+        LEFT JOIN zx_recruitment_registration_information recruitment_registration_information
+        ON work_base_info.recruit_id=recruitment_registration_information.recruiting_id
+        AND work_base_info.college_user_id=recruitment_registration_information.student_user_id
+        LEFT JOIN zx_cstudents_personal_info student_info
+        ON work_base_info.college_user_id=student_info.user_id
+        WHERE work_base_info.merchant_user_id=#{user_id}
+        <if test="which == 1">
+            AND recruitment_registration_information.hired='0'
+            AND work_base_info.is_over='否'
+        </if>
+        <if test="which == 2">
+            AND recruitment_registration_information.hired='1'
+            AND recruitment_registration_information.students_confirmed='0'
+            AND work_base_info.is_over='否'
+        </if>
+        <if test="which == 3">
+            AND recruitment_registration_information.hired='1'
+            AND recruitment_registration_information.students_confirmed='1'
+            AND work_base_info.is_over='否'
+        </if>
+        <if test="which == 4">
+            AND work_base_info.is_over='是'
+        </if>
+        Order By work_base_info.work_id DESC
+    </select>
+
+    <!-- 获取兼职次数 -->
+    <select id="getPartNum" resultType="String">
+        SELECT number_job
+        FROM zx_cstudents_personal_info
+        WHERE user_id=#{college_user_id}
+    </select>
+
+    <!-- 获取累计金额 -->
+    <select id="getAccumulatedMoney" resultType="Double">
+        SELECT SUM(final_pay)
+        FROM zx_pay_calculation
+        WHERE work_id=#{work_id}
+    </select>
+
+</mapper>

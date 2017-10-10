@@ -1,0 +1,24 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.BillListDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+
+    <select id="getBillList" resultType="BillList">
+        SELECT work_info.work_id, work_info.recruit_id, stu_info.name, stu_info.head_pic,
+		recru_info.post_name, pay_tion.settlement_time, pay_tion.final_pay
+		FROM zx_work_base_info work_info
+		LEFT JOIN zx_cstudents_personal_info stu_info
+		ON work_info.college_user_id = stu_info.user_id
+		LEFT JOIN zx_recruitment_information recru_info
+		ON work_info.recruit_id = recru_info.recruiting_id
+		LEFT JOIN zx_pay_calculation pay_tion
+		ON work_info.work_id = pay_tion.work_id
+		WHERE work_info.work_id = #{work_id}
+		AND work_info.college_user_id = #{college_user_id}
+		AND work_info.recruit_id = #{recruiting_id}
+    </select>
+
+</mapper>

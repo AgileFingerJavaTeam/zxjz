@@ -1,0 +1,33 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.DetailsPageDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+
+    <!--郭阳 学生详情页-->
+    <!-- 大学生个人信息表 -->
+    <select id="getDetailsPage" parameterType="int" resultType="DetailsPage">
+        SELECT student_info.user_id, regist_info.student_name, regist_info.sex, student_info.phone,
+        student_info.head_pic, regist_info.school, student_info.general_evaluation, student_info.miss_number,
+        regist_info.registration_time, regist_info.leave_message_merchant,
+        regist_info.hired, regist_info.business_hire_time,regist_info.students_confirmed,
+        regist_info.students_time,regist_info.contact_phone,ri.details_page_category
+        FROM zx_recruitment_registration_information regist_info
+        LEFT JOIN zx_cstudents_personal_info student_info ON regist_info.student_user_id = student_info.user_id
+        LEFT JOIN zx_recruitment_information ri ON ri.recruiting_id = regist_info.recruiting_id
+        WHERE regist_info.id=#{id}
+    </select>
+
+    <!-- 评论条数 -->
+    <select id="getCommentariesNum" parameterType="int" resultType="int">
+        SELECT COUNT(*) FROM zx_job_college_students_evaluation
+        WHERE user_id = #{user_id}
+    </select>
+
+    <select id="getIsOver" parameterType="int" resultType="String">
+        SELECT is_over FROM zx_work_base_info WHERE work_id = #{work_id}
+    </select>
+
+</mapper>

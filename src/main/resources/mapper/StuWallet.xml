@@ -1,0 +1,90 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.StuWalletDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+
+<!--查询余额-->
+    <select id="findBalance" resultType="StuWallletBase">
+        SELECT * FROM zx_students_wallet_base_info
+		WHERE user_id=#{userid}
+    </select>
+<!--查询流水-->
+    <select id="findListIncome" resultType="WalletIncomeInfo">
+        SELECT * FROM  zx_students_wallet_running_account
+        WHERE user_id=#{userid}
+        AND time between #{start,jdbcType=DATE}
+        AND #{end,jdbcType=DATE}
+        ORDER BY time DESC
+    </select>
+
+    <select id="findPriceTypeIncome"  resultType="WalletIncomeInfo">
+        SELECT a.*,b.portrait_url,c.name
+        FROM zx_students_wallet_running_account a
+        LEFT JOIN zx_user_count_info b
+        ON a.target_id =b.user_id
+        LEFT JOIN zx_cstudents_personal_info c
+        ON a.target_id=c.user_id
+        <where>
+            a.user_id=#{userid}
+            AND a.running_account_number=#{accountnember}
+        </where>
+    </select>
+
+    <select id="findOtherTypeIncome"  resultType="WalletIncomeInfo">
+        SELECT a.*,b.portrait_url,d.post_name
+        FROM zx_students_wallet_running_account a
+        LEFT JOIN zx_user_count_info b
+        ON a.target_id =b.user_id
+        LEFT JOIN zx_work_base_info c
+        ON  a.work_id=c.work_id
+        LEFT JOIN zx_recruitment_information d
+        ON c.recruit_id=d.recruiting_id
+        <where>
+            a.user_id=#{userid}
+            AND a.running_account_number=#{accountnember}
+        </where>
+    </select>
+<!--申请提现-->
+    <select id="findRunningId"  resultType="WalletIncomeInfo">
+        SELECT user_id
+        FROM zx_students_wallet_running_account
+        WHERE user_id=#{userid}
+    </select>
+    <insert id="addApplyWithdraw">
+        INSERT INTO zx_students_wallet_running_account (time,classification,user_id,amount_of_money,running_account_number)
+		SELECT NOW(),'3',user_id,#{money},
+		MAX(running_account_number)+1
+		FROM zx_students_wallet_running_account
+		 WHERE user_id=#{userid}
+    </insert>
+    <select id="findId"  resultType="WalletIncomeInfo">
+        SELECT user_id
+        FROM zx_students_wallet_withdraw_apply
+        Where user_id=#{userid}
+    </select>
+    <insert id="addWithdraw" >
+        INSERT INTO zx_students_wallet_withdraw_apply (user_id,withdraw_time,withdraw_money,withdraw_num)
+        SELECT user_id,now(),#{money},
+        MAX(withdraw_num)+1
+        FROM zx_students_wallet_withdraw_apply
+        WHERE user_id=#{userid}
+    </insert>
+    <update id="updateWalletBalance" >
+        UPDATE zx_students_wallet_base_info
+        SET balance=balance-#{money}
+        WHERE user_id=#{userid}
+    </update>
+    <insert id="addWithdrawFirst" >
+        insert INTO zx_students_wallet_withdraw_apply (user_id,withdraw_time,withdraw_money,withdraw_num)
+        VALUES(#{userid},NOW(),#{money},1)
+    </insert>
+    <insert id="addApplyWithdrawFirst" >
+        INSERT INTO zx_students_wallet_running_account (time,classification,user_id,amount_of_money,running_account_number)
+        VALUES(NOW(),'3',#{userid},#{money},1)
+    </insert>
+
+
+</mapper>

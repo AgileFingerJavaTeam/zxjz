@@ -1,0 +1,21 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.KeywordSearchDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+
+    <!--郭阳 根据关键字查询-->
+    <select id="getKeywordSearch" parameterType="String" resultType="KeywordSearch">
+        SELECT recrinfor.recruiting_id ,recrinfor.post_name ,recrinfor.details_page_category ,
+        recrinfor.work_date ,recrinfor.work_location ,recrinfor.salary_treatment ,
+        recrinfor.details_page_category, recrinfor.settlement_method,meracc.merchants_name ,meracc.is_star ,
+        user_account_info.portrait_url
+        FROM zx_recruitment_information recrinfor
+        LEFT JOIN zx_merchants_account meracc ON recrinfor.releases_user_id = meracc.user_id
+        LEFT JOIN zx_user_count_info user_account_info ON recrinfor.releases_user_id = user_account_info.user_id
+        WHERE post_name LIKE '%${key_word}%'
+    </select>
+
+</mapper>

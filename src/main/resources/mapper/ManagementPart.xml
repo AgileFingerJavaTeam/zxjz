@@ -1,0 +1,76 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.ManagementPartDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+
+    <!--郭阳 获取状态位正在进行和暂停的数据-->
+    <select id="getUnderWayInfor" resultType="ManagementPart">
+        select reinfor.recruiting_id ,reinfor.post_name ,reinfor.people_num ,
+        reinfor.employed_number ,reinfor.recruitment ,reinfor.recruitment_status ,userci.portrait_url
+        from `zx_recruitment_information` reinfor
+        left join `zx_user_count_info` userci on reinfor.releases_user_id = userci.user_id
+        where reinfor.releases_user_id = #{user_id} and (reinfor.recruitment_status = "进行中" or reinfor.recruitment_status = "已经暂停")
+    </select>
+
+    <!--郭阳 获取状态位待审核的数据-->
+    <select id="getToAudit" parameterType="int" resultType="ManagementPart">
+        select rec.recruiting_id ,rec.post_name ,userci.portrait_url ,rec.audit_status
+        from `zx_recruitment_information_apply` rec
+        left join `zx_user_count_info` userci on rec.releases_user_id = userci.user_id
+        where rec.releases_user_id = #{user_id} and rec.audit_status = "待审核"
+    </select>
+
+    <!--郭阳 获取状态位正在进行(已驳回)-->
+    <select id="getHasBeenRejected" parameterType="int" resultType="ManagementPart">
+        select recru_apply.recruiting_id, recru_apply.post_name, recru_apply.people_num,
+        recru_apply.recruitment, recru_apply.audit_status, userci.portrait_url
+        from `zx_recruitment_information_apply` recru_apply
+        left join `zx_user_count_info` userci on recru_apply.releases_user_id = userci.user_id
+        where recru_apply.releases_user_id = #{user_id} and (recru_apply.audit_status = "已驳回")
+    </select>
+
+    <!--郭阳 获取状态位已结束的数据-->
+    <select id="getIsOver" parameterType="int" resultType="ManagementPart">
+        select reinfor.recruiting_id ,reinfor.post_name ,reinfor.people_num ,
+        reinfor.employed_number ,reinfor.recruitment ,reinfor.recruitment_status,
+        reinfor.recruitment_status, userci.portrait_url
+        from `zx_recruitment_information` reinfor
+        left join `zx_user_count_info` userci on reinfor.releases_user_id = userci.user_id
+        where reinfor.releases_user_id = #{user_id} and reinfor.recruitment_status = "已经结束"
+    </select>
+
+    <!--郭阳 获取状态位草稿箱的数据-->
+    <select id="getDraftBox" parameterType="int" resultType="ManagementPart">
+        select rec.recruiting_id ,rec.post_name , rec.audit_status,userci.portrait_url
+        from `zx_recruitment_information_apply` rec
+        left join `zx_user_count_info` userci on rec.releases_user_id = userci.user_id
+        where rec.releases_user_id = #{user_id} and rec.audit_status = "草稿"
+    </select>
+
+    <!--郭阳 暂停-->
+    <update id="updatePause" parameterType="int">
+        UPDATE zx_recruitment_information SET recruitment_status = '已经暂停'
+        WHERE recruiting_id = #{recruiting_id}
+    </update>
+
+    <!--郭阳 暂停-->
+    <update id="updateFor" parameterType="int">
+        UPDATE zx_recruitment_information SET recruitment_status = '进行中'
+        WHERE recruiting_id = #{recruiting_id}
+    </update>
+
+    <!--郭阳 审核驳回-->
+    <update id="updateReject" parameterType="int">
+        UPDATE zx_recruitment_information_apply SET audit_status = '已驳回'
+        WHERE recruiting_id = #{recruiting_id}
+    </update>
+
+    <!--郭阳 结束-->
+    <update id="updateIsOver" parameterType="int">
+        UPDATE zx_recruitment_information SET recruitment_status = '已经结束'
+        WHERE recruiting_id = #{recruiting_id}
+    </update>
+</mapper>

@@ -1,0 +1,74 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.StationListDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+
+    <!--郭阳 获取岗位分类-->
+    <select id="getStationList" resultType="StationList">
+        SELECT * FROM zx_station
+        WHERE p_station_id = 0 AND is_delete=0
+    </select>
+
+    <!--郭阳 获取岗位分类-->
+    <select id="getchildrenStationList" resultType="StationList">
+        SELECT * FROM zx_station
+        WHERE p_station_id = #{station_id} AND is_delete=0
+    </select>
+
+    <!--郭阳 获取不按条件查询的数据 -->
+    <select id="getJobList" resultType="JobList">
+        SELECT recinfor.recruiting_id ,recinfor.post_name ,recinfor.work_date ,recinfor.work_location,
+        recinfor.salary_treatment ,recinfor.details_page_category, recinfor.settlement_method,
+        meracc.merchants_name ,meracc.is_star,
+        user_count_info.portrait_url
+        FROM zx_recruitment_information recinfor
+        LEFT JOIN zx_merchants_account meracc ON recinfor.releases_user_id = meracc.user_id
+        LEFT JOIN zx_user_count_info user_count_info ON recinfor.releases_user_id = user_count_info.user_id
+        <where>
+            recinfor.recruitment_status="进行中" and recinfor.up_down_frame = 1 and recinfor.hiring_expiration_date> now()
+            <if test="select_type!=0">
+                <if test="city_type!=-1">
+                    and recinfor.city=#{city_type}
+                </if>
+                <if test="job_type!=-1">
+                    and recinfor.post_classification=#{job_type}
+                </if>
+                <if test="payment_type!=-1">
+                    and recinfor.settlement_method=#{payment_type_str}
+                </if>
+                <if test="sex!=-1">
+                    and gender_requirements=#{sex_str}
+                </if>
+                <if test="star_job==1">
+                    and meracc.is_star=1
+                </if>
+                <if test = "star_job==2">
+                    and recinfor.details_page_category='担保'
+                </if>
+                <if test="star_job==3">
+                    and meracc.is_star=1 and recinfor.details_page_category='担保'
+                </if>
+            </if>
+        </where>
+
+        <if test="select_type==0">
+            ORDER BY recinfor.refresh_time DESC
+        </if>
+        <if test="select_type!=0">
+
+            <if test="order_type==1">
+                ORDER BY recinfor.refresh_time DESC
+            </if>
+            <if test="order_type==3">
+                order by abs(recinfor.position_longitude - #{longitude} + recinfor.position_latitude -  #{latitude}) desc
+            </if>
+            <if test="order_type==2">
+                ORDER BY recinfor.salary_treatment DESC
+            </if>
+        </if>
+    </select>
+
+</mapper>

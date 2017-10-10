@@ -1,0 +1,46 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.ConfirmRejectionDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+
+    <!--郭阳 修改没有录用学生-->
+    <update id="updateConReject" parameterType="int">
+        UPDATE zx_recruitment_registration_information
+        SET hired = '-1',business_hire_time = NOW()
+        WHERE id = #{recruiting_id}
+    </update>
+
+    <!-- 查询录用总人数 -->
+    <select id="getConRejectNums" resultType="ConfirmRejection">
+        SELECT recru_infor.recruitment,recru_infor.employed_number
+        FROM zx_recruitment_registration_information recru_regis_infor
+        LEFT JOIN zx_recruitment_information recru_infor
+        ON recru_regis_infor.recruiting_id = recru_infor.recruiting_id
+        WHERE id = #{recruiting_id}
+    </select>
+
+    <!--郭阳 修改学生录用时间-->
+    <update id="updataEmployTime" parameterType="int">
+        UPDATE zx_recruitment_registration_information
+        SET hired = '1',business_hire_time = NOW()
+        WHERE id = #{recruiting_id}
+    </update>
+
+    <!--郭阳 查询工作ID-->
+    <select id="findRecruId" parameterType="int" resultType="int">
+        SELECT recruiting_id
+        FROM zx_recruitment_registration_information
+        WHERE id = #{recruiting_id}
+    </select>
+
+    <!--郭阳 修改 已经报名人数-1 已经录用人数+1-->
+    <update id="updateNum" parameterType="int">
+        UPDATE zx_recruitment_information
+        SET people_num=people_num-1,employed_number = employed_number+1
+        WHERE recruiting_id = #{id}
+    </update>
+
+</mapper>

@@ -1,0 +1,20 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.StudentTranRecordsDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+
+    <!--郭阳 获取学生交易数据-->
+    <select id="getStudentTranRecordsList" resultType="StudentTranRecords">
+        SELECT  work_info.work_id, recru_infor.post_name, recru_infor.settlement_method, pay_tion.*
+        FROM zx_work_base_info work_info
+        LEFT JOIN zx_pay_calculation pay_tion
+        ON work_info.work_id = pay_tion.work_id
+        LEFT JOIN zx_recruitment_information recru_infor
+        ON work_info.recruit_id = recru_infor.recruiting_id
+        WHERE merchant_user_id = #{merchant_user_id} AND college_user_id = #{college_user_id}
+    </select>
+
+</mapper>
