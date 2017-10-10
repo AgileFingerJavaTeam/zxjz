@@ -11,8 +11,10 @@ import com.zxjz.enums.MerchantCommentEnum;
 import com.zxjz.enums.SystemParameterEnum;
 import com.zxjz.exception.FindDatabaseException;
 import com.zxjz.exception.FindJobException;
-import com.zxjz.exception.InsertInnerErrorException;
-import com.zxjz.exception.QueryInnerErrorException;
+import com.zxjz.exception.db.InsertInnerErrorException;
+import com.zxjz.exception.db.InsertInnerErrorException;
+import com.zxjz.exception.db.QueryInnerErrorException;
+import com.zxjz.exception.db.QueryInnerErrorException;
 import com.zxjz.service.SystemParameterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,7 +31,7 @@ public class SystemParameterController extends BaseController {
 
     /**
      * 是否需要更新
-     * @param systemParameterDto
+     * @param
      * @return
      */
     @RequestMapping(value = "/isUpdateAPP",
