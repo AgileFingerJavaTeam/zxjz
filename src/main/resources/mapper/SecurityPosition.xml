@@ -18,6 +18,18 @@
         limit #{offset},#{rows}
     </select>
 
+    <!--安童 是否上首页担保/推荐  后台页面list -->
+    <select id="findListCollection2"  resultType="AtCollection">
+        SELECT *
+        FROM zx_recruitment_information a
+        LEFT JOIN zx_recruitment_additional_information b
+        ON a.recruiting_id=b.recruiting_id
+        LEFT JOIN zx_merchants_account c
+        ON a.releases_user_id=c.user_id
+        WHERE 1=1
+        limit #{offset},#{rows}
+    </select>
+
     <!--安童 后台显示总数 -->
     <select id="findSecurityPositionListCount"  resultType="int">
         SELECT count(*)
@@ -59,5 +71,169 @@
         SELECT user_id,merchants_name
         FROM zx_merchants_account
         WHERE 1=1
+    </select>
+
+    <!-- 添加框查看 遍历岗位分类 -->
+    <select id="findListStation" resultType="Station">
+        SELECT station_id,station_name
+        FROM zx_station
+        WHERE p_station_id=0
+        AND is_delete=0
+    </select>
+
+    <!-- 查询二级岗位分类 -->
+    <select id="findListTwoLevelStation" resultType="Station">
+        SELECT station_id,station_name
+        FROM zx_station
+        <where>
+            p_station_id!=0 AND is_delete=0
+            <if test="p_station_id!=null and p_station_id!=''">
+                AND p_station_id=#{p_station_id}
+            </if>
+        </where>
+    </select>
+
+    <!--安童 添加精品职位数据 -->
+    <insert id="addSecurityPosition">
+        <selectKey resultType="int" keyProperty="recruiting_id"
+                   order="AFTER">
+        SELECT @@IDENTITY AS recruiting_id
+        </selectKey>
+        INSERT INTO zx_recruitment_information
+        (recruiting_id,release_time,refresh_time,post_name,post_classification,details_page_category,whether_on_homepage_guarantee,good_begin_time,good_end_time,whether_on_homepage_recommend,recommend_begin_time,recommend_end_time,work_date,work_time,work_location,position_longitude,position_latitude,work_content,settlement_method,salary_treatment,commission,benefits,gender_requirements,other_requirements,recruitment,people_num,hiring_expiration_date,recruitment_status,view_count,collection_count,reported,up_down_frame,releases_user_id)
+        VALUES
+        (#{recruiting_id},now(),now(),#{post_name},#{post_classification},'担保','否','1900-1-1','1900-1-1','否','1900-1-1','1900-1-1',#{work_date},#{work_time},#{work_location},#{position_longitude},#{position_latitude},#{work_content},'日结',#{salary_treatment},#{commission,jdbcType=VARCHAR},#{benefits,jdbcType=VARCHAR},#{gender_requirements},#{other_requirements},#{recruitment},0,#{hiring_expiration_date},'进行中',0,0,'否','1',#{releases_user_id})
+    </insert>
+    <!--安童 添加精品职位数据 -->
+    <insert id="addSecurityPosition2">
+        <selectKey resultType="int" keyProperty="recruiting_id"
+                   order="AFTER">
+        SELECT @@IDENTITY AS recruiting_id
+        </selectKey>
+        INSERT INTO
+        zx_recruitment_additional_information
+        (recruiting_id,main_title,subtitle,short_description,page_url,first_page_carousel_url,main_page_url,details_page_introduction)
+        VALUES
+        (#{recruiting_id},#{main_title},#{subtitle},#{short_description},#{page_url},#{first_page_carousel_url},#{main_page_url},#{details_page_introduction})
+    </insert>
+    <!-- 获取精品主键最大值 -->
+    <select id="getSecurityIndex" resultType="String">
+        SELECT MIN(recruiting_id)
+        FROM zx_recruitment_information a
+        WHERE a.details_page_category='担保'
+    </select>
+
+    <!-- 查询父分类名称 -->
+    <select id="findParentPostClassification"  resultType="int">
+        SELECT p_station_id
+        FROM zx_station
+        WHERE station_id = #{parentPostClassification}
+    </select>
+
+    <!--安童 编辑精品职位数据 -->
+    <update id="SecurityPositionUpdate">
+        UPDATE
+        zx_recruitment_information SET
+        release_time= now(),
+        refresh_time= now(),
+        post_name= #{post_name},
+        post_classification= #{post_classification},
+        work_date= #{work_date},
+        work_time= #{work_time},
+        work_location= #{work_location},
+        position_longitude= #{position_longitude},
+        position_latitude= #{position_latitude},
+        work_content= #{work_content},
+        salary_treatment= #{salary_treatment},
+        commission= #{commission},
+        benefits= #{benefits},
+        gender_requirements= #{gender_requirements},
+        other_requirements= #{other_requirements},
+        recruitment = #{recruitment},
+        hiring_expiration_date = #{hiring_expiration_date},
+        up_down_frame=#{up_down_frame}
+        WHERE recruiting_id =#{recruiting_id};
+    </update>
+
+    <!--安童 编辑精品职位数据 -->
+    <update id="SecurityPositionUpdate2">
+        UPDATE
+        `zx_recruitment_additional_information`
+        SET `main_title` = #{main_title},
+        `subtitle` = #{subtitle},
+        `page_url` = #{page_url},
+        `short_description` = #{short_description},
+        `details_page_introduction` = #{details_page_introduction}
+        WHERE `recruiting_id` = #{recruiting_id};
+    </update>
+
+    <!--安童 编辑精品职位数据 -->
+    <update id="SecurityPositionUpdate3">
+        UPDATE
+        `zx_recruitment_additional_information`
+        SET `main_title` = #{main_title},
+        `subtitle` = #{subtitle},
+        `short_description` = #{short_description},
+        `first_page_carousel_url` = #{first_page_carousel_url},
+        `details_page_introduction` = #{details_page_introduction}
+        WHERE `recruiting_id` = #{recruiting_id};
+    </update>
+    <!--安童 编辑精品职位数据 -->
+    <update id="SecurityPositionUpdate4">
+        UPDATE
+        `zx_recruitment_additional_information`
+        SET `main_title` = #{main_title},
+        `subtitle` = #{subtitle},
+        `short_description` = #{short_description},
+        main_page_url=#{main_page_url},
+        `details_page_introduction` = #{details_page_introduction}
+        WHERE `recruiting_id` = #{recruiting_id};
+    </update>
+
+    <!--安童 模糊查询 -->
+    <select id="findSearch"  resultType="AtCollection">
+        SELECT *
+        FROM zx_recruitment_information a
+        LEFT JOIN zx_recruitment_additional_information b
+        ON a.recruiting_id=b.recruiting_id
+        LEFT JOIN zx_merchants_account c
+        ON a.releases_user_id=c.user_id
+        WHERE CONCAT_WS(',',b.recruiting_id,b.main_title,b.subtitle,c.merchants_name)
+        LIKE '%${search}%'
+        limit #{offset},#{rows}
+    </select>
+
+    <!--安童 状态筛选 -->
+    <select id="findStatusSearch" resultType="AtCollection">
+        SELECT *
+        FROM zx_recruitment_information a
+        LEFT JOIN zx_recruitment_additional_information b
+        ON a.recruiting_id=b.recruiting_id
+        LEFT JOIN zx_merchants_account c
+        ON a.releases_user_id=c.user_id
+        <where>
+            a.details_page_category='担保'
+            <if test="StatusSearch!=null and StatusSearch!=''">
+                AND up_down_frame=#{StatusSearch}
+            </if>
+        </where>
+        limit #{offset},#{rows}
+    </select>
+
+    <!--安童    是否上首页推荐/担保 状态筛选 -->
+    <select id="findStatusSearch2"  resultType="AtCollection">
+        SELECT *
+        FROM zx_recruitment_information a
+        LEFT JOIN zx_recruitment_additional_information b
+        ON a.recruiting_id=b.recruiting_id
+        LEFT JOIN zx_merchants_account c
+        ON a.releases_user_id=c.user_id
+        <where>
+            1=1
+            <if test="StatusSearch!=null and StatusSearch!=''">
+                AND up_down_frame=#{StatusSearch}
+            </if>
+        </where>
+        limit #{offset},#{rows}
     </select>
 </mapper>

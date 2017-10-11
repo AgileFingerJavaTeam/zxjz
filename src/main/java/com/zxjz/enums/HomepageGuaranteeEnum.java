@@ -1,24 +1,24 @@
 package com.zxjz.enums;
 
 /**
- * Created by Administrator on 2017/10/10 0010.
+ * Created by Administrator on 2017/10/11 0011.
  */
-public enum  SecurityPositionEnum {
-    SUCCESS(7,"成功"),
-    FAIL(-7,"失败"),
-    COLLECTION_SUCCESS(1,"查询成功"),
-    ADD_PSW_SUCCESS(2,"添加成功"),
-    UPDATE_PSW_SUCCESS(3,"更改成功"),
-    ADD_JOB_SUCCESS(4,"发布职位成功"),
-    SAVE_JOB_COPY_SUCCESS(5,"保存草稿成功"),
-    UPDATE_SUCCESS(6,"更改状态成功"),
+public enum HomepageGuaranteeEnum {
+    FIND_ENROLLJOBSTATUS_SUCCESS(1,"查询兼职状态成功"),
+    IS_MERCHANT_SEE(2,"商家已经查看"),
+    UPDATE_JOB_STATUS_SUCCESS(3,"更改成功"),
+    SIGNUP_SUCCESS(4,"报名成功"),
+    HIRED_SUCCESS(5,"确认录取成功"),
+    NO_HIRED_SUCCESS(6,"拒绝录取成功"),
+    STUDENT_EDIT_SUCCESS(7,"获取学生兼职详情页成功"),
+    BUG(-555,"到这就BUG了"),
     NO_PRAM(-99,"缺少参数"),
     INNER_ERROR(-100,"数据库内部错误");
 
     private int code;
     private String codeInfo;
 
-    SecurityPositionEnum(int code, String codeInfo) {
+    HomepageGuaranteeEnum(int code, String codeInfo) {
         this.code = code;
         this.codeInfo = codeInfo;
     }
@@ -41,14 +41,14 @@ public enum  SecurityPositionEnum {
 
     @Override
     public String toString() {
-        return "SecurityPositionEnum{" +
+        return "HomepageGuaranteeEnum{" +
                 "code=" + code +
                 ", codeInfo='" + codeInfo + '\'' +
                 '}';
     }
 
-    public static SecurityPositionEnum stateof(int index) {
-        for (SecurityPositionEnum state : values())
+    public static HomepageGuaranteeEnum stateof(int index) {
+        for (HomepageGuaranteeEnum state : values())
         {
             if (state.getCode()==index)
             {

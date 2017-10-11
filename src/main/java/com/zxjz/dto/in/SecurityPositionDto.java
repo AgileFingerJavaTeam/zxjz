@@ -4,11 +4,20 @@ package com.zxjz.dto.in;
  * Created by Administrator on 2017/10/10 0010.
  */
 public class SecurityPositionDto {
+    private int p_station_id;
     private int id;
     private int page;
     private int rows;
     private String StatusSearch;
     private String search;
+
+    public int getP_station_id() {
+        return p_station_id;
+    }
+
+    public void setP_station_id(int p_station_id) {
+        this.p_station_id = p_station_id;
+    }
 
     public int getId() {
         return id;
@@ -53,7 +62,8 @@ public class SecurityPositionDto {
     @Override
     public String toString() {
         return "SecurityPositionDto{" +
-                "id=" + id +
+                "p_station_id=" + p_station_id +
+                ", id=" + id +
                 ", page=" + page +
                 ", rows=" + rows +
                 ", StatusSearch='" + StatusSearch + '\'' +
