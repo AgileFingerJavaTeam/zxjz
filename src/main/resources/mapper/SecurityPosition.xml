@@ -1,0 +1,63 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.SecurityPositionDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+
+    <!--安童 后台页面list -->
+    <select id="getSecurityPositionList"  resultType="AtCollection">
+        SELECT *
+        FROM zx_recruitment_information a
+        LEFT JOIN zx_recruitment_additional_information b
+        ON a.recruiting_id=b.recruiting_id
+        LEFT JOIN zx_merchants_account c
+        ON a.releases_user_id=c.user_id
+        WHERE a.details_page_category='担保'
+        limit #{offset},#{rows}
+    </select>
+
+    <!--安童 后台显示总数 -->
+    <select id="findSecurityPositionListCount"  resultType="int">
+        SELECT count(*)
+        FROM zx_recruitment_information a
+        LEFT JOIN zx_recruitment_additional_information b
+        ON a.recruiting_id=b.recruiting_id
+        LEFT JOIN zx_merchants_account c
+        ON a.releases_user_id=c.user_id
+        <where>
+            1=1
+            <if test="StatusSearch!=null and StatusSearch!=''">
+                AND up_down_frame=#{StatusSearch}
+            </if>
+            <if test="search!=null and search!=''">
+                AND CONCAT(b.recruiting_id,b.main_title,b.subtitle) LIKE '%${search}%'
+            </if>
+        </where>
+    </select>
+
+    <!--安童 详情list -->
+    <select id="findSecurityPositionSecurity" resultType="AtCollection">
+        SELECT *
+        FROM zx_recruitment_information a
+        LEFT JOIN zx_recruitment_additional_information b
+        ON a.recruiting_id=b.recruiting_id
+        LEFT JOIN zx_merchants_account c
+        ON a.releases_user_id=c.user_id
+        WHERE a.recruiting_id=#{id}
+    </select>
+
+    <!--安童 详情list 通过ID查name 岗位分类-->
+    <select id="findSecurityPositionSecurity1" resultType="Map">
+        SELECT *
+        FROM zx_station
+        WHERE station_id=#{post_calssification}
+    </select>
+    <!-- 添加框查看 遍历商户名称 -->
+    <select id="findListMarchantName" resultType="MerchantAccount">
+        SELECT user_id,merchants_name
+        FROM zx_merchants_account
+        WHERE 1=1
+    </select>
+</mapper>

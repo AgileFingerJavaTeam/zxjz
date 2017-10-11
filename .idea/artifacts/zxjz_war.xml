@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="zxjz:war">
-    <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="zxjz.war">
-      <element id="artifact" artifact-name="zxjz:war exploded" />
-    </root>
-  </artifact>
-</component>
