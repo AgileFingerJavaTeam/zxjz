@@ -1,0 +1,74 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.SettlementDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+    <!-- 显示页面数据 -->
+    <select id="findListSettlement"  resultType="Settlement">
+        SELECT *
+        FROM zx_merchant_funds_platform_settlement_record a
+        LEFT JOIN zx_merchants_account b
+        ON a.user_id=b.user_id
+        LEFT JOIN zx_clearing_fee_mode c
+        ON a.classification_of_settlement_expenses = c.clearing_fee_mode
+        WHERE 1=1 limit #{offset},#{rows}
+    </select>
+    <!-- 查总数 -->
+    <select id="findSettlementCount"  resultType="int">
+        SELECT COUNT(*)
+        FROM zx_merchant_funds_platform_settlement_record a
+        LEFT JOIN zx_merchants_account b
+        ON a.user_id=b.user_id
+        <where>
+            1=1
+            <if test="search!=null and search!=''">
+                AND CONCAT(b.merchants_name,a.settlement_time,a.classification_of_settlement_expenses,a.settlement_amount) LIKE '%${search}%'
+            </if>
+        </where>
+    </select>
+
+    <!--安童 模糊查询 -->
+    <select id="findSearch"  resultType="Settlement">
+        SELECT *
+        FROM zx_merchant_funds_platform_settlement_record a
+        LEFT JOIN zx_merchants_account b
+        ON a.user_id=b.user_id
+        WHERE CONCAT_WS(',',b.merchants_name,a.settlement_time,a.classification_of_settlement_expenses,a.settlement_amount) LIKE '%${search}%'
+        limit #{offset},#{rows}
+    </select>
+
+    <!-- 安童 查看 -->
+    <select id="getSettlementData"  resultType="Settlement">
+        SELECT *
+        FROM zx_merchant_funds_platform_settlement_record a
+        LEFT JOIN zx_merchants_account b
+        ON a.user_id=b.user_id
+        LEFT JOIN zx_employee_basic_information c
+        ON a.employees_id=c.employees_id
+        WHERE a.user_id=#{id}
+        AND a.withdrawal_serial_number=#{ob}
+        AND a.employees_id=#{uid}
+    </select>
+
+    <!--安童  添加窗口查流水号+1-->
+    <select id="findMaxNumber"  resultType="Map">
+        SELECT MAX(withdrawal_serial_number) AS withlist
+        FROM zx_merchant_funds_platform_settlement_record
+        WHERE user_id=#{id}
+    </select>
+
+    <!-- 查询商户名称 -->
+    <select id="findMerchantsName"   resultType="Settlement">
+        SELECT user_id, merchants_name
+        FROM zx_merchants_account
+        <where>
+            1=1
+            <if test="q!=null and q!=''">
+                AND merchants_name LIKE '%${q}%'
+            </if>
+        </where>
+        limit #{offset},#{rows}
+    </select>
+</mapper>

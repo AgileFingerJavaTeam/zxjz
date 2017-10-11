@@ -1,9 +1,9 @@
 package com.zxjz.enums;
 
 /**
- * Created by Administrator on 2017/10/10 0010.
+ * Created by Administrator on 2017/10/11 0011.
  */
-public enum  SecurityPositionEnum {
+public enum  SettlementEnum {
     SUCCESS(7,"成功"),
     FAIL(-7,"失败"),
     COLLECTION_SUCCESS(1,"查询成功"),
@@ -18,7 +18,7 @@ public enum  SecurityPositionEnum {
     private int code;
     private String codeInfo;
 
-    SecurityPositionEnum(int code, String codeInfo) {
+    SettlementEnum(int code, String codeInfo) {
         this.code = code;
         this.codeInfo = codeInfo;
     }
@@ -41,14 +41,14 @@ public enum  SecurityPositionEnum {
 
     @Override
     public String toString() {
-        return "SecurityPositionEnum{" +
+        return "SettlementEnum{" +
                 "code=" + code +
                 ", codeInfo='" + codeInfo + '\'' +
                 '}';
     }
 
-    public static SecurityPositionEnum stateof(int index) {
-        for (SecurityPositionEnum state : values())
+    public static SettlementEnum stateof(int index) {
+        for (SettlementEnum state : values())
         {
             if (state.getCode()==index)
             {
@@ -57,4 +57,5 @@ public enum  SecurityPositionEnum {
         }
         return null;
     }
+
 }

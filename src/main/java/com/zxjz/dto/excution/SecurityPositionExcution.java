@@ -10,12 +10,19 @@ import java.util.Map;
  * Created by Administrator on 2017/10/10 0010.
  */
 public class SecurityPositionExcution {
+     private List info;
      private AtCollection atCollection;
      private Map map;
      private List<AtCollection> list;
      private int total;
      private int code;
      private String codeInfo;
+
+    public SecurityPositionExcution(SecurityPositionEnum securityPositionEnum,List info) {
+        this.info = info;
+        this.code = securityPositionEnum.getCode();
+        this.codeInfo = securityPositionEnum.getCodeInfo();
+    }
 
     public SecurityPositionExcution(AtCollection atCollection, Map map) {
         this.atCollection = atCollection;
@@ -32,6 +39,14 @@ public class SecurityPositionExcution {
     public SecurityPositionExcution(SecurityPositionEnum securityPositionEnum) {
         this.code = securityPositionEnum.getCode();
         this.codeInfo = securityPositionEnum.getCodeInfo();
+    }
+
+    public List getInfo() {
+        return info;
+    }
+
+    public void setInfo(List info) {
+        this.info = info;
     }
 
     public AtCollection getAtCollection() {
