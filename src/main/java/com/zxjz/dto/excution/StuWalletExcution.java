@@ -1,10 +1,9 @@
 package com.zxjz.dto.excution;
 
 import com.zxjz.base.BaseException;
-import com.zxjz.base.BaseExcution;
 import com.zxjz.entity.StuWallletBase;
 import com.zxjz.enums.StuWalletEnum;
-import com.zxjz.enums.UserInfoEnum;
+
 
 public class StuWalletExcution  {
     private StuWallletBase stuWallletBase;
