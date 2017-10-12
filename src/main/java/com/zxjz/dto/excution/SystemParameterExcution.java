@@ -3,7 +3,10 @@ package com.zxjz.dto.excution;
 import com.zxjz.entity.SystemParameter;
 import com.zxjz.enums.SystemParameterEnum;
 
+import java.util.List;
+
 public class SystemParameterExcution {
+    private List<SystemParameter> systemParametersList;
     private SystemParameter systemParameter;
     private int code;
     private String codeInfo;
@@ -12,10 +15,23 @@ public class SystemParameterExcution {
         this.code = systemParameterEnum.getCode();
         this.codeInfo = systemParameterEnum.getCodeInfo();
     }
+    public SystemParameterExcution(SystemParameterEnum systemParameterEnum,List<SystemParameter> systemParametersList) {
+        this.systemParametersList = systemParametersList;
+        this.code = systemParameterEnum.getCode();
+        this.codeInfo = systemParameterEnum.getCodeInfo();
+    }
     public SystemParameterExcution(SystemParameterEnum systemParameterEnum,SystemParameter systemParameter) {
         this.systemParameter = systemParameter;
         this.code = systemParameterEnum.getCode();
         this.codeInfo = systemParameterEnum.getCodeInfo();
+    }
+
+    public List<SystemParameter> getSystemParametersList() {
+        return systemParametersList;
+    }
+
+    public void setSystemParametersList(List<SystemParameter> systemParametersList) {
+        this.systemParametersList = systemParametersList;
     }
 
     public SystemParameter getSystemParameter() {
@@ -45,7 +61,8 @@ public class SystemParameterExcution {
     @Override
     public String toString() {
         return "SystemParameterExcution{" +
-                "systemParameter=" + systemParameter +
+                "systemParametersList=" + systemParametersList +
+                ", systemParameter=" + systemParameter +
                 ", code=" + code +
                 ", codeInfo='" + codeInfo + '\'' +
                 '}';

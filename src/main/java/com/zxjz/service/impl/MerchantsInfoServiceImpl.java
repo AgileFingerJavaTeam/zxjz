@@ -131,4 +131,20 @@ public class MerchantsInfoServiceImpl implements MerchantsInfoService {
             throw new BaseException(e.getMessage());
         }
     }
+
+    public MerchantsUpgradeExcution showAuditPage(MerchantsUpgradeDto merchantsUpgradeDto) {
+        int user_id = merchantsUpgradeDto.getUserId();
+        try {
+            MerchantsUpgrade merchantsUpgrade = merchantsInfoDao.findEmInfo(user_id);
+            if (merchantsUpgrade == null){
+                throw new QueryInnerErrorException("数据库内部错误查询申请VIP商户申请信息失败");
+            }
+            return new MerchantsUpgradeExcution(MerchantsUpgradeEnum.FIND_SUCCESS,merchantsUpgrade);
+        }catch (QueryInnerErrorException e1){
+            throw e1;
+        }catch (Exception e){
+            logger.error(e.getMessage(), e);
+            throw new BaseException(e.getMessage());
+        }
+    }
 }

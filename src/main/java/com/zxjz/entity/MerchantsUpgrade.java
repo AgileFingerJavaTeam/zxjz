@@ -7,8 +7,24 @@ public class MerchantsUpgrade {
     private int acceptEmployees;
     private int operatingStaff;
     private String operatingTime;
+    private  String merchantsName;//商户名称
+    private String employees_name;//员工姓名
 
+    public String getEmployees_name() {
+        return employees_name;
+    }
 
+    public void setEmployees_name(String employees_name) {
+        this.employees_name = employees_name;
+    }
+
+    public String getMerchantsName() {
+        return merchantsName;
+    }
+
+    public void setMerchantsName(String merchantsName) {
+        this.merchantsName = merchantsName;
+    }
 
     public int getUserId() {
         return userId;
@@ -67,6 +83,8 @@ public class MerchantsUpgrade {
                 ", acceptEmployees=" + acceptEmployees +
                 ", operatingStaff=" + operatingStaff +
                 ", operatingTime='" + operatingTime + '\'' +
+                ", merchantsName='" + merchantsName + '\'' +
+                ", employees_name='" + employees_name + '\'' +
                 '}';
     }
 }

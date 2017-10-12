@@ -47,4 +47,36 @@
         LEFT JOIN `zx_user_count_info` uc on uc.user_id=ria.releases_user_id
         WHERE uc.user_id= #{user_id} and ria.recruiting_id=#{recruiting_id}
     </select>
+    <!--显示系统参数页面时 查询系统参数-->
+    <select id="findSystemPatameter"  resultType="SystemParameter">
+        SELECT * FROM`zx_system_parameter`
+        <where>
+            1=1
+            <if test="srt_search_content!=null and srt_search_content!=''">
+                AND CONCAT_WS(',',parameter_name,parameter_description,parameter,serial_number) LIKE '%${srt_search_content}%'
+            </if>
+        </where>
+        limit #{offset},#{rows}
+    </select>
+    <!--显示编辑系统参数时 通过Id查询本条系统参数-->
+    <select id="findSystemParameterInfoById"  resultType="SystemParameter">
+        SELECT * FROM `zx_system_parameter` where parameter_id=#{id}
+    </select>
+    <!--新增一条系统参数-->
+    <insert id="addSystemParameter" >
+        INSERT INTO
+        zx_system_parameter (serial_number,parameter_name,parameter_description,parameter)
+        VALUES (#{serial_number},#{parameter_name},#{parameter_description},#{parameter})
+    </insert>
+    <!--编辑一条系统参数 -->
+    <update id="updateSystemParameter" >
+        UPDATE zx_system_parameter
+        SET serial_number=#{serial_number}, parameter_name=#{parameter_name},parameter_description=#{parameter_description},parameter =#{parameter}
+        WHERE parameter_id=#{parameter_id}
+    </update>
+    <!--删除一条系统参数 -->
+    <delete id="delSystemParameter">
+        DELETE FROM zx_system_parameter
+        WHERE parameter_id =#{parameter_id}
+    </delete>
 </mapper>
