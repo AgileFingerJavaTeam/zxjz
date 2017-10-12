@@ -1,0 +1,24 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.HomepageRecommendDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+    <!--侯兆宁     更改是否上首页推荐-->
+    <update id="updateORHomepageRecommend">
+        UPDATE zx_recruitment_information
+        SET whether_on_homepage_recommend='是',
+        recommend_begin_time=#{hzn_recommend_begin_time},
+        recommend_end_time=#{hzn_recommend_end_time}
+        WHERE recruiting_id=#{recruiting_id}
+    </update>
+    <!--侯兆宁     关闭上首页推荐-->
+    <update id="updateDownHomepageRecommend" >
+        UPDATE zx_recruitment_information
+        SET whether_on_homepage_recommend='否'
+        WHERE recruiting_id=#{recruiting_id}
+    </update>
+
+
+</mapper>

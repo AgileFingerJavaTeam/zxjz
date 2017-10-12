@@ -12,12 +12,6 @@ public enum  SecurityPositionEnum {
     ADD_JOB_SUCCESS(4,"发布职位成功"),
     SAVE_JOB_COPY_SUCCESS(5,"保存草稿成功"),
     UPDATE_SUCCESS(6,"更改状态成功"),
-    COLLECTION_NOT_STATE(-1,"查询失败"),
-    ADD_PSW_FAIL(-2,"添加失败"),
-    UPDATE_PSW_FAIL(-3,"更改失败"),
-    ADD_JOB_FAIL(-4,"发布职位失败"),
-    UPDATE_FAIL(-6,"更改状态失败"),
-    SAVE_JOB_COPY_FAIL(-5,"保存草稿失败"),
     NO_PRAM(-99,"缺少参数"),
     INNER_ERROR(-100,"数据库内部错误");
 
