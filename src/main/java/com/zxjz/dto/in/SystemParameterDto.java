@@ -13,6 +13,42 @@ public class SystemParameterDto {
     private double working_ability;
     private double compre_evaluation;
     private int recruiting_id;
+    private int parameter_id;
+    private String serial_number;
+    private String parameter_description;
+    private String parameter;
+
+    public int getParameter_id() {
+        return parameter_id;
+    }
+
+    public void setParameter_id(int parameter_id) {
+        this.parameter_id = parameter_id;
+    }
+
+    public String getSerial_number() {
+        return serial_number;
+    }
+
+    public void setSerial_number(String serial_number) {
+        this.serial_number = serial_number;
+    }
+
+    public String getParameter_description() {
+        return parameter_description;
+    }
+
+    public void setParameter_description(String parameter_description) {
+        this.parameter_description = parameter_description;
+    }
+
+    public String getParameter() {
+        return parameter;
+    }
+
+    public void setParameter(String parameter) {
+        this.parameter = parameter;
+    }
 
     public String getIos_version() {
         return ios_version;
@@ -125,6 +161,10 @@ public class SystemParameterDto {
                 ", working_ability=" + working_ability +
                 ", compre_evaluation=" + compre_evaluation +
                 ", recruiting_id=" + recruiting_id +
+                ", parameter_id=" + parameter_id +
+                ", serial_number='" + serial_number + '\'' +
+                ", parameter_description='" + parameter_description + '\'' +
+                ", parameter='" + parameter + '\'' +
                 '}';
     }
 }

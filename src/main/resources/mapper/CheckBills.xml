@@ -1,0 +1,101 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.CheckBillDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+  <!--查询商户账单信息-->
+    <select id="findBillsInfo"  resultType="MerchantsBillsInfo">
+        SELECT *
+        FROM zx_merchant_funds_current_account mfca
+        LEFT JOIN zx_merchants_account ma
+        ON mfca.user_id = ma.user_id
+        WHERE mfca.user_id=#{merId}
+    </select>
+    <!--查询商户账单条数-->
+    <select id="findMerBillsCount" resultType="int">
+        select count(*)
+        FROM  zx_merchant_funds_current_account
+        <where>
+            1=1
+            <if test="q!=null and q!=''">
+                and merchants_name like '%${q}%'
+            </if>
+        </where>
+    </select>
+    <!--查询搜索时商户名称-->
+    <select id="findMerName"  resultType="MerchantsBillsInfo">
+        SELECT user_id,merchants_name
+        FROM zx_merchants_account
+        <where>
+            1=1
+            <if test="q!=null and q!=''">
+                and merchants_name like '%${q}%'
+            </if>
+        </where>
+        limit #{offset},#{rows}
+    </select>
+    <!--查询搜索时商户数量-->
+    <select id="findMerCount" resultType="int">
+        SELECT count(*)
+        FROM zx_merchants_account
+        <where>
+            1=1
+            <if test="q!=null and q!=''">
+                and merchants_name like '%${q}%'
+            </if>
+        </where>
+    </select>
+    <!--查询商户充值信息-->
+    <select id="findPayInfoById"  resultType="RechargeInfo">
+        SELECT *
+        FROM zx_merchant_funds_recharge_record mfrr
+        LEFT JOIN zx_merchants_account ma on mfrr.user_id = ma.user_id
+        LEFT JOIN zx_recharge_mode rm on mfrr.recharge_mode = rm.recharge_mode
+        LEFT JOIN zx_employee_basic_information ebi on ebi.employees_id = mfrr.operating_staff_id
+        WHERE mfrr.user_id = #{user_id} AND mfrr.recharge_sequence_number = #{references_the_internal_serial_number1}
+    </select>
+    <!--查询商户提现信息-->
+    <select id="findWithdrawInfoById"  resultType="MerchantWithdrawInfo">
+        SELECT *
+        FROM zx_merchant_funds_withdrawal_record mfwr
+        LEFT JOIN zx_merchants_account ma on mfwr.user_id = ma.user_id
+        LEFT JOIN zx_withdrawal_mode wm on mfwr.cash_withdrawal = wm.withdrawal_mode
+        WHERE mfwr.user_id = #{user_id} AND mfwr.withdrawal_sequence_number = #{references_the_internal_serial_number1}
+    </select>
+    <!--获取招聘ID-->
+    <select id="findRecruitIdByUserId"  resultType="Object">
+        SELECT recruit_id
+        FROM zx_work_base_info
+        WHERE work_id = #{work_id}
+    </select>
+    <!--查询工作名称-->
+    <select id="findPostNameByRecruitId"  resultType="String">
+        SELECT post_name
+        FROM zx_recruitment_information
+        WHERE recruiting_id = #{recruitId}
+    </select>
+    <!--查询商家支付工资信息-->
+    <select id="findSalaryById"  resultType="MerchantPayforStudent">
+        SELECT *
+        FROM zx_pay_calculation
+        WHERE work_id = #{work_id} AND settlement_num = #{references_the_internal_serial_number1}
+    </select>
+    <!--查询商家支付给平台信息-->
+    <select id="findCostInfoById"  resultType="MerchantPayforTerrace">
+        SELECT *
+        FROM zx_merchant_funds_platform_settlement_record mfps
+        LEFT JOIN zx_clearing_fee_mode cfc on mfps.classification_of_settlement_expenses = cfc.clearing_fee_mode
+        LEFT JOIN zx_merchants_account ma on mfps.user_id = ma.user_id
+        LEFT JOIN zx_employee_basic_information ebi on ebi.employees_id = mfps.employees_id
+        WHERE mfps.user_id = #{user_id} AND mfps.withdrawal_serial_number = #{references_the_internal_serial_number1}
+    </select>
+    <!--查询商家代付工资给学生信息-->
+    <select id="findPaymentInfoById" resultType="TerracePayforStudent">
+        SELECT *
+        FROM zx_merchant_funds_receivable mfr
+        LEFT JOIN zx_merchants_account ma on mfr.user_id = ma.user_id
+        WHERE mfr.user_id = #{user_id} AND mfr.serial_number = #{references_the_internal_serial_number1}
+    </select>
+</mapper>

@@ -1,7 +1,6 @@
 package com.zxjz.dto.excution;
 
 import com.zxjz.entity.StuEvaDetails;
-import com.zxjz.entity.StuPersonal;
 import com.zxjz.enums.StuPersonalEnum;
 
 public class StuEvaDetailsExcution {

@@ -9,6 +9,8 @@ package com.zxjz.enums;
          */
 
             APPLY_SUCCESS(1,"申请成功"),
+            FIND_SUCCESS(1,"查询申请VIP商户申请详情成功"),
+            FIND_FAIL(-3,"查询申请VIP商户申请详情失败"),
             APPLY_REPEAT(-1,"申请重复"),
             APPLY_ERROR(-2,"数据库内部错误");
 

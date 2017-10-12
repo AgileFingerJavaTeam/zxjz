@@ -1,0 +1,23 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.HomepageGuaranteeDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+    <!--侯兆宁     更改是否上首页担保-->
+    <update id="updateOrDownHomepageGuarantee" >
+        UPDATE zx_recruitment_information
+        SET whether_on_homepage_guarantee='是',
+        good_begin_time=#{hzn_good_begin_time},
+        good_end_time=#{hzn_good_end_time}
+        WHERE recruiting_id=#{recruiting_id}
+    </update>
+    <!--侯兆宁     关闭上首页担保-->
+    <update id="updatedownHomepageGuarantee" >
+        UPDATE zx_recruitment_information
+        SET whether_on_homepage_guarantee='否'
+        WHERE recruiting_id=#{recruiting_id}
+    </update>
+
+</mapper>
