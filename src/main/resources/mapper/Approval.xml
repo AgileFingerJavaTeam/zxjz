@@ -1,0 +1,61 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.ApprovalDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+    <!-- 查询招聘信息列表 -->
+    <select id="findApprovalList"  resultType="RecruitmentInfoApply">
+		SELECT * FROM zx_recruitment_information_apply a
+		left join zx_merchants_account  b on a.releases_user_id=b.user_id
+		LEFT JOIN zx_station c on a.post_classification=c.station_id
+		LEFT JOIN zx_employee_basic_information d ON a.auditor=d.employees_id
+		<where>
+			1=1 and a.audit_status!='草稿'
+			<if test="bxw_approval_status!=null and bxw_approval_status!='全部'">
+				and audit_status=#{bxw_approval_status}
+			</if>
+			<if test="bxw_search_content!=null and bxw_search_content!=''">
+				AND CONCAT_WS(',',merchants_name,apply_time,post_name,work_date,work_time,work_location,settlement_method,recruitment,audit_status,employees_name,status_time) LIKE '%${bxw_search_content}%'
+			</if>
+		</where>
+		<if test="sort!=null and sort!='' and order!=null and order!=''">
+			ORDER BY ${sort} ${order}
+		</if>
+		limit #{offset},#{rows}
+    </select>
+<!--查询招聘信息数量-->
+	<select id="findListCount"  resultType="int">
+		SELECT COUNT(*) FROM zx_recruitment_information_apply a left join zx_merchants_account  b on a.releases_user_id=b.user_id LEFT JOIN zx_station c on a.post_classification=c.station_id
+		<where>
+			1=1 and audit_status!='草稿'
+			<if test="bxw_approval_status!=null and bxw_approval_status!='全部'">
+				and audit_status=#{bxw_approval_status}
+			</if>
+			<if test="bxw_search_content!=null and bxw_search_content!=''">
+				AND CONCAT_WS(',',merchants_name,apply_time,post_name,work_date,work_time,work_location,settlement_method,recruitment,audit_status,auditor,status_time) LIKE '%${bxw_search_content}%'
+			</if>
+		</where>
+	</select>
+
+<!--查询详细信息-->
+	<select id="findApprovalByID" resultType="RecruitmentInfoApply">
+		SELECT * FROM zx_recruitment_information_apply a left join zx_merchants_account  b on a.releases_user_id=b.user_id 	LEFT JOIN zx_station c on a.post_classification=c.station_id LEFT JOIN zx_employee_basic_information d  ON a.auditor=d.employees_id WHERE recruiting_id=#{recruiting_id}
+	</select>
+
+<!--审核被拒-->
+	<update id="updateRefuse" >
+		UPDATE zx_recruitment_information_apply SET audit_status='已驳回',dismissed_reason=#{dismissed_reason},status_time=now(),auditor=#{employid} WHERE recruiting_id=${recruiting_id} and releases_user_id=${releases_user_id}
+	</update>
+	<!-- 审核通过 -->
+	<update id="updatePass" >
+		UPDATE zx_recruitment_information_apply SET audit_status='已通过',status_time=now(),auditor=#{employid} WHERE recruiting_id=${recruiting_id} and releases_user_id=${releases_user_id}
+	</update>
+	<!-- 审核通过后添加到正式表 -->
+	<insert id="addMessage">
+		INSERT INTO zx_recruitment_information (good_begin_time,good_end_time,recommend_begin_time,recommend_end_time,employed_number,recruiting_id,salary_treatment,releases_user_id,release_time,post_name,post_classification,details_page_category,work_date,work_time,work_location,position_longitude,position_latitude,work_content,settlement_method,commission,benefits,gender_requirements,recruitment,people_num,hiring_expiration_date,recruitment_status,view_count,collection_count,reported,city,p_station_id,up_down_frame,refresh_time,whether_on_homepage_guarantee,whether_on_homepage_recommend)
+		VALUES('1900-01-01','1900-01-01','1900-01-01','1900-01-01','0',#{recruiting_id},#{salary_treatment},#{releases_user_id},now(),#{post_name},#{post_classification},#{details_page_category},#{work_date},#{work_time},#{work_location},#{position_longitude},#{position_latitude},#{work_content},#{settlement_method},#{commission},#{benefits},#{gender_requirements},#{recruitment},#{people_num},#{hiring_expiration_date},'进行中',0,0,'否',#{city},222,'1',now(),'否','否')
+	</insert>
+
+</mapper>
