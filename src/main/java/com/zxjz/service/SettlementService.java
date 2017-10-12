@@ -1,6 +1,7 @@
 package com.zxjz.service;
 
 import com.zxjz.dto.excution.SettlementExcution;
+import com.zxjz.dto.in.SettlementAddFunctionDto;
 import com.zxjz.dto.in.SettlementDto;
 
 /**
@@ -34,6 +35,13 @@ public interface SettlementService {
      * @return
      */
     public SettlementExcution findMaxNumber(SettlementDto settlementDto);
+
+    /**
+     * 添加方法   事务控制
+     * @param settlementAddFunctionDto
+     * @return
+     */
+    public SettlementExcution saveFunction(SettlementAddFunctionDto settlementAddFunctionDto);
 
     /**
      * 查询商户名称
