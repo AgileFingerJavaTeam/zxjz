@@ -1,6 +1,10 @@
 package com.zxjz.controller;
 
 import com.zxjz.base.BaseController;
+import com.zxjz.base.BaseResult;
+import com.zxjz.dto.excution.BillListExcution;
+import com.zxjz.dto.excution.CheckBillExcution;
+import com.zxjz.dto.in.CheckBillDto;
 import com.zxjz.service.CheckBillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,9 +35,17 @@ public class CheckBillController extends BaseController {
         }
         return mv;
     }
-   /* @RequestMapping(value = "/findBills",
+   @RequestMapping(value = "/findBills",
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public*/
+    public BaseResult<CheckBillExcution> findBills(CheckBillDto checkBillDto){
+        try {
+            CheckBillExcution checkBillExcution = checkBillService.findBills(checkBillDto);
+            return new BaseResult<CheckBillExcution>(1,checkBillExcution);
+        }catch (Exception e){
+            logger.error(e.getMessage(), e);
+            return new BaseResult<CheckBillExcution>(0,e.getMessage());
+        }
+   }
 }
