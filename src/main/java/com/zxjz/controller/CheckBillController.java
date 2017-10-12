@@ -31,9 +31,9 @@ public class CheckBillController extends BaseController {
         }
         return mv;
     }
-    @RequestMapping(value = "/findBills",
+   /* @RequestMapping(value = "/findBills",
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public
+    public*/
 }
