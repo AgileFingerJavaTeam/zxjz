@@ -4,6 +4,8 @@ import com.zxjz.entity.JobDetails;
 import com.zxjz.entity.SystemParameter;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface SystemParameterDao {
     /**
      * 通过参数名去查询参数信息
@@ -51,4 +53,46 @@ public interface SystemParameterDao {
      * @return
      */
     public JobDetails findOtherJobDetail(@Param("recruiting_id") int recruiting_id, @Param("user_id") int user_id);
+
+    /**
+     * 查询系统参数
+     * @param rows
+     * @param offset
+     * @return
+     */
+    public List<SystemParameter> findSystemPatameter(@Param("rows") int rows, @Param("offset") int offset, @Param("srt_search_content") String srt_search_content);
+
+    /**
+     * 新增一条系统参数
+     * @param serial_number
+     * @param parameter_name
+     * @param parameter_description
+     * @param parameter
+     * @return
+     */
+    public int addSystemParameter(@Param("serial_number")String serial_number,@Param("parameter_name")String parameter_name,@Param("parameter_description")String parameter_description,@Param("parameter")String parameter);
+    /**
+     * 通过Id查询当前参数信息
+     * @param id
+     * @return
+     */
+    public SystemParameter findSystemParameterInfoById(@Param("id")int id);
+
+    /**
+     * 编辑一条系统参数
+     * @param parameter_id
+     * @param serial_number
+     * @param parameter_name
+     * @param parameter_description
+     * @param parameter
+     * @return
+     */
+    public int updateSystemParameter(@Param("parameter_id")int parameter_id,@Param("serial_number")String serial_number,@Param("parameter_name")String parameter_name,@Param("parameter_description")String parameter_description,@Param("parameter")String parameter);
+
+    /**
+     * 删除一条系统参数
+     * @param parameter_id
+     * @return
+     */
+    public int delSystemParameter(@Param("parameter_id")int parameter_id);
 }

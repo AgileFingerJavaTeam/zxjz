@@ -1,0 +1,99 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.MerchantAccountDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+
+    <!--郭阳  手机密码登录接口-->
+    <select id="getMerchantAccountInfo" resultType="MerchantAccountInfo">
+        SELECT * FROM  `zx_user_count_info` user
+        LEFT JOIN `zx_merchants_account` mer ON user.user_id=mer.user_id
+        WHERE `bound_phone`=#{phone} AND `phone_password`=#{password}
+    </select>
+
+    <!--郭阳  验证码登录接口-->
+    <select id="getUserByPhone"  resultType="MerchantAccountInfo">
+        SELECT * FROM `zx_user_count_info` user
+        LEFT JOIN `zx_merchants_account` mer ON user.user_id=mer.user_id
+        WHERE `bound_phone`=#{phone}
+    </select>
+
+    <!--郭阳 查询验证码-->
+    <select id="getVerifyCode" resultType="String">
+        SELECT verify_code FROM zx_verify_code WHERE phone=#{phone}
+    </select>
+
+    <!--郭阳 微信登录接口-->
+    <select id="getUserByWechatID" resultType="MerchantAccountInfo">
+        SELECT * FROM  `zx_user_count_info` user
+        LEFT JOIN `zx_merchants_account` mer ON mer.user_id=user.user_id
+        WHERE user.wechat=#{wechat_id}
+    </select>
+
+    <!--郭阳  微信注册-->
+    <insert id="insertUserCountByWechat">
+        INSERT INTO zx_user_count_info
+        (wechat,portrait_url,registration_time,user_type) VALUES (#{wechat_id},#{headimgurl},NOW(),'商户')
+    </insert>
+
+    <!--郭阳 QQ登录接口-->
+    <select id="getUserByQQID" resultType="MerchantAccountInfo">
+        SELECT * FROM  `zx_user_count_info` user
+        LEFT JOIN `zx_merchants_account` mer ON mer.user_id=user.user_id
+        WHERE user.qq=#{qq_id}
+    </select>
+
+    <!--郭阳  qq注册-->
+    <insert id="insertUserCountByQQ">
+        INSERT INTO zx_user_count_info
+        (qq,portrait_url,registration_time,user_type) VALUES (#{qq_id},#{headimgurl},NOW(),'商户')
+    </insert>
+
+    <!--郭阳  验证码登录接口--><!--查询验证码↑-->
+    <select id="getRegistration" resultType="MerchantAccountInfo">
+        SELECT * FROM `zx_user_count_info` user
+        LEFT JOIN `zx_merchants_account` mer on user.user_id=mer.user_id
+        WHERE `bound_phone`=#{phone}
+    </select>
+
+    <!--郭阳  手机号注册-->
+    <insert id="insertUserCount">
+        INSERT INTO zx_user_count_info
+        (bound_phone,phone_password,registration_time,user_type) VALUES (#{phone},#{password},NOW(),'商户')
+    </insert>
+
+    <!--郭阳  找回密码接口-->
+    <update id="updataPwdByPhone">
+        UPDATE zx_user_count_info SET phone_password=#{newPwd} WHERE `bound_phone`=#{phone}
+    </update>
+
+    <!--郭阳  根据Id查找用户-->
+    <select id="getUserById" resultType="MerchantAccountInfo">
+        SELECT * FROM `zx_user_count_info` user
+        LEFT JOIN `zx_merchants_account` mer on user.user_id=mer.user_id
+        WHERE user.user_id=#{user_id}
+    </select>
+
+    <!--郭阳  更改密码接口-->
+    <update id="updatePwdById">
+        UPDATE zx_user_count_info SET phone_password=#{newPwd} WHERE `user_id`=#{user_id}
+    </update>
+
+    <!--郭阳   根据Id查找审核状态-->
+    <select id="getApprovalStatusById" resultType="MerchantApprovalStatusInfo">
+        SELECT * FROM zx_merchants_approve a
+        LEFT JOIN zx_merchants_money_basic mmb ON  a.user_id= mmb.user_id
+        LEFT JOIN zx_user_count_info uci ON  a.user_id= uci.user_id
+        WHERE a.user_id=#{user_id} AND apply_time=(SELECT MAX(apply_time) FROM zx_merchants_approve WHERE zx_merchants_approve.user_id=#{user_id}) limit 1
+    </select>
+
+    <!--郭阳   插入审核信息-->
+    <insert id="insertApprovalInfo">
+        INSERT zx_merchants_approve (user_id,approval_num,apply_time,logo_url,company_name,industry_involved,company_address,longitude,latitude,head,job,phone,url,STATUS)
+        VALUES (#{user_id},
+        (SELECT approval_num FROM (SELECT CASE MAX(approval_num) IS NULL WHEN 1 THEN 1 ELSE (MAX(approval_num)+1) END approval_num FROM zx_merchants_approve WHERE user_id=#{user_id}) temp),
+        NOW(),#{logo_url},#{company_name},#{industry_involved},#{company_address},#{longitude},#{latitude},#{head},#{job},#{phone},#{url},'等待审核');
+    </insert>
+</mapper>

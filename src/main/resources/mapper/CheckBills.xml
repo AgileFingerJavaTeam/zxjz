@@ -1,0 +1,50 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.CheckBillDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+  <!--查询商户账单信息-->
+    <select id="findBillsInfo"  resultType="MerchantsBillsInfo">
+        SELECT *
+        FROM zx_merchant_funds_current_account mfca
+        LEFT JOIN zx_merchants_account ma
+        ON mfca.user_id = ma.user_id
+        WHERE mfca.user_id=#{merId}
+    </select>
+    <!--查询商户账单条数-->
+    <select id="findMerBillsCount" resultType="int">
+        select count(*)
+        FROM  zx_merchant_funds_current_account
+        <where>
+            1=1
+            <if test="q!=null and q!=''">
+                and merchants_name like '%${q}%'
+            </if>
+        </where>
+    </select>
+    <!--查询搜索时商户名称-->
+    <select id="findMerName"  resultType="MerchantsBillsInfo">
+        SELECT user_id,merchants_name
+        FROM zx_merchants_account
+        <where>
+            1=1
+            <if test="q!=null and q!=''">
+                and merchants_name like '%${q}%'
+            </if>
+        </where>
+        limit #{offset},#{rows}
+    </select>
+    <!--查询搜索时商户数量-->
+    <select id="findMerCount" resultType="int">
+        SELECT count(*)
+        FROM zx_merchants_account
+        <where>
+            1=1
+            <if test="q!=null and q!=''">
+                and merchants_name like '%${q}%'
+            </if>
+        </where>
+    </select>
+</mapper>

@@ -37,4 +37,11 @@ public interface MerchantsInfoService {
      * @return
      */
     public MerchantsUpgradeExcution upgradeAccount(MerchantsUpgradeDto merchantsUpgradDto);
+
+    /**
+     * 查询申请VIP商户申请信息
+     * @param merchantsUpgradeDto
+     * @return
+     */
+    public MerchantsUpgradeExcution showAuditPage(MerchantsUpgradeDto merchantsUpgradeDto);
 }
