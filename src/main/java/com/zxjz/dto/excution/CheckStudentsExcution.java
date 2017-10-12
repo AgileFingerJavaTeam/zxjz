@@ -9,6 +9,7 @@ public class CheckStudentsExcution {
     private int code;
     private String codeInfo;
     private List<CheckStudentsInfo> checkStudentsInfoList;
+    private CheckStudentsInfo checkStudentsInfo;
 
     public List<CheckStudentsInfo> getCheckStudentsInfoList() {
         return checkStudentsInfoList;
@@ -42,6 +43,12 @@ public class CheckStudentsExcution {
 
     public CheckStudentsExcution(CheckStudentsEnum checkStudentsEnum,List<CheckStudentsInfo> checkStudentsInfoList ) {
         this.checkStudentsInfoList = checkStudentsInfoList;
+        this.code = checkStudentsEnum.getCode();
+        this.codeInfo = checkStudentsEnum.getCodeInfo();
+    }
+
+    public CheckStudentsExcution(CheckStudentsEnum checkStudentsEnum,CheckStudentsInfo checkStudentsInfo ) {
+        this.checkStudentsInfo = checkStudentsInfo;
         this.code = checkStudentsEnum.getCode();
         this.codeInfo = checkStudentsEnum.getCodeInfo();
     }

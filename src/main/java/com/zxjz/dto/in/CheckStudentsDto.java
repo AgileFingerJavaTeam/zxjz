@@ -7,6 +7,15 @@ public class CheckStudentsDto {
     private int rows;
     private String srt_filtrate;
     private int check_state;
+    private String stat_res;
+
+    public String getStat_res() {
+        return stat_res;
+    }
+
+    public void setStat_res(String stat_res) {
+        this.stat_res = stat_res;
+    }
 
     public int getCheck_state() {
         return check_state;
@@ -65,6 +74,7 @@ public class CheckStudentsDto {
                 ", rows=" + rows +
                 ", srt_filtrate='" + srt_filtrate + '\'' +
                 ", check_state=" + check_state +
+                ", stat_res='" + stat_res + '\'' +
                 '}';
     }
 }

@@ -13,4 +13,18 @@ public interface CheckStudentsService {
      * @return
      */
     public CheckStudentsExcution findStudentsInfoList (CheckStudentsDto checkStudentsDto);
+
+    /**
+     * 查询当前审核的学生信息
+     * @param checkStudentsDto
+     * @return
+     */
+    public CheckStudentsExcution findStudentsInfoById (CheckStudentsDto checkStudentsDto);
+
+    /**
+     * 提交审核
+     * @param checkStudentsDto
+     * @return
+     */
+    public CheckStudentsExcution submitAudit(CheckStudentsDto checkStudentsDto);
 }
