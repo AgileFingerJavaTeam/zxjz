@@ -1,13 +1,9 @@
 package com.zxjz.controller;
 
 import com.zxjz.base.BaseController;
-import com.zxjz.base.BaseResult;
 import com.zxjz.dto.excution.KeywordSearchExcution;
-import com.zxjz.dto.excution.ManagementPartExcuton;
 import com.zxjz.dto.in.KeywordSearchDto;
-import com.zxjz.dto.in.ManagementPartDto;
 import com.zxjz.service.KeywordSearchService;
-import com.zxjz.service.ManagementPartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
