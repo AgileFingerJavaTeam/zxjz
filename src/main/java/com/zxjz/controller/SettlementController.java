@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,7 +32,9 @@ public class SettlementController extends BaseController{
      * 显示页面
      * @return
      */
-    @RequestMapping(value = "/SettlementJsp")
+    @RequestMapping(value = "/SettlementJsp",
+            method = RequestMethod.POST,
+            produces = {"application/json;charset=UTF-8"})
     public ModelAndView showCarousePage() {
         ModelAndView mv = new ModelAndView();
         try {
@@ -47,7 +50,9 @@ public class SettlementController extends BaseController{
      * @param settlementDto
      * @return
      */
-    @RequestMapping(value = "/SettlementJspList", produces = "text/json;charset=UTF-8")
+    @RequestMapping(value = "/SettlementJspList",
+            method = RequestMethod.POST,
+            produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public BaseResult<SettlementExcution> SettlementJspList(@RequestBody SettlementDto settlementDto){
         //参数验空
@@ -63,8 +68,10 @@ public class SettlementController extends BaseController{
      /*
 	  * 模糊查询
 	  */
-    @RequestMapping(value = "/search", produces = "text/json;charset=UTF-8")
-    @ResponseBody
+     @RequestMapping(value = "/search",
+             method = RequestMethod.POST,
+             produces = {"application/json;charset=UTF-8"})
+     @ResponseBody
     public BaseResult<SettlementExcution> search(@RequestBody SettlementDto settlementDto){
         //参数验空
         try {
@@ -80,7 +87,9 @@ public class SettlementController extends BaseController{
      * 显示添加页面
      * @return
      */
-    @RequestMapping(value ="/add")
+    @RequestMapping(value = "/add",
+            method = RequestMethod.POST,
+            produces = {"application/json;charset=UTF-8"})
     public ModelAndView Add(){
         ModelAndView mv = new ModelAndView();
         HttpSession session = this.getRequest().getSession();
@@ -101,7 +110,9 @@ public class SettlementController extends BaseController{
      * 显示查看页面数据
      * @return
      */
-    @RequestMapping(value ="/find")
+    @RequestMapping(value = "/find",
+            method = RequestMethod.POST,
+            produces = {"application/json;charset=UTF-8"})
     public ModelAndView FindData(SettlementDto settlementDto){
         ModelAndView mv = new ModelAndView();
       try {
@@ -119,7 +130,9 @@ public class SettlementController extends BaseController{
      * AJAX显示
      * @return
      */
-    @RequestMapping(value ="/add1")
+    @RequestMapping(value = "/add1",
+            method = RequestMethod.POST,
+            produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public BaseResult<SettlementExcution> add1(SettlementDto settlementDto){
         //参数验空
@@ -137,7 +150,9 @@ public class SettlementController extends BaseController{
      * 添加方法
      * @return
      */
-    @RequestMapping(value ="/addFunction")
+    @RequestMapping(value = "/addFunction",
+            method = RequestMethod.POST,
+            produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public BaseResult<SettlementExcution> addFunction(@RequestBody SettlementAddFunctionDto settlementAddFunctionDto) {
         //参数验空
@@ -162,7 +177,9 @@ public class SettlementController extends BaseController{
      *
      * @return
      */
-    @RequestMapping(value = "/getMerchantsName", produces = "text/json;charset=UTF-8")
+    @RequestMapping(value = "/getMerchantsName",
+            method = RequestMethod.POST,
+            produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public BaseResult<SettlementExcution> getMerchantsName(SettlementDto settlementDto){
         //参数验空

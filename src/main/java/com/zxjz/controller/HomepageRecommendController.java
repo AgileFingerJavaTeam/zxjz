@@ -65,7 +65,10 @@ public class HomepageRecommendController extends BaseController {
      *
      * @return
      */
-    @RequestMapping(value = "/showWeatherHomepageRecommend")
+    @RequestMapping(value = "/showWeatherHomepageRecommend",
+            method = RequestMethod.POST,
+            produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
     public ModelAndView showDelVIPMerchant(SecurityPositionDto securityPositionDto) {
         ModelAndView mv = new ModelAndView();
         try {
@@ -84,7 +87,10 @@ public class HomepageRecommendController extends BaseController {
      *
      * @return
      */
-    @RequestMapping(value = "/showDowmHomepageRecommend")
+    @RequestMapping(value = "/showDowmHomepageRecommend",
+            method = RequestMethod.POST,
+            produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
     public ModelAndView showDowmHomepageRecommend(SecurityPositionDto securityPositionDto) {
         ModelAndView mv = new ModelAndView();
         try {
@@ -104,7 +110,7 @@ public class HomepageRecommendController extends BaseController {
      */
     @RequestMapping(value ="/upOrDownHomepageRecommend", produces = "text/json;charset=UTF-8")
     @ResponseBody
-    public BaseResult<HomepageRecommendExcution> upOrDownHomepageRecommend(HomepageRecommendDto homepageRecommendDto){
+    public BaseResult<HomepageRecommendExcution> upOrDownHomepageRecommend(@RequestBody HomepageRecommendDto homepageRecommendDto){
         //参数验空
         try {
             HomepageRecommendExcution homepageRecommendExcution = homepageRecommendService.updateOrHomepageRecommend(homepageRecommendDto);
@@ -123,7 +129,7 @@ public class HomepageRecommendController extends BaseController {
      */
     @RequestMapping(value ="/downHomepageRecommend", produces = "text/json;charset=UTF-8")
     @ResponseBody
-    public BaseResult<HomepageRecommendExcution> downHomepageRecommend(HomepageRecommendDto homepageRecommendDto){
+    public BaseResult<HomepageRecommendExcution> downHomepageRecommend(@RequestBody HomepageRecommendDto homepageRecommendDto){
         //参数验空
         try {
             HomepageRecommendExcution homepageRecommendExcution = homepageRecommendService.updateCloseHomepageRecommend(homepageRecommendDto);

@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Created by Administrator on 2017/10/11 0011.
  */
 @Controller
+@RequestMapping("/homepageGuarantee")
 public class HomepageGuaranteeController extends BaseController {
     @Autowired
     private SecurityPositionService securityPositionService;
@@ -62,9 +63,11 @@ public class HomepageGuaranteeController extends BaseController {
      * 改变首页担保状态
      * @return
      */
-    @RequestMapping(value ="/upOrDownHomepageGuarantee", produces = "text/json;charset=UTF-8")
+    @RequestMapping(value = "/upOrDownHomepageGuarantee",
+            method = RequestMethod.POST,
+            produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<HomepageGuaranteeExcution> upOrDownHomepageGuarantee(HomepageGuaranteeDto homepageGuaranteeDto){
+    public BaseResult<HomepageGuaranteeExcution> upOrDownHomepageGuarantee(@RequestBody HomepageGuaranteeDto homepageGuaranteeDto){
         //参数验空
         try {
             HomepageGuaranteeExcution homepageGuaranteeExcution = homepageGuaranteeService.updateOrDownHomepageGuarantee(homepageGuaranteeDto);
@@ -83,9 +86,11 @@ public class HomepageGuaranteeController extends BaseController {
      * 改变首页担保状态
      * @return
      */
-    @RequestMapping(value ="/downHomepageGuarantee", produces = "text/json;charset=UTF-8")
+    @RequestMapping(value = "/downHomepageGuarantee",
+            method = RequestMethod.POST,
+            produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<HomepageGuaranteeExcution> downHomepageGuarantee(HomepageGuaranteeDto homepageGuaranteeDto){
+    public BaseResult<HomepageGuaranteeExcution> downHomepageGuarantee(@RequestBody HomepageGuaranteeDto homepageGuaranteeDto){
         //参数验空
         try {
             HomepageGuaranteeExcution homepageGuaranteeExcution = homepageGuaranteeService.updatedownHomepageGuarantee(homepageGuaranteeDto);

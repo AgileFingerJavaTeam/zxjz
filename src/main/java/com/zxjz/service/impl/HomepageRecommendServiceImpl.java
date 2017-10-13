@@ -27,8 +27,8 @@ public class HomepageRecommendServiceImpl implements HomepageRecommendService {
                   String hzn_recommend_begin_time = homepageRecommendDto.getHzn_recommend_begin_time();
                   String hzn_recommend_end_time =  homepageRecommendDto.getHzn_recommend_end_time();
             try{
-                  int flag = (int)homepageRecommendDao.updateORHomepageRecommend(recruiting_id,hzn_recommend_begin_time,hzn_recommend_end_time);
-                  if (flag>0) {
+                  int flag = homepageRecommendDao.updateORHomepageRecommend(recruiting_id,hzn_recommend_begin_time,hzn_recommend_end_time);
+                  if (flag > 0) {
                         return new HomepageRecommendExcution(HomepageRecommendEnum.UPDATE_JOB_STATUS_SUCCESS);
                   }else {
                         throw new UpdateInnerErrorException("更改失败");
@@ -45,7 +45,7 @@ public class HomepageRecommendServiceImpl implements HomepageRecommendService {
     public HomepageRecommendExcution updateCloseHomepageRecommend(HomepageRecommendDto homepageRecommendDto) {
         int recruiting_id = homepageRecommendDto.getRecruiting_id();
         try{
-            int flag = (int)homepageRecommendDao.updateDownHomepageRecommend(recruiting_id);
+            int flag = homepageRecommendDao.updateDownHomepageRecommend(recruiting_id);
             if (flag>0) {
                 return new HomepageRecommendExcution(HomepageRecommendEnum.UPDATE_JOB_STATUS_SUCCESS);
             }else {

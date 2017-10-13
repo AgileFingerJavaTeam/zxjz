@@ -46,7 +46,6 @@ public class SecurityPositionServiceImpl implements SecurityPositionService {
             int rows=securityPositionDto.getRows();
             int offset=(page-1)*rows;
         try{
-
             List<AtCollection> list = securityPositionDao.findListCollection(offset,rows);
             int total = securityPositionDao.findSecurityPositionListCount(StatusSearch,search);
             SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
@@ -526,7 +525,7 @@ public class SecurityPositionServiceImpl implements SecurityPositionService {
 
     public SecurityPositionExcution findStatusSearch(SecurityPositionDto securityPositionDto) {
             String StatusSearch = securityPositionDto.getStatusSearch();
-        String search = securityPositionDto.getSearch();
+            String search = securityPositionDto.getSearch();
             int page = securityPositionDto.getPage();
             int rows = securityPositionDto.getRows();
         try{

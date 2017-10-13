@@ -112,7 +112,7 @@ public class SettlementServiceImpl implements SettlementService {
                    double settlement_amount = settlementAddFunctionDto.getSettlement_amount();
                    String instructions = settlementAddFunctionDto.getInstructions();
                    int classification_of_settlement_expenses = settlementAddFunctionDto.getClassification_of_settlement_expenses();
-                   int employees_id = settlementAddFunctionDto.getEmployees_id();
+                       int employees_id = settlementAddFunctionDto.getEmployees_id();
           try {   //事务1
                         int settlement = settlementDao.insertPlatformBalanceSheet(user_id, withdrawal_serial_number, classification_of_settlement_expenses, settlement_amount, instructions, employees_id);
                     if(settlement <= 0){

@@ -1,5 +1,6 @@
 package com.zxjz.dao;
 
+import com.zxjz.entity.AtCollection;
 import com.zxjz.entity.MerchantAccount;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,8 +18,17 @@ import java.util.Map;
 //告诉junit spring的配置文件
 @ContextConfiguration({"classpath:spring/spring-dao.xml"})
 public class SecurityPositionDaoTest {
+
+
     @Autowired
     private SecurityPositionDao securityPositionDao;
+    @Test
+    public void findListCollection() throws Exception {
+
+        List<AtCollection> list = securityPositionDao.findListCollection(0,5);
+        System.out.println("--------------");
+        System.out.println(list);
+    }
     @Test
     public void findListMarchantName() throws Exception {
          List<MerchantAccount> list = securityPositionDao.findListMarchantName();

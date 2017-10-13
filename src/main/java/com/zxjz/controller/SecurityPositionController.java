@@ -239,7 +239,9 @@ public class SecurityPositionController extends BaseController{
     /*
 	 * 模糊查询
 	 */
-    @RequestMapping(value = "/search", produces = "text/json;charset=UTF-8")
+    @RequestMapping(value = "/search",
+            method = RequestMethod.POST,
+            produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public BaseResult<SecurityPositionExcution> search(@RequestBody SecurityPositionDto securityPositionDto) {
         //参数验空
@@ -255,7 +257,9 @@ public class SecurityPositionController extends BaseController{
     /*
      * 状态筛选
      */
-    @RequestMapping(value = "/StatusSearch", produces = "text/json;charset=UTF-8")
+    @RequestMapping(value = "/StatusSearch",
+            method = RequestMethod.POST,
+            produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public BaseResult<SecurityPositionExcution> StatusSearch(@RequestBody SecurityPositionDto securityPositionDto) {
         //参数验空
@@ -270,7 +274,9 @@ public class SecurityPositionController extends BaseController{
     /*
      * 状态筛选
      */
-    @RequestMapping(value = "/StatusSearch2", produces = "text/json;charset=UTF-8")
+    @RequestMapping(value = "/StatusSearch2",
+            method = RequestMethod.POST,
+            produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public BaseResult<SecurityPositionExcution> StatusSearch2(@RequestBody SecurityPositionDto securityPositionDto) {
         //参数验空

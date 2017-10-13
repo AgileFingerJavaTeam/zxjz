@@ -1,6 +1,4 @@
 package com.zxjz.dao;
-
-import com.zxjz.entity.AtCollection;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -16,5 +14,5 @@ public interface HomepageRecommendDao {
      */
      public int updateORHomepageRecommend (@Param("recruiting_id")int recruiting_id,@Param("hzn_recommend_begin_time")String hzn_recommend_begin_time,@Param("hzn_recommend_end_time")String hzn_recommend_end_time);
 
-     public int updateDownHomepageRecommend (int recruiting_id);
+     public int updateDownHomepageRecommend (@Param("recruiting_id") int recruiting_id);
 }
