@@ -7,6 +7,7 @@ import com.zxjz.dto.in.PaypsdDto;
 import com.zxjz.dto.in.RecruitmentDto;
 import com.zxjz.enums.RecruitmentEnum;
 import com.zxjz.exception.db.InsertInnerErrorException;
+import com.zxjz.exception.db.QueryInnerErrorException;
 import com.zxjz.exception.db.UpdateInnerErrorException;
 import com.zxjz.service.RecruitmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * Created by Administrator on 2017/9/29 0029.
  */
 @Controller
-@RequestMapping("recruitmentmsgApi")
+@RequestMapping("/recruitmentmsgApi")
 public class RecruitmentController extends BaseController {
     @Autowired
     private RecruitmentService recruitmentService;
@@ -38,7 +39,10 @@ public class RecruitmentController extends BaseController {
         try {
             RecruitmentExcution recruitmentExcution = recruitmentService.tradingRecord(paypsdDto);
             return new BaseResult<RecruitmentExcution>(1,recruitmentExcution);
-        } catch (Exception e) {
+        } catch (QueryInnerErrorException q){
+            RecruitmentExcution recruitmentExcution = new RecruitmentExcution(RecruitmentEnum.FAIL);
+            return new BaseResult<RecruitmentExcution>(0,recruitmentExcution);
+        }catch (Exception e) {
             logger.error(e.getMessage(), e);
             return new BaseResult<RecruitmentExcution>(0,e.getMessage());
         }

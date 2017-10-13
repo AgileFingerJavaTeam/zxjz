@@ -28,8 +28,8 @@
     </update>-->
     <insert id="addPsostJob">
         INSERT INTO `zx_recruitment_information_apply`
-	           (audit_status,apply_time,releases_user_id,post_name,settlement_method,salary_treatment,commission,benefits,position_longitude,position_latitude,work_location,work_date,work_time,recruitment,gender_requirements,work_content,hiring_expiration_date,leader,leader_phone,post_classification,apply_num,city)
-	    VALUES ('待审核',now(),#{user_id},#{post_name},#{settlement_method},#{salary_treatment},#{commission},#{benefits},#{position_longitude},#{position_latitude},#{work_location},#{work_date},#{work_time},#{recruitment},#{gender_requirements},#{work_content},#{hiring_expiration_date},#{leader},#{leader_phone},#{post_classification},'1',#{city})
+	           (details_page_category,audit_status,apply_time,releases_user_id,post_name,settlement_method,salary_treatment,commission,benefits,position_longitude,position_latitude,work_location,work_date,work_time,recruitment,gender_requirements,work_content,hiring_expiration_date,leader,leader_phone,post_classification,apply_num,city)
+	    VALUES ('普通','待审核',now(),#{user_id},#{post_name},#{settlement_method},#{salary_treatment},#{commission},#{benefits},#{position_longitude},#{position_latitude},#{work_location},#{work_date},#{work_time},#{recruitment},#{gender_requirements},#{work_content},#{hiring_expiration_date},#{leader},#{leader_phone},#{post_classification},'1',#{city})
     </insert>
     <select id="findRecruID" resultType="Recruitment">
         SELECT *
@@ -52,6 +52,11 @@
         FROM zx_recruitment_information_apply
         WHERE recruiting_id=#{recruiting_id}
     </select>
+    <select id="status" resultType="String">
+        SELECT audit_status
+        FROM zx_recruitment_information_apply
+        WHERE recruiting_id=#{recruiting_id}
+    </select>
     <update id="updateStatus">
         UPDATE zx_recruitment_information_apply
         SET apply_time=now(), post_name=#{post_name}, post_classification=#{post_classification},
@@ -63,7 +68,7 @@
         audit_status = '待审核' ,leader=#{leader}, leader_phone=#{leader_phone}, city=#{city}
         WHERE recruiting_id = #{recruiting_id}
     </update>
-    <update id="updataStatusC" >
+    <update id="updateStatusC" >
         UPDATE zx_recruitment_information_apply
         SET apply_time=now(), post_name=#{post_name}, post_classification=#{post_classification},
         work_date=#{work_date}, work_time=#{work_time}, work_location=#{work_location}, position_longitude=#{position_longitude},
@@ -87,7 +92,11 @@
     <update id="updatepostjob">
         UPDATE  zx_recruitment_information set recruitment_status='已经结束' where recruiting_id=#{recruiting_id}
     </update>
-
+    <insert id="insertData">
+        INSERT INTO `zx_recruitment_information_apply`
+        (audit_status,apply_time,releases_user_id,post_name,settlement_method,salary_treatment,commission,benefits,position_longitude,position_latitude,work_location,work_date,work_time,recruitment,gender_requirements,work_content,hiring_expiration_date,leader,leader_phone,post_classification,apply_num,city)
+        values ('待审核',now(),#{user_id},#{post_name},#{settlement_method},#{salary_treatment},#{commission},#{benefits},#{position_longitude},#{position_latitude},#{work_location},#{work_date},#{work_time},#{recruitment},#{gender_requirements},#{work_content},#{hiring_expiration_date},#{leader},#{leader_phone},#{post_classification},'1',#{city})
+    </insert>
 
     <!-- 判断是否设置支付密码 -->
     <select id="findIsPayPswByUserId" parameterType="int" resultType="IsSetPassword">
@@ -156,6 +165,6 @@
         c.recruiting_id=a.recruit_id
         left join zx_cstudents_personal_info d ON
         a.college_user_id=d.user_id
-        where a.college_user_id=#{student_user_id} and user_id=#{user_id}
+        where a.college_user_id=#{student_user_id} and a.merchant_user_id=#{user_id}
     </select>
 </mapper>

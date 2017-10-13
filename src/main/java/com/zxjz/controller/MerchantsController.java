@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping(value = "/employer")
@@ -136,4 +137,42 @@ public class MerchantsController extends BaseController{
             return new BaseResult<MerchantsAffirmStudentBreakPromiseExcution>(0,e.getMessage());
         }
     }
+
+    /**
+     * 显示商户申请VIP页面
+     * @return
+     */
+    @RequestMapping(value = "/showApplyVipPage",
+            method = RequestMethod.POST,
+            produces = {"application/json;charset=UTF-8"})
+    public ModelAndView showApplyVipPage(){
+        ModelAndView mv = new ModelAndView();
+        try {
+            mv.setViewName("applyVIP/showApplyVipPage");
+        }catch (Exception e){
+            logger.error(e.getMessage(),e);
+        }
+        return mv;
+    }
+
+    /**
+     * 显示审核页面
+     * @param merchantsUpgradeDto
+     * @return
+     */
+    @RequestMapping(value = "/showAuditPage",
+            method = RequestMethod.POST,
+            produces = {"application/json;charset=UTF-8"})
+    public ModelAndView showAuditPage(@RequestBody MerchantsUpgradeDto merchantsUpgradeDto){
+        ModelAndView mv = new ModelAndView();
+        try {
+            MerchantsUpgradeExcution applyInfo = merchantsInfoService.showAuditPage(merchantsUpgradeDto);
+            mv.addObject("data1", applyInfo);
+            mv.setViewName("applyVIP/AuditPage");
+        }catch (Exception e){
+            logger.error(e.getMessage(),e);
+        }
+        return mv;
+    }
+
 }
