@@ -26,7 +26,7 @@ public class StuEvaDetailsController extends BaseController{
      * @return
      */
     @RequestMapping(value = "postStuGenEvaluation",
-            method = RequestMethod.GET,
+            method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public BaseResult<StuPersonalExcution> postStuGenEvaluation(@RequestBody StuPersonalDto stuPersonalDto){

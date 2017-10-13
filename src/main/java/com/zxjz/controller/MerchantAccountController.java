@@ -9,6 +9,7 @@ import com.zxjz.dto.in.*;
 import com.zxjz.service.MerchantAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,10 +26,10 @@ public class MerchantAccountController extends BaseController{
      * @return
      */
     @RequestMapping(value = "loginPwd",
-            method = RequestMethod.GET,
+            method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<MerchantAccountExcution> getBills(MerchantAccountDto merchantAccountDto){
+    public BaseResult<MerchantAccountExcution> getBills(@RequestBody MerchantAccountDto merchantAccountDto){
         //参数验空
         try {
             MerchantAccountExcution findMerchantAccount = merchantAccountService.findMerchantAccountinfo(merchantAccountDto);
@@ -45,10 +46,10 @@ public class MerchantAccountController extends BaseController{
      * @return
      */
     @RequestMapping(value = "loginVerifyCode",
-            method = RequestMethod.GET,
+            method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<MerchantAccountExcution> loginVerifyCode(MerchantAccountDto merchantAccountDto){
+    public BaseResult<MerchantAccountExcution> loginVerifyCode(@RequestBody MerchantAccountDto merchantAccountDto){
         //参数验空
         try {
             MerchantAccountExcution findUserByPhone = merchantAccountService.findUserByPhone(merchantAccountDto);
@@ -68,7 +69,7 @@ public class MerchantAccountController extends BaseController{
             method = RequestMethod.GET,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<MerchantAccountExcution> loginWechat(UserByWechatIDDto userByWechatIDDto){
+    public BaseResult<MerchantAccountExcution> loginWechat(@RequestBody UserByWechatIDDto userByWechatIDDto){
         //参数验空
         try {
             MerchantAccountExcution findUserByWechatID = merchantAccountService.findUserByWechatID(userByWechatIDDto);
@@ -85,10 +86,10 @@ public class MerchantAccountController extends BaseController{
      * @return
      */
     @RequestMapping(value = "loginQQ",
-            method = RequestMethod.GET,
+            method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<MerchantAccountExcution> loginQQ(UserByQQIDDto userByQQIDDto){
+    public BaseResult<MerchantAccountExcution> loginQQ(@RequestBody UserByQQIDDto userByQQIDDto){
         //参数验空
         try {
             MerchantAccountExcution findUserByQQID = merchantAccountService.findUserByQQID(userByQQIDDto);
@@ -105,10 +106,10 @@ public class MerchantAccountController extends BaseController{
      * @return
      */
     @RequestMapping(value = "register",
-            method = RequestMethod.GET,
+            method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<MerchantAccountExcution> register(MerchantAccountDto merchantAccountDto){
+    public BaseResult<MerchantAccountExcution> register(@RequestBody MerchantAccountDto merchantAccountDto){
         //参数验空
         try {
             MerchantAccountExcution findRegistration = merchantAccountService.findRegistration(merchantAccountDto);
@@ -125,10 +126,10 @@ public class MerchantAccountController extends BaseController{
      * @return
      */
     @RequestMapping(value = "backPwd",
-            method = RequestMethod.GET,
+            method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<UpdatePwdByPhoneExcution> backPwd(MerchantAccountDto merchantAccountDto){
+    public BaseResult<UpdatePwdByPhoneExcution> backPwd(@RequestBody MerchantAccountDto merchantAccountDto){
         //参数验空
         try {
             UpdatePwdByPhoneExcution updatePwdByPhone = merchantAccountService.updatePwdByPhone(merchantAccountDto);
@@ -145,10 +146,10 @@ public class MerchantAccountController extends BaseController{
      * @return
      */
     @RequestMapping(value = "setPwd",
-            method = RequestMethod.GET,
+            method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<MerchantAccountExcution> setPwd(UserByIdDto userByIdDto){
+    public BaseResult<MerchantAccountExcution> setPwd(@RequestBody UserByIdDto userByIdDto){
         //参数验空
         try {
             MerchantAccountExcution findUserById = merchantAccountService.findUserById(userByIdDto);
@@ -165,10 +166,10 @@ public class MerchantAccountController extends BaseController{
      * @return
      */
     @RequestMapping(value = "findInfoById",
-            method = RequestMethod.GET,
+            method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<MerchantAccountExcution> findInfoById(UserByIdDto userByIdDto){
+    public BaseResult<MerchantAccountExcution> findInfoById(@RequestBody UserByIdDto userByIdDto){
         //参数验空
         try {
             MerchantAccountExcution getUserById = merchantAccountService.getUserById(userByIdDto);
@@ -185,10 +186,10 @@ public class MerchantAccountController extends BaseController{
      * @return
      */
     @RequestMapping(value = "checkApprovalStatus",
-            method = RequestMethod.GET,
+            method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<MerchantApprovalStatusExcution> checkApprovalStatus(MerchantApprovalStatusDto merchantApprovalStatusDto){
+    public BaseResult<MerchantApprovalStatusExcution> checkApprovalStatus(@RequestBody MerchantApprovalStatusDto merchantApprovalStatusDto){
         //参数验空
         try {
             MerchantApprovalStatusExcution findApprovalStatusById = merchantAccountService.findApprovalStatusById(merchantApprovalStatusDto);
@@ -205,10 +206,10 @@ public class MerchantAccountController extends BaseController{
      * @return
      */
     @RequestMapping(value = "submitApproval",
-            method = RequestMethod.GET,
+            method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<MerchantAccountExcution> checkApprovalStatus(ApprovalStatusByIdDto approvalStatusByIdDto){
+    public BaseResult<MerchantAccountExcution> checkApprovalStatus(@RequestBody ApprovalStatusByIdDto approvalStatusByIdDto){
         //参数验空
         try {
             MerchantAccountExcution findApprovalStatusById = merchantAccountService.findApprovalStatusById(approvalStatusByIdDto);

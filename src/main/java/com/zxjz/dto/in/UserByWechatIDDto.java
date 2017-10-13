@@ -2,7 +2,7 @@ package com.zxjz.dto.in;
 
 public class UserByWechatIDDto {
     private String wechat_id;
-    private String headimgurl;//
+    private String headimgurl;
 
     public String getWechat_id() {
         return wechat_id;
