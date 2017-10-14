@@ -30,9 +30,10 @@ public class CheckStudentsServiceImpl implements CheckStudentsService {
      * @return
      */
      public CheckStudentsExcution  findStudentsInfoList (CheckStudentsDto checkStudentsDto){
-         int offset = checkStudentsDto.getOffset();
+         int page = checkStudentsDto.getPage();
          int rows = checkStudentsDto.getRows();
          int check_state = checkStudentsDto.getCheck_state();
+         int offset = (page - 1) * rows;
          String srt_searchStu_content = checkStudentsDto.getSrt_searchStu_content();
          String srt_filtrate = checkStudentsDto.getSrt_filtrate();
          try {
@@ -70,6 +71,11 @@ public class CheckStudentsServiceImpl implements CheckStudentsService {
         }
     }
 
+    /**
+     * 提交审核
+     * @param checkStudentsDto
+     * @return
+     */
     public CheckStudentsExcution submitAudit(CheckStudentsDto checkStudentsDto) {
         int user_id = checkStudentsDto.getUser_id();
         String stat_res = checkStudentsDto.getStat_res();

@@ -1,5 +1,6 @@
 package com.zxjz.controller;
 
+import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
 import com.zxjz.dto.excution.CollectionExcution;
 import com.zxjz.dto.in.CollectionDto;
@@ -29,18 +30,20 @@ public class CollectionController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<CollectionExcution> addConllection(@RequestBody CollectionDto collectionDto) {
+    public BaseAPIResult addConllection(@RequestBody CollectionDto collectionDto) {
         //参数验空
         try {
             CollectionExcution collectionExcution = collectionService.addConllection(collectionDto);
-            return new BaseResult<CollectionExcution>(1,collectionExcution);
+            return new BaseAPIResult(1,collectionExcution);
         } catch (InsertInnerErrorException e) {
-             CollectionExcution collectionExcution = new CollectionExcution(CollectionEnum.COLLECTION_NOT_STATE);
-            return new BaseResult<CollectionExcution>(0,collectionExcution);
+            logger.error(e.getMessage(), e);
+             CollectionExcution collectionExcution = new CollectionExcution(CollectionEnum.COLLECTION_NOT_STATE,e.getMessage());
+            return new BaseAPIResult(0,collectionExcution);
         }
           catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<CollectionExcution>(0,e.getMessage());
+              CollectionExcution collectionExcution = new CollectionExcution(CollectionEnum.INNER_ERROR,e.getMessage());
+              return new BaseAPIResult(0,collectionExcution);
         }
     }
 
@@ -49,18 +52,20 @@ public class CollectionController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<CollectionExcution> deleteConllection(@RequestBody CollectionDto collectionDto) {
+    public BaseAPIResult deleteConllection(@RequestBody CollectionDto collectionDto) {
         //参数验空
         try {
             CollectionExcution collectionExcution = collectionService.deleteConllection(collectionDto);
-            return new BaseResult<CollectionExcution>(1,collectionExcution);
+            return new BaseAPIResult(1,collectionExcution);
         } catch (DeleteInnerErrorException e) {
-            CollectionExcution collectionExcution = new CollectionExcution(CollectionEnum.DELETE_COLLECTION_NOT_STATE);
-            return new BaseResult<CollectionExcution>(0,collectionExcution);
+            logger.error(e.getMessage(), e);
+            CollectionExcution collectionExcution = new CollectionExcution(CollectionEnum.DELETE_COLLECTION_NOT_STATE,e.getMessage());
+            return new BaseAPIResult(0,collectionExcution);
         }
           catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<CollectionExcution>(0,e.getMessage());
+              CollectionExcution collectionExcution = new CollectionExcution(CollectionEnum.INNER_ERROR,e.getMessage());
+              return new BaseAPIResult(0,collectionExcution);
         }
     }
 
@@ -68,18 +73,20 @@ public class CollectionController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<CollectionExcution> findCollectionList(@RequestBody CollectionListDto collectionListDto) {
+    public BaseAPIResult findCollectionList(@RequestBody CollectionListDto collectionListDto) {
         //参数验空
         try {
             CollectionExcution collectionExcution = collectionService.collectionList(collectionListDto);
-            return new BaseResult<CollectionExcution>(1,collectionExcution);
+            return new BaseAPIResult(1,collectionExcution);
         }catch (QueryInnerErrorException e) {
-            CollectionExcution collectionExcution = new CollectionExcution(CollectionEnum.FIND_COLLECTIONLIST_NOT_STATE);
-            return new BaseResult<CollectionExcution>(0,collectionExcution);
+            logger.error(e.getMessage(), e);
+            CollectionExcution collectionExcution = new CollectionExcution(CollectionEnum.FIND_COLLECTIONLIST_NOT_STATE,e.getMessage());
+            return new BaseAPIResult(0,collectionExcution);
         }
          catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<CollectionExcution>(0,e.getMessage());
+             CollectionExcution collectionExcution = new CollectionExcution(CollectionEnum.INNER_ERROR,e.getMessage());
+             return new BaseAPIResult(0,collectionExcution);
         }
     }
 }

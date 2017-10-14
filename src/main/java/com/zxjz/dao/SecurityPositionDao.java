@@ -31,11 +31,11 @@ public interface SecurityPositionDao  {
 
     /**
      * 后台显示总数
-     * @param StatusSearch
+     * @param statusSearch
      * @param search
      * @return
      */
-    public int findSecurityPositionListCount(@Param("StatusSearch")String StatusSearch,@Param("search")String search);
+    public int findSecurityPositionListCount(@Param("statusSearch")String statusSearch,@Param("search")String search);
 
     /**
      * 详情
@@ -68,7 +68,7 @@ public interface SecurityPositionDao  {
      * @param p_station_id
      * @return
      */
-    public List<Station>findListTwoLevelStation(int p_station_id);
+    public List<Station> findListTwoLevelStation(@Param("p_station_id") int p_station_id);
 
     /**
      * 添加精品职位数据
@@ -132,10 +132,10 @@ public interface SecurityPositionDao  {
      * 状态筛选
      * @param offset
      * @param rows
-     * @param StatusSearch
+     * @param statusSearch
      * @return
      */
-    public List<AtCollection> findStatusSearch(@Param("offset")int offset , @Param("rows")int rows,@Param("StatusSearch")String StatusSearch);
+    public List<AtCollection> findStatusSearch(@Param("offset")int offset , @Param("rows")int rows,@Param("statusSearch")String statusSearch);
     /**
      * 否上首页推荐/担保 状态筛选
      * @param offset
@@ -143,5 +143,5 @@ public interface SecurityPositionDao  {
      * @param StatusSearch
      * @return
      */
-    public List<AtCollection> findStatusSearch2(@Param("offset")int offset , @Param("rows")int rows,@Param("StatusSearch")String StatusSearch);
+    public List<AtCollection> findStatusSearch2(@Param("offset")int offset , @Param("rows")int rows,@Param("statusSearch")String statusSearch);
 }

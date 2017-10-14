@@ -38,7 +38,7 @@ public class StudentSetBoundPhoneServiceImpl implements StudentSetBoundPhoneServ
                     if (code==1){
                         int setBoundPhone = studentSetBoundPhoneDao.AddBoundPhoneById(user_id,phone_password,phone,verify_code,code);
                         if (setBoundPhone > 0){
-                            return new StudentSetBoundPhoneExcution(StudentSetBoundPhoneEnum.BIND_SUCCESS);
+                            return new StudentSetBoundPhoneExcution(StudentSetBoundPhoneEnum.BOUND_SUCCESS);
                         }
                     }else {
                        UserCountInfo OldPhonePassword = studentSetBoundPhoneDao.findOldPhoneAndPasswordById(user_id);
@@ -58,7 +58,7 @@ public class StudentSetBoundPhoneServiceImpl implements StudentSetBoundPhoneServ
                     return new StudentSetBoundPhoneExcution(StudentSetBoundPhoneEnum.VERIFY_CODE_ERROR);
                 }
             }else {
-                return new StudentSetBoundPhoneExcution(StudentSetBoundPhoneEnum.BIND_REPEAT);
+                return new StudentSetBoundPhoneExcution(StudentSetBoundPhoneEnum.BOUND_REPEAT);
             }
         }catch (Exception e){
             logger.error(e.getMessage(),e);

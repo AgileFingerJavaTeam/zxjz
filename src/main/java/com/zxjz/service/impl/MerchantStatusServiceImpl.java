@@ -37,21 +37,21 @@ public class MerchantStatusServiceImpl implements MerchantStatusService {
                 if (merChantStatusOne == null || merChantStatusOne.size()== 0) {
                     throw new QueryInnerErrorException("查询失败");
                 } else {
-                    return new MerchantStatusExcution(MerchantStatusEnum.COLLECTION_SUCCESS,merChantStatusOne,null,null);
+                    return new MerchantStatusExcution(MerchantStatusEnum.COLLECTION_SUCCESS,merChantStatusOne);
                 }
             } else if (which.equals("2")) {
                 List<MerchantStatusTwo> merchantStatusTwo = merchantStatusDao.findMerchantStatusTwo(user_id);
                 if (merchantStatusTwo == null || merchantStatusTwo.size()== 0) {
                     throw new QueryInnerErrorException("查询失败");
                 } else {
-                    return new MerchantStatusExcution(MerchantStatusEnum.COLLECTION_SUCCESS,null,merchantStatusTwo,null);
+                    return new MerchantStatusExcution(MerchantStatusEnum.COLLECTION_SUCCESS,merchantStatusTwo);
                 }
             } else if (which.equals("3")) {
                 List<MerchantStatusThree> merchantStatusThree = merchantStatusDao.findMerchantStatusThree(user_id);
                 if (merchantStatusThree == null || merchantStatusThree.size()== 0) {
                     throw new QueryInnerErrorException("查询失败");
                 } else {
-                    return new MerchantStatusExcution(MerchantStatusEnum.COLLECTION_SUCCESS,null,null,merchantStatusThree);
+                    return new MerchantStatusExcution(MerchantStatusEnum.COLLECTION_SUCCESS,merchantStatusThree);
                 }
             }
             throw new MerchantStatusException("缺少参数");

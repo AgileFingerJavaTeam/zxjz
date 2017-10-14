@@ -1,10 +1,12 @@
 package com.zxjz.controller;
 
+import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
 import com.zxjz.dto.excution.SettlementExcution;
 import com.zxjz.dto.in.SettlementAddFunctionDto;
 import com.zxjz.dto.in.SettlementDto;
 import com.zxjz.entity.LandFall;
+import com.zxjz.enums.SettlementEnum;
 import com.zxjz.exception.db.InsertInnerErrorException;
 import com.zxjz.exception.db.UpdateInnerErrorException;
 import com.zxjz.service.SettlementService;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,7 +33,9 @@ public class SettlementController extends BaseController{
      * 显示页面
      * @return
      */
-    @RequestMapping(value = "/SettlementJsp")
+    @RequestMapping(value = "/SettlementJsp",
+            method = RequestMethod.POST,
+            produces = {"application/json;charset=UTF-8"})
     public ModelAndView showCarousePage() {
         ModelAndView mv = new ModelAndView();
         try {
@@ -46,32 +51,38 @@ public class SettlementController extends BaseController{
      * @param settlementDto
      * @return
      */
-    @RequestMapping(value = "/SettlementJspList", produces = "text/json;charset=UTF-8")
+    @RequestMapping(value = "/SettlementJspList",
+            method = RequestMethod.POST,
+            produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<SettlementExcution> SettlementJspList(@RequestBody SettlementDto settlementDto){
+    public BaseAPIResult SettlementJspList(@RequestBody SettlementDto settlementDto){
         //参数验空
         try {
             SettlementExcution settlementExcution = settlementService.findListSettlement(settlementDto);
-            return new BaseResult<SettlementExcution>(1,settlementExcution);
+            return new BaseAPIResult(1,settlementExcution);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<SettlementExcution>(0,e.getMessage());
+            SettlementExcution settlementExcution = new SettlementExcution(SettlementEnum.INNER_ERROR,e.getMessage());
+            return new BaseAPIResult(0,settlementExcution);
         }
     }
 
      /*
 	  * 模糊查询
 	  */
-    @RequestMapping(value = "/search", produces = "text/json;charset=UTF-8")
-    @ResponseBody
-    public BaseResult<SettlementExcution> search(@RequestBody SettlementDto settlementDto){
+     @RequestMapping(value = "/search",
+             method = RequestMethod.POST,
+             produces = {"application/json;charset=UTF-8"})
+     @ResponseBody
+    public BaseAPIResult search(@RequestBody SettlementDto settlementDto){
         //参数验空
         try {
             SettlementExcution settlementExcution = settlementService.findSearch(settlementDto);
-            return new BaseResult<SettlementExcution>(1,settlementExcution);
+            return new BaseAPIResult(1,settlementExcution);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<SettlementExcution>(0,e.getMessage());
+            SettlementExcution settlementExcution = new SettlementExcution(SettlementEnum.INNER_ERROR,e.getMessage());
+            return new BaseAPIResult(0,settlementExcution);
         }
     }
 
@@ -79,7 +90,9 @@ public class SettlementController extends BaseController{
      * 显示添加页面
      * @return
      */
-    @RequestMapping(value ="/add")
+    @RequestMapping(value = "/add",
+            method = RequestMethod.POST,
+            produces = {"application/json;charset=UTF-8"})
     public ModelAndView Add(){
         ModelAndView mv = new ModelAndView();
         HttpSession session = this.getRequest().getSession();
@@ -100,12 +113,14 @@ public class SettlementController extends BaseController{
      * 显示查看页面数据
      * @return
      */
-    @RequestMapping(value ="/find")
+    @RequestMapping(value = "/find",
+            method = RequestMethod.POST,
+            produces = {"application/json;charset=UTF-8"})
     public ModelAndView FindData(SettlementDto settlementDto){
         ModelAndView mv = new ModelAndView();
       try {
             SettlementExcution settlementExcution = settlementService.getSettlementData(settlementDto);
-            mv.addObject("data", settlementExcution.getSettlement());
+            mv.addObject("data", settlementExcution.getData());
             mv.setViewName("settlementServiceFee/AT_Find");
         } catch (Exception e) {
             logger.error(e.toString(),e);
@@ -118,16 +133,19 @@ public class SettlementController extends BaseController{
      * AJAX显示
      * @return
      */
-    @RequestMapping(value ="/add1")
+    @RequestMapping(value = "/add1",
+            method = RequestMethod.POST,
+            produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<SettlementExcution> add1(SettlementDto settlementDto){
+    public BaseAPIResult add1(@RequestBody SettlementDto settlementDto){
         //参数验空
         try {
             SettlementExcution settlementExcution = settlementService.findMaxNumber(settlementDto);
-            return new BaseResult<SettlementExcution>(1,settlementExcution);
+            return new BaseAPIResult(1,settlementExcution);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<SettlementExcution>(0,e.getMessage());
+            SettlementExcution settlementExcution = new SettlementExcution(SettlementEnum.INNER_ERROR,e.getMessage());
+            return new BaseAPIResult(0,settlementExcution);
         }
 
     }
@@ -136,24 +154,29 @@ public class SettlementController extends BaseController{
      * 添加方法
      * @return
      */
-    @RequestMapping(value ="/addFunction")
+    @RequestMapping(value = "/addFunction",
+            method = RequestMethod.POST,
+            produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<SettlementExcution> addFunction(@RequestBody SettlementAddFunctionDto settlementAddFunctionDto) {
+    public BaseAPIResult addFunction(@RequestBody SettlementAddFunctionDto settlementAddFunctionDto) {
         //参数验空
         try {
             SettlementExcution settlementExcution = settlementService.saveFunction(settlementAddFunctionDto);
-            return new BaseResult<SettlementExcution>(1,settlementExcution);
+            return new BaseAPIResult(1,settlementExcution);
         }catch (InsertInnerErrorException e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<SettlementExcution>(0,e.getMessage());
+            SettlementExcution settlementExcution = new SettlementExcution(SettlementEnum.FAIL,e.getMessage());
+            return new BaseAPIResult(0,settlementExcution);
         }
         catch (UpdateInnerErrorException e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<SettlementExcution>(0,e.getMessage());
+            SettlementExcution settlementExcution = new SettlementExcution(SettlementEnum.FAIL,e.getMessage());
+            return new BaseAPIResult(0,settlementExcution);
         }
         catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<SettlementExcution>(0,e.getMessage());
+            SettlementExcution settlementExcution = new SettlementExcution(SettlementEnum.FAIL,e.getMessage());
+            return new BaseAPIResult(0,settlementExcution);
         }
     }
     /**
@@ -161,16 +184,19 @@ public class SettlementController extends BaseController{
      *
      * @return
      */
-    @RequestMapping(value = "/getMerchantsName", produces = "text/json;charset=UTF-8")
+    @RequestMapping(value = "/getMerchantsName",
+            method = RequestMethod.POST,
+            produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<SettlementExcution> getMerchantsName(SettlementDto settlementDto){
+    public BaseAPIResult getMerchantsName(SettlementDto settlementDto){
         //参数验空
         try {
             SettlementExcution settlementExcution = settlementService.findMerchantsName(settlementDto);
-            return new BaseResult<SettlementExcution>(1,settlementExcution);
+            return new BaseAPIResult(1,settlementExcution);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<SettlementExcution>(0,e.getMessage());
+            SettlementExcution settlementExcution = new SettlementExcution(SettlementEnum.INNER_ERROR,e.getMessage());
+            return new BaseAPIResult(0,settlementExcution);
         }
     }
 }

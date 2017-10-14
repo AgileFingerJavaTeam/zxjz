@@ -44,4 +44,11 @@ public interface MerchantsInfoService {
      * @return
      */
     public MerchantsUpgradeExcution showAuditPage(MerchantsUpgradeDto merchantsUpgradeDto);
+
+    /**
+     * 查询申请VIP商户列表
+     * @param merchantsUpgradeDto
+     * @return
+     */
+//    public MerchantsUpgradeExcution findApplyVipShopList(MerchantsUpgradeDto merchantsUpgradeDto);
 }

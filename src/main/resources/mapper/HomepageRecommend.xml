@@ -8,7 +8,7 @@
     <!--侯兆宁     更改是否上首页推荐-->
     <update id="updateORHomepageRecommend">
         UPDATE zx_recruitment_information
-        SET whether_on_homepage_recommend='是',
+        SET whether_on_homepage_recommend="是",
         recommend_begin_time=#{hzn_recommend_begin_time},
         recommend_end_time=#{hzn_recommend_end_time}
         WHERE recruiting_id=#{recruiting_id}

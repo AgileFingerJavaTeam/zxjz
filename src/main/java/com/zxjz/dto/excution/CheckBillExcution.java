@@ -1,30 +1,17 @@
 package com.zxjz.dto.excution;
 
-public class CheckBillExcution {
-    private int code;
-    private String codeInfo;
+import com.zxjz.base.BaseAPIExcution;
+import com.zxjz.enums.CheckBillEnum;
 
-    public int getCode() {
-        return code;
+public class CheckBillExcution extends BaseAPIExcution{
+
+    public CheckBillExcution( CheckBillEnum checkBillEnum,Object data) {
+        this.code = checkBillEnum.getCode();
+        this.data = data;
+    }
+    public CheckBillExcution( CheckBillEnum checkBillEnum) {
+        this.code = checkBillEnum.getCode();
     }
 
-    public void setCode(int code) {
-        this.code = code;
-    }
 
-    public String getCodeInfo() {
-        return codeInfo;
-    }
-
-    public void setCodeInfo(String codeInfo) {
-        this.codeInfo = codeInfo;
-    }
-
-    @Override
-    public String toString() {
-        return "CheckBillExcution{" +
-                "code=" + code +
-                ", codeInfo='" + codeInfo + '\'' +
-                '}';
-    }
 }

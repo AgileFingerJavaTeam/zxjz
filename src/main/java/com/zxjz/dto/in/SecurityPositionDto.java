@@ -1,5 +1,6 @@
 package com.zxjz.dto.in;
 
+
 /**
  * Created by Administrator on 2017/10/10 0010.
  */
@@ -8,8 +9,11 @@ public class SecurityPositionDto {
     private int id;
     private int page;
     private int rows;
-    private String StatusSearch;
     private String search;
+    private  String statusSearch;
+
+
+
 
     public int getP_station_id() {
         return p_station_id;
@@ -28,11 +32,11 @@ public class SecurityPositionDto {
     }
 
     public String getStatusSearch() {
-        return StatusSearch;
+        return statusSearch;
     }
 
     public void setStatusSearch(String statusSearch) {
-        StatusSearch = statusSearch;
+        this.statusSearch = statusSearch;
     }
 
     public String getSearch() {
@@ -66,8 +70,8 @@ public class SecurityPositionDto {
                 ", id=" + id +
                 ", page=" + page +
                 ", rows=" + rows +
-                ", StatusSearch='" + StatusSearch + '\'' +
                 ", search='" + search + '\'' +
+                ", StatusSearch='" + statusSearch + '\'' +
                 '}';
     }
 }

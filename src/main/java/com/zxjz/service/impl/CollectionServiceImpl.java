@@ -37,7 +37,7 @@ public class CollectionServiceImpl implements CollectionService {
             if (collection <= 0) {
                 throw new InsertInnerErrorException("添加收藏失败");
             }
-                return new CollectionExcution(CollectionEnum.COLLECTION_SUCCESS);
+                return new CollectionExcution(CollectionEnum.COLLECTION_SUCCESS,null);
         }catch (InsertInnerErrorException e1) {
             throw e1;
         }
@@ -55,7 +55,7 @@ public class CollectionServiceImpl implements CollectionService {
             if (collection <= 0) {
                 throw new DeleteInnerErrorException("删除收藏失败");
             }
-                return new CollectionExcution(CollectionEnum.DELETE_COLLECTION_SUCCESS);
+                return new CollectionExcution(CollectionEnum.DELETE_COLLECTION_SUCCESS,null);
         }catch (DeleteInnerErrorException e1) {
           throw e1;
         }

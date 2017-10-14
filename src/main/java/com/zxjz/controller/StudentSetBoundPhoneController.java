@@ -1,5 +1,6 @@
 package com.zxjz.controller;
 
+import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
 import com.zxjz.dto.excution.StudentSetBoundPhoneExcution;
 import com.zxjz.dto.in.StudentSetBoundPhoneDto;
@@ -21,15 +22,16 @@ public class StudentSetBoundPhoneController extends BaseController{
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<StudentSetBoundPhoneExcution> setPhoneNo(@RequestBody StudentSetBoundPhoneDto studentSetBoundPhoneDto){
+    public BaseAPIResult setPhoneNo(@RequestBody StudentSetBoundPhoneDto studentSetBoundPhoneDto){
+        System.out.println("----------------");
         //参数验空
         try {
             StudentSetBoundPhoneExcution studentSetBoundPhoneExcution = studentSetBoundPhoneService.setBoundPhone(studentSetBoundPhoneDto);
-            return new BaseResult<StudentSetBoundPhoneExcution>(1,studentSetBoundPhoneExcution);
+            return new BaseAPIResult(1,studentSetBoundPhoneExcution);
         }catch (Exception e){
             logger.error(e.getMessage(),e);
-            StudentSetBoundPhoneExcution studentSetBoundPhoneExcution = new StudentSetBoundPhoneExcution(StudentSetBoundPhoneEnum.BIND_FAIL);
-            return new BaseResult<StudentSetBoundPhoneExcution>(0,studentSetBoundPhoneExcution);
+            StudentSetBoundPhoneExcution studentSetBoundPhoneExcution = new StudentSetBoundPhoneExcution(StudentSetBoundPhoneEnum.BOUND_FAIL);
+            return new BaseAPIResult(0,studentSetBoundPhoneExcution);
         }
     }
 }

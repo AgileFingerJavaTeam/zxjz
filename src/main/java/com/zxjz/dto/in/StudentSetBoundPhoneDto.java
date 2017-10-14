@@ -1,6 +1,5 @@
 package com.zxjz.dto.in;
 
-import javax.xml.ws.Service;
 
 public class StudentSetBoundPhoneDto {
     private int user_id;
@@ -9,6 +8,9 @@ public class StudentSetBoundPhoneDto {
     private String phone_password;//手机登录密码
     private int code;//校验是否首次绑定码
     private String bound_phone;//原绑定手机号
+
+    public StudentSetBoundPhoneDto() {
+    }
 
     public StudentSetBoundPhoneDto(int user_id, String phone, String verify_code, String phone_password, int code) {
         this.user_id = user_id;
