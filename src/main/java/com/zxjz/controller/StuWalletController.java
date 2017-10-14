@@ -1,5 +1,6 @@
 package com.zxjz.controller;
 
+import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
 import com.zxjz.dto.excution.StuWalletExcution;
 import com.zxjz.dto.excution.StuWalletIncomeExcution;
@@ -7,6 +8,7 @@ import com.zxjz.dto.excution.StuWalletWithdrawExcution;
 import com.zxjz.dto.in.StuWalletDto;
 import com.zxjz.dto.in.StuWalletIncomeDto;
 import com.zxjz.dto.in.StuWalletWithdrawDto;
+import com.zxjz.enums.StuJobEnum;
 import com.zxjz.enums.StuWalletEnum;
 import com.zxjz.enums.WalletIncomeEnum;
 import com.zxjz.enums.WalletWithdrawEnum;
@@ -30,49 +32,51 @@ public class StuWalletController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<StuWalletExcution> walletbalance(@RequestBody StuWalletDto stuWalletDto){
+    public BaseAPIResult walletbalance(@RequestBody StuWalletDto stuWalletDto){
         try{
             StuWalletExcution stuWalletExcution = stuWalletService.walletbalance(stuWalletDto);
-            return new BaseResult<StuWalletExcution>(1,stuWalletExcution);
+            return new BaseAPIResult(1,stuWalletExcution);
         }catch (QueryInnerErrorException q){
             StuWalletExcution stuWalletExcution = new StuWalletExcution(StuWalletEnum.FAIL);
-            return new BaseResult<StuWalletExcution>(0,stuWalletExcution);
+            return new BaseAPIResult(0,stuWalletExcution);
         }catch (Exception e){
             logger.error(e.getMessage(),e);
-            return new BaseResult<StuWalletExcution>(0,e.getMessage());
+            StuWalletExcution stuWalletExcution = new StuWalletExcution(StuWalletEnum.FAIL,e.getMessage());
+            return new BaseAPIResult(0,stuWalletExcution);
         }
     }
     @RequestMapping(value = "income",
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<StuWalletIncomeExcution> income(@RequestBody StuWalletIncomeDto stuWalletIncomeDto){
+    public BaseAPIResult income(@RequestBody StuWalletIncomeDto stuWalletIncomeDto){
         try{
             StuWalletIncomeExcution stuWalletIncomeExcution = stuWalletService.income(stuWalletIncomeDto);
-            return new BaseResult<StuWalletIncomeExcution>(1,stuWalletIncomeExcution);
+            return new BaseAPIResult(1,stuWalletIncomeExcution);
         }catch (QueryInnerErrorException q){
             StuWalletIncomeExcution stuWalletIncomeExcution = new StuWalletIncomeExcution(WalletIncomeEnum.FAIL);
-            return new BaseResult<StuWalletIncomeExcution>(0,stuWalletIncomeExcution);
+            return new BaseAPIResult(0,stuWalletIncomeExcution);
         }catch (Exception e){
             logger.error(e.getMessage(),e);
-            return new BaseResult<StuWalletIncomeExcution>(0,e.getMessage());
+            StuWalletIncomeExcution stuWalletIncomeExcution = new StuWalletIncomeExcution(WalletIncomeEnum.FAIL,e.getMessage());
+            return new BaseAPIResult(0,stuWalletIncomeExcution);
         }
     }
     @RequestMapping(value = "withdraw",
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<StuWalletWithdrawExcution> withdraw(@RequestBody StuWalletWithdrawDto stuWalletWithdrawDto){
+    public BaseAPIResult withdraw(@RequestBody StuWalletWithdrawDto stuWalletWithdrawDto){
         try{
             StuWalletWithdrawExcution stuWalletWithdrawExcution = stuWalletService.withdraw(stuWalletWithdrawDto);
-            return new BaseResult<StuWalletWithdrawExcution>(1,stuWalletWithdrawExcution);
+            return new BaseAPIResult(1,stuWalletWithdrawExcution);
         }catch (InsertInnerErrorException i){
             StuWalletWithdrawExcution stuWalletWithdrawExcution = new StuWalletWithdrawExcution(WalletWithdrawEnum.FAIL);
-            return new BaseResult<StuWalletWithdrawExcution>(0,stuWalletWithdrawExcution);
+            return new BaseAPIResult(0,stuWalletWithdrawExcution);
         }catch (Exception e){
             logger.error(e.getMessage(),e);
-            return new BaseResult<StuWalletWithdrawExcution>(0,e.getMessage()
-            );
+            StuWalletWithdrawExcution stuWalletWithdrawExcution = new StuWalletWithdrawExcution(WalletWithdrawEnum.FAIL,e.getMessage());
+            return new BaseAPIResult(0,stuWalletWithdrawExcution);
         }
     }
 }

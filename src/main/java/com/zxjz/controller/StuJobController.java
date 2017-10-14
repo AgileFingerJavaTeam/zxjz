@@ -1,5 +1,6 @@
 package com.zxjz.controller;
 
+import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
 import com.zxjz.dto.excution.StuJobExcution;
 import com.zxjz.dto.in.StuJobDto;
@@ -23,16 +24,17 @@ public class StuJobController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<StuJobExcution> stujob(@RequestBody StuJobDto stuJobDto){
+    public BaseAPIResult stujob(@RequestBody StuJobDto stuJobDto){
         try{
             StuJobExcution stuJobExcution = stuJobService.stuJob(stuJobDto);
-            return new BaseResult<StuJobExcution>(1,stuJobExcution);
+            return new BaseAPIResult(1,stuJobExcution);
         }catch (QueryInnerErrorException q){
             StuJobExcution stuJobExcution = new StuJobExcution(StuJobEnum.FAIL);
-            return new BaseResult<StuJobExcution>(0,stuJobExcution);
+            return new BaseAPIResult(0,stuJobExcution);
         }catch (Exception e){
             logger.error(e.getMessage(),e);
-            return new BaseResult<StuJobExcution>(0,e.getMessage());
+            StuJobExcution stuJobExcution = new StuJobExcution(StuJobEnum.FAIL,e.getMessage());
+            return new BaseAPIResult(0,stuJobExcution);
         }
     }
 
@@ -41,16 +43,17 @@ public class StuJobController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<StuJobExcution> stujoblist(@RequestBody StuJobDto stuJobDto){
+    public BaseAPIResult stujoblist(@RequestBody StuJobDto stuJobDto){
         try{
             StuJobExcution stuJobExcution = stuJobService.stuJobList(stuJobDto);
-            return new BaseResult<StuJobExcution>(1,stuJobExcution);
+            return new BaseAPIResult(1,stuJobExcution);
         }catch (QueryInnerErrorException q){
             StuJobExcution stuJobExcution = new StuJobExcution(StuJobEnum.FAIL);
-            return new BaseResult<StuJobExcution>(0,stuJobExcution);
+            return new BaseAPIResult(0,stuJobExcution);
         }catch (Exception e){
             logger.error(e.getMessage(),e);
-            return new BaseResult<StuJobExcution>(0,e.getMessage());
+            StuJobExcution stuJobExcution = new StuJobExcution(StuJobEnum.FAIL,e.getMessage());
+            return new BaseAPIResult(0,stuJobExcution);
         }
     }
 }

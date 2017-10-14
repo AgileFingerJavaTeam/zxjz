@@ -1,0 +1,58 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.CreditDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+    <!--查询列表-->
+    <select id="findCreditList"  resultType="CreditAndPayment">
+        SELECT a.user_id, a.merchants_name,b.text,a.head,a.phone,c.account_balance,c.credit_total,c.credit_balance,c.Payment_days from zx_merchants_account a
+        LEFT JOIN zx_industry_category b
+        on a.job_id=b.`value`
+        LEFT JOIN zx_merchants_money_basic c
+        on a.user_id=c.user_id
+        <where>
+            1=1 and merchants_level='签约VIP'
+            and now() BETWEEN vip_start AND vip_end
+            <if test="bxw_search_content!=null and bxw_search_content!=''">
+                AND CONCAT_WS(',',merchants_name,text,head,phone,account_balance,credit_total,credit_balance,payment_days) LIKE '%${bxw_search_content}%'
+            </if>
+        </where>
+        <if test="sort!=null and sort!='' and order!=null and order!=''">
+            ORDER BY ${sort} ${order}
+        </if>
+        limit #{offset},#{rows}
+    </select>
+    <!--查询列表数量-->
+    <select id="getcreditcount" resultType="int">
+        SELECT count(*) from zx_merchants_account a
+        LEFT JOIN zx_industry_category b
+        on a.job_id=b.`value`
+        LEFT JOIN zx_merchants_money_basic c
+        on a.user_id=c.user_id
+        where 1=1 and merchants_level='签约VIP'
+        and now() BETWEEN vip_start AND vip_end
+        <if test="sort!=null and sort!='' and order!=null and order!=''">
+            ORDER BY ${sort} ${order}
+        </if>
+    </select>
+
+    <!--设置授信与账期-->
+    <select id="CreditAndPayment"resultType="CreditAndPayment">
+        SELECT a.user_id, a.merchants_name,c.account_balance,c.credit_total,c.credit_balance,c.Payment_days from zx_merchants_account a
+        LEFT JOIN zx_merchants_money_basic c
+        on a.user_id=c.user_id
+        where 1=1 and a.user_id=#{user_id}
+    </select>
+
+    <!-- 提交授信 -->
+    <update id="submitCredit">
+        UPDATE zx_merchants_money_basic SET credit_total=#{credit_total} WHERE user_id=#{user_id}
+    </update>
+
+    <!-- 提交账期 -->
+    <update id="submitPayment" >
+        UPDATE zx_merchants_money_basic SET Payment_days=#{payment_days} WHERE user_id=#{user_id}
+    </update>
+</mapper>

@@ -3,7 +3,7 @@ package com.zxjz.enums;
 /**
  * Created by Administrator on 2017/9/29 0029.
  */
-public enum RecruitmentEnum {
+public enum RechargeEnum {
     SUCCESS(7),//成功
     FAIL(-7),//失败
     COLLECTION_SUCCESS(1),//查询成功
@@ -24,7 +24,7 @@ public enum RecruitmentEnum {
         private int code;
 
 
-    RecruitmentEnum(int code) {
+    RechargeEnum(int code) {
         this.code = code;
 
     }

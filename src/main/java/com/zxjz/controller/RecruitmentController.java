@@ -1,5 +1,6 @@
 package com.zxjz.controller;
 
+import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
 import com.zxjz.dto.excution.RecruitmentExcution;
 import com.zxjz.dto.in.CheckBillDto;
@@ -30,21 +31,23 @@ public class RecruitmentController extends BaseController {
 
 
 
+
     @RequestMapping(value = "/recruitment",
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<RecruitmentExcution> recruitment(@Validated @RequestBody PaypsdDto paypsdDto){
+    public BaseAPIResult recruitment(@Validated @RequestBody PaypsdDto paypsdDto){
         //参数验空
         try {
             RecruitmentExcution recruitmentExcution = recruitmentService.tradingRecord(paypsdDto);
-            return new BaseResult<RecruitmentExcution>(1,recruitmentExcution);
+            return new BaseAPIResult(1,recruitmentExcution);
         } catch (QueryInnerErrorException q){
             RecruitmentExcution recruitmentExcution = new RecruitmentExcution(RecruitmentEnum.FAIL);
-            return new BaseResult<RecruitmentExcution>(0,recruitmentExcution);
+            return new BaseAPIResult(0,recruitmentExcution);
         }catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<RecruitmentExcution>(0,e.getMessage());
+            RecruitmentExcution recruitmentExcution = new RecruitmentExcution(RecruitmentEnum.FAIL,e.getMessage());
+            return new BaseAPIResult(0,recruitmentExcution);
         }
     }
 
@@ -52,14 +55,15 @@ public class RecruitmentController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<RecruitmentExcution> checkbill(@Validated @RequestBody CheckBillDto checkBillDto){
+    public BaseAPIResult checkbill(@Validated @RequestBody CheckBillDto checkBillDto){
         //参数验空
         try {
             RecruitmentExcution recruitmentExcution = recruitmentService.checkBill(checkBillDto);
-            return new BaseResult<RecruitmentExcution>(1,recruitmentExcution);
+            return new BaseAPIResult(1,recruitmentExcution);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<RecruitmentExcution>(0,e.getMessage());
+            RecruitmentExcution recruitmentExcution =new RecruitmentExcution(RecruitmentEnum.FAIL,e.getMessage());
+            return new BaseAPIResult(0,recruitmentExcution);
         }
     }
 
@@ -69,14 +73,15 @@ public class RecruitmentController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<RecruitmentExcution> setpaypsd(@Validated @RequestBody PaypsdDto paypsdDto){
+    public BaseAPIResult setpaypsd(@Validated @RequestBody PaypsdDto paypsdDto){
         //参数验空
         try {
             RecruitmentExcution recruitmentExcution = recruitmentService.setpaypsd(paypsdDto);
-            return new BaseResult<RecruitmentExcution>(1,recruitmentExcution);
+            return new BaseAPIResult(1,recruitmentExcution);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<RecruitmentExcution>(0,e.getMessage());
+            RecruitmentExcution recruitmentExcution =new RecruitmentExcution(RecruitmentEnum.FAIL,e.getMessage());
+            return new BaseAPIResult(0,recruitmentExcution);
         }
     }
 
@@ -85,17 +90,18 @@ public class RecruitmentController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<RecruitmentExcution> PostJob(@Validated @RequestBody RecruitmentDto recruitmentDto){
+    public BaseAPIResult PostJob(@Validated @RequestBody RecruitmentDto recruitmentDto){
         //参数验空
         try {
             RecruitmentExcution recruitmentExcution = recruitmentService.postjob(recruitmentDto);
-            return new BaseResult<RecruitmentExcution>(1,recruitmentExcution);
+            return new BaseAPIResult(1,recruitmentExcution);
         } catch (InsertInnerErrorException i){
             RecruitmentExcution recruitmentExcution = new RecruitmentExcution(RecruitmentEnum.FAIL);
-            return new BaseResult<RecruitmentExcution>(0,recruitmentExcution);
+            return new BaseAPIResult(0,recruitmentExcution);
         }catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<RecruitmentExcution>(0,e.getMessage());
+            RecruitmentExcution recruitmentExcution =new RecruitmentExcution(RecruitmentEnum.FAIL,e.getMessage());
+            return new BaseAPIResult(0,recruitmentExcution);
         }
     }
 
@@ -104,20 +110,21 @@ public class RecruitmentController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<RecruitmentExcution> PostJobcopy(@Validated @RequestBody RecruitmentDto recruitmentDto){
+    public BaseAPIResult PostJobcopy(@Validated @RequestBody RecruitmentDto recruitmentDto){
         //参数验空
         try {
             RecruitmentExcution recruitmentExcution = recruitmentService.postjobcopy(recruitmentDto);
-            return new BaseResult<RecruitmentExcution>(1,recruitmentExcution);
+            return new BaseAPIResult(1,recruitmentExcution);
         }  catch (InsertInnerErrorException i){
             RecruitmentExcution recruitmentExcution = new RecruitmentExcution(RecruitmentEnum.FAIL);
-            return new BaseResult<RecruitmentExcution>(0,recruitmentExcution);
+            return new BaseAPIResult(0,recruitmentExcution);
         } catch (UpdateInnerErrorException u){
             RecruitmentExcution recruitmentExcution = new RecruitmentExcution(RecruitmentEnum.FAIL);
-            return new BaseResult<RecruitmentExcution>(0,recruitmentExcution);
+            return new BaseAPIResult(0,recruitmentExcution);
         }catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<RecruitmentExcution>(0,e.getMessage());
+            RecruitmentExcution recruitmentExcution = new RecruitmentExcution(RecruitmentEnum.FAIL,e.getMessage());
+            return new BaseAPIResult(0,recruitmentExcution);
         }
     }
 
@@ -126,20 +133,21 @@ public class RecruitmentController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<RecruitmentExcution> editPostjobCopy(@Validated @RequestBody RecruitmentDto recruitmentDto){
+    public BaseAPIResult editPostjobCopy(@Validated @RequestBody RecruitmentDto recruitmentDto){
         //参数验空
         try {
             RecruitmentExcution recruitmentExcution = recruitmentService.editpostjobcopy(recruitmentDto);
-            return new BaseResult<RecruitmentExcution>(1,recruitmentExcution);
+            return new BaseAPIResult(1,recruitmentExcution);
         }  catch (InsertInnerErrorException i){
             RecruitmentExcution recruitmentExcution = new RecruitmentExcution(RecruitmentEnum.FAIL);
-            return new BaseResult<RecruitmentExcution>(0,recruitmentExcution);
+            return new BaseAPIResult(0,recruitmentExcution);
         } catch (UpdateInnerErrorException u){
             RecruitmentExcution recruitmentExcution = new RecruitmentExcution(RecruitmentEnum.FAIL);
-            return new BaseResult<RecruitmentExcution>(0,recruitmentExcution);
+            return new BaseAPIResult(0,recruitmentExcution);
         }catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<RecruitmentExcution>(0,e.getMessage());
+            RecruitmentExcution recruitmentExcution = new RecruitmentExcution(RecruitmentEnum.FAIL,e.getMessage());
+            return new BaseAPIResult(0,recruitmentExcution);
         }
     }
 
@@ -148,20 +156,21 @@ public class RecruitmentController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<RecruitmentExcution> editJob(@Validated @RequestBody RecruitmentDto recruitmentDto){
+    public BaseAPIResult editJob(@Validated @RequestBody RecruitmentDto recruitmentDto){
         //参数验空
         try {
             RecruitmentExcution recruitmentExcution = recruitmentService.editJob(recruitmentDto);
-            return new BaseResult<RecruitmentExcution>(1,recruitmentExcution);
+            return new BaseAPIResult(1,recruitmentExcution);
         } catch (InsertInnerErrorException i){
             RecruitmentExcution recruitmentExcution = new RecruitmentExcution(RecruitmentEnum.FAIL);
-            return new BaseResult<RecruitmentExcution>(0,recruitmentExcution);
+            return new BaseAPIResult(0,recruitmentExcution);
         } catch (UpdateInnerErrorException u){
             RecruitmentExcution recruitmentExcution = new RecruitmentExcution(RecruitmentEnum.FAIL);
-            return new BaseResult<RecruitmentExcution>(0,recruitmentExcution);
+            return new BaseAPIResult(0,recruitmentExcution);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<RecruitmentExcution>(0,e.getMessage());
+            RecruitmentExcution recruitmentExcution = new RecruitmentExcution(RecruitmentEnum.FAIL,e.getMessage());
+            return new BaseAPIResult(0,recruitmentExcution);
         }
     }
 
@@ -170,20 +179,21 @@ public class RecruitmentController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<RecruitmentExcution> postfailure(@Validated @RequestBody RecruitmentDto recruitmentDto){
+    public BaseAPIResult postfailure(@Validated @RequestBody RecruitmentDto recruitmentDto){
         //参数验空
         try {
             RecruitmentExcution recruitmentExcution = recruitmentService.postfailure(recruitmentDto);
-            return new BaseResult<RecruitmentExcution>(1,recruitmentExcution);
+            return new BaseAPIResult(1,recruitmentExcution);
         }  catch (InsertInnerErrorException i){
             RecruitmentExcution recruitmentExcution = new RecruitmentExcution(RecruitmentEnum.FAIL);
-            return new BaseResult<RecruitmentExcution>(0,recruitmentExcution);
+            return new BaseAPIResult(0,recruitmentExcution);
         } catch (UpdateInnerErrorException u){
             RecruitmentExcution recruitmentExcution = new RecruitmentExcution(RecruitmentEnum.FAIL);
-            return new BaseResult<RecruitmentExcution>(0,recruitmentExcution);
+            return new BaseAPIResult(0,recruitmentExcution);
         }catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<RecruitmentExcution>(0,e.getMessage());
+            RecruitmentExcution recruitmentExcution = new RecruitmentExcution(RecruitmentEnum.FAIL,e.getMessage());
+            return new BaseAPIResult(0,recruitmentExcution);
         }
     }
 
