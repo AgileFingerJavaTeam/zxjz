@@ -1,5 +1,6 @@
 package com.zxjz.controller;
 
+import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
 import com.zxjz.dto.excution.MerchantsAffirmStudentBreakPromiseExcution;
 import com.zxjz.dto.excution.MerchantsChangeHeadExcution;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+
 @Controller
 @RequestMapping(value = "/employer")
 public class MerchantsController extends BaseController{
@@ -42,20 +44,21 @@ public class MerchantsController extends BaseController{
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<MerchantsUpgradeExcution> Premium(@RequestBody MerchantsUpgradeDto merchantsUpgradeDto){
+    public BaseAPIResult Premium(@RequestBody MerchantsUpgradeDto merchantsUpgradeDto){
         //参数验空
         try{
             MerchantsUpgradeExcution merchantsUpgradeExcution = merchantsInfoService.upgradeAccount(merchantsUpgradeDto);
-            return new BaseResult<MerchantsUpgradeExcution>(1,merchantsUpgradeExcution);
+            return new BaseAPIResult(1,merchantsUpgradeExcution);
         } catch (RepeatApplyException e){
             MerchantsUpgradeExcution merchantsUpgradeExcution = new MerchantsUpgradeExcution(MerchantsUpgradeEnum.APPLY_REPEAT);
-            return new BaseResult<MerchantsUpgradeExcution>(0,merchantsUpgradeExcution);
+            return new BaseAPIResult(0,merchantsUpgradeExcution);
         } catch (ApplyFailException e) {
             MerchantsUpgradeExcution merchantsUpgradeExcution = new MerchantsUpgradeExcution(MerchantsUpgradeEnum.APPLY_ERROR);
-            return new BaseResult<MerchantsUpgradeExcution>(0, merchantsUpgradeExcution);
+            return new BaseAPIResult(0, merchantsUpgradeExcution);
         } catch (Exception e){
             logger.error(e.getMessage(),e);
-            return new BaseResult<MerchantsUpgradeExcution>(0,e.getMessage());
+            MerchantsUpgradeExcution merchantsUpgradeExcution = new MerchantsUpgradeExcution(MerchantsUpgradeEnum.APPLY_ERROR,e.getMessage());
+            return new BaseAPIResult(0,merchantsUpgradeExcution);
         }
 
     }
@@ -69,17 +72,18 @@ public class MerchantsController extends BaseController{
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<MerchantsChangeHeadExcution> changeHead (@RequestBody MerchantsChangeHeadDto merchantsChangeHeadDto){
+    public BaseAPIResult changeHead (@RequestBody MerchantsChangeHeadDto merchantsChangeHeadDto){
         //参数验空
         try {
             MerchantsChangeHeadExcution merchantsChangeHeadExcution = merchantsInfoService.changeHead(merchantsChangeHeadDto);
-            return  new BaseResult<MerchantsChangeHeadExcution>(1,merchantsChangeHeadExcution);
+            return  new BaseAPIResult(1,merchantsChangeHeadExcution);
         }catch (UpdateDatabaseException e){
             MerchantsChangeHeadExcution merchantsChangeHeadExcution = new MerchantsChangeHeadExcution(MerchantsChangeHeadEnum.CHANGE_FAIL);
-            return new BaseResult<MerchantsChangeHeadExcution>(0,merchantsChangeHeadExcution);
+            return new BaseAPIResult(0,merchantsChangeHeadExcution);
         }catch (Exception e){
             logger.error(e.getMessage(),e);
-            return new BaseResult<MerchantsChangeHeadExcution>(0,e.getMessage());
+            MerchantsChangeHeadExcution merchantsChangeHeadExcution = new MerchantsChangeHeadExcution(MerchantsChangeHeadEnum.CHANGE_FAIL,e.getMessage());
+            return new BaseAPIResult(0,merchantsChangeHeadExcution);
         }
     }
 
@@ -92,17 +96,18 @@ public class MerchantsController extends BaseController{
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<MerchantsInfoExcution> findEmpolyerInfoById (@RequestBody MerchantsInfoDto merchantsInfoDto) {
+    public BaseAPIResult findEmpolyerInfoById (@RequestBody MerchantsInfoDto merchantsInfoDto) {
         //参数验空
         try {
             MerchantsInfoExcution merchantsInfoExcution = merchantsInfoService.findEmpolyerInfoById(merchantsInfoDto);
-            return new BaseResult<MerchantsInfoExcution>(1, merchantsInfoExcution);
+            return new BaseAPIResult(1, merchantsInfoExcution);
         } catch (FindDatabaseException e) {
             MerchantsInfoExcution merchantsInfoExcution = new MerchantsInfoExcution(MerchantsInfoEnum.INQUIRE_ERROR);
-            return new BaseResult<MerchantsInfoExcution>(0,merchantsInfoExcution);
+            return new BaseAPIResult(0,merchantsInfoExcution);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<MerchantsInfoExcution>(0, e.getMessage());
+            MerchantsInfoExcution merchantsInfoExcution = new MerchantsInfoExcution(MerchantsInfoEnum.INQUIRE_ERROR,e.getMessage());
+            return new BaseAPIResult(0,merchantsInfoExcution);
         }
     }
 
@@ -115,26 +120,27 @@ public class MerchantsController extends BaseController{
                     method = RequestMethod.POST,
                     produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<MerchantsAffirmStudentBreakPromiseExcution> affirmStuBaa(@RequestBody MerchantsAffirmStudentBreakPromiseDto merchantsAffirmStudentBreakPromiseDto){
+    public BaseAPIResult affirmStuBaa(@RequestBody MerchantsAffirmStudentBreakPromiseDto merchantsAffirmStudentBreakPromiseDto){
         //参数验空
         try {
             MerchantsAffirmStudentBreakPromiseExcution merchantsAffirmStudentBreakPromiseExcution = merchantsInfoService.confirmStudentMiss(merchantsAffirmStudentBreakPromiseDto);
-            return new BaseResult<MerchantsAffirmStudentBreakPromiseExcution>(1,merchantsAffirmStudentBreakPromiseExcution);
+            return new BaseAPIResult(1,merchantsAffirmStudentBreakPromiseExcution);
         }catch (UpdateInnerErrorException e){
             MerchantsAffirmStudentBreakPromiseExcution merchantsAffirmStudentBreakPromiseExcution = new MerchantsAffirmStudentBreakPromiseExcution(MerchantsAffirmStudentBreakPromiseEnum.AFFIRM_STUDENT_BREAK_PROMISE_FAIL);
-            return new BaseResult<MerchantsAffirmStudentBreakPromiseExcution>(0,merchantsAffirmStudentBreakPromiseExcution);
+            return new BaseAPIResult(0,merchantsAffirmStudentBreakPromiseExcution);
         }catch (QueryInnerErrorException e){
             MerchantsAffirmStudentBreakPromiseExcution merchantsAffirmStudentBreakPromiseExcution = new MerchantsAffirmStudentBreakPromiseExcution(MerchantsAffirmStudentBreakPromiseEnum.FIND_DOUBLEID_FAIL);
-            return new BaseResult<MerchantsAffirmStudentBreakPromiseExcution>(0,merchantsAffirmStudentBreakPromiseExcution);
+            return new BaseAPIResult(0,merchantsAffirmStudentBreakPromiseExcution);
         }catch (UpdateDatabaseException e){
             MerchantsAffirmStudentBreakPromiseExcution merchantsAffirmStudentBreakPromiseExcution = new MerchantsAffirmStudentBreakPromiseExcution(MerchantsAffirmStudentBreakPromiseEnum.OVER_WORK_FAIL);
-            return new BaseResult<MerchantsAffirmStudentBreakPromiseExcution>(0,merchantsAffirmStudentBreakPromiseExcution);
+            return new BaseAPIResult(0,merchantsAffirmStudentBreakPromiseExcution);
         }catch (UpdateStuMissException e){
             MerchantsAffirmStudentBreakPromiseExcution merchantsAffirmStudentBreakPromiseExcution = new MerchantsAffirmStudentBreakPromiseExcution(MerchantsAffirmStudentBreakPromiseEnum.UPDATE_STUDENT_MISS_NUMBER_FAIL);
-            return new BaseResult<MerchantsAffirmStudentBreakPromiseExcution>(0,merchantsAffirmStudentBreakPromiseExcution);
+            return new BaseAPIResult(0,merchantsAffirmStudentBreakPromiseExcution);
         }catch (Exception e){
             logger.error(e.getMessage(),e);
-            return new BaseResult<MerchantsAffirmStudentBreakPromiseExcution>(0,e.getMessage());
+            MerchantsAffirmStudentBreakPromiseExcution merchantsAffirmStudentBreakPromiseExcution = new MerchantsAffirmStudentBreakPromiseExcution(MerchantsAffirmStudentBreakPromiseEnum.UPDATE_STUDENT_MISS_NUMBER_FAIL,e.getMessage());
+            return new BaseAPIResult(0,merchantsAffirmStudentBreakPromiseExcution);
         }
     }
 
@@ -154,6 +160,26 @@ public class MerchantsController extends BaseController{
         }
         return mv;
     }
+
+    /**
+     * 查询申请VIP商户信息
+     * @param merchantsUpgradeDto
+     * @return
+     */
+//    @RequestMapping(value = "/GetApplyVipInfo",
+//            method = RequestMethod.POST,
+//            produces = {"application/json;charset=UTF-8"})
+//    @ResponseBody
+//    public BaseAPIResult findApplyVipShopInfo (@RequestBody MerchantsUpgradeDto merchantsUpgradeDto){
+//        try {
+//           MerchantsUpgradeExcution merchantsUpgradeExcution = merchantsInfoService.findApplyVipShopList(merchantsUpgradeDto);
+//            return new BaseAPIResult(1,merchantsUpgradeExcution);
+//        }catch (Exception e){
+//            logger.error(e.getMessage(),e);
+//            MerchantsUpgradeExcution merchantsUpgradeExcution = new MerchantsUpgradeExcution(MerchantsUpgradeEnum.FIND_FAIL,e.getMessage());
+//            return new BaseAPIResult(0,merchantsUpgradeExcution);
+//        }
+//    }
 
     /**
      * 显示审核页面

@@ -17,7 +17,7 @@
     </select>
 
     <!--查询申请VIP商户信息（后台管理）-->
-    <select id="findApplyVipListById"  resultType="MerchantsUpgrade">
+    <select id="findApplyVipList"  resultType="MerchantsUpgrade">
         SELECT *,ma.merchants_name FROM zx_merchants_upgrade  mu
         LEFT JOIN zx_merchants_account ma  ON mu.user_id = ma.user_id
         <where>
@@ -55,4 +55,10 @@
     <select id="findEmInfo" resultType="MerchantsUpgrade">
         SELECT *FROM zx_merchants_upgrade where user_id=#{id}
     </select>
+    <!--确认审核-->
+    <update id="conrifmCheck"  >
+        UPDATE  zx_merchants_upgrade
+        SET is_dispose='已经受理',operating_time=NOW(),accept_employees=#{employees_name},operating_staff = #{id}
+        WHERE user_id=#{user_id}
+    </update>
 </mapper>

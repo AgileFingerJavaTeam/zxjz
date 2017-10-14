@@ -1,7 +1,7 @@
 package com.zxjz.controller;
 
+import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
-import com.zxjz.base.BaseResult;
 import com.zxjz.dto.excution.SystemParameterExcution;
 import com.zxjz.dto.in.FindParemeterDto;
 import com.zxjz.dto.in.SystemParameterDto;
@@ -53,13 +53,14 @@ public class SystemParameterManageController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<SystemParameterExcution> getParameterList(@RequestBody FindParemeterDto findParemeterDto){
+    public BaseAPIResult getParameterList(@RequestBody FindParemeterDto findParemeterDto){
         try {
           SystemParameterExcution SystemParameter = systemParameterService.findParameterList(findParemeterDto);
-          return new BaseResult<SystemParameterExcution>(1,SystemParameter);
+          return new BaseAPIResult(1,SystemParameter);
         }catch (Exception e){
             logger.error(e.getMessage(),e);
-            return new BaseResult<SystemParameterExcution>(0,e.getMessage());
+            SystemParameterExcution SystemParameter = new SystemParameterExcution(SystemParameterEnum.QUERY_FAIL);
+            return new BaseAPIResult(0,SystemParameter);
         }
     }
 
@@ -89,16 +90,17 @@ public class SystemParameterManageController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<SystemParameterExcution> insertParameter(@RequestBody SystemParameterDto systemParameterDto){
+    public BaseAPIResult insertParameter(@RequestBody SystemParameterDto systemParameterDto){
         try {
             SystemParameterExcution systemParameterExcution = systemParameterService.addSystemParameter(systemParameterDto);
-            return new BaseResult<SystemParameterExcution>(1,systemParameterExcution);
+            return new BaseAPIResult(1,systemParameterExcution);
         }catch (InsertInnerErrorException e){
             SystemParameterExcution systemParameterExcution = new SystemParameterExcution(SystemParameterEnum.ADD_FAIL);
-            return new BaseResult<SystemParameterExcution>(0,systemParameterExcution);
+            return new BaseAPIResult(0,systemParameterExcution);
         }catch (Exception e){
             logger.error(e.getMessage(),e);
-            return new BaseResult<SystemParameterExcution>(0,e.getMessage());
+            SystemParameterExcution systemParameterExcution = new SystemParameterExcution(SystemParameterEnum.ADD_FAIL,e.getMessage());
+            return new BaseAPIResult(0,systemParameterExcution);
         }
     }
     /**
@@ -131,16 +133,17 @@ public class SystemParameterManageController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<SystemParameterExcution> editParameter(@RequestBody SystemParameterDto systemParameterDto){
+    public BaseAPIResult editParameter(@RequestBody SystemParameterDto systemParameterDto){
         try{
             SystemParameterExcution systemParameterExcution = systemParameterService.updateSystemParameter(systemParameterDto);
-            return new BaseResult<SystemParameterExcution>(1,systemParameterExcution);
+            return new BaseAPIResult(1,systemParameterExcution);
         }catch (UpdateInnerErrorException e){
             SystemParameterExcution systemParameterExcution = new SystemParameterExcution(SystemParameterEnum.EDIT_FAIL);
-            return new BaseResult<SystemParameterExcution>(0,systemParameterExcution);
+            return new BaseAPIResult(0,systemParameterExcution);
         }catch (Exception e){
             logger.error(e.getMessage(),e);
-            return new BaseResult<SystemParameterExcution>(0,e.getMessage());
+            SystemParameterExcution systemParameterExcution = new SystemParameterExcution(SystemParameterEnum.EDIT_FAIL,e.getMessage());
+            return new BaseAPIResult(0,systemParameterExcution);
         }
     }
 
@@ -168,16 +171,17 @@ public class SystemParameterManageController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<SystemParameterExcution> delSystemParameter (@RequestBody SystemParameterDto systemParameterDto){
+    public BaseAPIResult delSystemParameter (@RequestBody SystemParameterDto systemParameterDto){
         try {
             SystemParameterExcution systemParameterExcution = systemParameterService.delSystemParameter(systemParameterDto);
-            return new BaseResult<SystemParameterExcution>(1,systemParameterExcution);
+            return new BaseAPIResult(1,systemParameterExcution);
         }catch (DeleteInnerErrorException e){
             SystemParameterExcution systemParameterExcution = new SystemParameterExcution(SystemParameterEnum.DEL_FAIL);
-            return new BaseResult<SystemParameterExcution>(0,systemParameterExcution);
+            return new BaseAPIResult(0,systemParameterExcution);
         }catch (Exception e){
             logger.error(e.getMessage(),e);
-            return new BaseResult<SystemParameterExcution>(0,e.getMessage());
+            SystemParameterExcution systemParameterExcution = new SystemParameterExcution(SystemParameterEnum.DEL_FAIL,e.getMessage());
+            return new BaseAPIResult(0,systemParameterExcution);
         }
     }
 

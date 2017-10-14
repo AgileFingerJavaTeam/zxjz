@@ -3,7 +3,7 @@ package com.zxjz.dto.in;
 public class CheckStudentsDto {
     private int user_id;
     private String srt_searchStu_content;
-    private int offset;
+    private int page;
     private int rows;
     private String srt_filtrate;
     private int check_state;
@@ -41,12 +41,12 @@ public class CheckStudentsDto {
         this.srt_searchStu_content = srt_searchStu_content;
     }
 
-    public int getOffset() {
-        return offset;
+    public int getPage() {
+        return page;
     }
 
-    public void setOffset(int offset) {
-        this.offset = offset;
+    public void setPage(int page) {
+        this.page = page;
     }
 
     public int getRows() {
@@ -70,7 +70,7 @@ public class CheckStudentsDto {
         return "CheckStudentsDto{" +
                 "user_id=" + user_id +
                 ", srt_searchStu_content='" + srt_searchStu_content + '\'' +
-                ", offset=" + offset +
+                ", page=" + page +
                 ", rows=" + rows +
                 ", srt_filtrate='" + srt_filtrate + '\'' +
                 ", check_state=" + check_state +

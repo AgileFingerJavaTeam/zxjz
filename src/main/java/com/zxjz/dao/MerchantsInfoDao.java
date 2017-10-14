@@ -68,7 +68,7 @@ public interface MerchantsInfoDao {
      * @param rows
      * @return
      */
-    public MerchantsUpgrade findApplyVipListById(@Param("srt_approval_status1")String srt_approval_status1,@Param("srt_search_content1")String srt_search_content1,@Param("offset")int offset,@Param("rows")int rows);
+    public MerchantsUpgrade findApplyVipList(@Param("srt_approval_status1")String srt_approval_status1,@Param("srt_search_content1")String srt_search_content1,@Param("offset")int offset,@Param("rows")int rows);
 
     /**
      * 查询申请VIP商户总数
@@ -96,4 +96,13 @@ public interface MerchantsInfoDao {
      * @return
      */
     public MerchantsUpgrade findEmInfo (@Param("id")int id);
+
+    /**
+     * 确认审核
+     * @param employees_name
+     * @param id
+     * @param user_id
+     * @return
+     */
+    public int conrifmCheck(@Param("employees_name")String employees_name,@Param("id")int id,@Param("user_id")int user_id);
 }

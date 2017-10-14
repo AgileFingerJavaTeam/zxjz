@@ -1,7 +1,7 @@
 package com.zxjz.controller;
 
+import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
-import com.zxjz.base.BaseResult;
 import com.zxjz.dto.excution.CheckStudentsExcution;
 import com.zxjz.dto.in.CheckStudentsDto;
 import com.zxjz.enums.CheckStudentsEnum;
@@ -49,16 +49,17 @@ public class CheckStudentController extends BaseController{
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<CheckStudentsExcution> findStudentsInfo (CheckStudentsDto checkStudentsDto){
+    public BaseAPIResult findStudentsInfo (CheckStudentsDto checkStudentsDto){
         try {
             CheckStudentsExcution checkStudentsExcution = checkStudentsService.findStudentsInfoList(checkStudentsDto);
-            return new BaseResult<CheckStudentsExcution>(1,checkStudentsExcution);
+            return new BaseAPIResult(1,checkStudentsExcution);
         }catch (QueryInnerErrorException e){
             CheckStudentsExcution checkStudentsExcution = new CheckStudentsExcution(CheckStudentsEnum.FIND_STUDENTS_LIST_FAIL);
-            return new BaseResult<CheckStudentsExcution>(0,checkStudentsExcution);
+            return new BaseAPIResult(0,checkStudentsExcution);
         }catch (Exception e){
             logger.error(e.getMessage(),e);
-            return new BaseResult<CheckStudentsExcution>(0,e.getMessage());
+            CheckStudentsExcution checkStudentsExcution = new CheckStudentsExcution(CheckStudentsEnum.FIND_STUDENTS_LIST_FAIL,e.getMessage());
+            return new BaseAPIResult(0,checkStudentsExcution);
         }
     }
 
@@ -92,16 +93,17 @@ public class CheckStudentController extends BaseController{
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<CheckStudentsExcution> substudentinfo(CheckStudentsDto checkStudentsDto){
+    public BaseAPIResult substudentinfo(CheckStudentsDto checkStudentsDto){
         try {
             CheckStudentsExcution checkStudentsExcution = checkStudentsService.submitAudit(checkStudentsDto);
-            return new BaseResult<CheckStudentsExcution>(1,checkStudentsExcution);
+            return new BaseAPIResult(1,checkStudentsExcution);
         }catch (UpdateInnerErrorException e){
             CheckStudentsExcution checkStudentsExcution = new CheckStudentsExcution(CheckStudentsEnum.CHECK_FAIL);
-            return new BaseResult<CheckStudentsExcution>(0,checkStudentsExcution);
+            return new BaseAPIResult(0,checkStudentsExcution);
         }catch (Exception e){
             logger.error(e.getMessage(),e);
-            return new BaseResult<CheckStudentsExcution>(0,e.getMessage());
+            CheckStudentsExcution checkStudentsExcution = new CheckStudentsExcution(CheckStudentsEnum.CHECK_FAIL,e.getMessage());
+            return new BaseAPIResult(0,checkStudentsExcution);
         }
     }
 

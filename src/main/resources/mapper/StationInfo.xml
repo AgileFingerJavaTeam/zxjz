@@ -1,0 +1,102 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zxjz.dao.StationDao">
+    <select id="findParentJobTypeList"  resultType="StationInfo">
+        SELECT *
+        FROM zx_station
+        WHERE p_station_id = 0 AND is_delete=0
+        limit #{offset},#{rows}
+    </select>
+    <!--查询父类职位条数-->
+    <select id="findParentJobCount" resultType="int">
+        SELECT count(*)
+        FROM zx_station
+        WHERE p_station_id = 0 AND is_delete=0
+    </select>
+    <!--新增父类职位类型-->
+    <insert id="addParentJobType" >
+        INSERT INTO zx_station (p_station_id,station_name)
+        VALUES (0,#{station_name});
+    </insert>
+    <!--查询父类职位信息-->
+    <select id="findParentJobInfo" resultType="StationInfo">
+        SELECT *
+        FROM `zx_station`
+        where station_id=#{id}
+    </select>
+    <!--更新父类职位信息-->
+    <update id="editParentJobInfo" >
+        UPDATE zx_station
+        SET  station_name = #{station_name}
+        WHERE station_id=#{station_id}
+    </update>
+    <!--查询此父类职位的子类条数-->
+    <select id="findCount"  resultType="int">
+        SELECT COUNT(*)
+        FROM zx_station
+        WHERE p_station_id = #{station_id}
+    </select>
+    <!--更新父类职位类型状态（标记删除）-->
+    <update id="delDetails" >
+        UPDATE  zx_station
+        SET  is_delete = 1
+        WHERE station_id=#{station_id}
+    </update>
+    <!--查询子类岗位类型-->
+    <select id="findChildJobType"  resultType="StationInfo">
+        select * from zx_station
+        <where>
+            p_station_id > 0 and is_delete=0
+            <if test="pstationName!=null and pstationName!=''">
+                AND p_station_id =#{pstationName}
+            </if>
+        </where>
+        limit #{offset},#{rows}
+    </select>
+    <!--查询子类岗位条数-->
+    <select id="findChildJobCount" resultType="int">
+        SELECT count(*) FROM zx_station
+        <where>
+            p_station_id > 0 and is_delete=0
+            <if test="pstationName!=null and pstationName!=''">
+                AND p_station_id =#{pstationName}
+            </if>
+        </where>
+    </select>
+    <!--查询父类职位列表-->
+    <select id="getPInfo"  resultType="StationInfo">
+        SELECT station_id,station_name
+        FROM zx_station
+        WHERE p_station_id = 0 and is_delete = 0
+    </select>
+    <!--新增子类岗位类型-->
+    <insert id="addChildJobType" >
+        INSERT INTO zx_station (p_station_id,station_name)
+        VALUES (#{p_station_id},#{station_name});
+    </insert>
+    <!--查询子类岗位信息-->
+    <select id="findChildJobInfo"  resultType="StationInfo">
+        SELECT *
+        FROM `zx_station`
+        WHERE station_id=#{id}
+    </select>
+    <!--查询此子类岗位的父级职位名称-->
+    <select id="findParentJobName"  resultType="String">
+        SELECT station_name
+        FROM `zx_station`
+        WHERE station_id=#{p_station_id}
+    </select>
+    <!--更新子类岗位状态（标记删除）-->
+    <update id="updateChildJobState" >
+        UPDATE zx_station
+        SET  is_delete = 1
+        WHERE station_id=#{station_id}
+    </update>
+    <!--编辑子类岗位信息-->
+    <update id="editChildJobInfo" >
+        UPDATE zx_station
+        SET  station_name = #{station_name},p_station_id=#{pstation_name}
+        WHERE station_id=#{station_id}
+    </update>
+</mapper>
