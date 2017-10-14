@@ -1,11 +1,7 @@
 package com.zxjz.service.impl;
 
-<<<<<<< HEAD
-//public class CheckBillServiceImpl implements CheckBillService {
-//    private Logger logger= LoggerFactory.getLogger(this.getClass());
-//    @Autowired
-//}
-=======
+import com.zxjz.entity.RechargeInfo;
+import com.zxjz.exception.db.QueryInnerErrorException;
 import com.zxjz.base.BaseException;
 import com.zxjz.dao.CheckBillDao;
 import com.zxjz.dto.excution.CheckBillExcution;
@@ -170,4 +166,3 @@ public class CheckBillServiceImpl implements CheckBillService {
         }
     }
 }
->>>>>>> ec0146550d21c63d4b35a7e8ae3da1e694be8ca4
