@@ -13,7 +13,7 @@ public class RecruitmentDto {
     @NotNull
     private String settlement_method;
     @NotNull
-    private String salary_treatment;
+    private int salary_treatment;
     @NotNull
     private String commission;
     @NotNull
@@ -47,7 +47,8 @@ public class RecruitmentDto {
     @NotNull
     private int city;
     private  int recruiting_id;
-
+    private String status_result;
+    private String dismissed_reason;
     public int getRecruiting_id() {
         return recruiting_id;
     }
@@ -80,11 +81,11 @@ public class RecruitmentDto {
         this.settlement_method = settlement_method;
     }
 
-    public String getSalary_treatment() {
+    public int getSalary_treatment() {
         return salary_treatment;
     }
 
-    public void setSalary_treatment(String salary_treatment) {
+    public void setSalary_treatment(int salary_treatment) {
         this.salary_treatment = salary_treatment;
     }
 
@@ -216,13 +217,29 @@ public class RecruitmentDto {
         this.status_time = status_time;
     }
 
+    public String getStatus_result() {
+        return status_result;
+    }
+
+    public void setStatus_result(String status_result) {
+        this.status_result = status_result;
+    }
+
+    public String getDismissed_reason() {
+        return dismissed_reason;
+    }
+
+    public void setDismissed_reason(String dismissed_reason) {
+        this.dismissed_reason = dismissed_reason;
+    }
+
     @Override
     public String toString() {
         return "RecruitmentDto{" +
                 "user_id=" + user_id +
                 ", post_name='" + post_name + '\'' +
                 ", settlement_method='" + settlement_method + '\'' +
-                ", salary_treatment='" + salary_treatment + '\'' +
+                ", salary_treatment=" + salary_treatment +
                 ", commission='" + commission + '\'' +
                 ", benefits='" + benefits + '\'' +
                 ", position_longitude='" + position_longitude + '\'' +
@@ -240,6 +257,8 @@ public class RecruitmentDto {
                 ", post_classification=" + post_classification +
                 ", city=" + city +
                 ", recruiting_id=" + recruiting_id +
+                ", status_result='" + status_result + '\'' +
+                ", dismissed_reason='" + dismissed_reason + '\'' +
                 '}';
     }
 }

@@ -1,7 +1,6 @@
 package com.zxjz.controller;
 
 import com.zxjz.base.BaseController;
-import com.zxjz.base.BaseResult;
 import com.zxjz.dto.excution.StudentSetBoundPhoneExcution;
 import com.zxjz.dto.in.StudentSetBoundPhoneDto;
 import com.zxjz.enums.StudentSetBoundPhoneEnum;

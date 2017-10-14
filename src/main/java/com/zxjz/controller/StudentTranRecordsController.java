@@ -1,10 +1,8 @@
 package com.zxjz.controller;
 
 import com.zxjz.base.BaseController;
-import com.zxjz.base.BaseResult;
 import com.zxjz.dto.excution.StudentTranRecordsExcution;
 import com.zxjz.dto.in.StudentTranRecordsDto;
-import com.zxjz.service.BillListService;
 import com.zxjz.service.StudentTranRecordsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

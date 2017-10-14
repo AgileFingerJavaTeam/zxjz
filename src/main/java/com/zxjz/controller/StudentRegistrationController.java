@@ -1,7 +1,6 @@
 package com.zxjz.controller;
 
 import com.zxjz.base.BaseController;
-import com.zxjz.base.BaseResult;
 import com.zxjz.dto.excution.StudentRegistrationExcution;
 import com.zxjz.dto.in.StudentRegistrationDto;
 import com.zxjz.exception.db.QueryInnerErrorException;
