@@ -166,20 +166,20 @@ public class MerchantsController extends BaseController{
      * @param merchantsUpgradeDto
      * @return
      */
-    @RequestMapping(value = "/GetApplyVipInfo",
-            method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
-    @ResponseBody
-    public BaseAPIResult findApplyVipShopInfo (@RequestBody MerchantsUpgradeDto merchantsUpgradeDto){
-        try {
-           MerchantsUpgradeExcution merchantsUpgradeExcution = merchantsInfoService.findApplyVipShopList(merchantsUpgradeDto);
-            return new BaseAPIResult(1,merchantsUpgradeExcution);
-        }catch (Exception e){
-            logger.error(e.getMessage(),e);
-            MerchantsUpgradeExcution merchantsUpgradeExcution = new MerchantsUpgradeExcution(MerchantsUpgradeEnum.FIND_FAIL,e.getMessage());
-            return new BaseAPIResult(0,merchantsUpgradeExcution);
-        }
-    }
+//    @RequestMapping(value = "/GetApplyVipInfo",
+//            method = RequestMethod.POST,
+//            produces = {"application/json;charset=UTF-8"})
+//    @ResponseBody
+//    public BaseAPIResult findApplyVipShopInfo (@RequestBody MerchantsUpgradeDto merchantsUpgradeDto){
+//        try {
+//           MerchantsUpgradeExcution merchantsUpgradeExcution = merchantsInfoService.findApplyVipShopList(merchantsUpgradeDto);
+//            return new BaseAPIResult(1,merchantsUpgradeExcution);
+//        }catch (Exception e){
+//            logger.error(e.getMessage(),e);
+//            MerchantsUpgradeExcution merchantsUpgradeExcution = new MerchantsUpgradeExcution(MerchantsUpgradeEnum.FIND_FAIL,e.getMessage());
+//            return new BaseAPIResult(0,merchantsUpgradeExcution);
+//        }
+//    }
 
     /**
      * 显示审核页面

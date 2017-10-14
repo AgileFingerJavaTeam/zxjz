@@ -132,6 +132,11 @@ public class MerchantsInfoServiceImpl implements MerchantsInfoService {
         }
     }
 
+    /**
+     * 查询申请VIP商户申请信息
+     * @param merchantsUpgradeDto
+     * @return
+     */
     public MerchantsUpgradeExcution showAuditPage(MerchantsUpgradeDto merchantsUpgradeDto) {
         int user_id = merchantsUpgradeDto.getUserId();
         try {
@@ -147,4 +152,8 @@ public class MerchantsInfoServiceImpl implements MerchantsInfoService {
             throw new BaseException(e.getMessage());
         }
     }
+
+//    public MerchantsUpgradeExcution findApplyVipShopList(MerchantsUpgradeDto merchantsUpgradeDto) {
+//        int page = merchantsUpgradeDto.
+//    }
 }

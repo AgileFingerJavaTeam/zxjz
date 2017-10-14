@@ -17,7 +17,7 @@
     </select>
 
     <!--查询申请VIP商户信息（后台管理）-->
-    <select id="findApplyVipListById"  resultType="MerchantsUpgrade">
+    <select id="findApplyVipList"  resultType="MerchantsUpgrade">
         SELECT *,ma.merchants_name FROM zx_merchants_upgrade  mu
         LEFT JOIN zx_merchants_account ma  ON mu.user_id = ma.user_id
         <where>

@@ -77,7 +77,7 @@ public interface StationDao {
      * 查询父类职位信息
      * @return
      */
-    public List<PageData> findParentJobInfo();
+    public List<StationInfo> findParentJobInfo();
 
     /**
      * 新增子类岗位类型

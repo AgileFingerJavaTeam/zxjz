@@ -65,7 +65,7 @@
         </where>
     </select>
     <!--查询父类职位列表-->
-    <select id="getPInfo"  resultType="PageData">
+    <select id="getPInfo"  resultType="StationInfo">
         SELECT station_id,station_name
         FROM zx_station
         WHERE p_station_id = 0 and is_delete = 0

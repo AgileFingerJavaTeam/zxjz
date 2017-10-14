@@ -50,5 +50,5 @@ public interface MerchantsInfoService {
      * @param merchantsUpgradeDto
      * @return
      */
-    public MerchantsUpgradeExcution findApplyVipShopList(MerchantsUpgradeDto merchantsUpgradeDto);
+//    public MerchantsUpgradeExcution findApplyVipShopList(MerchantsUpgradeDto merchantsUpgradeDto);
 }

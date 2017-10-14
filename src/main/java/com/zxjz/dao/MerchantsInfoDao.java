@@ -68,7 +68,7 @@ public interface MerchantsInfoDao {
      * @param rows
      * @return
      */
-    public MerchantsUpgrade findApplyVipListById(@Param("srt_approval_status1")String srt_approval_status1,@Param("srt_search_content1")String srt_search_content1,@Param("offset")int offset,@Param("rows")int rows);
+    public MerchantsUpgrade findApplyVipList(@Param("srt_approval_status1")String srt_approval_status1,@Param("srt_search_content1")String srt_search_content1,@Param("offset")int offset,@Param("rows")int rows);
 
     /**
      * 查询申请VIP商户总数

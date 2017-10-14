@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -40,7 +41,10 @@ public class StationInfoServiceImpl implements StationInfoService {
                 throw new QueryInnerErrorException("查询父类职位列表失败");
             }
             int parentJobCount = stationDao.findParentJobCount();
-            return new StationInfoExcution(StationInfoEnum.FIND_SUCCESS,parentJobCount);
+            HashMap map = new HashMap();
+            map.put("stationInfoList",stationInfoList);
+            map.put("parentJobCount",parentJobCount);
+            return new StationInfoExcution(StationInfoEnum.FIND_SUCCESS,map);
         }catch (QueryInnerErrorException e1){
             throw e1;
         }catch (Exception e){
@@ -151,7 +155,10 @@ public class StationInfoServiceImpl implements StationInfoService {
         try {
             List<StationInfo> stationInfoList = stationDao.findChildJobType(pstationName,offset,rows);
             int childCount = stationDao.findChildJobCount(pstationName);
-            return new StationInfoExcution(StationInfoEnum.FIND_CHILD_INFO_SUCCESS,stationInfoList,childCount);
+            HashMap map = new HashMap();
+            map.put("stationInfoList",stationInfoList);
+            map.put("childCount",childCount);
+            return new StationInfoExcution(StationInfoEnum.FIND_CHILD_INFO_SUCCESS,map);
         }catch (Exception e){
             logger.error(e.getMessage(), e);
             throw new BaseException(e.getMessage());
@@ -164,7 +171,7 @@ public class StationInfoServiceImpl implements StationInfoService {
      */
     public StationInfoExcution findParentJob(StationDto stationDto) {
         try {
-            List<PageData> pageDataList = stationDao.findParentJobInfo();
+            List<StationInfo> pageDataList = stationDao.findParentJobInfo();
             if (pageDataList == null){
                 throw new QueryInnerErrorException("查询父类信息失败");
             }
@@ -216,7 +223,10 @@ public class StationInfoServiceImpl implements StationInfoService {
             if (parentJobName == null){
                 throw new QueryInnerErrorException("查询父类岗位名称失败");
             }
-            return new StationInfoExcution(StationInfoEnum.FIND_FAIL,childJobInfo,parentJobName);
+            HashMap map = new HashMap();
+            map.put("childJobInfo",childJobInfo);
+            map.put("parentJobName",parentJobName);
+            return new StationInfoExcution(StationInfoEnum.FIND_FAIL,map);
         }catch (QueryInnerErrorException e1){
             throw e1;
         }catch (Exception e){
