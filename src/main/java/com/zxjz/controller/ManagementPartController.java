@@ -1,7 +1,7 @@
 package com.zxjz.controller;
 
+import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
-import com.zxjz.base.BaseResult;
 import com.zxjz.dto.excution.ManagementPartExcuton;
 import com.zxjz.dto.excution.UpdateIsOverExcution;
 import com.zxjz.dto.excution.UpdatePauseExcution;
@@ -9,6 +9,8 @@ import com.zxjz.dto.excution.UpdateRejectExcution;
 import com.zxjz.dto.in.ManagementPartDto;
 import com.zxjz.dto.in.UpdatePauseDto;
 import com.zxjz.dto.in.UpdateRejectDto;
+import com.zxjz.enums.StuPersonalEnum;
+import com.zxjz.enums.UpdatePauseEnum;
 import com.zxjz.service.ManagementPartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,17 +31,18 @@ public class ManagementPartController extends BaseController{
      * @return
      */
     @RequestMapping(value = "postStuGenEvaluation",
-            method = RequestMethod.GET,
+            method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<ManagementPartExcuton> postStuGenEvaluation(@RequestBody ManagementPartDto managementPartDto){
+    public BaseAPIResult postStuGenEvaluation(@RequestBody ManagementPartDto managementPartDto){
         //参数验空
         try{
             ManagementPartExcuton managementPartExcuton = managementPartService.findManagementPart(managementPartDto);
-            return new BaseResult<ManagementPartExcuton>(1,managementPartExcuton);
+            return new BaseAPIResult(1,managementPartExcuton);
         } catch (Exception e){
             logger.error(e.getMessage(),e);
-            return new BaseResult<ManagementPartExcuton>(0,e.getMessage());
+            ManagementPartExcuton managementPartExcuton = new ManagementPartExcuton(e.getMessage(), StuPersonalEnum.FIND_ERROR);
+            return new BaseAPIResult(0,managementPartExcuton);
         }
 
     }
@@ -53,14 +56,15 @@ public class ManagementPartController extends BaseController{
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<UpdatePauseExcution> getPause(@RequestBody UpdatePauseDto updatePauseDto){
+    public BaseAPIResult getPause(@RequestBody UpdatePauseDto updatePauseDto){
         //参数验空
         try{
             UpdatePauseExcution updatePauseExcution = managementPartService.updatePause(updatePauseDto);
-            return new BaseResult<UpdatePauseExcution>(1,updatePauseExcution);
+            return new BaseAPIResult(1,updatePauseExcution);
         } catch (Exception e){
             logger.error(e.getMessage(),e);
-            return new BaseResult<UpdatePauseExcution>(0,e.getMessage());
+            UpdatePauseExcution updatePauseExcution = new UpdatePauseExcution(e.getMessage(), UpdatePauseEnum.UPDATE_ERROR);
+            return new BaseAPIResult(0,updatePauseExcution);
         }
 
     }
@@ -74,14 +78,15 @@ public class ManagementPartController extends BaseController{
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<UpdateRejectExcution> getAuditFailed(@RequestBody UpdateRejectDto updateRejectDto){
+    public BaseAPIResult getAuditFailed(@RequestBody UpdateRejectDto updateRejectDto){
         //参数验空
         try{
             UpdateRejectExcution updateRejectExcution = managementPartService.updateReject(updateRejectDto);
-            return new BaseResult<UpdateRejectExcution>(1,updateRejectExcution);
+            return new BaseAPIResult(1,updateRejectExcution);
         } catch (Exception e){
             logger.error(e.getMessage(),e);
-            return new BaseResult<UpdateRejectExcution>(0,e.getMessage());
+            UpdateRejectExcution updateRejectExcution = new UpdateRejectExcution(e.getMessage(), UpdatePauseEnum.UPDATE_ERROR);
+            return new BaseAPIResult(0,updateRejectExcution);
         }
 
     }
@@ -95,14 +100,15 @@ public class ManagementPartController extends BaseController{
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<UpdateIsOverExcution> updateIsOver(@RequestBody UpdateRejectDto updateRejectDto){
+    public BaseAPIResult updateIsOver(@RequestBody UpdateRejectDto updateRejectDto){
         //参数验空
         try{
             UpdateIsOverExcution updateIsOverExcution = managementPartService.updateIsOver(updateRejectDto);
-            return new BaseResult<UpdateIsOverExcution>(1,updateIsOverExcution);
+            return new BaseAPIResult(1,updateIsOverExcution);
         } catch (Exception e){
             logger.error(e.getMessage(),e);
-            return new BaseResult<UpdateIsOverExcution>(0,e.getMessage());
+            UpdateIsOverExcution updateIsOverExcution = new UpdateIsOverExcution(e.getMessage(), UpdatePauseEnum.UPDATE_ERROR);
+            return new BaseAPIResult(0,updateIsOverExcution);
         }
 
     }

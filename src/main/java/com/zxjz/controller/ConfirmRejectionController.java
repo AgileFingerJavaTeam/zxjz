@@ -1,12 +1,11 @@
 package com.zxjz.controller;
 
+import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
-import com.zxjz.base.BaseResult;
-import com.zxjz.dto.excution.BillListExcution;
 import com.zxjz.dto.excution.ConfirmRejectionExcution;
-import com.zxjz.dto.in.BillListDto;
 import com.zxjz.dto.in.ConfirmRejectionDto;
-import com.zxjz.service.BillListService;
+import com.zxjz.enums.ConfirmRejectionEnum;
+import com.zxjz.enums.StuPersonalEnum;
 import com.zxjz.service.ConfirmRejectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,14 +23,15 @@ public class ConfirmRejectionController extends BaseController{
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<ConfirmRejectionExcution> postDetailsPage(ConfirmRejectionDto confirmRejectionDto){
+    public BaseAPIResult postDetailsPage(ConfirmRejectionDto confirmRejectionDto){
         //参数验空
         try {
             ConfirmRejectionExcution confirmRejectionExcution = confirmRejectionService.updateConReject(confirmRejectionDto);
-            return new BaseResult<ConfirmRejectionExcution>(1,confirmRejectionExcution);
+            return new BaseAPIResult(1,confirmRejectionExcution);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<ConfirmRejectionExcution>(0,e.getMessage());
+            ConfirmRejectionExcution confirmRejectionExcution = new ConfirmRejectionExcution(ConfirmRejectionEnum.HIRED_ERROR, e.getMessage());
+            return new BaseAPIResult(0,confirmRejectionExcution);
         }
     }
 }

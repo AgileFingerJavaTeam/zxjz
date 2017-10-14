@@ -41,7 +41,7 @@ public class ManagementPartServiceImpl implements ManagementPartService{
         List<ManagementPart> List = null;
         try{
             if(recruitmentListType.equals(null)){
-                return new ManagementPartExcuton(null,StuPersonalEnum.FIND_ERROR);
+                return new ManagementPartExcuton(StuPersonalEnum.FIND_ERROR);
             }
             if (recruitmentListType.equals("0")){
                 List<ManagementPart> underWayInfor = managementPartDao.getUnderWayInfor(userID);

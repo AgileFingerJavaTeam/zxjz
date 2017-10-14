@@ -3,6 +3,7 @@ package com.zxjz.service.impl;
 import com.zxjz.base.BaseException;
 import com.zxjz.dao.MerchantDao;
 import com.zxjz.dto.excution.MerchantExcution;
+import com.zxjz.dto.excution.MerchantInformationExcution;
 import com.zxjz.dto.in.MerchantDto;
 import com.zxjz.entity.*;
 import com.zxjz.enums.MerchantEnum;
@@ -98,11 +99,11 @@ public class MerchantServiceImpl implements MerchantService {
         }
     }
 
-    public MerchantExcution findMerchantinfor(MerchantDto merchantDto) {
+    public MerchantInformationExcution findMerchantinfor(MerchantDto merchantDto) {
         int user_id = merchantDto.getUser_id();
         try {
             GetMerchantInfo merinfo = merchantDao.findMerchantInformation(user_id);
-            return new MerchantExcution(MerchantEnum.FIND_MERCHANT_SUCCESS, merinfo);
+            return new MerchantInformationExcution(MerchantEnum.FIND_MERCHANT_SUCCESS, merinfo);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             throw new BaseException(e.getMessage());

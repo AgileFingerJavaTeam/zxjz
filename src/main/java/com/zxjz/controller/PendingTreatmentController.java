@@ -1,12 +1,10 @@
 package com.zxjz.controller;
 
+import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
-import com.zxjz.base.BaseResult;
-import com.zxjz.dto.excution.BillListExcution;
 import com.zxjz.dto.excution.PendingTreatmentExcution;
-import com.zxjz.dto.in.BillListDto;
 import com.zxjz.dto.in.PendingTreatmentDto;
-import com.zxjz.service.BillListService;
+import com.zxjz.enums.StuPersonalEnum;
 import com.zxjz.service.PendingTreatmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,14 +23,15 @@ public class PendingTreatmentController extends BaseController {
             method = RequestMethod.GET,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<PendingTreatmentExcution> postGetInterface(PendingTreatmentDto pendingTreatmentDto){
+    public BaseAPIResult postGetInterface(PendingTreatmentDto pendingTreatmentDto){
         //参数验空
         try {
             PendingTreatmentExcution pendingTreatmentExcution = pendingTreatmentService.findPendingTreatment(pendingTreatmentDto);
-            return new BaseResult<PendingTreatmentExcution>(1,pendingTreatmentExcution);
+            return new BaseAPIResult(1,pendingTreatmentExcution);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<PendingTreatmentExcution>(0,e.getMessage());
+            PendingTreatmentExcution pendingTreatmentExcution = new PendingTreatmentExcution(e.getMessage(), StuPersonalEnum.FIND_ERROR);
+            return new BaseAPIResult(0,pendingTreatmentExcution);
         }
     }
 }

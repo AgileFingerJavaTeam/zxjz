@@ -40,7 +40,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     public RecruitmentExcution postjob(RecruitmentDto recruitmentDto) {
         int user_id = recruitmentDto.getUser_id();
         String settlement_method = recruitmentDto.getSettlement_method();
-        String salary_treatment = recruitmentDto.getSalary_treatment();
+        int salary_treatment = recruitmentDto.getSalary_treatment();
         String benefits = recruitmentDto.getBenefits();
         int city = recruitmentDto.getCity();
         String commission = recruitmentDto.getCommission();
@@ -79,7 +79,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     public RecruitmentExcution postjobcopy(RecruitmentDto recruitmentDto) {
         int user_id = recruitmentDto.getUser_id();
         String settlement_method = recruitmentDto.getSettlement_method();
-        String salary_treatment = recruitmentDto.getSalary_treatment();
+        int salary_treatment = recruitmentDto.getSalary_treatment();
         String commission = recruitmentDto.getCommission();
         String benefits = recruitmentDto.getBenefits();
         String position_longitude = recruitmentDto.getPosition_longitude();
@@ -127,7 +127,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     public RecruitmentExcution postfailure(RecruitmentDto recruitmentDto) {
         int user_id = recruitmentDto.getUser_id();
         String settlement_method = recruitmentDto.getSettlement_method();
-        String salary_treatment = recruitmentDto.getSalary_treatment();
+        int salary_treatment = recruitmentDto.getSalary_treatment();
         String commission = recruitmentDto.getCommission();
         String benefits = recruitmentDto.getBenefits();
         String position_longitude = recruitmentDto.getPosition_longitude();
@@ -146,14 +146,16 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         int post_classification = recruitmentDto.getPost_classification();
         String post_name = recruitmentDto.getPost_name();
         String status_time=recruitmentDto.getStatus_time();
+        String status_result=recruitmentDto.getStatus_result();
+        String dismissed_reason=recruitmentDto.getDismissed_reason();
         try{
-            Recruitment status =recruitmentDao.status(recruiting_id);
+            String status =recruitmentDao.status(recruiting_id);
                 int data=0;
                 if (status==null){
                     throw  new  UpdateInnerErrorException("更改状态失败");
                 }else{
                     if (status.equals("草稿") || status.equals("已驳回")) {
-                        int updataStatus =recruitmentDao.updateStatus(status_time, user_id, post_name, settlement_method, salary_treatment, commission, benefits, position_longitude, position_latitude, work_location, work_date, work_time, recruitment, gender_requirements, work_content, hiring_expiration_date, leader, leader_phone, post_classification,city);
+                        int updataStatus =recruitmentDao.updateStatus(status_time, user_id, post_name, settlement_method, salary_treatment, commission, benefits, position_longitude, position_latitude, work_location, work_date, work_time, recruitment, gender_requirements, work_content, hiring_expiration_date, leader, leader_phone, post_classification,city,status_result,dismissed_reason,recruiting_id);
                         if(updataStatus>0){
                             return  new RecruitmentExcution(RecruitmentEnum.UPDATE_SUCCESS);
                         }else{
@@ -186,7 +188,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     public RecruitmentExcution editpostjobcopy(RecruitmentDto recruitmentDto) {
         int user_id = recruitmentDto.getUser_id();
         String settlement_method = recruitmentDto.getSettlement_method();
-        String salary_treatment = recruitmentDto.getSalary_treatment();
+        int salary_treatment = recruitmentDto.getSalary_treatment();
         String commission = recruitmentDto.getCommission();
         String benefits = recruitmentDto.getBenefits();
         String position_longitude = recruitmentDto.getPosition_longitude();
@@ -204,12 +206,15 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         String leader_phone = recruitmentDto.getLeader_phone();
         int post_classification = recruitmentDto.getPost_classification();
         String post_name = recruitmentDto.getPost_name();
+        String status_time=recruitmentDto.getStatus_time();
+        String status_result=recruitmentDto.getStatus_result();
+        String dismissed_reason=recruitmentDto.getDismissed_reason();
         try {
             String audit_status="草稿";
-            Recruitment applyStatus=recruitmentDao.findStatus(recruiting_id);
+            String applyStatus=recruitmentDao.status(recruiting_id);
             if(applyStatus!=null){
                if(applyStatus.equals("草稿")||applyStatus.equals("待审核")){
-                int updateStatus=recruitmentDao.updateStatusC(user_id, post_name, settlement_method, salary_treatment, commission, benefits, position_longitude, position_latitude, work_location, work_date, work_time, recruitment, gender_requirements, work_content, hiring_expiration_date, leader, leader_phone, post_classification,city);
+                int updateStatus=recruitmentDao.updateStatusC(status_time, user_id, post_name, settlement_method, salary_treatment, commission, benefits, position_longitude, position_latitude, work_location, work_date, work_time, recruitment, gender_requirements, work_content, hiring_expiration_date, leader, leader_phone, post_classification,city,status_result,dismissed_reason,recruiting_id);
                 if(updateStatus>0){
                     return  new RecruitmentExcution(RecruitmentEnum.UPDATE_SUCCESS);
                 }else {
@@ -246,7 +251,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     public RecruitmentExcution editJob(RecruitmentDto recruitmentDto) {
         int user_id = recruitmentDto.getUser_id();
         String settlement_method = recruitmentDto.getSettlement_method();
-        String salary_treatment = recruitmentDto.getSalary_treatment();
+        int salary_treatment = recruitmentDto.getSalary_treatment();
         String commission = recruitmentDto.getCommission();
         String benefits = recruitmentDto.getBenefits();
         String position_longitude = recruitmentDto.getPosition_longitude();
@@ -318,40 +323,48 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 
     @Transactional
     public RecruitmentExcution tradingRecord(PaypsdDto paypsdDto) {
+
         int user_id = paypsdDto.getUser_id();
-        List<MerchantFundsCurrentAccount> merchantFundsCurrentAccountInfoList = recruitmentDao.findListTradingRecord(user_id);
-        if (merchantFundsCurrentAccountInfoList == null) {
-            return null;
-        }
-        for (MerchantFundsCurrentAccount info : merchantFundsCurrentAccountInfoList) {
-            if (info.getReferenceBillClassification().equals("平台代付工资")) {
-                info.setIsPayWages("是");
-                int student_id = info.getTargetId();
-                int work_id = info.getWorkId();
-                MerchantFundsCurrentAccount studentPartInfo = recruitmentDao.findTradingRecord(student_id);
-                if (studentPartInfo != null) {
-                    info.setName(studentPartInfo.getName());
-                    info.setHeadPic(studentPartInfo.getHeadPic());
-                }
-                MerchantFundsCurrentAccount workInfo = recruitmentDao.findTradingRecords(work_id);
-                if (workInfo != null) {
-                    info.setPostName(workInfo.getPostName());
-                }
-            } else if (info.getReferenceBillClassification().equals("充值")) {
-                int references_the_bill_id = info.getReferencesTheBillId();
-                int references_the_internal_serial_number1 = info.getReferencesTheInternalSerialNumber1();
-                MerchantFundsCurrentAccount merchantFundsCurrentAccountInfo = recruitmentDao.findMerchantRecharge(references_the_bill_id, references_the_internal_serial_number1);
-                if (merchantFundsCurrentAccountInfo != null) {
-                    info.setRechargeMode(merchantFundsCurrentAccountInfo.getRechargeMode());
-                }
-            } else if (info.getReferenceBillClassification().equals("提现")) {
-                int references_the_bill_id = info.getReferencesTheBillId();
-                int references_the_internal_serial_number1 = info.getReferencesTheInternalSerialNumber1();
-                MerchantFundsCurrentAccount merchantFundsCurrentAccountInfo = recruitmentDao.findMerchantTX(references_the_bill_id, references_the_internal_serial_number1);
-                if (merchantFundsCurrentAccountInfo != null) {
-                    info.setCashWithdrawal(merchantFundsCurrentAccountInfo.getCashWithdrawal());
+        try {
+            List<MerchantFundsCurrentAccount> merchantFundsCurrentAccountInfoList = recruitmentDao.findListTradingRecord(user_id);
+            if (merchantFundsCurrentAccountInfoList == null) {
+                throw new QueryInnerErrorException("查询失败");
+            }
+            for (MerchantFundsCurrentAccount info : merchantFundsCurrentAccountInfoList) {
+                if (info.getReferenceBillClassification().equals("平台代付工资")) {
+                    info.setIsPayWages("是");
+                    int student_id = info.getTargetId();
+                    int work_id = info.getWorkId();
+                    MerchantFundsCurrentAccount studentPartInfo = recruitmentDao.findTradingRecord(student_id);
+                    if (studentPartInfo != null) {
+                        info.setName(studentPartInfo.getName());
+                        info.setHeadPic(studentPartInfo.getHeadPic());
+                    }
+                    MerchantFundsCurrentAccount workInfo = recruitmentDao.findTradingRecords(work_id);
+                    if (workInfo != null) {
+                        info.setPostName(workInfo.getPostName());
+                    }
+                } else if (info.getReferenceBillClassification().equals("充值")) {
+                    int references_the_bill_id = info.getReferencesTheBillId();
+                    int references_the_internal_serial_number1 = info.getReferencesTheInternalSerialNumber1();
+                    MerchantFundsCurrentAccount merchantFundsCurrentAccountInfo = recruitmentDao.findMerchantRecharge(references_the_bill_id, references_the_internal_serial_number1);
+                    if (merchantFundsCurrentAccountInfo != null) {
+                        info.setRechargeMode(merchantFundsCurrentAccountInfo.getRechargeMode());
+                    }
+                } else if (info.getReferenceBillClassification().equals("提现")) {
+                    int references_the_bill_id = info.getReferencesTheBillId();
+                    int references_the_internal_serial_number1 = info.getReferencesTheInternalSerialNumber1();
+                    MerchantFundsCurrentAccount merchantFundsCurrentAccountInfo = recruitmentDao.findMerchantTX(references_the_bill_id, references_the_internal_serial_number1);
+                    if (merchantFundsCurrentAccountInfo != null) {
+                        info.setCashWithdrawal(merchantFundsCurrentAccountInfo.getCashWithdrawal());
+                    }
                 }
             }
+        } catch (QueryInnerErrorException q) {
+            throw q;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new BaseException(e.getMessage());
         }
         return null;
     }

@@ -1,10 +1,12 @@
 package com.zxjz.controller;
 
 import com.zxjz.base.BaseController;
-import com.zxjz.base.BaseResult;
 import com.zxjz.dto.excution.SettlementExcution;
+import com.zxjz.dto.in.SettlementAddFunctionDto;
 import com.zxjz.dto.in.SettlementDto;
 import com.zxjz.entity.LandFall;
+import com.zxjz.exception.db.InsertInnerErrorException;
+import com.zxjz.exception.db.UpdateInnerErrorException;
 import com.zxjz.service.SettlementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,7 @@ import javax.servlet.http.HttpSession;
  * Created by Administrator on 2017/10/11 0011.
  */
 @Controller
+@RequestMapping("/Settlement")
 public class SettlementController extends BaseController{
     @Autowired
     private SettlementService settlementService;
@@ -130,6 +133,30 @@ public class SettlementController extends BaseController{
     }
 
     /**
+     * 添加方法
+     * @return
+     */
+    @RequestMapping(value ="/addFunction")
+    @ResponseBody
+    public BaseResult<SettlementExcution> addFunction(@RequestBody SettlementAddFunctionDto settlementAddFunctionDto) {
+        //参数验空
+        try {
+            SettlementExcution settlementExcution = settlementService.saveFunction(settlementAddFunctionDto);
+            return new BaseResult<SettlementExcution>(1,settlementExcution);
+        }catch (InsertInnerErrorException e) {
+            logger.error(e.getMessage(), e);
+            return new BaseResult<SettlementExcution>(0,e.getMessage());
+        }
+        catch (UpdateInnerErrorException e) {
+            logger.error(e.getMessage(), e);
+            return new BaseResult<SettlementExcution>(0,e.getMessage());
+        }
+        catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return new BaseResult<SettlementExcution>(0,e.getMessage());
+        }
+    }
+    /**
      * 查询商户名称
      *
      * @return
@@ -146,8 +173,4 @@ public class SettlementController extends BaseController{
             return new BaseResult<SettlementExcution>(0,e.getMessage());
         }
     }
-
-
-
-
 }

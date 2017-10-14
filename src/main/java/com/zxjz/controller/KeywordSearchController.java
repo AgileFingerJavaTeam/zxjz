@@ -1,13 +1,11 @@
 package com.zxjz.controller;
 
+import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
-import com.zxjz.base.BaseResult;
 import com.zxjz.dto.excution.KeywordSearchExcution;
-import com.zxjz.dto.excution.ManagementPartExcuton;
 import com.zxjz.dto.in.KeywordSearchDto;
-import com.zxjz.dto.in.ManagementPartDto;
+import com.zxjz.enums.StuPersonalEnum;
 import com.zxjz.service.KeywordSearchService;
-import com.zxjz.service.ManagementPartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,14 +28,15 @@ public class KeywordSearchController extends BaseController{
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<KeywordSearchExcution> getKeyWord(@RequestBody KeywordSearchDto keywordSearchDto){
+    public BaseAPIResult getKeyWord(@RequestBody KeywordSearchDto keywordSearchDto){
         //参数验空
         try{
             KeywordSearchExcution keywordSearchExcution = keywordSearchService.getKeywordSearch(keywordSearchDto);
-            return new BaseResult<KeywordSearchExcution>(1,keywordSearchExcution);
+            return new BaseAPIResult(1,keywordSearchExcution);
         } catch (Exception e){
             logger.error(e.getMessage(),e);
-            return new BaseResult<KeywordSearchExcution>(0,e.getMessage());
+            KeywordSearchExcution keywordSearchExcution = new KeywordSearchExcution(e.getMessage(), StuPersonalEnum.FIND_ERROR);
+            return new BaseAPIResult(0,keywordSearchExcution);
         }
 
     }

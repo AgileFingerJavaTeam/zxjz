@@ -47,4 +47,55 @@
             </if>
         </where>
     </select>
+    <!--查询商户充值信息-->
+    <select id="findPayInfoById"  resultType="RechargeInfo">
+        SELECT *
+        FROM zx_merchant_funds_recharge_record mfrr
+        LEFT JOIN zx_merchants_account ma on mfrr.user_id = ma.user_id
+        LEFT JOIN zx_recharge_mode rm on mfrr.recharge_mode = rm.recharge_mode
+        LEFT JOIN zx_employee_basic_information ebi on ebi.employees_id = mfrr.operating_staff_id
+        WHERE mfrr.user_id = #{user_id} AND mfrr.recharge_sequence_number = #{references_the_internal_serial_number1}
+    </select>
+    <!--查询商户提现信息-->
+    <select id="findWithdrawInfoById"  resultType="MerchantWithdrawInfo">
+        SELECT *
+        FROM zx_merchant_funds_withdrawal_record mfwr
+        LEFT JOIN zx_merchants_account ma on mfwr.user_id = ma.user_id
+        LEFT JOIN zx_withdrawal_mode wm on mfwr.cash_withdrawal = wm.withdrawal_mode
+        WHERE mfwr.user_id = #{user_id} AND mfwr.withdrawal_sequence_number = #{references_the_internal_serial_number1}
+    </select>
+    <!--获取招聘ID-->
+    <select id="findRecruitIdByUserId"  resultType="Object">
+        SELECT recruit_id
+        FROM zx_work_base_info
+        WHERE work_id = #{work_id}
+    </select>
+    <!--查询工作名称-->
+    <select id="findPostNameByRecruitId"  resultType="String">
+        SELECT post_name
+        FROM zx_recruitment_information
+        WHERE recruiting_id = #{recruitId}
+    </select>
+    <!--查询商家支付工资信息-->
+    <select id="findSalaryById"  resultType="MerchantPayforStudent">
+        SELECT *
+        FROM zx_pay_calculation
+        WHERE work_id = #{work_id} AND settlement_num = #{references_the_internal_serial_number1}
+    </select>
+    <!--查询商家支付给平台信息-->
+    <select id="findCostInfoById"  resultType="MerchantPayforTerrace">
+        SELECT *
+        FROM zx_merchant_funds_platform_settlement_record mfps
+        LEFT JOIN zx_clearing_fee_mode cfc on mfps.classification_of_settlement_expenses = cfc.clearing_fee_mode
+        LEFT JOIN zx_merchants_account ma on mfps.user_id = ma.user_id
+        LEFT JOIN zx_employee_basic_information ebi on ebi.employees_id = mfps.employees_id
+        WHERE mfps.user_id = #{user_id} AND mfps.withdrawal_serial_number = #{references_the_internal_serial_number1}
+    </select>
+    <!--查询商家代付工资给学生信息-->
+    <select id="findPaymentInfoById" resultType="TerracePayforStudent">
+        SELECT *
+        FROM zx_merchant_funds_receivable mfr
+        LEFT JOIN zx_merchants_account ma on mfr.user_id = ma.user_id
+        WHERE mfr.user_id = #{user_id} AND mfr.serial_number = #{references_the_internal_serial_number1}
+    </select>
 </mapper>

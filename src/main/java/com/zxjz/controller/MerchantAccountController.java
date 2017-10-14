@@ -1,11 +1,14 @@
 package com.zxjz.controller;
 
+import com.zxjz.base.BaseAPIExcution;
+import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
-import com.zxjz.base.BaseResult;
 import com.zxjz.dto.excution.MerchantAccountExcution;
 import com.zxjz.dto.excution.MerchantApprovalStatusExcution;
 import com.zxjz.dto.excution.UpdatePwdByPhoneExcution;
 import com.zxjz.dto.in.*;
+import com.zxjz.enums.RegistrationEnum;
+import com.zxjz.enums.UpdatePauseEnum;
 import com.zxjz.service.MerchantAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,14 +32,15 @@ public class MerchantAccountController extends BaseController{
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<MerchantAccountExcution> getBills(@RequestBody MerchantAccountDto merchantAccountDto){
+    public BaseAPIResult getBills(@RequestBody MerchantAccountDto merchantAccountDto){
         //参数验空
         try {
             MerchantAccountExcution findMerchantAccount = merchantAccountService.findMerchantAccountinfo(merchantAccountDto);
-            return new BaseResult<MerchantAccountExcution>(1,findMerchantAccount);
+            return new BaseAPIResult(1,findMerchantAccount);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<MerchantAccountExcution>(0,e.getMessage());
+            MerchantAccountExcution findMerchantAccount = new MerchantAccountExcution(RegistrationEnum.FIND_ERROR,e.getMessage());
+            return new BaseAPIResult(0,findMerchantAccount);
         }
     }
 
@@ -49,14 +53,15 @@ public class MerchantAccountController extends BaseController{
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<MerchantAccountExcution> loginVerifyCode(@RequestBody MerchantAccountDto merchantAccountDto){
+    public BaseAPIResult loginVerifyCode(@RequestBody MerchantAccountDto merchantAccountDto){
         //参数验空
         try {
             MerchantAccountExcution findUserByPhone = merchantAccountService.findUserByPhone(merchantAccountDto);
-            return new BaseResult<MerchantAccountExcution>(1,findUserByPhone);
+            return new BaseAPIResult(1,findUserByPhone);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<MerchantAccountExcution>(0,e.getMessage());
+            MerchantAccountExcution findUserByPhone = new MerchantAccountExcution(RegistrationEnum.FIND_ERROR,e.getMessage());
+            return new BaseAPIResult(0,findUserByPhone);
         }
     }
 
@@ -66,17 +71,18 @@ public class MerchantAccountController extends BaseController{
      * @return
      */
     @RequestMapping(value = "loginWechat",
-            method = RequestMethod.GET,
+            method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<MerchantAccountExcution> loginWechat(@RequestBody UserByWechatIDDto userByWechatIDDto){
+    public BaseAPIResult loginWechat(@RequestBody UserByWechatIDDto userByWechatIDDto){
         //参数验空
         try {
             MerchantAccountExcution findUserByWechatID = merchantAccountService.findUserByWechatID(userByWechatIDDto);
-            return new BaseResult<MerchantAccountExcution>(1,findUserByWechatID);
+            return new BaseAPIResult(1,findUserByWechatID);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<MerchantAccountExcution>(0,e.getMessage());
+            MerchantAccountExcution findUserByWechatID = new MerchantAccountExcution(RegistrationEnum.FIND_ERROR,e.getMessage());
+            return new BaseAPIResult(0,findUserByWechatID);
         }
     }
 
@@ -89,14 +95,15 @@ public class MerchantAccountController extends BaseController{
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<MerchantAccountExcution> loginQQ(@RequestBody UserByQQIDDto userByQQIDDto){
+    public BaseAPIResult loginQQ(@RequestBody UserByQQIDDto userByQQIDDto){
         //参数验空
         try {
             MerchantAccountExcution findUserByQQID = merchantAccountService.findUserByQQID(userByQQIDDto);
-            return new BaseResult<MerchantAccountExcution>(1,findUserByQQID);
+            return new BaseAPIResult(1,findUserByQQID);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<MerchantAccountExcution>(0,e.getMessage());
+            MerchantAccountExcution merchantAccountExcution = new MerchantAccountExcution(RegistrationEnum.FIND_ERROR,e.getMessage());
+            return new BaseAPIResult(0,merchantAccountExcution);
         }
     }
 
@@ -109,14 +116,15 @@ public class MerchantAccountController extends BaseController{
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<MerchantAccountExcution> register(@RequestBody MerchantAccountDto merchantAccountDto){
+    public BaseAPIResult register(@RequestBody MerchantAccountDto merchantAccountDto){
         //参数验空
         try {
             MerchantAccountExcution findRegistration = merchantAccountService.findRegistration(merchantAccountDto);
-            return new BaseResult<MerchantAccountExcution>(1,findRegistration);
+            return new BaseAPIResult(1,findRegistration);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<MerchantAccountExcution>(0,e.getMessage());
+            MerchantAccountExcution merchantAccountExcution = new MerchantAccountExcution(RegistrationEnum.REGISTER_FAIL,e.getMessage());
+            return new BaseAPIResult(0,merchantAccountExcution);
         }
     }
 
@@ -129,14 +137,15 @@ public class MerchantAccountController extends BaseController{
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<UpdatePwdByPhoneExcution> backPwd(@RequestBody MerchantAccountDto merchantAccountDto){
+    public BaseAPIResult backPwd(@RequestBody MerchantAccountDto merchantAccountDto){
         //参数验空
         try {
             UpdatePwdByPhoneExcution updatePwdByPhone = merchantAccountService.updatePwdByPhone(merchantAccountDto);
-            return new BaseResult<UpdatePwdByPhoneExcution>(1,updatePwdByPhone);
+            return new BaseAPIResult(1,updatePwdByPhone);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<UpdatePwdByPhoneExcution>(0,e.getMessage());
+            UpdatePwdByPhoneExcution updatePwdByPhoneExcution = new UpdatePwdByPhoneExcution(e.getMessage(),RegistrationEnum.MODIFICATION_ERROR);
+            return new BaseAPIResult(0,updatePwdByPhoneExcution);
         }
     }
 
@@ -149,14 +158,15 @@ public class MerchantAccountController extends BaseController{
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<MerchantAccountExcution> setPwd(@RequestBody UserByIdDto userByIdDto){
+    public BaseAPIResult setPwd(@RequestBody UserByIdDto userByIdDto){
         //参数验空
         try {
             MerchantAccountExcution findUserById = merchantAccountService.findUserById(userByIdDto);
-            return new BaseResult<MerchantAccountExcution>(1,findUserById);
+            return new BaseAPIResult(1,findUserById);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<MerchantAccountExcution>(0,e.getMessage());
+            MerchantAccountExcution merchantAccountExcution = new MerchantAccountExcution(RegistrationEnum.MODIFICATION_ERROR,e.getMessage());
+            return new BaseAPIResult(0,merchantAccountExcution);
         }
     }
 
@@ -169,14 +179,15 @@ public class MerchantAccountController extends BaseController{
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<MerchantAccountExcution> findInfoById(@RequestBody UserByIdDto userByIdDto){
+    public BaseAPIResult findInfoById(@RequestBody UserByIdDto userByIdDto){
         //参数验空
         try {
             MerchantAccountExcution getUserById = merchantAccountService.getUserById(userByIdDto);
-            return new BaseResult<MerchantAccountExcution>(1,getUserById);
+            return new BaseAPIResult(1,getUserById);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<MerchantAccountExcution>(0,e.getMessage());
+            MerchantAccountExcution merchantAccountExcution = new MerchantAccountExcution(RegistrationEnum.MODIFICATION_ERROR,e.getMessage());
+            return new BaseAPIResult(0,merchantAccountExcution);
         }
     }
 
@@ -189,14 +200,15 @@ public class MerchantAccountController extends BaseController{
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<MerchantApprovalStatusExcution> checkApprovalStatus(@RequestBody MerchantApprovalStatusDto merchantApprovalStatusDto){
+    public BaseAPIResult checkApprovalStatus(@RequestBody MerchantApprovalStatusDto merchantApprovalStatusDto){
         //参数验空
         try {
             MerchantApprovalStatusExcution findApprovalStatusById = merchantAccountService.findApprovalStatusById(merchantApprovalStatusDto);
-            return new BaseResult<MerchantApprovalStatusExcution>(1,findApprovalStatusById);
+            return new BaseAPIResult(1,findApprovalStatusById);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<MerchantApprovalStatusExcution>(0,e.getMessage());
+            MerchantApprovalStatusExcution merchantApprovalStatusExcution = new MerchantApprovalStatusExcution(RegistrationEnum.MODIFICATION_ERROR,e.getMessage());
+            return new BaseAPIResult(0,merchantApprovalStatusExcution);
         }
     }
 
@@ -209,14 +221,15 @@ public class MerchantAccountController extends BaseController{
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<MerchantAccountExcution> checkApprovalStatus(@RequestBody ApprovalStatusByIdDto approvalStatusByIdDto){
+    public BaseAPIResult checkApprovalStatus(@RequestBody ApprovalStatusByIdDto approvalStatusByIdDto){
         //参数验空
         try {
             MerchantAccountExcution findApprovalStatusById = merchantAccountService.findApprovalStatusById(approvalStatusByIdDto);
-            return new BaseResult<MerchantAccountExcution>(1,findApprovalStatusById);
+            return new BaseAPIResult(1,findApprovalStatusById);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<MerchantAccountExcution>(0,e.getMessage());
+            MerchantAccountExcution merchantAccountExcution = new MerchantAccountExcution(RegistrationEnum.MODIFICATION_ERROR,e.getMessage());
+            return new BaseAPIResult(0,merchantAccountExcution);
         }
     }
 }

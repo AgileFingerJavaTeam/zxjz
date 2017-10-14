@@ -1,7 +1,6 @@
 package com.zxjz.controller;
 
 import com.zxjz.base.BaseController;
-import com.zxjz.base.BaseResult;
 import com.zxjz.dto.excution.JobDetailsExcution;
 import com.zxjz.dto.excution.MerchantCommentExcution;
 import com.zxjz.dto.excution.SystemParameterExcution;
@@ -12,8 +11,6 @@ import com.zxjz.enums.SystemParameterEnum;
 import com.zxjz.exception.FindDatabaseException;
 import com.zxjz.exception.FindJobException;
 import com.zxjz.exception.db.InsertInnerErrorException;
-import com.zxjz.exception.db.InsertInnerErrorException;
-import com.zxjz.exception.db.QueryInnerErrorException;
 import com.zxjz.exception.db.QueryInnerErrorException;
 import com.zxjz.service.SystemParameterService;
 import org.springframework.beans.factory.annotation.Autowired;

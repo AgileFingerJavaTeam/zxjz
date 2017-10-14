@@ -1,10 +1,11 @@
 package com.zxjz.controller;
 
+import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
-import com.zxjz.base.BaseResult;
 import com.zxjz.dto.excution.StudentTranRecordsExcution;
 import com.zxjz.dto.in.StudentTranRecordsDto;
-import com.zxjz.service.BillListService;
+import com.zxjz.enums.CityEnum;
+import com.zxjz.enums.StuPersonalEnum;
 import com.zxjz.service.StudentTranRecordsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,14 +23,15 @@ public class StudentTranRecordsController extends BaseController{
             method = RequestMethod.GET,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<StudentTranRecordsExcution> postStudentTranRecords(StudentTranRecordsDto studentTranRecordsDto){
+    public BaseAPIResult postStudentTranRecords(StudentTranRecordsDto studentTranRecordsDto){
         //参数验空
         try {
             StudentTranRecordsExcution studentTranRecordsExcution = studentTranRecordsService.getStudentTranRecords(studentTranRecordsDto);
-            return new BaseResult<StudentTranRecordsExcution>(1,studentTranRecordsExcution);
+            return new BaseAPIResult(1,studentTranRecordsExcution);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<StudentTranRecordsExcution>(0,e.getMessage());
+            StudentTranRecordsExcution studentTranRecordsExcution = new StudentTranRecordsExcution(e.getMessage(), CityEnum.FIND_ERROR);
+            return new BaseAPIResult(0,studentTranRecordsExcution);
         }
     }
 }

@@ -1,6 +1,6 @@
 package com.zxjz.controller;
 
-import com.zxjz.base.BaseResult;
+import com.zxjz.base.BaseAPIResult;
 import com.zxjz.dto.excution.CodeExcution;
 import com.zxjz.dto.excution.UpdatePwdExcution;
 import com.zxjz.dto.excution.UserCountExcution;
@@ -8,6 +8,7 @@ import com.zxjz.dto.in.CodeDto;
 import com.zxjz.dto.in.UpdateByIdDto;
 import com.zxjz.dto.in.UpdatePwdDto;
 import com.zxjz.dto.in.UserCountDto;
+import com.zxjz.enums.RegistrationEnum;
 import com.zxjz.service.UserCountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,13 +32,14 @@ public class UserCountController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<UserCountExcution> loginPwd(@RequestBody UserCountDto userCountDto){
+    public BaseAPIResult loginPwd(@RequestBody UserCountDto userCountDto){
         //参数验空
         try {
             UserCountExcution findUserByPhoneAndPwd = userCountService.findUserByPhoneAndPwd(userCountDto);
-            return new BaseResult<UserCountExcution>(1,findUserByPhoneAndPwd);
+            return new BaseAPIResult(1,findUserByPhoneAndPwd);
         } catch (Exception e) {
-            return new BaseResult<UserCountExcution>(0,e.getMessage());
+            UserCountExcution userCountExcution = new UserCountExcution(e.getMessage(), RegistrationEnum.FIND_ERROR);
+            return new BaseAPIResult(0,userCountExcution);
         }
     }
 
@@ -50,13 +52,14 @@ public class UserCountController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<UserCountExcution> loginWechat(@RequestBody UserCountDto userCountDto){
+    public BaseAPIResult loginWechat(@RequestBody UserCountDto userCountDto){
         //参数验空
         try {
             UserCountExcution findUserByWechatID = userCountService.findUserByWechatID(userCountDto);
-            return new BaseResult<UserCountExcution>(1,findUserByWechatID);
+            return new BaseAPIResult(1,findUserByWechatID);
         } catch (Exception e) {
-            return new BaseResult<UserCountExcution>(0,e.getMessage());
+            UserCountExcution userCountExcution = new UserCountExcution(e.getMessage(), RegistrationEnum.FIND_ERROR);
+            return new BaseAPIResult(0,userCountExcution);
         }
     }
 
@@ -69,13 +72,14 @@ public class UserCountController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<UserCountExcution> loginQQ(@RequestBody UserCountDto userCountDto){
+    public BaseAPIResult loginQQ(@RequestBody UserCountDto userCountDto){
         //参数验空
         try {
             UserCountExcution findUserByQQID = userCountService.findUserByQQID(userCountDto);
-            return new BaseResult<UserCountExcution>(1,findUserByQQID);
+            return new BaseAPIResult(1,findUserByQQID);
         } catch (Exception e) {
-            return new BaseResult<UserCountExcution>(0,e.getMessage());
+            UserCountExcution userCountExcution = new UserCountExcution(e.getMessage(), RegistrationEnum.FIND_ERROR);
+            return new BaseAPIResult(0,userCountExcution);
         }
     }
 
@@ -88,13 +92,14 @@ public class UserCountController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<CodeExcution> sendSMS(CodeDto codeDto){
+    public BaseAPIResult sendSMS(CodeDto codeDto){
         //参数验空
         try {
             CodeExcution findVerifyCode = userCountService.findVerifyCode(codeDto);
-            return new BaseResult<CodeExcution>(1,findVerifyCode);
+            return new BaseAPIResult(1,findVerifyCode);
         } catch (Exception e) {
-            return new BaseResult<CodeExcution>(0,e.getMessage());
+            CodeExcution codeExcution = new CodeExcution(RegistrationEnum.FIND_ERROR,e.getMessage());
+            return new BaseAPIResult(0,codeExcution);
         }
     }
 
@@ -107,13 +112,14 @@ public class UserCountController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<UserCountExcution> loginVerifyCode(@RequestBody CodeDto codeDto){
+    public BaseAPIResult loginVerifyCode(@RequestBody CodeDto codeDto){
         //参数验空
         try {
             UserCountExcution findUserByPhone = userCountService.findUserByPhone(codeDto);
-            return new BaseResult<UserCountExcution>(1,findUserByPhone);
+            return new BaseAPIResult(1,findUserByPhone);
         } catch (Exception e) {
-            return new BaseResult<UserCountExcution>(0,e.getMessage());
+            UserCountExcution userCountExcution = new UserCountExcution(e.getMessage() ,RegistrationEnum.FIND_ERROR);
+            return new BaseAPIResult(0,userCountExcution);
         }
     }
 
@@ -126,13 +132,14 @@ public class UserCountController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<UserCountExcution> judgeVerifyCode(@RequestBody CodeDto codeDto){
+    public BaseAPIResult judgeVerifyCode(@RequestBody CodeDto codeDto){
         //参数验空
         try {
             UserCountExcution getUserByPhone = userCountService.getUserByPhone(codeDto);
-            return new BaseResult<UserCountExcution>(1,getUserByPhone);
+            return new BaseAPIResult(1,getUserByPhone);
         } catch (Exception e) {
-            return new BaseResult<UserCountExcution>(0,e.getMessage());
+            UserCountExcution userCountExcution = new UserCountExcution(e.getMessage() ,RegistrationEnum.FIND_ERROR);
+            return new BaseAPIResult(0,userCountExcution);
         }
     }
 
@@ -145,13 +152,14 @@ public class UserCountController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<UserCountExcution> register(@RequestBody UserCountDto userCountDto){
+    public BaseAPIResult register(@RequestBody UserCountDto userCountDto){
         //参数验空
         try {
             UserCountExcution insertUserCount = userCountService.insertUserCount(userCountDto);
-            return new BaseResult<UserCountExcution>(1,insertUserCount);
+            return new BaseAPIResult(1,insertUserCount);
         } catch (Exception e) {
-            return new BaseResult<UserCountExcution>(0,e.getMessage());
+            UserCountExcution userCountExcution = new UserCountExcution(e.getMessage() ,RegistrationEnum.FIND_ERROR);
+            return new BaseAPIResult(0,userCountExcution);
         }
     }
 
@@ -164,13 +172,14 @@ public class UserCountController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<UpdatePwdExcution> backPwd(@RequestBody UpdatePwdDto updatePwdDto){
+    public BaseAPIResult backPwd(@RequestBody UpdatePwdDto updatePwdDto){
         //参数验空
         try {
             UpdatePwdExcution updataPwdByPhone = userCountService.updataPwdByPhone(updatePwdDto);
-            return new BaseResult<UpdatePwdExcution>(1,updataPwdByPhone);
+            return new BaseAPIResult(1,updataPwdByPhone);
         } catch (Exception e) {
-            return new BaseResult<UpdatePwdExcution>(0,e.getMessage());
+            UpdatePwdExcution updatePwdExcution = new UpdatePwdExcution(e.getMessage() ,RegistrationEnum.FIND_ERROR);
+            return new BaseAPIResult(0,updatePwdExcution);
         }
     }
 
@@ -183,13 +192,14 @@ public class UserCountController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<UserCountExcution> setPwd(@RequestBody UpdatePwdDto updatePwdDto){
+    public BaseAPIResult setPwd(@RequestBody UpdatePwdDto updatePwdDto){
         //参数验空
         try {
             UserCountExcution findUserById = userCountService.findUserById(updatePwdDto);
-            return new BaseResult<UserCountExcution>(1,findUserById);
+            return new BaseAPIResult(1,findUserById);
         } catch (Exception e) {
-            return new BaseResult<UserCountExcution>(0,e.getMessage());
+            UserCountExcution userCountExcution = new UserCountExcution(e.getMessage() ,RegistrationEnum.FIND_ERROR);
+            return new BaseAPIResult(0,userCountExcution);
         }
     }
 
@@ -202,13 +212,14 @@ public class UserCountController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<UserCountExcution> getData(@RequestBody UpdatePwdDto updatePwdDto){
+    public BaseAPIResult getData(@RequestBody UpdatePwdDto updatePwdDto){
         //参数验空
         try {
             UserCountExcution postUserById = userCountService.postUserById(updatePwdDto);
-            return new BaseResult<UserCountExcution>(1,postUserById);
+            return new BaseAPIResult(1,postUserById);
         } catch (Exception e) {
-            return new BaseResult<UserCountExcution>(0,e.getMessage());
+            UserCountExcution userCountExcution = new UserCountExcution(e.getMessage() ,RegistrationEnum.FIND_ERROR);
+            return new BaseAPIResult(0,userCountExcution);
         }
     }
 
@@ -221,13 +232,14 @@ public class UserCountController {
             method = RequestMethod.GET,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<UserCountExcution> getStuForMerchant(@RequestBody UpdatePwdDto updatePwdDto){
+    public BaseAPIResult getStuForMerchant(@RequestBody UpdatePwdDto updatePwdDto){
         //参数验空
         try {
             UserCountExcution getUserById = userCountService.postUserById(updatePwdDto);
-            return new BaseResult<UserCountExcution>(1,getUserById);
+            return new BaseAPIResult(1,getUserById);
         } catch (Exception e) {
-            return new BaseResult<UserCountExcution>(0,e.getMessage());
+            UserCountExcution userCountExcution = new UserCountExcution(e.getMessage() ,RegistrationEnum.FIND_ERROR);
+            return new BaseAPIResult(0,userCountExcution);
         }
     }
 
@@ -240,13 +252,14 @@ public class UserCountController {
             method = RequestMethod.GET,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<UserCountExcution> saveInfo(@RequestBody UpdateByIdDto updateByIdDto){
+    public BaseAPIResult saveInfo(@RequestBody UpdateByIdDto updateByIdDto){
         //参数验空
         try {
             UserCountExcution updateById = userCountService.updateById(updateByIdDto);
-            return new BaseResult<UserCountExcution>(1,updateById);
+            return new BaseAPIResult(1,updateById);
         } catch (Exception e) {
-            return new BaseResult<UserCountExcution>(0,e.getMessage());
+            UserCountExcution userCountExcution = new UserCountExcution(e.getMessage() ,RegistrationEnum.FIND_ERROR);
+            return new BaseAPIResult(0,userCountExcution);
         }
     }
 
@@ -259,13 +272,14 @@ public class UserCountController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<UserCountExcution> findInfoById(@RequestBody UpdatePwdDto updatePwdDto){
+    public BaseAPIResult findInfoById(@RequestBody UpdatePwdDto updatePwdDto){
         //参数验空
         try {
             UserCountExcution saveUserById = userCountService.saveUserById(updatePwdDto);
-            return new BaseResult<UserCountExcution>(1,saveUserById);
+            return new BaseAPIResult(1,saveUserById);
         } catch (Exception e) {
-            return new BaseResult<UserCountExcution>(0,e.getMessage());
+            UserCountExcution userCountExcution = new UserCountExcution(e.getMessage() ,RegistrationEnum.FIND_ERROR);
+            return new BaseAPIResult(0,userCountExcution);
         }
     }
 }

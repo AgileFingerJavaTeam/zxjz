@@ -1,11 +1,11 @@
 package com.zxjz.controller;
 
+import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
-import com.zxjz.base.BaseResult;
-import com.zxjz.dto.excution.BillListExcution;
 import com.zxjz.dto.excution.DetailsPageExcution;
-import com.zxjz.dto.in.BillListDto;
 import com.zxjz.dto.in.DetailsPageDto;
+import com.zxjz.enums.CityEnum;
+import com.zxjz.enums.StuPersonalEnum;
 import com.zxjz.service.DetailsPageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,17 +19,18 @@ public class DetailsPageController extends BaseController{
     private DetailsPageService detailsPageService;
 
     @RequestMapping(value = "postDetailsPage",
-            method = RequestMethod.GET,
+            method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<DetailsPageExcution> getBills(DetailsPageDto detailsPageDto){
+    public BaseAPIResult getBills(DetailsPageDto detailsPageDto){
         //参数验空
         try {
             DetailsPageExcution detailsPageExcution = detailsPageService.getDetailsPage(detailsPageDto);
-            return new BaseResult<DetailsPageExcution>(1,detailsPageExcution);
+            return new BaseAPIResult(1,detailsPageExcution);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<DetailsPageExcution>(0,e.getMessage());
+            DetailsPageExcution detailsPageExcution = new DetailsPageExcution(e.getMessage(), CityEnum.FIND_ERROR);
+            return new BaseAPIResult(0,detailsPageExcution);
         }
     }
 }

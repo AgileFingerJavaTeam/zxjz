@@ -1,10 +1,11 @@
 package com.zxjz.controller;
 
+import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
-import com.zxjz.base.BaseResult;
 import com.zxjz.dto.excution.JobListExcution;
 import com.zxjz.dto.excution.StationListExcution;
 import com.zxjz.dto.in.JobListDto;
+import com.zxjz.enums.StuPersonalEnum;
 import com.zxjz.service.StationListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,14 +28,15 @@ public class StationListController extends BaseController{
             method = RequestMethod.GET,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<StationListExcution> getListStation(){
+    public BaseAPIResult getListStation(){
         //参数验空
         try{
             StationListExcution stationListExcution = stationListService.getStationList();
-            return new BaseResult<StationListExcution>(1,stationListExcution);
+            return new BaseAPIResult(1,stationListExcution);
         } catch (Exception e){
             logger.error(e.getMessage(),e);
-            return new BaseResult<StationListExcution>(0,e.getMessage());
+            StationListExcution stationListExcution = new StationListExcution(e.getMessage(), StuPersonalEnum.FIND_ERROR);
+            return new BaseAPIResult(0,stationListExcution);
         }
 
     }
@@ -48,14 +50,15 @@ public class StationListController extends BaseController{
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<JobListExcution> getListStation(JobListDto jobListDto){
+    public BaseAPIResult getListStation(JobListDto jobListDto){
         //参数验空
         try{
             JobListExcution jobListExcution = stationListService.getJobList(jobListDto);
-            return new BaseResult<JobListExcution>(1,jobListExcution);
+            return new BaseAPIResult(1,jobListExcution);
         } catch (Exception e){
             logger.error(e.getMessage(),e);
-            return new BaseResult<JobListExcution>(0,e.getMessage());
+            JobListExcution jobListExcution = new JobListExcution(e.getMessage(), StuPersonalEnum.FIND_ERROR);
+            return new BaseAPIResult(0,jobListExcution);
         }
 
     }

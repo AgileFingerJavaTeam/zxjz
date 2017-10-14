@@ -22,7 +22,7 @@ public class StuEvaDetailsServiceImpl implements StuEvaDetailsService{
     private Logger logger= LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    public StuEvaDetailsDao stuEvaDetailsDao;
+    private StuEvaDetailsDao stuEvaDetailsDao;
 
     public StuPersonalExcution findStuPersonal(StuPersonalDto stuPersonalDto) {
         int userID = stuPersonalDto.getUserID();
