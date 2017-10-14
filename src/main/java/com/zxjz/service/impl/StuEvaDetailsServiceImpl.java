@@ -31,7 +31,7 @@ public class StuEvaDetailsServiceImpl implements StuEvaDetailsService{
             if (stuPersonal != null) {
                 return new StuPersonalExcution(stuPersonal,StuPersonalEnum.FIND_SUCCESS);
             }else{
-                return new StuPersonalExcution(null,StuPersonalEnum.FIND_ERROR);
+                return new StuPersonalExcution(StuPersonalEnum.FIND_ERROR);
             }
         } catch (Exception e) {
             logger.error(e.getMessage(),e);
@@ -47,7 +47,7 @@ public class StuEvaDetailsServiceImpl implements StuEvaDetailsService{
             if (stuEvaDetails != null) {
                 return new StuEvaDetailsExcution(stuEvaDetails, StuPersonalEnum.FIND_SUCCESS);
             }else{
-                return new StuEvaDetailsExcution(null,StuPersonalEnum.FIND_ERROR);
+                return new StuEvaDetailsExcution(StuPersonalEnum.FIND_ERROR);
             }
         } catch (Exception e) {
             logger.error(e.getMessage(),e);

@@ -11,4 +11,8 @@ public class UserCountExcution extends BaseAPIExcution{
         this.code = registrationEnum.getCode();
     }
 
+    public UserCountExcution(RegistrationEnum registrationEnum) {
+        this.code = registrationEnum.getCode();
+    }
+
 }

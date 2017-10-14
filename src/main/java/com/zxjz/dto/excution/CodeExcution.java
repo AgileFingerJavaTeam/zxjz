@@ -10,4 +10,8 @@ public class CodeExcution extends BaseAPIExcution{
         this.code = registrationEnum.getCode();
     }
 
+    public CodeExcution(RegistrationEnum registrationEnum) {
+        this.code = registrationEnum.getCode();
+    }
+
 }

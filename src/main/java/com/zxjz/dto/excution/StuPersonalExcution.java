@@ -16,4 +16,8 @@ public class StuPersonalExcution extends BaseAPIExcution{
         this.code = stuPersonalEnum.getCode();
     }
 
+    public StuPersonalExcution(StuPersonalEnum stuPersonalEnum) {
+        this.code = stuPersonalEnum.getCode();
+    }
+
 }

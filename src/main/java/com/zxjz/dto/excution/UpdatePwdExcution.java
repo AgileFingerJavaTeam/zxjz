@@ -10,4 +10,8 @@ public class UpdatePwdExcution extends BaseAPIExcution{
         this.code = registrationEnum.getCode();
     }
 
+    public UpdatePwdExcution(RegistrationEnum registrationEnum) {
+        this.code = registrationEnum.getCode();
+    }
+
 }
