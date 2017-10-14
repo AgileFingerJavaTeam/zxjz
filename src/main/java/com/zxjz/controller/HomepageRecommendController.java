@@ -1,11 +1,13 @@
 package com.zxjz.controller;
 
+import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
-import com.zxjz.base.BaseResult;
 import com.zxjz.dto.excution.HomepageRecommendExcution;
 import com.zxjz.dto.excution.SecurityPositionExcution;
 import com.zxjz.dto.in.HomepageRecommendDto;
 import com.zxjz.dto.in.SecurityPositionDto;
+import com.zxjz.enums.HomepageRecommendEnum;
+import com.zxjz.enums.SecurityPositionEnum;
 import com.zxjz.exception.db.UpdateInnerErrorException;
 import com.zxjz.service.HomepageRecommendService;
 import com.zxjz.service.SecurityPositionService;
@@ -49,14 +51,15 @@ public class HomepageRecommendController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<SecurityPositionExcution> getSecurityPositionList(@RequestBody SecurityPositionDto securityPositionDto) {
+    public BaseAPIResult getSecurityPositionList(@RequestBody SecurityPositionDto securityPositionDto) {
         //参数验空
         try {
             SecurityPositionExcution securityPositionExcution = securityPositionService.getSecurityPositionList(securityPositionDto);
-            return new BaseResult<SecurityPositionExcution>(1, securityPositionExcution);
+            return new BaseAPIResult(1, securityPositionExcution);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<SecurityPositionExcution>(0, e.getMessage());
+            SecurityPositionExcution securityPositionExcution = new SecurityPositionExcution(SecurityPositionEnum.INNER_ERROR,e.getMessage());
+            return new BaseAPIResult(0, securityPositionExcution);
         }
     }
 
@@ -73,7 +76,7 @@ public class HomepageRecommendController extends BaseController {
         ModelAndView mv = new ModelAndView();
         try {
             SecurityPositionExcution securityPositionExcution = securityPositionService.getSecurityPosition(securityPositionDto);
-            mv.addObject("data", securityPositionExcution.getAtCollection());
+            mv.addObject("data", securityPositionExcution.getData());
             mv.setViewName("homepageRecommend/up_and_down");
         }
         catch (Exception e) {
@@ -95,7 +98,7 @@ public class HomepageRecommendController extends BaseController {
         ModelAndView mv = new ModelAndView();
         try {
             SecurityPositionExcution securityPositionExcution = securityPositionService.getSecurityPosition(securityPositionDto);
-            mv.addObject("data", securityPositionExcution.getAtCollection());
+            mv.addObject("data", securityPositionExcution.getData());
             mv.setViewName("homepageRecommend/down");
         }
         catch (Exception e) {
@@ -110,17 +113,19 @@ public class HomepageRecommendController extends BaseController {
      */
     @RequestMapping(value ="/upOrDownHomepageRecommend", produces = "text/json;charset=UTF-8")
     @ResponseBody
-    public BaseResult<HomepageRecommendExcution> upOrDownHomepageRecommend(@RequestBody HomepageRecommendDto homepageRecommendDto){
+    public BaseAPIResult upOrDownHomepageRecommend(@RequestBody HomepageRecommendDto homepageRecommendDto){
         //参数验空
         try {
             HomepageRecommendExcution homepageRecommendExcution = homepageRecommendService.updateOrHomepageRecommend(homepageRecommendDto);
-            return new BaseResult<HomepageRecommendExcution>(1, homepageRecommendExcution);
+            return new BaseAPIResult(1, homepageRecommendExcution);
         }catch (UpdateInnerErrorException e) {
-            logger.error(e.toString(), e);
-            return new BaseResult<HomepageRecommendExcution>(0, e.getMessage());
+            logger.error(e.getMessage(), e);
+            HomepageRecommendExcution homepageRecommendExcution = new HomepageRecommendExcution(HomepageRecommendEnum.FAIL,e.getMessage());
+            return new BaseAPIResult(0,homepageRecommendExcution);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<HomepageRecommendExcution>(0, e.getMessage());
+            HomepageRecommendExcution homepageRecommendExcution = new HomepageRecommendExcution(HomepageRecommendEnum.INNER_ERROR,e.getMessage());
+            return new BaseAPIResult(0,homepageRecommendExcution);
         }
     }
     /**
@@ -129,17 +134,19 @@ public class HomepageRecommendController extends BaseController {
      */
     @RequestMapping(value ="/downHomepageRecommend", produces = "text/json;charset=UTF-8")
     @ResponseBody
-    public BaseResult<HomepageRecommendExcution> downHomepageRecommend(@RequestBody HomepageRecommendDto homepageRecommendDto){
+    public BaseAPIResult downHomepageRecommend(@RequestBody HomepageRecommendDto homepageRecommendDto){
         //参数验空
         try {
             HomepageRecommendExcution homepageRecommendExcution = homepageRecommendService.updateCloseHomepageRecommend(homepageRecommendDto);
-            return new BaseResult<HomepageRecommendExcution>(1, homepageRecommendExcution);
+            return new BaseAPIResult(1, homepageRecommendExcution);
         }catch (UpdateInnerErrorException e) {
-            logger.error(e.toString(), e);
-            return new BaseResult<HomepageRecommendExcution>(0, e.getMessage());
+            logger.error(e.getMessage(), e);
+            HomepageRecommendExcution homepageRecommendExcution = new HomepageRecommendExcution(HomepageRecommendEnum.FAIL,e.getMessage());
+            return new BaseAPIResult(0,homepageRecommendExcution);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<HomepageRecommendExcution>(0, e.getMessage());
+            HomepageRecommendExcution homepageRecommendExcution = new HomepageRecommendExcution(HomepageRecommendEnum.INNER_ERROR,e.getMessage());
+            return new BaseAPIResult(0,homepageRecommendExcution);
         }
     }
 }

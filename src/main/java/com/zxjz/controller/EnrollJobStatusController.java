@@ -1,7 +1,7 @@
 package com.zxjz.controller;
+import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
 import com.zxjz.base.BaseException;
-import com.zxjz.base.BaseResult;
 import com.zxjz.dto.excution.EnrollJobStatusExcution;
 import com.zxjz.dto.excution.QuickSignUpExcution;
 import com.zxjz.dto.excution.UpdateJobStatusExcution;
@@ -40,18 +40,20 @@ public class EnrollJobStatusController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<EnrollJobStatusExcution> FindEnrollJobStatus(@RequestBody EnrollJobStatusDto enrollJobStatusDto) {
+    public BaseAPIResult FindEnrollJobStatus(@RequestBody EnrollJobStatusDto enrollJobStatusDto) {
         //参数验空
         try {
             EnrollJobStatusExcution enrollJobStatusExcution = enrollJobStatusService.findEnrollJobStatus(enrollJobStatusDto);
-            return new BaseResult<EnrollJobStatusExcution>(1,enrollJobStatusExcution);
+            return new BaseAPIResult(1,enrollJobStatusExcution);
         }catch (QueryInnerErrorException e) {
-             EnrollJobStatusExcution enrollJobStatusExcution = new EnrollJobStatusExcution(EnrollJobStatusEnum.FIND_ENROLLJOBSTATUS_FAIL);
-            return new BaseResult<EnrollJobStatusExcution>(0,enrollJobStatusExcution);
+             logger.error(e.getMessage(), e);
+             EnrollJobStatusExcution enrollJobStatusExcution = new EnrollJobStatusExcution(EnrollJobStatusEnum.FIND_ENROLLJOBSTATUS_FAIL,e.getMessage());
+            return new BaseAPIResult(0,enrollJobStatusExcution);
         }
          catch (BaseException e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<EnrollJobStatusExcution>(0,e.getMessage());
+             EnrollJobStatusExcution enrollJobStatusExcution = new EnrollJobStatusExcution(EnrollJobStatusEnum.INNER_ERROR,e.getMessage());
+             return new BaseAPIResult(0,enrollJobStatusExcution);
         }
     }
 
@@ -59,30 +61,35 @@ public class EnrollJobStatusController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<UpdateJobStatusExcution> UpdateSelectStatus(@RequestBody UpdateJobStatusDto updateJobStatusDto) {
+    public BaseAPIResult UpdateSelectStatus(@RequestBody UpdateJobStatusDto updateJobStatusDto) {
         //参数验空
         try {
             UpdateJobStatusExcution updateJobStatusExcution = enrollJobStatusService.updateJobStatus(updateJobStatusDto);
-            return new BaseResult<UpdateJobStatusExcution>(1,updateJobStatusExcution);
+            return new BaseAPIResult(1,updateJobStatusExcution);
         }catch (EnrollJobStatusException e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<UpdateJobStatusExcution>(0,e.getMessage());
+            UpdateJobStatusExcution updateJobStatusExcution = new UpdateJobStatusExcution(EnrollJobStatusEnum.UPDATE_JOB_STATUS_FAIL,e.getMessage());
+            return new BaseAPIResult(0,updateJobStatusExcution);
         }
         catch (QueryInnerErrorException e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<UpdateJobStatusExcution>(0,e.getMessage());
+            UpdateJobStatusExcution updateJobStatusExcution = new UpdateJobStatusExcution(EnrollJobStatusEnum.UPDATE_JOB_STATUS_FAIL,e.getMessage());
+            return new BaseAPIResult(0,updateJobStatusExcution);
         }
         catch (InsertInnerErrorException e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<UpdateJobStatusExcution>(0,e.getMessage());
+            UpdateJobStatusExcution updateJobStatusExcution = new UpdateJobStatusExcution(EnrollJobStatusEnum.UPDATE_JOB_STATUS_FAIL,e.getMessage());
+            return new BaseAPIResult(0,updateJobStatusExcution);
         }
         catch (UpdateInnerErrorException e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<UpdateJobStatusExcution>(0,e.getMessage());
+            UpdateJobStatusExcution updateJobStatusExcution = new UpdateJobStatusExcution(EnrollJobStatusEnum.UPDATE_JOB_STATUS_FAIL,e.getMessage());
+            return new BaseAPIResult(0,updateJobStatusExcution);
         }
         catch (BaseException e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<UpdateJobStatusExcution>(0,e.getMessage());
+            UpdateJobStatusExcution updateJobStatusExcution = new UpdateJobStatusExcution(EnrollJobStatusEnum.INNER_ERROR,e.getMessage());
+            return new BaseAPIResult(0,updateJobStatusExcution);
         }
     }
 
@@ -92,26 +99,30 @@ public class EnrollJobStatusController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<QuickSignUpExcution> QuickSignUp(@RequestBody QuickSignUpDto quickSignUpDto) {
+    public BaseAPIResult QuickSignUp(@RequestBody QuickSignUpDto quickSignUpDto) {
         //参数验空
         try {
             QuickSignUpExcution quickSignUpExcution = enrollJobStatusService.quickSignUp(quickSignUpDto);
-            return new BaseResult<QuickSignUpExcution>(1,quickSignUpExcution);
+            return new BaseAPIResult(1,quickSignUpExcution);
         }catch (EnrollJobStatusException e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<QuickSignUpExcution>(0,e.getMessage());
+            QuickSignUpExcution quickSignUpExcution = new QuickSignUpExcution(EnrollJobStatusEnum.SIGNUP_FAIL,e.getMessage());
+            return new BaseAPIResult(0,quickSignUpExcution);
         }
          catch (QueryInnerErrorException e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<QuickSignUpExcution>(0,e.getMessage());
+             QuickSignUpExcution quickSignUpExcution = new QuickSignUpExcution(EnrollJobStatusEnum.SIGNUP_FAIL,e.getMessage());
+             return new BaseAPIResult(0,quickSignUpExcution);
         }
          catch (InsertInnerErrorException e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<QuickSignUpExcution>(0,e.getMessage());
+             QuickSignUpExcution quickSignUpExcution = new QuickSignUpExcution(EnrollJobStatusEnum.SIGNUP_FAIL,e.getMessage());
+             return new BaseAPIResult(0,quickSignUpExcution);
         }
         catch (BaseException e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<QuickSignUpExcution>(0,e.getMessage());
+            QuickSignUpExcution quickSignUpExcution = new QuickSignUpExcution(EnrollJobStatusEnum.INNER_ERROR,e.getMessage());
+            return new BaseAPIResult(0,quickSignUpExcution);
         }
     }
 
@@ -119,22 +130,25 @@ public class EnrollJobStatusController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<WhetherAdmissionExcution> Admission(@RequestBody WhetherAdmissionDto whetherAdmissionDto) {
+    public BaseAPIResult Admission(@RequestBody WhetherAdmissionDto whetherAdmissionDto) {
         //参数验空
         try {
             WhetherAdmissionExcution whetherAdmissionExcution = whetherAdmissionService.whetherAdmission(whetherAdmissionDto);
-            return new BaseResult<WhetherAdmissionExcution>(1,whetherAdmissionExcution);
+            return new BaseAPIResult(1,whetherAdmissionExcution);
         }catch (WhetherAdmissionException e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<WhetherAdmissionExcution>(0,e.getMessage());
+            WhetherAdmissionExcution whetherAdmissionExcution = new WhetherAdmissionExcution(EnrollJobStatusEnum.HIRED_FAIL,e.getMessage());
+            return new BaseAPIResult(0,whetherAdmissionExcution);
         }
         catch (UpdateInnerErrorException e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<WhetherAdmissionExcution>(0,e.getMessage());
+            WhetherAdmissionExcution whetherAdmissionExcution = new WhetherAdmissionExcution(EnrollJobStatusEnum.HIRED_FAIL,e.getMessage());
+            return new BaseAPIResult(0,whetherAdmissionExcution);
         }
         catch (BaseException e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<WhetherAdmissionExcution>(0,e.getMessage());
+            WhetherAdmissionExcution whetherAdmissionExcution = new WhetherAdmissionExcution(EnrollJobStatusEnum.INNER_ERROR,e.getMessage());
+            return new BaseAPIResult(0,whetherAdmissionExcution);
         }
     }
 }

@@ -29,7 +29,7 @@ public class HomepageRecommendServiceImpl implements HomepageRecommendService {
             try{
                   int flag = homepageRecommendDao.updateORHomepageRecommend(recruiting_id,hzn_recommend_begin_time,hzn_recommend_end_time);
                   if (flag > 0) {
-                        return new HomepageRecommendExcution(HomepageRecommendEnum.UPDATE_JOB_STATUS_SUCCESS);
+                        return new HomepageRecommendExcution(HomepageRecommendEnum.UPDATE_JOB_STATUS_SUCCESS,null);
                   }else {
                         throw new UpdateInnerErrorException("更改失败");
                     }
@@ -47,7 +47,7 @@ public class HomepageRecommendServiceImpl implements HomepageRecommendService {
         try{
             int flag = homepageRecommendDao.updateDownHomepageRecommend(recruiting_id);
             if (flag>0) {
-                return new HomepageRecommendExcution(HomepageRecommendEnum.UPDATE_JOB_STATUS_SUCCESS);
+                return new HomepageRecommendExcution(HomepageRecommendEnum.UPDATE_JOB_STATUS_SUCCESS,null);
             }else {
                 throw new UpdateInnerErrorException("更改失败");
             }

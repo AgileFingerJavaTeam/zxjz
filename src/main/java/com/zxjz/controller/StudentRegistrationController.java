@@ -1,9 +1,10 @@
 package com.zxjz.controller;
 
+import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
-import com.zxjz.base.BaseResult;
 import com.zxjz.dto.excution.StudentRegistrationExcution;
 import com.zxjz.dto.in.StudentRegistrationDto;
+import com.zxjz.enums.EnrollJobStatusEnum;
 import com.zxjz.exception.db.QueryInnerErrorException;
 import com.zxjz.service.StudentRegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,18 +25,20 @@ public class StudentRegistrationController extends BaseController{
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<StudentRegistrationExcution> studentRegistration(@Validated @RequestBody StudentRegistrationDto studentRegistrationDto){
+    public BaseAPIResult studentRegistration(@Validated @RequestBody StudentRegistrationDto studentRegistrationDto){
         //参数验空
         try {
             StudentRegistrationExcution studentRegistrationExcution = studentRegistrationService.studentRegistration(studentRegistrationDto);
-            return new BaseResult<StudentRegistrationExcution>(1,studentRegistrationExcution);
+            return new BaseAPIResult(1,studentRegistrationExcution);
         }catch (QueryInnerErrorException e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<StudentRegistrationExcution>(0,e.getMessage());
+            StudentRegistrationExcution studentRegistrationExcution = new StudentRegistrationExcution(EnrollJobStatusEnum.FIND_ENROLLJOBSTATUS_FAIL,e.getMessage());
+            return new BaseAPIResult(0,studentRegistrationExcution);
         }
         catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<StudentRegistrationExcution>(0,e.getMessage());
+            StudentRegistrationExcution studentRegistrationExcution = new StudentRegistrationExcution(EnrollJobStatusEnum.INNER_ERROR,e.getMessage());
+            return new BaseAPIResult(0,studentRegistrationExcution);
         }
     }
 }

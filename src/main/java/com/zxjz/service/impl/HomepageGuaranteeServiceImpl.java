@@ -29,7 +29,7 @@ public class HomepageGuaranteeServiceImpl implements HomepageGuaranteeService {
             try{
                 int flag = (int)homepageGuaranteeDao.updateOrDownHomepageGuarantee(recruiting_id,hzn_good_begin_time,hzn_good_end_time);
                 if (flag>0) {
-                    return new HomepageGuaranteeExcution(HomepageGuaranteeEnum.UPDATE_JOB_STATUS_SUCCESS);
+                    return new HomepageGuaranteeExcution(HomepageGuaranteeEnum.UPDATE_JOB_STATUS_SUCCESS,null);
                 }else {
                     throw new UpdateInnerErrorException("更改失败");
                 }
@@ -47,7 +47,7 @@ public class HomepageGuaranteeServiceImpl implements HomepageGuaranteeService {
         try{
             int flag = (int)homepageGuaranteeDao.updatedownHomepageGuarantee(recruiting_id);
             if (flag>0) {
-                return new HomepageGuaranteeExcution(HomepageGuaranteeEnum.UPDATE_JOB_STATUS_SUCCESS);
+                return new HomepageGuaranteeExcution(HomepageGuaranteeEnum.UPDATE_JOB_STATUS_SUCCESS,null);
             }else {
                 throw new UpdateInnerErrorException("更改失败");
             }

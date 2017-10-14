@@ -39,14 +39,14 @@ public class WhetherAdmissionServiceImpl implements WhetherAdmissionService {
             if (hired.equals("1")) {
                 int whetherAdmiss = whetherAdmissionDao.updateAdmission(recruiting_id, student_user_id, hired, after_confirmation);
                 if (whetherAdmiss > 0) {
-                    return new WhetherAdmissionExcution(EnrollJobStatusEnum.HIRED_SUCCESS);
+                    return new WhetherAdmissionExcution(EnrollJobStatusEnum.HIRED_SUCCESS,null);
                 } else {
                     throw new UpdateInnerErrorException("没有报名");
                 }
             } else if (hired.equals("0")) {
                 int whetherAdmiss = whetherAdmissionDao.updateAdmissionT(recruiting_id, student_user_id, hired);
                 if (whetherAdmiss > 0) {
-                    return new WhetherAdmissionExcution(EnrollJobStatusEnum.NO_HIRED_SUCCESS);
+                    return new WhetherAdmissionExcution(EnrollJobStatusEnum.NO_HIRED_SUCCESS,null);
                 } else {
                     throw new UpdateInnerErrorException("录取失败");
                 }

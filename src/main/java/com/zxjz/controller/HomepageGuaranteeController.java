@@ -1,11 +1,13 @@
 package com.zxjz.controller;
 
+import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
-import com.zxjz.base.BaseResult;
 import com.zxjz.dto.excution.HomepageGuaranteeExcution;
 import com.zxjz.dto.excution.SecurityPositionExcution;
 import com.zxjz.dto.in.HomepageGuaranteeDto;
 import com.zxjz.dto.in.SecurityPositionDto;
+import com.zxjz.enums.HomepageGuaranteeEnum;
+import com.zxjz.enums.SecurityPositionEnum;
 import com.zxjz.exception.db.UpdateInnerErrorException;
 import com.zxjz.service.HomepageGuaranteeService;
 import com.zxjz.service.SecurityPositionService;
@@ -48,14 +50,15 @@ public class HomepageGuaranteeController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<SecurityPositionExcution> getSecurityPositionList(@RequestBody SecurityPositionDto securityPositionDto) {
+    public BaseAPIResult getSecurityPositionList(@RequestBody SecurityPositionDto securityPositionDto) {
         //参数验空
         try {
             SecurityPositionExcution securityPositionExcution = securityPositionService.getSecurityPositionList(securityPositionDto);
-            return new BaseResult<SecurityPositionExcution>(1, securityPositionExcution);
+            return new BaseAPIResult(1, securityPositionExcution);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<SecurityPositionExcution>(0, e.getMessage());
+            SecurityPositionExcution securityPositionExcution = new SecurityPositionExcution(SecurityPositionEnum.INNER_ERROR,e.getMessage());
+            return new BaseAPIResult(0, securityPositionExcution);
         }
     }
 
@@ -67,18 +70,19 @@ public class HomepageGuaranteeController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<HomepageGuaranteeExcution> upOrDownHomepageGuarantee(@RequestBody HomepageGuaranteeDto homepageGuaranteeDto){
+    public BaseAPIResult upOrDownHomepageGuarantee(@RequestBody HomepageGuaranteeDto homepageGuaranteeDto){
         //参数验空
         try {
             HomepageGuaranteeExcution homepageGuaranteeExcution = homepageGuaranteeService.updateOrDownHomepageGuarantee(homepageGuaranteeDto);
-            return new BaseResult<HomepageGuaranteeExcution>(1, homepageGuaranteeExcution);
+            return new BaseAPIResult(1, homepageGuaranteeExcution);
         }catch (UpdateInnerErrorException e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<HomepageGuaranteeExcution>(0, e.getMessage());
+            HomepageGuaranteeExcution homepageGuaranteeExcution = new HomepageGuaranteeExcution(HomepageGuaranteeEnum.FAIL,e.getMessage());
+            return new BaseAPIResult(0, homepageGuaranteeExcution);
         }
         catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            return new BaseResult<HomepageGuaranteeExcution>(0, e.getMessage());
+            HomepageGuaranteeExcution homepageGuaranteeExcution = new HomepageGuaranteeExcution(HomepageGuaranteeEnum.INNER_ERROR,e.getMessage());
+            return new BaseAPIResult(0, homepageGuaranteeExcution);
         }
     }
 
@@ -90,18 +94,20 @@ public class HomepageGuaranteeController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<HomepageGuaranteeExcution> downHomepageGuarantee(@RequestBody HomepageGuaranteeDto homepageGuaranteeDto){
+    public BaseAPIResult downHomepageGuarantee(@RequestBody HomepageGuaranteeDto homepageGuaranteeDto){
         //参数验空
         try {
             HomepageGuaranteeExcution homepageGuaranteeExcution = homepageGuaranteeService.updatedownHomepageGuarantee(homepageGuaranteeDto);
-            return new BaseResult<HomepageGuaranteeExcution>(1, homepageGuaranteeExcution);
+            return new BaseAPIResult(1, homepageGuaranteeExcution);
         }catch (UpdateInnerErrorException e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<HomepageGuaranteeExcution>(0, e.getMessage());
+            HomepageGuaranteeExcution homepageGuaranteeExcution = new HomepageGuaranteeExcution(HomepageGuaranteeEnum.FAIL,e.getMessage());
+            return new BaseAPIResult(0, homepageGuaranteeExcution);
         }
         catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return new BaseResult<HomepageGuaranteeExcution>(0, e.getMessage());
+            HomepageGuaranteeExcution homepageGuaranteeExcution = new HomepageGuaranteeExcution(HomepageGuaranteeEnum.INNER_ERROR,e.getMessage());
+            return new BaseAPIResult(0, homepageGuaranteeExcution);
         }
     }
 

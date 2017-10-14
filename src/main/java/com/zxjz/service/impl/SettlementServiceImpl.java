@@ -52,7 +52,10 @@ public class SettlementServiceImpl implements SettlementService {
                    }
                }
            }
-           return new SettlementExcution(SettlementEnum.COLLECTION_SUCCESS,infoList,total);
+           HashMap map = new HashMap();
+           map.put("infoList",infoList);
+           map.put("total",total);
+           return new SettlementExcution(SettlementEnum.COLLECTION_SUCCESS,map);
        } catch (Exception e) {
            logger.error(e.getMessage(), e);
            throw new BaseException(e.getMessage());
@@ -67,7 +70,10 @@ public class SettlementServiceImpl implements SettlementService {
         try{
             List<Settlement> infoList=settlementDao.findSearch(rows,offset,search);
             int total = settlementDao.findSettlementCount(search);
-            return new SettlementExcution(SettlementEnum.COLLECTION_SUCCESS,infoList,total);
+            HashMap map = new HashMap();
+            map.put("infoList",infoList);
+            map.put("total",total);
+            return new SettlementExcution(SettlementEnum.COLLECTION_SUCCESS,map);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             throw new BaseException(e.getMessage());
@@ -146,7 +152,7 @@ public class SettlementServiceImpl implements SettlementService {
                           double balanced = balance - setll; //账户余额 - 收费金额 = 当前账户余额
                           int money = settlementDao.updateMoney(user_id, balanced); //把账户余额 改成 当前账户余额数
                           if (money > 0) {
-                              return new SettlementExcution(SettlementEnum.UPDATE_PSW_SUCCESS);
+                              return new SettlementExcution(SettlementEnum.UPDATE_PSW_SUCCESS,null);
                           } else {
                               throw new UpdateInnerErrorException("更改失败");
                           }
@@ -165,14 +171,14 @@ public class SettlementServiceImpl implements SettlementService {
                                       if(debt <= 0){
                                           throw new InsertInnerErrorException("插入欠款记录失败");
                                       }else{
-                                          return new SettlementExcution(SettlementEnum.ADD_JOB_SUCCESS);
+                                          return new SettlementExcution(SettlementEnum.ADD_JOB_SUCCESS,null);
                                       }
                                   }else{
                                       int debt = settlementDao.saveDebt2(user_id,settlement_time,withdrawal_serial_number,setll,balance,Arrears); //插入欠款记录表 最大应收款为1  实际应收款为账户余额
                                       if(debt <= 0){
                                           throw new InsertInnerErrorException("插入欠款记录失败");
                                       }else{
-                                          return new SettlementExcution(SettlementEnum.ADD_JOB_SUCCESS);
+                                          return new SettlementExcution(SettlementEnum.ADD_JOB_SUCCESS,null);
                                       }
                                   }
                               }
@@ -192,7 +198,7 @@ public class SettlementServiceImpl implements SettlementService {
                       }else if(crbatotal < setll){
                             throw new InsertInnerErrorException("插入欠款记录失败");
                                   }
-                            return new SettlementExcution(SettlementEnum.ADD_JOB_SUCCESS);
+                            return new SettlementExcution(SettlementEnum.ADD_JOB_SUCCESS,null);
                   }catch (InsertInnerErrorException e1) {
                          throw e1;
                   }catch (UpdateInnerErrorException e2) {
@@ -211,7 +217,10 @@ public class SettlementServiceImpl implements SettlementService {
         try{
             List<Settlement> infoList=settlementDao.findMerchantsName(rows,offset,q);
             int total = settlementDao.findSettlementCount(search);
-            return new SettlementExcution(SettlementEnum.COLLECTION_SUCCESS,infoList,total);
+            HashMap map =new HashMap();
+            map.put("infoList",infoList);
+            map.put("total",total);
+            return new SettlementExcution(SettlementEnum.COLLECTION_SUCCESS,map);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             throw new BaseException(e.getMessage());

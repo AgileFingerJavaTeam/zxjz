@@ -1,15 +1,11 @@
 package com.zxjz.controller;
 
 import com.zxjz.base.BaseController;
-import com.zxjz.base.BaseResult;
 import com.zxjz.dto.excution.StuJobExcution;
-import com.zxjz.dto.excution.StuWalletExcution;
 import com.zxjz.dto.in.StuJobDto;
-import com.zxjz.dto.in.StuWalletDto;
 import com.zxjz.enums.StuJobEnum;
 import com.zxjz.exception.db.QueryInnerErrorException;
 import com.zxjz.service.StuJobService;
-import com.zxjz.service.StuWalletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;

@@ -1,7 +1,6 @@
 package com.zxjz.controller;
 
 import com.zxjz.base.BaseController;
-import com.zxjz.base.BaseResult;
 import com.zxjz.dto.excution.StuWalletExcution;
 import com.zxjz.dto.excution.StuWalletIncomeExcution;
 import com.zxjz.dto.excution.StuWalletWithdrawExcution;

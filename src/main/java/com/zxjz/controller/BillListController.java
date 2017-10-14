@@ -1,7 +1,6 @@
 package com.zxjz.controller;
 
 import com.zxjz.base.BaseController;
-import com.zxjz.base.BaseResult;
 import com.zxjz.dto.excution.BillListExcution;
 import com.zxjz.dto.in.BillListDto;
 import com.zxjz.service.BillListService;
