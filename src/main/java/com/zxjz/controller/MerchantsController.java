@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @Controller
 @RequestMapping(value = "/employer")
 public class MerchantsController extends BaseController{
@@ -154,6 +156,25 @@ public class MerchantsController extends BaseController{
             logger.error(e.getMessage(),e);
         }
         return mv;
+    }
+
+    /**
+     * 查询申请VIP商户信息
+     * @param merchantsUpgradeDto
+     * @return
+     */
+    @RequestMapping(value = "/GetApplyVipInfo",
+            method = RequestMethod.POST,
+            produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public BaseResult<MerchantsUpgradeExcution> findApplyVipShopInfo (@RequestBody MerchantsUpgradeDto merchantsUpgradeDto){
+        try {
+           MerchantsUpgradeExcution merchantsUpgradeExcution = merchantsInfoService.findApplyVipShopList(merchantsUpgradeDto);
+            return new BaseResult<MerchantsUpgradeExcution>(1,merchantsUpgradeExcution);
+        }catch (Exception e){
+            logger.error(e.getMessage(),e);
+            return new BaseResult<MerchantsUpgradeExcution>(0,e.getMessage());
+        }
     }
 
     /**

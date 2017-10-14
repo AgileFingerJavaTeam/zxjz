@@ -1,8 +1,8 @@
 package com.zxjz.enums;
 
-import com.zxjz.entity.CheckStudentsInfo;
 
-import java.util.List;
+
+
 
 public enum CheckStudentsEnum {
     CHECK_SUCCESS(1,"审核成功"),

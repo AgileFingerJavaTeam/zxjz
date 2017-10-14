@@ -96,4 +96,13 @@ public interface MerchantsInfoDao {
      * @return
      */
     public MerchantsUpgrade findEmInfo (@Param("id")int id);
+
+    /**
+     * 确认审核
+     * @param employees_name
+     * @param id
+     * @param user_id
+     * @return
+     */
+    public int conrifmCheck(@Param("employees_name")String employees_name,@Param("id")int id,@Param("user_id")int user_id);
 }
