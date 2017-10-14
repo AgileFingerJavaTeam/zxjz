@@ -3,10 +3,6 @@ package com.zxjz.dto.in;
 public class StuPersonalDto {
     private int userID;
 
-    public StuPersonalDto(int userID) {
-        this.userID = userID;
-    }
-
     public int getUserID() {
         return userID;
     }

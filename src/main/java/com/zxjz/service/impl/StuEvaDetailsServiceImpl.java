@@ -9,13 +9,14 @@ import com.zxjz.dto.in.StuPersonalDto;
 import com.zxjz.entity.StuEvaDetails;
 import com.zxjz.entity.StuPersonal;
 import com.zxjz.enums.StuPersonalEnum;
+import com.zxjz.service.StuEvaDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class StuEvaDetailsServiceImpl {
+public class StuEvaDetailsServiceImpl implements StuEvaDetailsService{
 
     //日志对象
     private Logger logger= LoggerFactory.getLogger(this.getClass());

@@ -8,4 +8,86 @@
         LEFT JOIN `zx_cstudents_personal_info` stu ON stu.user_id=user.user_id
         WHERE `bound_phone`=#{phone} AND `phone_password`=#{password}
     </select>
+
+    <!--郭阳  微信登录接口-->
+    <select id="getUserByWechatID" resultType="UserCountInfo">
+        SELECT * FROM  `zx_user_count_info` user
+        LEFT JOIN `zx_cstudents_personal_info` stu ON stu.user_id=user.user_id
+        WHERE user.wechat=#{wechat_id}
+    </select>
+
+    <!--郭阳   微信注册-->
+    <insert id="insertUserCountByWechat">
+        INSERT INTO zx_user_count_info (wechat,portrait_url,registration_time) VALUES (#{wechat_id},#{headimgurl},NOW())
+    </insert>
+
+    <!--郭阳  QQ登录接口-->
+    <select id="findUserByQQID" resultType="UserCountInfo">
+        SELECT * FROM  `zx_user_count_info` user
+        LEFT JOIN `zx_cstudents_personal_info` stu ON stu.user_id=user.user_id
+        WHERE user.qq=#{qq_id}
+    </select>
+
+    <!--郭阳   QQ注册-->
+    <insert id="insertUserCountByQQ">
+        INSERT INTO zx_user_count_info (qq,portrait_url,registration_time) VALUES (#{qq_id},#{headimgurl},NOW())
+    </insert>
+
+    <!--郭阳  查询验证码-->
+    <select id="findVerifyCode" resultType="String">
+        SELECT verify_code FROM zx_verify_code WHERE phone=#{phone}
+    </select>
+
+    <!--郭阳   更新验证码-->
+    <update id="updateVerifyCode">
+        UPDATE zx_verify_code SET verify_code=#{verify_code},send_time=NOW() WHERE phone=#{phone}
+    </update>
+
+    <!--郭阳  插入验证码-->
+    <insert id="insertVerifyCode">
+        INSERT INTO zx_verify_code (phone,verify_code,send_time) VALUES (#{phone},#{verify_code},NOW())
+    </insert>
+
+    <!--郭阳  验证码登录接口-->
+    <select id="findUserByPhone" resultType="UserCountInfo">
+        SELECT * FROM  `zx_user_count_info` user
+        LEFT JOIN  `zx_cstudents_personal_info` stu ON stu.user_id=user.user_id
+        WHERE `bound_phone`=#{phone}
+    </select>
+
+    <!--郭阳  手机号注册-->
+    <insert id="insertUserCount">
+        INSERT INTO zx_user_count_info
+        (bound_phone,phone_password,registration_time) VALUES (#{phone},#{password},NOW())
+    </insert>
+
+    <!--郭阳 找回密码接口-->
+    <update id="updatePwdByPhone">
+        UPDATE zx_user_count_info SET phone_password=#{newPwd} WHERE `bound_phone`=#{phone}
+    </update>
+
+    <!--郭阳   根据Id查找用户-->
+    <select id="findUserById" resultType="UserCountInfo">
+        SELECT * FROM  `zx_cstudents_personal_info` stu
+        LEFT JOIN `zx_user_count_info` user ON stu.user_id = user.user_id
+        WHERE stu.user_id=#{user_id}
+    </select>
+
+    <!--郭阳  更改密码接口-->
+    <update id="updatePwdById">
+        UPDATE zx_user_count_info SET phone_password=#{newPwd} WHERE `user_id`=#{user_id}
+    </update>
+
+    <!--郭阳 保存个人基本信息-->
+    <update id="updateById">
+        UPDATE zx_cstudents_personal_info SET name=#{name},head_pic=#{head_url},sex=#{sex},birthday=#{birthday},email=#{email},school=#{school},enrollment_year=#{enrollment_year},college=#{college},
+        system=#{system},sch_class=#{sch_class},major=#{major},phone=#{phone},
+        qqNum=#{qqNum},weixinNum=#{weixinNum},stu_number=#{stu_number},height=#{height},weight=#{weight},blood=#{blood},
+        constellation=#{constellation},selfdescription=#{selfdescription} WHERE user_id=#{user_id}
+    </update>
+
+    <select id="findUserBoundPhone" resultType="BoundPhoneInfo">
+        SELECT * FROM `zx_user_count_info`
+        WHERE bound_phone=#{phone}
+    </select>
 </mapper>

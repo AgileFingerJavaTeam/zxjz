@@ -1,6 +1,7 @@
 package com.zxjz.service;
 
 import com.zxjz.dto.excution.MerchantExcution;
+import com.zxjz.dto.excution.MerchantInformationExcution;
 import com.zxjz.dto.in.MerchantDto;
 
 /**
@@ -12,5 +13,5 @@ public interface MerchantService {
 
      public MerchantExcution findOrdinaryMerchant(MerchantDto merchantDto);
 
-     public MerchantExcution findMerchantinfor(MerchantDto merchantDto);
+     public MerchantInformationExcution findMerchantinfor(MerchantDto merchantDto);
 }
