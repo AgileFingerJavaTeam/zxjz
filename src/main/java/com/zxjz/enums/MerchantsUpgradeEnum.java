@@ -8,19 +8,17 @@ package com.zxjz.enums;
          * Created by sunzhongyuan on 2017/9/20.
          */
 
-            APPLY_SUCCESS(1,"申请成功"),
-            FIND_SUCCESS(1,"查询申请VIP商户申请详情成功"),
-            FIND_FAIL(-3,"查询申请VIP商户申请详情失败"),
-            APPLY_REPEAT(-1,"申请重复"),
-            APPLY_ERROR(-2,"数据库内部错误");
+            APPLY_SUCCESS(1),//申请成功
+            FIND_SUCCESS(1),//查询申请VIP商户申请详情成功
+            FIND_FAIL(-3),//查询申请VIP商户申请详情失败
+            APPLY_REPEAT(-1),//申请重复
+            APPLY_ERROR(-2);//数据库内部错误
 
             private int code;
 
-            private String codeInfo;
 
-        MerchantsUpgradeEnum(int code, String codeInfo) {
+        MerchantsUpgradeEnum(int code) {
             this.code = code;
-            this.codeInfo = codeInfo;
         }
 
         public int getCode() {
@@ -31,19 +29,11 @@ package com.zxjz.enums;
                 this.code = code;
             }
 
-            public String getCodeInfo() {
-                return codeInfo;
-            }
-
-            public void setCodeInfo(String codeInfo) {
-                this.codeInfo = codeInfo;
-            }
 
             @Override
             public String toString() {
                 return "merchantsUpgradeEnum{" +
                         "code=" + code +
-                        ", codeInfo='" + codeInfo + '\'' +
                         '}';
             }
 

@@ -1,8 +1,7 @@
 package com.zxjz.controller;
 
+import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
-import com.zxjz.base.BaseResult;
-import com.zxjz.dto.excution.BillListExcution;
 import com.zxjz.dto.excution.CheckBillExcution;
 import com.zxjz.dto.in.CheckBillDto;
 import com.zxjz.enums.CheckBillEnum;
@@ -47,16 +46,17 @@ public class CheckBillController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<CheckBillExcution> findBills(CheckBillDto checkBillDto){
+    public BaseAPIResult findBills(CheckBillDto checkBillDto){
         try {
             CheckBillExcution checkBillExcution = checkBillService.findBills(checkBillDto);
-            return new BaseResult<CheckBillExcution>(1,checkBillExcution);
+            return new BaseAPIResult(1,checkBillExcution);
         }catch (QueryInnerErrorException e){
             CheckBillExcution checkBillExcution = new CheckBillExcution(CheckBillEnum.FIND_BILL_FAIL);
-            return new BaseResult<CheckBillExcution>(0,checkBillExcution);
+            return new BaseAPIResult(0,checkBillExcution);
         }catch (Exception e){
             logger.error(e.getMessage(), e);
-            return new BaseResult<CheckBillExcution>(0,e.getMessage());
+            CheckBillExcution checkBillExcution = new CheckBillExcution(CheckBillEnum.FIND_FAIL,e.getMessage());
+            return new BaseAPIResult(0,checkBillExcution);
         }
    }
 
@@ -69,16 +69,17 @@ public class CheckBillController extends BaseController {
            method = RequestMethod.POST,
            produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<CheckBillExcution> findMerName(CheckBillDto checkBillDto){
+    public BaseAPIResult findMerName(CheckBillDto checkBillDto){
         try {
             CheckBillExcution checkBillExcution = checkBillService.findMerName(checkBillDto);
-            return new BaseResult<CheckBillExcution>(1,checkBillExcution);
+            return new BaseAPIResult(1,checkBillExcution);
         }catch (QueryInnerErrorException e){
             CheckBillExcution checkBillExcution = new CheckBillExcution(CheckBillEnum.FIND_MERCHANTS_NAME_FAIL);
-            return new BaseResult<CheckBillExcution>(0,checkBillExcution);
+            return new BaseAPIResult(0,checkBillExcution);
         }catch (Exception e){
             logger.error(e.getMessage(), e);
-            return new BaseResult<CheckBillExcution>(0,e.getMessage());
+            CheckBillExcution checkBillExcution = new CheckBillExcution(CheckBillEnum.FIND_MERCHANTS_NAME_FAIL,e.getMessage());
+            return new BaseAPIResult(0,checkBillExcution);
         }
    }
 

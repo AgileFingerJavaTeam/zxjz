@@ -1,5 +1,6 @@
 package com.zxjz.controller;
 
+import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
 import com.zxjz.dto.excution.JobDetailsExcution;
 import com.zxjz.dto.excution.MerchantCommentExcution;
@@ -36,17 +37,18 @@ public class SystemParameterController extends BaseController {
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
 //    ----------是否需要更新APP
-    public BaseResult<SystemParameterExcution> isUpdateAPP(){
+    public BaseAPIResult isUpdateAPP(){
         //参数验空
         try {
             SystemParameterExcution systemParameterExcution = systemParameterService.isUpdateAPP();
-            return new BaseResult<SystemParameterExcution>(1,systemParameterExcution);
+            return new BaseAPIResult(1,systemParameterExcution);
         }catch (QueryInnerErrorException e){
             SystemParameterExcution systemParameterExcution = new SystemParameterExcution(SystemParameterEnum.QUERY_FAIL);
-            return new BaseResult<SystemParameterExcution>(0, systemParameterExcution);
+            return new BaseAPIResult(0, systemParameterExcution);
         }catch (Exception e){
             logger.error(e.getMessage(),e);
-            return new BaseResult<SystemParameterExcution>(0,e.getMessage());
+            SystemParameterExcution systemParameterExcution = new SystemParameterExcution(SystemParameterEnum.QUERY_FAIL,e.getMessage());
+            return new BaseAPIResult(0,systemParameterExcution);
         }
     }
 
@@ -60,18 +62,18 @@ public class SystemParameterController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<MerchantCommentExcution> evaluate(@RequestBody SystemParameterDto systemParameterDto){
+    public BaseAPIResult evaluate(@RequestBody SystemParameterDto systemParameterDto){
         //参数验空
         try {
             MerchantCommentExcution merchantCommentExcution = systemParameterService.evaluateStudent(systemParameterDto);
-            BaseResult<MerchantCommentExcution> ret = new BaseResult<MerchantCommentExcution>(1,merchantCommentExcution);
-            return new BaseResult<MerchantCommentExcution>(1,merchantCommentExcution);
+            return new BaseAPIResult(1,merchantCommentExcution);
         }catch (InsertInnerErrorException e){
             MerchantCommentExcution merchantCommentExcution = new MerchantCommentExcution(MerchantCommentEnum.ADD_EVALUATE_FORETABLE_FAIL);
-            return new BaseResult<MerchantCommentExcution>(0,merchantCommentExcution);
+            return new BaseAPIResult(0,merchantCommentExcution);
         }catch (Exception e){
             logger.error(e.getMessage(),e);
-            return new BaseResult<MerchantCommentExcution>(0,e.getMessage());
+            MerchantCommentExcution merchantCommentExcution = new MerchantCommentExcution(MerchantCommentEnum.ADD_EVALUATE_FORETABLE_FAIL,e.getMessage());
+            return new BaseAPIResult(0,merchantCommentExcution);
         }
     }
 
@@ -85,24 +87,24 @@ public class SystemParameterController extends BaseController {
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
 // ---------查询职位详情
-    public BaseResult<JobDetailsExcution> JobDetails(SystemParameterDto systemParameterDto){
+    public BaseAPIResult JobDetails(@RequestBody SystemParameterDto systemParameterDto){
         //参数验空
         try {
             JobDetailsExcution jobDetailsExcution = systemParameterService.jobDetails(systemParameterDto);
-            return new BaseResult<JobDetailsExcution>(1,jobDetailsExcution);
+            return new BaseAPIResult(1,jobDetailsExcution);
         }catch (QueryInnerErrorException e){
             JobDetailsExcution jobDetailsExcution = new JobDetailsExcution(JobDetailsEnum.QUERY_STATUS_FAIL);
-            return new BaseResult<JobDetailsExcution>(0,jobDetailsExcution);
+            return new BaseAPIResult(0,jobDetailsExcution);
         }catch (FindDatabaseException e){
             JobDetailsExcution jobDetailsExcution = new JobDetailsExcution(JobDetailsEnum.QUERY_PASSEDJOB_FAIL);
-            return new BaseResult<JobDetailsExcution>(0,jobDetailsExcution);
+            return new BaseAPIResult(0,jobDetailsExcution);
         }catch (FindJobException e){
             JobDetailsExcution jobDetailsExcution = new JobDetailsExcution(JobDetailsEnum.QUERY_OTHERJOB_FAIL);
-            return new BaseResult<JobDetailsExcution>(0,jobDetailsExcution);
+            return new BaseAPIResult(0,jobDetailsExcution);
         }catch (Exception e){
             logger.error(e.getMessage(),e);
-      //      JobDetailsExcution jobDetailsExcution = new JobDetailsExcution(JobDetailsEnum.UNKNOW_ERROR);
-            return new BaseResult<JobDetailsExcution>(0,e.getMessage());
+            JobDetailsExcution jobDetailsExcution = new JobDetailsExcution(JobDetailsEnum.QUERY_OTHERJOB_FAIL,e.getMessage());
+            return new BaseAPIResult(0,jobDetailsExcution);
         }
     }
 }

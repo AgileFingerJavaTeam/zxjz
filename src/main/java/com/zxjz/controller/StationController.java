@@ -1,8 +1,7 @@
 package com.zxjz.controller;
 
+import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
-import com.zxjz.base.BaseResult;
-import com.zxjz.dto.excution.CheckBillExcution;
 import com.zxjz.dto.excution.StationInfoExcution;
 import com.zxjz.dto.in.StationDto;
 import com.zxjz.enums.StationInfoEnum;
@@ -12,6 +11,7 @@ import com.zxjz.exception.db.UpdateInnerErrorException;
 import com.zxjz.service.StationInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -49,16 +49,17 @@ public class StationController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<StationInfoExcution> findParentJobList (StationDto stationDto){
+    public BaseAPIResult findParentJobList (@RequestBody StationDto stationDto){
         try {
             StationInfoExcution stationInfoExcution = stationInfoService.findParentJobList(stationDto);
-            return new BaseResult<StationInfoExcution>(1,stationInfoExcution);
+            return new BaseAPIResult(1,stationInfoExcution);
         }catch (QueryInnerErrorException e){
             StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.FIND_FAIL);
-            return new BaseResult<StationInfoExcution>(0,stationInfoExcution);
+            return new BaseAPIResult(0,stationInfoExcution);
         }catch (Exception e){
             logger.error(e.getMessage(), e);
-            return new BaseResult<StationInfoExcution>(0,e.getMessage());
+            StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.FIND_FAIL,e.getMessage());
+            return new BaseAPIResult(0,stationInfoExcution);
         }
     }
 
@@ -88,16 +89,17 @@ public class StationController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<StationInfoExcution> addParentJobType (StationDto stationDto){
+    public BaseAPIResult addParentJobType (@RequestBody  StationDto stationDto){
         try {
             StationInfoExcution stationInfoExcution = stationInfoService.addParentJobType(stationDto);
-            return new BaseResult<StationInfoExcution>(1,stationInfoExcution);
+            return new BaseAPIResult(1,stationInfoExcution);
         }catch (InsertInnerErrorException e){
             StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.ADD_PARENT_JOB_FAIL);
-            return new BaseResult<StationInfoExcution>(0,stationInfoExcution);
+            return new BaseAPIResult(0,stationInfoExcution);
         }catch (Exception e){
             logger.error(e.getMessage(), e);
-            return new BaseResult<StationInfoExcution>(0,e.getMessage());
+            StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.ADD_PARENT_JOB_FAIL,e.getMessage());
+            return new BaseAPIResult(0,stationInfoExcution);
         }
     }
 
@@ -110,7 +112,7 @@ public class StationController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public ModelAndView showEditParentJobPage (StationDto stationDto){
+    public ModelAndView showEditParentJobPage (@RequestBody StationDto stationDto){
         ModelAndView mv = new ModelAndView();
         try {
             StationInfoExcution stationInfoExcution = stationInfoService.findParentJobInfo(stationDto);
@@ -133,16 +135,17 @@ public class StationController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<StationInfoExcution> editParentJobType (StationDto stationDto){
+    public BaseAPIResult editParentJobType (@RequestBody StationDto stationDto){
         try {
             StationInfoExcution stationInfoExcution = stationInfoService.editParentJobInfo(stationDto);
-            return new BaseResult<StationInfoExcution>(1,stationInfoExcution);
+            return new BaseAPIResult(1,stationInfoExcution);
         }catch (UpdateInnerErrorException e){
             StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.EDIT_PARENT_JOB_FAIL);
-            return new BaseResult<StationInfoExcution>(0,stationInfoExcution);
+            return new BaseAPIResult(0,stationInfoExcution);
         }catch (Exception e){
             logger.error(e.getMessage(), e);
-            return new BaseResult<StationInfoExcution>(0,e.getMessage());
+            StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.EDIT_PARENT_JOB_FAIL,e.getMessage());
+            return new BaseAPIResult(0,stationInfoExcution);
         }
     }
 
@@ -155,7 +158,7 @@ public class StationController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public ModelAndView showDeleteParentJobPage (StationDto stationDto){
+    public ModelAndView showDeleteParentJobPage (@RequestBody StationDto stationDto){
         ModelAndView mv = new ModelAndView();
         try {
             StationInfoExcution stationInfoExcution = stationInfoService.findParentJobInfo(stationDto);
@@ -178,16 +181,17 @@ public class StationController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<StationInfoExcution> deleteParentJobType (StationDto stationDto){
+    public BaseAPIResult deleteParentJobType (@RequestBody StationDto stationDto){
         try {
             StationInfoExcution stationInfoExcution = stationInfoService.deleteParentJobType(stationDto);
-            return new BaseResult<StationInfoExcution>(1,stationInfoExcution);
+            return new BaseAPIResult(1,stationInfoExcution);
         }catch (UpdateInnerErrorException e){
             StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.DELETE_PARENT_JOB_FAIL);
-            return new BaseResult<StationInfoExcution>(0,stationInfoExcution);
+            return new BaseAPIResult(0,stationInfoExcution);
         }catch (Exception e){
             logger.error(e.getMessage(), e);
-            return new BaseResult<StationInfoExcution>(0,e.getMessage());
+            StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.DELETE_PARENT_JOB_FAIL,e.getMessage());
+            return new BaseAPIResult(0,stationInfoExcution);
         }
     }
 
@@ -218,13 +222,14 @@ public class StationController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<StationInfoExcution> findChildJobInfo(StationDto stationDto){
+    public BaseAPIResult findChildJobInfo(@RequestBody StationDto stationDto){
         try {
             StationInfoExcution stationInfoExcution = stationInfoService.findChildJobList(stationDto);
-            return new BaseResult<StationInfoExcution>(1,stationInfoExcution);
+            return new BaseAPIResult(1,stationInfoExcution);
         }catch (Exception e){
             logger.error(e.getMessage(), e);
-            return new BaseResult<StationInfoExcution>(0,e.getMessage());
+            StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.FIND_FAIL);
+            return new BaseAPIResult(0,stationInfoExcution);
         }
     }
 
@@ -237,7 +242,7 @@ public class StationController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public ModelAndView showChildAddPage (StationDto stationDto){
+    public ModelAndView showChildAddPage (@RequestBody StationDto stationDto){
         String pid = stationDto.getPid();
         String pname = stationDto.getPname();
         ModelAndView mv = new ModelAndView();
@@ -259,16 +264,17 @@ public class StationController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<StationInfoExcution> findParentJobInfo(StationDto stationDto){
+    public BaseAPIResult findParentJobInfo(@RequestBody StationDto stationDto){
         try {
             StationInfoExcution stationInfoExcution = stationInfoService.findParentJob(stationDto);
-            return new BaseResult<StationInfoExcution>(1,stationInfoExcution);
+            return new BaseAPIResult(1,stationInfoExcution);
         }catch (QueryInnerErrorException e){
             StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.FIND_FAIL);
-            return new BaseResult<StationInfoExcution>(0,stationInfoExcution);
+            return new BaseAPIResult(0,stationInfoExcution);
         }catch (Exception e){
             logger.error(e.getMessage(), e);
-            return new BaseResult<StationInfoExcution>(0,e.getMessage());
+            StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.FIND_FAIL,e.getMessage());
+            return new BaseAPIResult(0,stationInfoExcution);
         }
     }
 
@@ -281,16 +287,17 @@ public class StationController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<StationInfoExcution> addChildJobType (StationDto stationDto){
+    public BaseAPIResult addChildJobType (@RequestBody StationDto stationDto){
         try {
             StationInfoExcution stationInfoExcution = stationInfoService.addChildJobType(stationDto);
-            return new BaseResult<StationInfoExcution>(1,stationInfoExcution);
+            return new BaseAPIResult(1,stationInfoExcution);
         }catch (InsertInnerErrorException e){
             StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.ADD_CHILD_JOB_FAIL);
-            return new BaseResult<StationInfoExcution>(0,stationInfoExcution);
+            return new BaseAPIResult(0,stationInfoExcution);
         }catch (Exception e){
             logger.error(e.getMessage(), e);
-            return new BaseResult<StationInfoExcution>(0,e.getMessage());
+            StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.ADD_CHILD_JOB_FAIL,e.getMessage());
+            return new BaseAPIResult(0,stationInfoExcution);
         }
     }
 
@@ -303,7 +310,7 @@ public class StationController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public ModelAndView showEditChildJobPage (StationDto stationDto){
+    public ModelAndView showEditChildJobPage (@RequestBody StationDto stationDto){
         ModelAndView mv = new ModelAndView();
         try {
             StationInfoExcution stationInfoExcution = stationInfoService.findChildJobInfo(stationDto);
@@ -326,16 +333,17 @@ public class StationController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<StationInfoExcution> editChildJobType(StationDto stationDto){
+    public BaseAPIResult editChildJobType(@RequestBody StationDto stationDto){
         try {
             StationInfoExcution stationInfoExcution = stationInfoService.editChildJobType(stationDto);
-            return new BaseResult<StationInfoExcution>(1,stationInfoExcution);
+            return new BaseAPIResult(1,stationInfoExcution);
         }catch (UpdateInnerErrorException e){
             StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.EDIT_CHILD_JOB_FAIL);
-            return new BaseResult<StationInfoExcution>(0,stationInfoExcution);
+            return new BaseAPIResult(0,stationInfoExcution);
         }catch (Exception e){
             logger.error(e.getMessage(), e);
-            return new BaseResult<StationInfoExcution>(0,e.getMessage());
+            StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.EDIT_CHILD_JOB_FAIL,e.getMessage());
+            return new BaseAPIResult(0,stationInfoExcution);
         }
     }
 
@@ -348,7 +356,7 @@ public class StationController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public ModelAndView showDelectChildJobType (StationDto stationDto){
+    public ModelAndView showDelectChildJobType (@RequestBody StationDto stationDto){
         ModelAndView mv = new ModelAndView();
         try {
             StationInfoExcution stationInfoExcution = stationInfoService.findChildJobInfo(stationDto);
@@ -371,16 +379,17 @@ public class StationController extends BaseController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseResult<StationInfoExcution> delectChildJobType (StationDto stationDto){
+    public BaseAPIResult delectChildJobType (@RequestBody StationDto stationDto){
         try {
             StationInfoExcution stationInfoExcution = stationInfoService.delectChildJobType(stationDto);
-            return new BaseResult<StationInfoExcution>(1,stationInfoExcution);
+            return new BaseAPIResult(1,stationInfoExcution);
         }catch (UpdateInnerErrorException e){
             StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.DELETE_CHILD_JOB_FAIL);
-            return new BaseResult<StationInfoExcution>(0,stationInfoExcution);
+            return new BaseAPIResult(0,stationInfoExcution);
         }catch (Exception e){
             logger.error(e.getMessage(), e);
-            return new BaseResult<StationInfoExcution>(0,e.getMessage());
+            StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.DELETE_CHILD_JOB_FAIL,e.getMessage());
+            return new BaseAPIResult(0,stationInfoExcution);
         }
     }
 }
