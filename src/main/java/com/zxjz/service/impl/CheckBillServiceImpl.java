@@ -1,7 +1,7 @@
 package com.zxjz.service.impl;
 
-import com.zxjz.entity.RechargeInfo;
-import com.zxjz.exception.db.QueryInnerErrorException;
+import com.zxjz.service.CheckBillService;
+import org.springframework.stereotype.Service;
 import com.zxjz.base.BaseException;
 import com.zxjz.dao.CheckBillDao;
 import com.zxjz.dto.excution.CheckBillExcution;
@@ -166,3 +166,4 @@ public class CheckBillServiceImpl implements CheckBillService {
         }
     }
 }
+
