@@ -1,0 +1,156 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.RechargeDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+    <!-- 查看列表 -->
+    <select id="findRechargeList"  resultType="RechargeInfo">
+        SELECT zx_merchant_funds_recharge_record.user_id,recharge_sequence_number,zx_merchants_account.merchants_name,recharge_time,recharge_mode_name,amount_of_recharge
+        from zx_merchant_funds_recharge_record
+        LEFT JOIN zx_merchants_account
+        ON zx_merchant_funds_recharge_record.user_id=zx_merchants_account.user_id
+        LEFT JOIN zx_recharge_mode ON zx_merchant_funds_recharge_record.recharge_mode=zx_recharge_mode.recharge_mode
+        <where>
+            1=1
+            <if test="bxw_search_content!=null and bxw_search_content!=''">
+                AND CONCAT_WS(',',merchants_name,recharge_time,recharge_mode_name,amount_of_recharge) LIKE '%${bxw_search_content}%'
+            </if>
+        </where>
+        <if test="sort!=null and sort!='' and order!=null and order!=''">
+            ORDER BY ${sort} ${order}
+        </if>
+        limit #{offset},#{rows}
+    </select>
+    <!-- 查看数量 -->
+    <select id="total"  resultType="int">
+        SELECT count(*)
+        from zx_merchant_funds_recharge_record
+        LEFT JOIN zx_merchants_account
+        ON zx_merchant_funds_recharge_record.user_id=zx_merchants_account.user_id
+        <where>
+            1=1
+            <if test="bxw_search_content!=null and bxw_search_content!=''">
+                AND CONCAT_WS(',',merchants_name,recharge_time,recharge_mode,amount_of_recharge) LIKE '%${bxw_search_content}%'
+            </if>
+        </where>
+    </select>
+    <!-- 查看详情 -->
+    <select id="findRechargePage" resultType="RechargeInfo">
+        SELECT account.merchants_name,recharge_record.recharge_sequence_number,
+        recharge_record.recharge_time,recharge_mode.recharge_mode_name,recharge_record.amount_of_recharge,
+        recharge_record.`recharge_declare`,recharge_record.Payment_platform_flow_number,zx_employee_basic_information.employees_name
+        FROM zx_merchant_funds_recharge_record recharge_record
+        LEFT JOIN zx_merchants_account account
+        ON recharge_record.user_id=account.user_id
+        LEFT JOIN zx_recharge_mode recharge_mode
+        ON recharge_record.recharge_mode=recharge_mode.recharge_mode
+        LEFT JOIN zx_employee_basic_information
+        ON recharge_record.operating_staff_id=zx_employee_basic_information.employees_id
+        where recharge_record.user_id=#{user_id} and recharge_record.recharge_sequence_number=#{recharge_sequence_number}
+    </select>
+
+
+    <!-- 查询商户名称 -->
+    <select id="findMerchantsName"  resultType="RechargeInfo">
+        select user_id, merchants_name FROM zx_merchants_account
+        <where>
+            1=1
+            <if test="q!=null and q!=''">
+                and merchants_name like '%${q}%'
+            </if>
+
+        </where>
+
+        limit #{offset},#{rows}
+    </select>
+
+
+    <!-- 查询商户列表数量-->
+    <select id="count"   resultType="int">
+        select count(*) FROM zx_merchants_account
+        <where>
+            1=1
+            <if test="q!=null and q!=''">
+                and merchants_name like '%${q}%'
+            </if>
+        </where>
+    </select>
+
+
+    <!-- 查询充值方式 -->
+    <select id="findRechargeMethod"  resultType="RechargeInfo">
+        select * from zx_recharge_mode where 1=1
+    </select>
+
+
+    <!-- 查充值表id -->
+    <select id="findUserId"  resultType="RechargeInfo">
+        SELECT user_id,max(recharge_sequence_number) as recharge_sequence_number FROM zx_merchant_funds_recharge_record where user_id=#{merchants_id}
+    </select>
+
+
+    <!-- 查看流水号 -->
+    <select id="findNum"  resultType="int">
+        SELECT max(recharge_sequence_number)+1 FROM zx_merchant_funds_recharge_record where user_id=#{merchants_id}
+    </select>
+
+    <!-- 查看流水号 -->
+    <insert id="updateNum" >
+        insert into zx_merchant_funds_recharge_record (user_id,recharge_sequence_number,recharge_time)VALUES(#{merchants_id},0,now())
+    </insert>
+
+
+
+    <!-- 提交充值表单 -->
+    <insert id="insertRecharge" >
+        insert into zx_merchant_funds_recharge_record (user_id,recharge_sequence_number,recharge_time,recharge_mode,amount_of_recharge,Payment_platform_flow_number,recharge_declare,operating_staff_id)
+        values (#{user_id},#{recharge_sequence_number},#{recharge_time},#{recharge_mode},#{amount_of_recharge},#{payment_platform_flow_number,jdbcType=INTEGER},#{declare},#{operating_staff_id})
+    </insert>
+    <!-- 查询流水账是否存在商户id -->
+    <select id="findForList"  resultType="CurrentAccountInfo">
+        SELECT user_id from zx_merchant_funds_current_account WHERE user_id=#{user_id}
+    </select>
+    <!-- 添加到流水账 -->
+    <insert id="insertAccount" >
+        INSERT INTO zx_merchant_funds_current_account (user_id,current_account_number,accounting_time,classification,description,amount,reference_bill_classification,references_the_internal_serial_number1)
+        VALUES (#{user_id},1,NOW(),1,'充值',#{amount_of_recharge},'充值',#{recharge_sequence_number})
+    </insert>
+    <!-- 添加到流水账 -->
+    <insert id="insertAccounts" >
+        INSERT INTO zx_merchant_funds_current_account (user_id,accounting_time,classification,description,amount,reference_bill_classification,references_the_internal_serial_number1,current_account_number)
+        SELECT user_id,NOW(),1,'充值',#{amount_of_recharge},'充值',#{recharge_sequence_number},MAX(current_account_number)+1 FROM zx_merchant_funds_current_account where user_id=#{user_id}
+    </insert>
+    <!-- 查询没收回的应收款 -->
+    <select id="findRList"  resultType="MerchantFundsReceivableInfo">
+        SELECT *FROM zx_merchant_funds_receivable WHERE is_back='否' and user_id=#{user_id}
+    </select>
+    <!-- 修改应收款 -->
+    <update id="updateReceivable" >
+        UPDATE zx_merchant_funds_receivable SET is_back='是'
+        WHERE 1=1 AND user_id=#{user_id} AND serial_number=#{serial_number}
+    </update>
+
+    <!-- 修改应收款部分 -->
+    <update id="updateReceivablePart" >
+        UPDATE zx_merchant_funds_receivable SET actual_amount=#{actual_amount}-#{amount_of_recharge},deductedI=#{amount_of_recharge}
+        WHERE 1=1 AND user_id=#{user_id} AND serial_number=#{serial_number}
+    </update>
+
+
+    <!-- 查询基本信息 -->
+    <select id="findCredit"  resultType="CreditAndPayment">
+        SELECT account_balance,credit_total,credit_balance FROM zx_merchants_money_basic WHERE user_id=#{user_id}
+    </select>
+
+    <!-- 修改余额等信息 -->
+    <update id="updateCredit" >
+        UPDATE zx_merchants_money_basic SET account_balance=account_balance+#{amount_of_recharge},credit_balance=credit_total WHERE user_id=#{user_id}
+    </update>
+
+    <!-- 修改授信余额等信息 -->
+    <update id="upcreditbalance" >
+        UPDATE zx_merchants_money_basic SET credit_balance=credit_balance+#{amount_of_recharge} WHERE user_id=#{user_id}
+    </update>
+</mapper>
