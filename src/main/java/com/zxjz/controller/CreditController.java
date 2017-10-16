@@ -3,6 +3,7 @@ package com.zxjz.controller;
 import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
 
+import com.zxjz.base.BaseUIResult;
 import com.zxjz.dto.excution.CheckBillExcution;
 import com.zxjz.dto.excution.CreditAndPaymentExcution;
 import com.zxjz.dto.in.CheckBillDto;
@@ -26,32 +27,30 @@ public class CreditController extends BaseController {
     /*
 	 * 显示页面
 	 * */
-    @RequestMapping(value = "/creditPage",
-            method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/creditPage")
     public ModelAndView creditPage(){
         ModelAndView mv=new ModelAndView();
         mv.setViewName("credit/credit");
         return mv;
     }
    @RequestMapping(value = "/getcreditList",
-            method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+           method = RequestMethod.POST,
+           produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult getcreditList(CreditAndPaymentDto creditAndPaymentDto){
+    public String getcreditList(CreditAndPaymentDto creditAndPaymentDto){
         try {
             CreditAndPaymentExcution creditAndPaymentExcution = creditAndPaymentService.findList(creditAndPaymentDto);
-            return new BaseAPIResult(1,creditAndPaymentExcution);
+            return BaseUIResult.returnJsonEasyUI(creditAndPaymentExcution);
         }catch (Exception e){
             logger.error(e.getMessage(), e);
             CreditAndPaymentExcution creditAndPaymentExcution =new CreditAndPaymentExcution(CreditEnum.FAIL,e.getMessage());
 
-            return new BaseAPIResult(0,creditAndPaymentExcution);
+            return  BaseUIResult.returnJsonEasyUI(creditAndPaymentExcution);
         }
    }
     @RequestMapping(value = "/editcredit",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
     public ModelAndView editcredit(CreditAndPaymentDto creditAndPaymentDto) {
         ModelAndView mv = new ModelAndView();
@@ -71,7 +70,7 @@ public class CreditController extends BaseController {
 
     @RequestMapping(value = "/payment",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
     public ModelAndView payment(CreditAndPaymentDto creditAndPaymentDto) {
         ModelAndView mv = new ModelAndView();
@@ -89,32 +88,32 @@ public class CreditController extends BaseController {
 
     @RequestMapping(value = "/subcredit",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult subedit(CreditAndPaymentDto creditAndPaymentDto){
+    public String subedit(CreditAndPaymentDto creditAndPaymentDto){
         try {
             CreditAndPaymentExcution creditAndPaymentExcution = creditAndPaymentService.subCredit(creditAndPaymentDto);
-            return new BaseAPIResult(1,creditAndPaymentExcution);
+            return BaseUIResult.returnJsonEasyUI(creditAndPaymentExcution);
         }catch (Exception e){
             logger.error(e.getMessage(), e);
             CreditAndPaymentExcution creditAndPaymentExcution =new CreditAndPaymentExcution(CreditEnum.FAIL,e.getMessage());
 
-            return new BaseAPIResult(0,creditAndPaymentExcution);
+            return BaseUIResult.returnJsonEasyUI(creditAndPaymentExcution);
         }
     }
 
     @RequestMapping(value = "/subpayment",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult subpayment(CreditAndPaymentDto creditAndPaymentDto){
+    public String subpayment(CreditAndPaymentDto creditAndPaymentDto){
         try {
             CreditAndPaymentExcution creditAndPaymentExcution = creditAndPaymentService.subPayment(creditAndPaymentDto);
-            return new BaseAPIResult(1,creditAndPaymentExcution);
+            return BaseUIResult.returnJsonEasyUI(creditAndPaymentExcution);
         }catch (Exception e){
             logger.error(e.getMessage(), e);
             CreditAndPaymentExcution creditAndPaymentExcution =new CreditAndPaymentExcution(CreditEnum.FAIL,e.getMessage());
-            return new BaseAPIResult(0,creditAndPaymentExcution);
+            return BaseUIResult.returnJsonEasyUI(creditAndPaymentExcution);
         }
     }
 }

@@ -20,7 +20,7 @@ public class AuthRoleDaoTest {
     private AuthRoleDao authRoleDao;
     @Test
     public void findAuthRole() throws Exception {
-           String id = "4";
+           int id = 4;
           List<AuthRole> list =  authRoleDao.findAuthRole(id);
         System.out.println("-------------------------");
         System.out.println(list);

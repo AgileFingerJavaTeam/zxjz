@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface AuthRoleDao {
 
-       public List<AuthRole> findAuthRole(@Param("id") String id);
+       public List<AuthRole> findAuthRole(@Param("id") int id);
 }

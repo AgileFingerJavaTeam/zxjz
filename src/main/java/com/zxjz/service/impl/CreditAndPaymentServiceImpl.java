@@ -54,7 +54,7 @@ public class CreditAndPaymentServiceImpl implements CreditAndPaymentService {
                 }
                 int total = creditDao.total(sort,order);
                 HashMap map=new HashMap();
-                map.put("findList",findList);
+                map.put("rows",findList);
                 map.put("total",total);
                 return new CreditAndPaymentExcution(CreditEnum.SUCCESS,map);
             }   else{
