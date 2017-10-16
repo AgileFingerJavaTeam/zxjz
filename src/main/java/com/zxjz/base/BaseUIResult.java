@@ -27,4 +27,20 @@ public class BaseUIResult {
         return result;
     }
 
+
+    public static String returnJsonMSG(int status,BaseAPIExcution baseAPIExcution) {
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> map = new HashMap<String, Object>();
+        String result = "";
+        try {
+            map.put("status", status);
+            map.put("info", baseAPIExcution.getCode());
+            map.put("data", baseAPIExcution.getData());
+            result=mapper.writeValueAsString(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 }
