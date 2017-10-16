@@ -2,6 +2,7 @@ package com.zxjz.service.impl;
 
 import com.zxjz.base.BaseException;
 import com.zxjz.dao.MerchantsInfoDao;
+import com.zxjz.dao.MerchantsUpgadeDao;
 import com.zxjz.dto.excution.MerchantsAffirmStudentBreakPromiseExcution;
 import com.zxjz.dto.excution.MerchantsChangeHeadExcution;
 import com.zxjz.dto.excution.MerchantsInfoExcution;
@@ -24,16 +25,20 @@ import com.zxjz.exception.db.UpdateInnerErrorException;
 import com.zxjz.service.MerchantsInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
+
 @Service
 public class MerchantsInfoServiceImpl implements MerchantsInfoService {
     //日志对象
     private Logger logger= LoggerFactory.getLogger(this.getClass());
-    @Resource
+    @Autowired
     private MerchantsInfoDao merchantsInfoDao;
+    private MerchantsUpgadeDao merchantsUpgadeDao;
 //---------获取商户个人信息
     public MerchantsInfoExcution findEmpolyerInfoById(MerchantsInfoDto merchantsInfoDto) {
         int user_id = merchantsInfoDto.getUserId();
@@ -109,15 +114,17 @@ public class MerchantsInfoServiceImpl implements MerchantsInfoService {
             throw new BaseException(e.getMessage());
         }
     }
-//    账户升级申请
+
+
+    //    账户升级申请
     public MerchantsUpgradeExcution upgradeAccount(MerchantsUpgradeDto merchantsUpgradeDto) {
         int userId = merchantsUpgradeDto.getUserId();
         try {
-            MerchantsUpgrade id = merchantsInfoDao.findUserById(userId);
+            MerchantsUpgrade id = merchantsUpgadeDao.findUserById(userId);
             if (id != null){
                 throw new RepeatApplyException("重复申请");
             }
-            int isAdd = merchantsInfoDao.addADataById(userId);
+            int isAdd = merchantsUpgadeDao.addADataById(userId);
             if (isAdd == 0) {
                throw new ApplyFailException("数据库内部错误");
             }
@@ -140,7 +147,7 @@ public class MerchantsInfoServiceImpl implements MerchantsInfoService {
     public MerchantsUpgradeExcution showAuditPage(MerchantsUpgradeDto merchantsUpgradeDto) {
         int user_id = merchantsUpgradeDto.getUserId();
         try {
-            MerchantsUpgrade merchantsUpgrade = merchantsInfoDao.findEmInfo(user_id);
+            MerchantsUpgrade merchantsUpgrade = merchantsUpgadeDao.findEmInfo(user_id);
             if (merchantsUpgrade == null){
                 throw new QueryInnerErrorException("数据库内部错误查询申请VIP商户申请信息失败");
             }
@@ -153,7 +160,77 @@ public class MerchantsInfoServiceImpl implements MerchantsInfoService {
         }
     }
 
-//    public MerchantsUpgradeExcution findApplyVipShopList(MerchantsUpgradeDto merchantsUpgradeDto) {
-//        int page = merchantsUpgradeDto.
-//    }
+    /**
+     * 查询申请VIP商户列表
+     * @param merchantsUpgradeDto
+     * @return
+     */
+    public MerchantsUpgradeExcution findApplyVipShopList(MerchantsUpgradeDto merchantsUpgradeDto) {
+        int page = merchantsUpgradeDto.getPage();
+        int rows = merchantsUpgradeDto.getRows();
+        int offset = (page-1)*rows;
+        int user_id = merchantsUpgradeDto.getUserId();
+        String srt_approval_status1 = merchantsUpgradeDto.getSrt_approval_status1();
+        String srt_search_content1 = merchantsUpgradeDto.getSrt_search_content1();
+        try {
+            List<MerchantsUpgrade> merchantsUpgradeList = merchantsUpgadeDao.findApplyVipList(srt_approval_status1,srt_search_content1,offset,rows);
+            int merchantsCount = merchantsUpgadeDao.findApplyVipCount();
+            for (int i=0;i<merchantsUpgradeList.size();i++){
+                MerchantsUpgrade info = merchantsUpgradeList.get(i);
+                String is_dispose = info.getIsDispose();
+                if(is_dispose.equals("已经受理")){
+                    //查询受理人姓名
+                    String acceptEmployees = merchantsUpgadeDao.findAcceptEmployer(user_id);
+                    info.setAcceptEmployees(acceptEmployees);
+                    //查询操作人姓名
+                    String OperatingStaff = merchantsUpgadeDao.findOperatingEmployer(user_id);
+                    info.setOperatingStaff(OperatingStaff);
+                }
+            }
+            HashMap map = new HashMap();
+            map.put("merchantsUpgradeList",merchantsUpgradeList);
+            map.put("merchantsCount",merchantsCount);
+            return new MerchantsUpgradeExcution(MerchantsUpgradeEnum.FIND_SUCCESS,map);
+        }catch (Exception e){
+            logger.error(e.getMessage(), e);
+            throw new BaseException(e.getMessage());
+        }
+    }
+
+    /**
+     * 审核
+     * @param merchantsUpgradeDto
+     * @return
+     */
+    public MerchantsUpgradeExcution confirmCheck(MerchantsUpgradeDto merchantsUpgradeDto) {
+        int id = merchantsUpgradeDto.getId();
+        int employees_name = merchantsUpgradeDto.getEmployees_name();
+        int user_id = merchantsUpgradeDto.getUserId();
+        try {
+            int isConfirmCheck = merchantsUpgadeDao.conrifmCheck(employees_name,id,user_id);
+            if (isConfirmCheck == 0){
+                throw new UpdateInnerErrorException("更新商户申请VIP受理状态失败（确认审核失败）");
+            }
+            return new MerchantsUpgradeExcution(MerchantsUpgradeEnum.CONFIRM_CHECK_SUCCESS);
+        }catch (UpdateInnerErrorException e1){
+            throw e1;
+        }catch (Exception e){
+            logger.error(e.getMessage(), e);
+            throw new BaseException(e.getMessage());
+        }
+    }
+
+    /**
+     * 查询员工列表
+     * @return
+     */
+    public MerchantsUpgradeExcution findCheckEmployer() {
+        try {
+           List<MerchantsUpgrade> merchantsUpgradeList = merchantsUpgadeDao.findEmployerList();
+           return new MerchantsUpgradeExcution(MerchantsUpgradeEnum.FIND_SUCCESS,merchantsUpgradeList);
+        }catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new BaseException(e.getMessage());
+        }
+    }
 }

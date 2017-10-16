@@ -61,4 +61,9 @@
         SET is_dispose='已经受理',operating_time=NOW(),accept_employees=#{employees_name},operating_staff = #{id}
         WHERE user_id=#{user_id}
     </update>
+    <!--查询员工列表-->
+    <select id="findEmployees"  resultType="ApplyVipInfo">
+        SELECT employees_name,employees_id
+        FROM `zx_employee_basic_information`;
+    </select>
 </mapper>
