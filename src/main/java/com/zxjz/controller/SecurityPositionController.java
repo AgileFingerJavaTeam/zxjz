@@ -50,7 +50,7 @@ public class SecurityPositionController extends BaseController{
               method = RequestMethod.POST,
               produces = {"application/json;charset=UTF-8"})
       @ResponseBody
-      public BaseAPIResult getSecurityPositionList(@RequestBody SecurityPositionDto securityPositionDto) {
+      public BaseAPIResult getSecurityPositionList(SecurityPositionDto securityPositionDto) {
           //参数验空
           try {
               SecurityPositionExcution securityPositionExcution = securityPositionService.getSecurityPositionList(securityPositionDto);
@@ -69,7 +69,7 @@ public class SecurityPositionController extends BaseController{
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult getSecurityPositionList2(@RequestBody SecurityPositionDto securityPositionDto) {
+    public BaseAPIResult getSecurityPositionList2(SecurityPositionDto securityPositionDto) {
         //参数验空
         try {
             SecurityPositionExcution securityPositionExcution = securityPositionService.getSecurityPositionList2(securityPositionDto);
@@ -256,7 +256,7 @@ public class SecurityPositionController extends BaseController{
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult search(@RequestBody SecurityPositionDto securityPositionDto) {
+    public BaseAPIResult search(SecurityPositionDto securityPositionDto) {
         //参数验空
         try {
             SecurityPositionExcution securityPositionExcution = securityPositionService.findSearch(securityPositionDto);
@@ -275,7 +275,7 @@ public class SecurityPositionController extends BaseController{
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult StatusSearch(@RequestBody SecurityPositionDto securityPositionDto) {
+    public BaseAPIResult StatusSearch(SecurityPositionDto securityPositionDto) {
         //参数验空
         try {
             SecurityPositionExcution securityPositionExcution = securityPositionService.findStatusSearch(securityPositionDto);
@@ -293,7 +293,7 @@ public class SecurityPositionController extends BaseController{
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult StatusSearch2(@RequestBody SecurityPositionDto securityPositionDto) {
+    public BaseAPIResult StatusSearch2(SecurityPositionDto securityPositionDto) {
         //参数验空
         try {
             SecurityPositionExcution securityPositionExcution = securityPositionService.findStatusSearch2(securityPositionDto);

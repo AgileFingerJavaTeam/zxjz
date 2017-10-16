@@ -37,7 +37,7 @@ $.Admin.atSecurityPosition = {
         }
         },
         {
-          text:'状态筛选:<select style="width:70px;" id="StatusSearch"><option value="">全部</option><option value="1">上架</option><option value="0">下架</option></select></div>',
+          text:'状态筛选:<select style="width:70px;" id="statusSearch"><option value="">全部</option><option value="1">上架</option><option value="0">下架</option></select></div>',
         
           },
     ],
@@ -274,10 +274,10 @@ $($.Admin.atSecurityPosition.id).datagrid({
     		 $.Admin.atSecurityPosition.search();
     		 } }] })
     		 
-    $('#StatusSearch').on('change',function(){
-     	var a=$('#StatusSearch').val();
-    	var StatusSearch={};
-    	StatusSearch.StatusSearch=a;
+    $('#statusSearch').on('change',function(){
+     	var a=$('#statusSearch').val();
+    	var statusSearch={};
+    	statusSearch.statusSearch=a;
           $.ajax({
         	  type:'post',
               title: '状态筛选',

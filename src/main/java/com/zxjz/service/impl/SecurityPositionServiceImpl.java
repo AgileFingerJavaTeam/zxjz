@@ -78,7 +78,7 @@ public class SecurityPositionServiceImpl implements SecurityPositionService {
              }
          }
              HashMap map =new HashMap();
-             map.put("list",list);
+             map.put("rows",list);
              map.put("total",total);
             return new SecurityPositionExcution(SecurityPositionEnum.COLLECTION_SUCCESS,map);
         }catch (Exception e) {
