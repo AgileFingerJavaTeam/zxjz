@@ -12,7 +12,11 @@ package com.zxjz.enums;
             FIND_SUCCESS(1),//查询申请VIP商户申请详情成功
             FIND_FAIL(-3),//查询申请VIP商户申请详情失败
             APPLY_REPEAT(-1),//申请重复
+            CONFIRM_CHECK_SUCCESS(1),//确认审核成功
+            CONFIRM_CHECK_FAIL(-4),//确认审核失败
+            FIND_CHECK_EMPLOYER_FAIL(-5),//查询受理员工失败
             APPLY_ERROR(-2);//数据库内部错误
+
 
             private int code;
 

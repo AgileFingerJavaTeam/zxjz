@@ -4,11 +4,28 @@ public class MerchantsUpgrade {
     private int userId;
     private String applyTime;
     private String isDispose;
-    private int acceptEmployees;
-    private int operatingStaff;
+    private String acceptEmployees;
+    private String operatingStaff;
     private String operatingTime;
-    private  String merchantsName;//商户名称
+    private String merchantsName;//商户名称
     private String employees_name;//员工姓名
+    private int employeesId;
+
+    public void setAcceptEmployees(String acceptEmployees) {
+        this.acceptEmployees = acceptEmployees;
+    }
+
+    public void setOperatingStaff(String operatingStaff) {
+        this.operatingStaff = operatingStaff;
+    }
+
+    public int getEmployeesId() {
+        return employeesId;
+    }
+
+    public void setEmployeesId(int employeesId) {
+        this.employeesId = employeesId;
+    }
 
     public String getEmployees_name() {
         return employees_name;
@@ -50,21 +67,6 @@ public class MerchantsUpgrade {
         this.isDispose = isDispose;
     }
 
-    public int getAcceptEmployees() {
-        return acceptEmployees;
-    }
-
-    public void setAcceptEmployees(int acceptEmployees) {
-        this.acceptEmployees = acceptEmployees;
-    }
-
-    public int getOperatingStaff() {
-        return operatingStaff;
-    }
-
-    public void setOperatingStaff(int operatingStaff) {
-        this.operatingStaff = operatingStaff;
-    }
 
     public String getOperatingTime() {
         return operatingTime;
@@ -80,11 +82,12 @@ public class MerchantsUpgrade {
                 "userId=" + userId +
                 ", applyTime='" + applyTime + '\'' +
                 ", isDispose='" + isDispose + '\'' +
-                ", acceptEmployees=" + acceptEmployees +
-                ", operatingStaff=" + operatingStaff +
+                ", acceptEmployees='" + acceptEmployees + '\'' +
+                ", operatingStaff='" + operatingStaff + '\'' +
                 ", operatingTime='" + operatingTime + '\'' +
                 ", merchantsName='" + merchantsName + '\'' +
                 ", employees_name='" + employees_name + '\'' +
+                ", employeesId=" + employeesId +
                 '}';
     }
 }

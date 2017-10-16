@@ -50,5 +50,19 @@ public interface MerchantsInfoService {
      * @param merchantsUpgradeDto
      * @return
      */
-//    public MerchantsUpgradeExcution findApplyVipShopList(MerchantsUpgradeDto merchantsUpgradeDto);
+    public MerchantsUpgradeExcution findApplyVipShopList(MerchantsUpgradeDto merchantsUpgradeDto);
+
+    /**
+     * 确认审核
+     * @param merchantsUpgradeDto
+     * @return
+     */
+    public MerchantsUpgradeExcution confirmCheck(MerchantsUpgradeDto merchantsUpgradeDto);
+
+    /**
+     * 获取受理员工
+     * @param
+     * @return
+     */
+    public MerchantsUpgradeExcution findCheckEmployer();
 }
