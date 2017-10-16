@@ -9,6 +9,7 @@ import com.zxjz.enums.StuPersonalEnum;
 import com.zxjz.service.DetailsPageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,7 +23,7 @@ public class DetailsPageController extends BaseController{
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult getBills(DetailsPageDto detailsPageDto){
+    public BaseAPIResult getBills(@RequestBody DetailsPageDto detailsPageDto){
         //参数验空
         try {
             DetailsPageExcution detailsPageExcution = detailsPageService.getDetailsPage(detailsPageDto);

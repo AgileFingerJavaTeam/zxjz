@@ -9,6 +9,7 @@ import com.zxjz.enums.StuPersonalEnum;
 import com.zxjz.service.StationListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,7 +26,7 @@ public class StationListController extends BaseController{
      * @return
      */
     @RequestMapping(value = "getListStation",
-            method = RequestMethod.GET,
+            method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public BaseAPIResult getListStation(){
@@ -50,7 +51,7 @@ public class StationListController extends BaseController{
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult getListStation(JobListDto jobListDto){
+    public BaseAPIResult getListStation(@RequestBody JobListDto jobListDto){
         //参数验空
         try{
             JobListExcution jobListExcution = stationListService.getJobList(jobListDto);
