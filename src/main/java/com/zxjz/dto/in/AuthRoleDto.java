@@ -7,13 +7,13 @@ import com.sun.istack.internal.NotNull;
  */
 public class AuthRoleDto {
     @NotNull
-    private String id;
+    private int id;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

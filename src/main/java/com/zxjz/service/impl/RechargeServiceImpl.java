@@ -51,7 +51,7 @@ public class RechargeServiceImpl implements RechargeService{
             }
             int total = rechargeDao.total(bxw_search_content);
             HashMap map=new HashMap();
-            map.put("rechargelist",rechargelist);
+            map.put("rows",rechargelist);
             map.put("total",total);
             return  new RechargeExcution(RechargeEnum.SUCCESS,map);
         }catch (Exception e) {
@@ -87,7 +87,7 @@ public class RechargeServiceImpl implements RechargeService{
             List<RechargeInfo> infolist = rechargeDao.findMerchantsName(q,offset,rows);
             int total = rechargeDao.count(q);
             HashMap map =new HashMap();
-            map.put("infolist",infolist);
+            map.put("rows",infolist);
             map.put("total",total);
             return new RechargeExcution(RechargeEnum.SUCCESS,map);
         }catch (Exception e) {
