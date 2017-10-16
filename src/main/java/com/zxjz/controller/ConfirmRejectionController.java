@@ -9,6 +9,7 @@ import com.zxjz.enums.StuPersonalEnum;
 import com.zxjz.service.ConfirmRejectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,7 +24,7 @@ public class ConfirmRejectionController extends BaseController{
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult postDetailsPage(ConfirmRejectionDto confirmRejectionDto){
+    public BaseAPIResult postDetailsPage(@RequestBody ConfirmRejectionDto confirmRejectionDto){
         //参数验空
         try {
             ConfirmRejectionExcution confirmRejectionExcution = confirmRejectionService.updateConReject(confirmRejectionDto);

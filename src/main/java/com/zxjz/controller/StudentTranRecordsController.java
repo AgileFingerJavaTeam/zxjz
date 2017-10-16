@@ -9,6 +9,7 @@ import com.zxjz.enums.StuPersonalEnum;
 import com.zxjz.service.StudentTranRecordsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,7 +24,7 @@ public class StudentTranRecordsController extends BaseController{
             method = RequestMethod.GET,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult postStudentTranRecords(StudentTranRecordsDto studentTranRecordsDto){
+    public BaseAPIResult postStudentTranRecords(@RequestBody StudentTranRecordsDto studentTranRecordsDto){
         //参数验空
         try {
             StudentTranRecordsExcution studentTranRecordsExcution = studentTranRecordsService.getStudentTranRecords(studentTranRecordsDto);
