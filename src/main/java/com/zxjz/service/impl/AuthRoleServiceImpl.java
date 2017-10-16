@@ -33,9 +33,9 @@ public class AuthRoleServiceImpl implements AuthRoleService{
 
 
     public AuthRoleExcution AuthRole(AuthRoleDto authRoleDto) {
-              int id = authRoleDto.getId();
+              String id = authRoleDto.getId();
         try {
-            List<AuthRole> list = authRoleDao.findAuthRole();
+            List<AuthRole> list = authRoleDao.findAuthRole(id);
             if (list == null) {
                 list = new ArrayList<AuthRole>();
             }

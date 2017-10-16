@@ -9,10 +9,7 @@ import com.zxjz.enums.AuthRoleEnum;
 import com.zxjz.service.AuthRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -31,7 +28,7 @@ public class CommonController extends BaseController{
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public Object getSonMenu(@RequestBody AuthRoleDto authRoleDto){
+    public Object getSonMenu(AuthRoleDto authRoleDto){
            HttpSession authSession = this.getRequest().getSession();
         try {
            AuthRoleExcution authRoleExcution = authRoleService.AuthRole(authRoleDto);

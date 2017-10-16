@@ -1,6 +1,7 @@
 package com.zxjz.dao;
 
 import com.zxjz.entity.AuthRole;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -9,5 +10,5 @@ import java.util.List;
  */
 public interface AuthRoleDao {
 
-       public List<AuthRole> findAuthRole();
+       public List<AuthRole> findAuthRole(@Param("id") String id);
 }
