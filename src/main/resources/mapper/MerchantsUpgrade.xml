@@ -62,7 +62,7 @@
         WHERE user_id=#{user_id}
     </update>
     <!--查询员工列表-->
-    <select id="findEmployees"  resultType="ApplyVipInfo">
+    <select id="findEmployees"  resultType="MerchantsUpgrade">
         SELECT employees_name,employees_id
         FROM `zx_employee_basic_information`;
     </select>
