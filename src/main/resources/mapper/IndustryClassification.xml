@@ -12,4 +12,32 @@
 
     </select><!--limit #{offset},#{rows}-->
 
+    <!--郭阳 获取数量 -->
+    <select id="total" resultType="int">
+        SELECT COUNT(*) FROM zx_industry_category
+    </select>
+
+    <!--郭阳 添加信息 -->
+    <insert id="insertIndustry">
+        INSERT INTO zx_industry_category (text) VALUES
+        (#{name})
+    </insert>
+
+    <!--郭阳 信息编辑 -->
+    <update id="editIndustry">
+        UPDATE  zx_industry_category SET text=#{name}
+        WHERE value = #{value}
+    </update>
+
+    <!--郭阳  删除信息 -->
+    <update id="updateIndustry">
+        UPDATE  zx_industry_category SET is_delete=0
+        WHERE value=#{value}
+    </update>
+
+    <!--郭阳 获取单行数据 -->
+    <select id="findIndustryCategory" resultType="IndustryCategory">
+        SELECT * FROM zx_industry_category where value =#{value}
+    </select>
+
 </mapper>
