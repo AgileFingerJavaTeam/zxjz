@@ -2,6 +2,7 @@ package com.zxjz.controller;
 
 import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
+import com.zxjz.base.BaseUIResult;
 import com.zxjz.dto.excution.AtSecurityPositionExcution;
 import com.zxjz.dto.excution.SecurityPositionExcution;
 import com.zxjz.dto.in.AtSecurityPositionDto;
@@ -43,24 +44,24 @@ public class SecurityPositionController extends BaseController{
             return mv;
         }
 
-        /*
-	    * 显示页面数据
-	    */
-      @RequestMapping(value = "/getSecurityPositionList",
-              method = RequestMethod.POST,
-              produces = {"application/json;charset=UTF-8"})
-      @ResponseBody
-      public BaseAPIResult getSecurityPositionList(SecurityPositionDto securityPositionDto) {
-          //参数验空
-          try {
-              SecurityPositionExcution securityPositionExcution = securityPositionService.getSecurityPositionList(securityPositionDto);
-              return new BaseAPIResult(1,securityPositionExcution);
-          } catch (Exception e) {
-              logger.error(e.getMessage(), e);
-              SecurityPositionExcution securityPositionExcution = new SecurityPositionExcution(SecurityPositionEnum.INNER_ERROR,e.getMessage());
-              return new BaseAPIResult(0,securityPositionExcution);
-          }
+    /*
+    * 显示页面数据
+    */
+  @RequestMapping(value = "/getSecurityPositionList",
+          method = RequestMethod.POST,
+          produces = {"text/json;charset=UTF-8"})
+  @ResponseBody
+  public String getSecurityPositionList(SecurityPositionDto securityPositionDto) {
+      //参数验空
+      try {
+          SecurityPositionExcution securityPositionExcution = securityPositionService.getSecurityPositionList(securityPositionDto);
+          return BaseUIResult.returnJsonEasyUI(securityPositionExcution);
+      } catch (Exception e) {
+          logger.error(e.getMessage(), e);
+          SecurityPositionExcution securityPositionExcution = new SecurityPositionExcution(SecurityPositionEnum.INNER_ERROR,e.getMessage());
+          return BaseUIResult.returnJsonEasyUI(securityPositionExcution);
       }
+  }
 
     /*
      * 显示页面数据2

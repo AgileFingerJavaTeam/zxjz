@@ -1,9 +1,10 @@
 package com.zxjz.base;
 
+import com.zxjz.util.PageData;
 import com.zxjz.util.UuidUtil;
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.commons.io.FileUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -54,5 +55,11 @@ public class BaseController {
         }
         FileUtils.copyInputStreamToFile(in, file);
         return realName;
+    }
+
+
+
+    public PageData getPageData(){
+        return new PageData(this.getRequest());
     }
 }
