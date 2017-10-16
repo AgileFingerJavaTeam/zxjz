@@ -2,6 +2,7 @@ package com.zxjz.controller;
 
 import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
+import com.zxjz.base.BaseUIResult;
 import com.zxjz.dto.excution.CheckStudentsExcution;
 import com.zxjz.dto.in.CheckStudentsDto;
 import com.zxjz.enums.CheckStudentsEnum;
@@ -28,8 +29,8 @@ public class CheckStudentController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/showStuCertificationPage",
-            method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            method = RequestMethod.GET,
+            produces = {"text/json;charset=UTF-8"})
     public ModelAndView showStuCertificationPage(){
         ModelAndView mv = new ModelAndView();
         try {
@@ -47,19 +48,19 @@ public class CheckStudentController extends BaseController{
      */
     @RequestMapping(value = "/getStudentInfo",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult findStudentsInfo (CheckStudentsDto checkStudentsDto){
+    public String findStudentsInfo (CheckStudentsDto checkStudentsDto){
         try {
             CheckStudentsExcution checkStudentsExcution = checkStudentsService.findStudentsInfoList(checkStudentsDto);
-            return new BaseAPIResult(1,checkStudentsExcution);
+            return BaseUIResult.returnJsonEasyUI(checkStudentsExcution);
         }catch (QueryInnerErrorException e){
             CheckStudentsExcution checkStudentsExcution = new CheckStudentsExcution(CheckStudentsEnum.FIND_STUDENTS_LIST_FAIL);
-            return new BaseAPIResult(0,checkStudentsExcution);
+            return BaseUIResult.returnJsonEasyUI(checkStudentsExcution);
         }catch (Exception e){
             logger.error(e.getMessage(),e);
             CheckStudentsExcution checkStudentsExcution = new CheckStudentsExcution(CheckStudentsEnum.FIND_STUDENTS_LIST_FAIL,e.getMessage());
-            return new BaseAPIResult(0,checkStudentsExcution);
+            return  BaseUIResult.returnJsonEasyUI(checkStudentsExcution);
         }
     }
 
@@ -70,7 +71,7 @@ public class CheckStudentController extends BaseController{
      */
     @RequestMapping(value = "/showAuditStuPage",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
     public ModelAndView showAuditStuPage(CheckStudentsDto checkStudentsDto){
         ModelAndView mv = new ModelAndView();
@@ -91,19 +92,19 @@ public class CheckStudentController extends BaseController{
      */
     @RequestMapping(value = "/substudentinfo",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult substudentinfo(CheckStudentsDto checkStudentsDto){
+    public String substudentinfo(CheckStudentsDto checkStudentsDto){
         try {
             CheckStudentsExcution checkStudentsExcution = checkStudentsService.submitAudit(checkStudentsDto);
-            return new BaseAPIResult(1,checkStudentsExcution);
+            return  BaseUIResult.returnJsonEasyUI(checkStudentsExcution);
         }catch (UpdateInnerErrorException e){
             CheckStudentsExcution checkStudentsExcution = new CheckStudentsExcution(CheckStudentsEnum.CHECK_FAIL);
-            return new BaseAPIResult(0,checkStudentsExcution);
+            return  BaseUIResult.returnJsonEasyUI(checkStudentsExcution);
         }catch (Exception e){
             logger.error(e.getMessage(),e);
             CheckStudentsExcution checkStudentsExcution = new CheckStudentsExcution(CheckStudentsEnum.CHECK_FAIL,e.getMessage());
-            return new BaseAPIResult(0,checkStudentsExcution);
+            return  BaseUIResult.returnJsonEasyUI(checkStudentsExcution);
         }
     }
 

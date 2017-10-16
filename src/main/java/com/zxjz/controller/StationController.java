@@ -2,6 +2,7 @@ package com.zxjz.controller;
 
 import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
+import com.zxjz.base.BaseUIResult;
 import com.zxjz.dto.excution.StationInfoExcution;
 import com.zxjz.dto.in.StationDto;
 import com.zxjz.enums.StationInfoEnum;
@@ -27,9 +28,7 @@ public class StationController extends BaseController {
      * 显示职位类型管理页面
      * @return
      */
-    @RequestMapping(value = "/showStation",
-            method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/showStation")
     public ModelAndView showStation(){
         ModelAndView mv = new ModelAndView();
         try {
@@ -47,19 +46,19 @@ public class StationController extends BaseController {
      */
     @RequestMapping(value = "/StationList",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult findParentJobList (@RequestBody StationDto stationDto){
+    public String findParentJobList (StationDto stationDto){
         try {
             StationInfoExcution stationInfoExcution = stationInfoService.findParentJobList(stationDto);
-            return new BaseAPIResult(1,stationInfoExcution);
+            return  BaseUIResult.returnJsonEasyUI(stationInfoExcution);
         }catch (QueryInnerErrorException e){
             StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.FIND_FAIL);
-            return new BaseAPIResult(0,stationInfoExcution);
+            return  BaseUIResult.returnJsonEasyUI(stationInfoExcution);
         }catch (Exception e){
             logger.error(e.getMessage(), e);
             StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.FIND_FAIL,e.getMessage());
-            return new BaseAPIResult(0,stationInfoExcution);
+            return  BaseUIResult.returnJsonEasyUI(stationInfoExcution);
         }
     }
 
@@ -67,9 +66,7 @@ public class StationController extends BaseController {
      * 显示添加父类岗位页面
      * @return
      */
-    @RequestMapping(value = "/getTanStation",
-            method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/getTanStation")
     @ResponseBody
     public ModelAndView showAddParentJobPage(){
         ModelAndView mv = new ModelAndView();
@@ -87,19 +84,19 @@ public class StationController extends BaseController {
      */
     @RequestMapping(value = "/AddStationList",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult addParentJobType (@RequestBody  StationDto stationDto){
+    public String addParentJobType (@RequestBody  StationDto stationDto){
         try {
             StationInfoExcution stationInfoExcution = stationInfoService.addParentJobType(stationDto);
-            return new BaseAPIResult(1,stationInfoExcution);
+            return  BaseUIResult.returnJsonEasyUI(stationInfoExcution);
         }catch (InsertInnerErrorException e){
             StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.ADD_PARENT_JOB_FAIL);
-            return new BaseAPIResult(0,stationInfoExcution);
+            return  BaseUIResult.returnJsonEasyUI(stationInfoExcution);
         }catch (Exception e){
             logger.error(e.getMessage(), e);
             StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.ADD_PARENT_JOB_FAIL,e.getMessage());
-            return new BaseAPIResult(0,stationInfoExcution);
+            return  BaseUIResult.returnJsonEasyUI(stationInfoExcution);
         }
     }
 
@@ -110,7 +107,7 @@ public class StationController extends BaseController {
      */
     @RequestMapping(value = "/getEditMvDetails",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
     public ModelAndView showEditParentJobPage (@RequestBody StationDto stationDto){
         ModelAndView mv = new ModelAndView();
@@ -133,19 +130,19 @@ public class StationController extends BaseController {
      */
     @RequestMapping(value = "/editDetails",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult editParentJobType (@RequestBody StationDto stationDto){
+    public String editParentJobType (@RequestBody StationDto stationDto){
         try {
             StationInfoExcution stationInfoExcution = stationInfoService.editParentJobInfo(stationDto);
-            return new BaseAPIResult(1,stationInfoExcution);
+            return  BaseUIResult.returnJsonEasyUI(stationInfoExcution);
         }catch (UpdateInnerErrorException e){
             StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.EDIT_PARENT_JOB_FAIL);
-            return new BaseAPIResult(0,stationInfoExcution);
+            return  BaseUIResult.returnJsonEasyUI(stationInfoExcution);
         }catch (Exception e){
             logger.error(e.getMessage(), e);
             StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.EDIT_PARENT_JOB_FAIL,e.getMessage());
-            return new BaseAPIResult(0,stationInfoExcution);
+            return  BaseUIResult.returnJsonEasyUI(stationInfoExcution);
         }
     }
 
@@ -156,7 +153,7 @@ public class StationController extends BaseController {
      */
     @RequestMapping(value = "/getDelMvDetails",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
     public ModelAndView showDeleteParentJobPage (@RequestBody StationDto stationDto){
         ModelAndView mv = new ModelAndView();
@@ -179,19 +176,19 @@ public class StationController extends BaseController {
      */
     @RequestMapping(value = "/delDetails",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult deleteParentJobType (@RequestBody StationDto stationDto){
+    public String deleteParentJobType (@RequestBody StationDto stationDto){
         try {
             StationInfoExcution stationInfoExcution = stationInfoService.deleteParentJobType(stationDto);
-            return new BaseAPIResult(1,stationInfoExcution);
+            return  BaseUIResult.returnJsonEasyUI(stationInfoExcution);
         }catch (UpdateInnerErrorException e){
             StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.DELETE_PARENT_JOB_FAIL);
-            return new BaseAPIResult(0,stationInfoExcution);
+            return  BaseUIResult.returnJsonEasyUI(stationInfoExcution);
         }catch (Exception e){
             logger.error(e.getMessage(), e);
             StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.DELETE_PARENT_JOB_FAIL,e.getMessage());
-            return new BaseAPIResult(0,stationInfoExcution);
+            return  BaseUIResult.returnJsonEasyUI(stationInfoExcution);
         }
     }
 
@@ -199,9 +196,7 @@ public class StationController extends BaseController {
      * 显示子类岗位页面
      * @return
      */
-    @RequestMapping(value = "/showStation2",
-            method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/showStation2")
     @ResponseBody
     public ModelAndView showChildJobList(){
         ModelAndView mv = new ModelAndView();
@@ -220,16 +215,16 @@ public class StationController extends BaseController {
      */
     @RequestMapping(value = "/TwoStationList",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult findChildJobInfo(@RequestBody StationDto stationDto){
+    public String findChildJobInfo(StationDto stationDto){
         try {
             StationInfoExcution stationInfoExcution = stationInfoService.findChildJobList(stationDto);
-            return new BaseAPIResult(1,stationInfoExcution);
+            return  BaseUIResult.returnJsonEasyUI(stationInfoExcution);
         }catch (Exception e){
             logger.error(e.getMessage(), e);
             StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.FIND_FAIL);
-            return new BaseAPIResult(0,stationInfoExcution);
+            return  BaseUIResult.returnJsonEasyUI(stationInfoExcution);
         }
     }
 
@@ -240,7 +235,7 @@ public class StationController extends BaseController {
      */
     @RequestMapping(value = "/getTwoTanStation",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
     public ModelAndView showChildAddPage (@RequestBody StationDto stationDto){
         String pid = stationDto.getPid();
@@ -262,19 +257,19 @@ public class StationController extends BaseController {
      */
     @RequestMapping(value = "/getPInfo",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult findParentJobInfo(@RequestBody StationDto stationDto){
+    public String findParentJobInfo(@RequestBody StationDto stationDto){
         try {
             StationInfoExcution stationInfoExcution = stationInfoService.findParentJob(stationDto);
-            return new BaseAPIResult(1,stationInfoExcution);
+            return  BaseUIResult.returnJsonEasyUI(stationInfoExcution);
         }catch (QueryInnerErrorException e){
             StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.FIND_FAIL);
-            return new BaseAPIResult(0,stationInfoExcution);
+            return  BaseUIResult.returnJsonEasyUI(stationInfoExcution);
         }catch (Exception e){
             logger.error(e.getMessage(), e);
             StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.FIND_FAIL,e.getMessage());
-            return new BaseAPIResult(0,stationInfoExcution);
+            return  BaseUIResult.returnJsonEasyUI(stationInfoExcution);
         }
     }
 
@@ -285,19 +280,19 @@ public class StationController extends BaseController {
      */
     @RequestMapping(value = "/AddCInfo",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult addChildJobType (@RequestBody StationDto stationDto){
+    public String addChildJobType (@RequestBody StationDto stationDto){
         try {
             StationInfoExcution stationInfoExcution = stationInfoService.addChildJobType(stationDto);
-            return new BaseAPIResult(1,stationInfoExcution);
+            return  BaseUIResult.returnJsonEasyUI(stationInfoExcution);
         }catch (InsertInnerErrorException e){
             StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.ADD_CHILD_JOB_FAIL);
-            return new BaseAPIResult(0,stationInfoExcution);
+            return  BaseUIResult.returnJsonEasyUI(stationInfoExcution);
         }catch (Exception e){
             logger.error(e.getMessage(), e);
             StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.ADD_CHILD_JOB_FAIL,e.getMessage());
-            return new BaseAPIResult(0,stationInfoExcution);
+            return  BaseUIResult.returnJsonEasyUI(stationInfoExcution);
         }
     }
 
@@ -308,7 +303,7 @@ public class StationController extends BaseController {
      */
     @RequestMapping(value = "/showEditDetails",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
     public ModelAndView showEditChildJobPage (@RequestBody StationDto stationDto){
         ModelAndView mv = new ModelAndView();
@@ -331,19 +326,19 @@ public class StationController extends BaseController {
      */
     @RequestMapping(value = "/editCDetails",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult editChildJobType(@RequestBody StationDto stationDto){
+    public String editChildJobType(@RequestBody StationDto stationDto){
         try {
             StationInfoExcution stationInfoExcution = stationInfoService.editChildJobType(stationDto);
-            return new BaseAPIResult(1,stationInfoExcution);
+            return  BaseUIResult.returnJsonEasyUI(stationInfoExcution);
         }catch (UpdateInnerErrorException e){
             StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.EDIT_CHILD_JOB_FAIL);
-            return new BaseAPIResult(0,stationInfoExcution);
+            return  BaseUIResult.returnJsonEasyUI(stationInfoExcution);
         }catch (Exception e){
             logger.error(e.getMessage(), e);
             StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.EDIT_CHILD_JOB_FAIL,e.getMessage());
-            return new BaseAPIResult(0,stationInfoExcution);
+            return  BaseUIResult.returnJsonEasyUI(stationInfoExcution);
         }
     }
 
@@ -354,7 +349,7 @@ public class StationController extends BaseController {
      */
     @RequestMapping(value = "/showDelCClassify",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
     public ModelAndView showDelectChildJobType (@RequestBody StationDto stationDto){
         ModelAndView mv = new ModelAndView();
@@ -377,19 +372,19 @@ public class StationController extends BaseController {
      */
     @RequestMapping(value = "/delCDetails",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult delectChildJobType (@RequestBody StationDto stationDto){
+    public String delectChildJobType (@RequestBody StationDto stationDto){
         try {
             StationInfoExcution stationInfoExcution = stationInfoService.delectChildJobType(stationDto);
-            return new BaseAPIResult(1,stationInfoExcution);
+            return  BaseUIResult.returnJsonEasyUI(stationInfoExcution);
         }catch (UpdateInnerErrorException e){
             StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.DELETE_CHILD_JOB_FAIL);
-            return new BaseAPIResult(0,stationInfoExcution);
+            return  BaseUIResult.returnJsonEasyUI(stationInfoExcution);
         }catch (Exception e){
             logger.error(e.getMessage(), e);
             StationInfoExcution stationInfoExcution = new StationInfoExcution(StationInfoEnum.DELETE_CHILD_JOB_FAIL,e.getMessage());
-            return new BaseAPIResult(0,stationInfoExcution);
+            return  BaseUIResult.returnJsonEasyUI(stationInfoExcution);
         }
     }
 }

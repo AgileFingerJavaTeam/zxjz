@@ -326,7 +326,7 @@ $($.Admin.GyPositionType.id).datagrid({
     		columns:[[
     		   //       {field:'ck',checkbox:true},    
     		  //      {field:'station_id',title:'ID',align:'center'},
-    		          {field:'station_name',title:'职位分类(子类)名称',width:80,},
+    		          {field:'stationName',title:'职位分类(子类)名称',width:80,},
     		      ]],
     	    onDblClickRow: function(row){ 
     	    	

@@ -2,6 +2,7 @@ package com.zxjz.controller;
 
 import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
+import com.zxjz.base.BaseUIResult;
 import com.zxjz.dto.excution.MerchantsAffirmStudentBreakPromiseExcution;
 import com.zxjz.dto.excution.MerchantsChangeHeadExcution;
 import com.zxjz.dto.excution.MerchantsInfoExcution;
@@ -158,7 +159,7 @@ public class MerchantsController extends BaseController {
      */
     @RequestMapping(value = "/showApplyVipPage",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     public ModelAndView showApplyVipPage() {
         ModelAndView mv = new ModelAndView();
         try {
@@ -177,16 +178,16 @@ public class MerchantsController extends BaseController {
      */
     @RequestMapping(value = "/GetApplyVipInfo",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult findApplyVipShopInfo(@RequestBody MerchantsUpgradeDto merchantsUpgradeDto) {
+    public String findApplyVipShopInfo(@RequestBody MerchantsUpgradeDto merchantsUpgradeDto) {
         try {
             MerchantsUpgradeExcution merchantsUpgradeExcution = merchantsInfoService.findApplyVipShopList(merchantsUpgradeDto);
-            return new BaseAPIResult(1, merchantsUpgradeExcution);
+            return  BaseUIResult.returnJsonEasyUI( merchantsUpgradeExcution);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             MerchantsUpgradeExcution merchantsUpgradeExcution = new MerchantsUpgradeExcution(MerchantsUpgradeEnum.FIND_FAIL, e.getMessage());
-            return new BaseAPIResult(0, merchantsUpgradeExcution);
+            return  BaseUIResult.returnJsonEasyUI( merchantsUpgradeExcution);
         }
     }
 
@@ -198,7 +199,7 @@ public class MerchantsController extends BaseController {
      */
     @RequestMapping(value = "/showAuditPage",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
     public ModelAndView showAuditPage(@RequestBody MerchantsUpgradeDto merchantsUpgradeDto) {
         ModelAndView mv = new ModelAndView();
@@ -219,20 +220,20 @@ public class MerchantsController extends BaseController {
      */
     @RequestMapping(value = "/audit",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult check(@RequestBody MerchantsUpgradeDto merchantsUpgradeDto) {
+    public String check(@RequestBody MerchantsUpgradeDto merchantsUpgradeDto) {
         try {
             HttpSession session = this.getRequest().getSession();
             LandFallInfo user = (LandFallInfo) session.getAttribute("user");
             int id = user.getEmployees_id();
             merchantsUpgradeDto.setId(id);
             MerchantsUpgradeExcution merchantsUpgradeExcution = merchantsInfoService.confirmCheck(merchantsUpgradeDto);
-            return new BaseAPIResult(1, merchantsUpgradeExcution);
+            return  BaseUIResult.returnJsonEasyUI(merchantsUpgradeExcution);
         }catch (Exception e) {
             logger.error(e.getMessage(), e);
             MerchantsUpgradeExcution merchantsUpgradeExcution = new MerchantsUpgradeExcution(MerchantsUpgradeEnum.CONFIRM_CHECK_FAIL, e.getMessage());
-            return new BaseAPIResult(0, merchantsUpgradeExcution);
+            return  BaseUIResult.returnJsonEasyUI(merchantsUpgradeExcution);
         }
     }
 
@@ -243,7 +244,7 @@ public class MerchantsController extends BaseController {
      */
     @RequestMapping(value = "/getAccEm",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
     public BaseAPIResult findCheckEmployer(){
         try {
