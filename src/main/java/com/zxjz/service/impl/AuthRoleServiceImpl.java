@@ -33,7 +33,7 @@ public class AuthRoleServiceImpl implements AuthRoleService{
 
 
     public AuthRoleExcution AuthRole(AuthRoleDto authRoleDto) {
-              String id = authRoleDto.getId();
+              int id = authRoleDto.getId();
         try {
             List<AuthRole> list = authRoleDao.findAuthRole(id);
             if (list == null) {

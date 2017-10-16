@@ -20,16 +20,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 
 @Service
 public class RecruitApprovalServiceImpl implements RecruitApprovalService {
     private org.slf4j.Logger logger= LoggerFactory.getLogger(this.getClass());
-    public HttpServletRequest getRequest() {
-        HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
-        return request;
-    }
+
     @Autowired
     private ApprovalDao approvalDao;
     public RecruitApprovalExcution findApprovalList(RecruitApprovalDto recruitApprovalDto) {
@@ -60,7 +58,11 @@ public class RecruitApprovalServiceImpl implements RecruitApprovalService {
                     }
 
                 }
-                return  new RecruitApprovalExcution(RecruitApprovalEnum.FIND_SUCCESS,approvalList);
+                int total=approvalDao.findListCount(bxw_approval_status,bxw_search_content,order,sort);
+                HashMap map=new HashMap();
+                map.put("approvalList",approvalList);
+                map.put("total",total);
+                return  new RecruitApprovalExcution(RecruitApprovalEnum.FIND_SUCCESS,map);
             }else {
                 throw   new QueryInnerErrorException("查询失败");
             }
@@ -73,7 +75,7 @@ public class RecruitApprovalServiceImpl implements RecruitApprovalService {
 
     }
 
-    public RecruitApprovalExcution findTotal(RecruitApprovalDto recruitApprovalDto) {
+    /*public RecruitApprovalExcution findTotal(RecruitApprovalDto recruitApprovalDto) {
         String bxw_approval_status=recruitApprovalDto.getBxw_approval_status();
         String bxw_search_content=recruitApprovalDto.getBxw_search_content();
         String sort=recruitApprovalDto.getSort();
@@ -91,11 +93,11 @@ public class RecruitApprovalServiceImpl implements RecruitApprovalService {
             logger.error(e.getMessage(),e);
             throw new BaseException(e.getMessage());
         }
-    }
+    }*/
 
     public RecruitApprovalExcution findApprovalByID(RecruitApprovalDto recruitApprovalDto) {
         int recruiting_id=recruitApprovalDto.getRecruiting_id();
-        HttpSession session=this.getRequest().getSession();
+
 
         try{
             RecruitmentInfoApply findApprovalByID=approvalDao.findApprovalByID(recruiting_id);
@@ -158,7 +160,7 @@ public class RecruitApprovalServiceImpl implements RecruitApprovalService {
         if(result.equals("1")){
             int updateRefuse=approvalDao.updateRefuse(recruiting_id,releases_user_id,dismissed_reason,employid);
             if(updateRefuse>0){
-                return  new RecruitApprovalExcution(RecruitApprovalEnum.UP_SUCCESS);
+                return  new RecruitApprovalExcution(RecruitApprovalEnum.UP_SUCCESS,null);
             }else{
                 throw new UnsupportedOperationException("更改失败");
             }
@@ -167,7 +169,7 @@ public class RecruitApprovalServiceImpl implements RecruitApprovalService {
             if(updatePass>0){
                 int addMessage=approvalDao.addMessage(recruiting_id,salary_treatment,releases_user_id,post_name,post_classification,details_page_category,work_date,work_time,work_location,position_longitude,position_latitude,work_content,settlement_method,commission,benefits,gender_requirements,recruitment,people_num,hiring_expiration_date,city);
                 if(addMessage>0){
-                    return  new RecruitApprovalExcution(RecruitApprovalEnum.ADD_SUCCESS);
+                    return  new RecruitApprovalExcution(RecruitApprovalEnum.ADD_SUCCESS,null);
                 }else{
                     throw new UnsupportedOperationException("添加失败");
                 }

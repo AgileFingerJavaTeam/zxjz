@@ -7,8 +7,8 @@ public interface RecruitApprovalService {
 
     /*查看招聘信息列表*/
     public RecruitApprovalExcution findApprovalList(RecruitApprovalDto recruitApprovalDto);
-    /*查询招聘信息数量*/
-    public RecruitApprovalExcution findTotal(RecruitApprovalDto recruitApprovalDto);
+    /*查询招聘信息数量*//*
+    public RecruitApprovalExcution findTotal(RecruitApprovalDto recruitApprovalDto);*/
     /*根据招聘id查看详细信息*/
     public RecruitApprovalExcution findApprovalByID(RecruitApprovalDto recruitApprovalDto);
     /*审核信息被拒绝*/

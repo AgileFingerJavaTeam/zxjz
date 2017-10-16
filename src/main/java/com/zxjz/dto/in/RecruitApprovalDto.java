@@ -34,7 +34,7 @@ public class RecruitApprovalDto {
     private int people_num;
     private String hiring_expiration_date;
     private int city;
-
+    private String stat_res;
     public String getBxw_approval_status() {
         return bxw_approval_status;
     }
@@ -273,5 +273,13 @@ public class RecruitApprovalDto {
 
     public void setPage(int page) {
         this.page = page;
+    }
+
+    public String getStat_res() {
+        return stat_res;
+    }
+
+    public void setStat_res(String stat_res) {
+        this.stat_res = stat_res;
     }
 }
