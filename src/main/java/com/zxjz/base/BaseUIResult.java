@@ -28,13 +28,13 @@ public class BaseUIResult {
     }
 
 
-    public static String returnJsonMSG(int status,BaseAPIExcution baseAPIExcution) {
+    public static String returnJsonMSG(int status,BaseAPIExcution baseAPIExcution,String info) {
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> map = new HashMap<String, Object>();
         String result = "";
         try {
             map.put("status", status);
-            map.put("info", baseAPIExcution.getCode());
+            map.put("info", info);
             map.put("data", baseAPIExcution.getData());
             result=mapper.writeValueAsString(map);
         } catch (Exception e) {
