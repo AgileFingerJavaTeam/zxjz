@@ -15,14 +15,17 @@ public class BaseUIResult {
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> map = new HashMap<String, Object>();
         String result = "";
-        Map<String,Object> dataMap = (HashMap<String,Object>)baseAPIExcution.getData();
-        try {
-            map.put("rows",dataMap.get("rows"));
-            map.put("total",dataMap.get("total"));
-            result=mapper.writeValueAsString(map);
-            System.out.println("");
-        } catch (Exception e) {
-            e.printStackTrace();
+        Map<String,Object> dataMap;
+        if (baseAPIExcution.getData() instanceof Map){
+            dataMap = (HashMap<String,Object>)baseAPIExcution.getData();
+            try {
+                map.put("rows",dataMap.get("rows"));
+                map.put("total",dataMap.get("total"));
+                result=mapper.writeValueAsString(map);
+                System.out.println("");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return result;
     }

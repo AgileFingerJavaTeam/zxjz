@@ -42,8 +42,8 @@ public class StationInfoServiceImpl implements StationInfoService {
             }
             int parentJobCount = stationDao.findParentJobCount();
             HashMap map = new HashMap();
-            map.put("stationInfoList",stationInfoList);
-            map.put("parentJobCount",parentJobCount);
+            map.put("rows",stationInfoList);
+            map.put("total",parentJobCount);
             return new StationInfoExcution(StationInfoEnum.FIND_SUCCESS,map);
         }catch (QueryInnerErrorException e1){
             throw e1;
@@ -156,8 +156,8 @@ public class StationInfoServiceImpl implements StationInfoService {
             List<StationInfo> stationInfoList = stationDao.findChildJobType(pstationName,offset,rows);
             int childCount = stationDao.findChildJobCount(pstationName);
             HashMap map = new HashMap();
-            map.put("stationInfoList",stationInfoList);
-            map.put("childCount",childCount);
+            map.put("rows",stationInfoList);
+            map.put("total",childCount);
             return new StationInfoExcution(StationInfoEnum.FIND_CHILD_INFO_SUCCESS,map);
         }catch (Exception e){
             logger.error(e.getMessage(), e);

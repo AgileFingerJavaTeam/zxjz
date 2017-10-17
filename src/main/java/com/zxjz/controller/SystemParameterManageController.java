@@ -2,6 +2,7 @@ package com.zxjz.controller;
 
 import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
+import com.zxjz.base.BaseUIResult;
 import com.zxjz.dto.excution.SystemParameterExcution;
 import com.zxjz.dto.in.FindParemeterDto;
 import com.zxjz.dto.in.SystemParameterDto;
@@ -33,7 +34,7 @@ public class SystemParameterManageController extends BaseController {
      */
     @RequestMapping(value = "/showParameterPage",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     public ModelAndView showParameterManagePage(){
       ModelAndView mv = new ModelAndView();
       try {
@@ -51,16 +52,16 @@ public class SystemParameterManageController extends BaseController {
      */
     @RequestMapping(value = "/parameter",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult getParameterList(@RequestBody FindParemeterDto findParemeterDto){
+    public String getParameterList(@RequestBody FindParemeterDto findParemeterDto){
         try {
           SystemParameterExcution SystemParameter = systemParameterService.findParameterList(findParemeterDto);
-          return new BaseAPIResult(1,SystemParameter);
+          return BaseUIResult.returnJsonEasyUI(SystemParameter);
         }catch (Exception e){
             logger.error(e.getMessage(),e);
             SystemParameterExcution SystemParameter = new SystemParameterExcution(SystemParameterEnum.QUERY_FAIL);
-            return new BaseAPIResult(0,SystemParameter);
+            return  BaseUIResult.returnJsonEasyUI(SystemParameter);
         }
     }
 
@@ -70,7 +71,7 @@ public class SystemParameterManageController extends BaseController {
      */
     @RequestMapping(value = "/addPS",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     public ModelAndView showAddPS(){
         ModelAndView mv = new ModelAndView();
         try{
@@ -88,19 +89,19 @@ public class SystemParameterManageController extends BaseController {
      */
     @RequestMapping(value = "/insertParameter",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult insertParameter(@RequestBody SystemParameterDto systemParameterDto){
+    public String insertParameter(@RequestBody SystemParameterDto systemParameterDto){
         try {
             SystemParameterExcution systemParameterExcution = systemParameterService.addSystemParameter(systemParameterDto);
-            return new BaseAPIResult(1,systemParameterExcution);
+            return  BaseUIResult.returnJsonEasyUI(systemParameterExcution);
         }catch (InsertInnerErrorException e){
             SystemParameterExcution systemParameterExcution = new SystemParameterExcution(SystemParameterEnum.ADD_FAIL);
-            return new BaseAPIResult(0,systemParameterExcution);
+            return  BaseUIResult.returnJsonEasyUI(systemParameterExcution);
         }catch (Exception e){
             logger.error(e.getMessage(),e);
             SystemParameterExcution systemParameterExcution = new SystemParameterExcution(SystemParameterEnum.ADD_FAIL,e.getMessage());
-            return new BaseAPIResult(0,systemParameterExcution);
+            return  BaseUIResult.returnJsonEasyUI(systemParameterExcution);
         }
     }
     /**
@@ -110,7 +111,7 @@ public class SystemParameterManageController extends BaseController {
      */
     @RequestMapping(value = "/editPS",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
     public ModelAndView showEditPS(@RequestBody SystemParameterDto systemParameterDto){
         ModelAndView mv = new ModelAndView();
@@ -131,19 +132,19 @@ public class SystemParameterManageController extends BaseController {
      */
     @RequestMapping(value = "srt_editParameter",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult editParameter(@RequestBody SystemParameterDto systemParameterDto){
+    public String editParameter(@RequestBody SystemParameterDto systemParameterDto){
         try{
             SystemParameterExcution systemParameterExcution = systemParameterService.updateSystemParameter(systemParameterDto);
-            return new BaseAPIResult(1,systemParameterExcution);
+            return  BaseUIResult.returnJsonEasyUI(systemParameterExcution);
         }catch (UpdateInnerErrorException e){
             SystemParameterExcution systemParameterExcution = new SystemParameterExcution(SystemParameterEnum.EDIT_FAIL);
-            return new BaseAPIResult(0,systemParameterExcution);
+            return  BaseUIResult.returnJsonEasyUI(systemParameterExcution);
         }catch (Exception e){
             logger.error(e.getMessage(),e);
             SystemParameterExcution systemParameterExcution = new SystemParameterExcution(SystemParameterEnum.EDIT_FAIL,e.getMessage());
-            return new BaseAPIResult(0,systemParameterExcution);
+            return  BaseUIResult.returnJsonEasyUI(systemParameterExcution);
         }
     }
 
@@ -154,7 +155,7 @@ public class SystemParameterManageController extends BaseController {
      */
     @RequestMapping(value = "/delPS",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
     public ModelAndView showDelPS(@RequestBody SystemParameterDto systemParameterDto){
         ModelAndView mv = new ModelAndView();
@@ -169,19 +170,19 @@ public class SystemParameterManageController extends BaseController {
     }
     @RequestMapping(value = "/srt_deleteParameter",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult delSystemParameter (@RequestBody SystemParameterDto systemParameterDto){
+    public String delSystemParameter (@RequestBody SystemParameterDto systemParameterDto){
         try {
             SystemParameterExcution systemParameterExcution = systemParameterService.delSystemParameter(systemParameterDto);
-            return new BaseAPIResult(1,systemParameterExcution);
+            return  BaseUIResult.returnJsonEasyUI(systemParameterExcution);
         }catch (DeleteInnerErrorException e){
             SystemParameterExcution systemParameterExcution = new SystemParameterExcution(SystemParameterEnum.DEL_FAIL);
-            return new BaseAPIResult(0,systemParameterExcution);
+            return  BaseUIResult.returnJsonEasyUI(systemParameterExcution);
         }catch (Exception e){
             logger.error(e.getMessage(),e);
             SystemParameterExcution systemParameterExcution = new SystemParameterExcution(SystemParameterEnum.DEL_FAIL,e.getMessage());
-            return new BaseAPIResult(0,systemParameterExcution);
+            return  BaseUIResult.returnJsonEasyUI(systemParameterExcution);
         }
     }
 
