@@ -25,7 +25,7 @@
         limit #{offset},#{rows}
     </select>
     <!--查询列表数量-->
-    <select id="getcreditcount" resultType="int">
+    <select id="total" resultType="int">
         SELECT count(*) from zx_merchants_account a
         LEFT JOIN zx_industry_category b
         on a.job_id=b.`value`

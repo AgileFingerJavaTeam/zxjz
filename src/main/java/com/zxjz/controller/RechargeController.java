@@ -47,7 +47,7 @@ public class RechargeController extends BaseController {
      */
     @RequestMapping(value = "/getRechargeList", produces = "text/json;charset=UTF-8")
     @ResponseBody
-    public String getRechargeList(@RequestBody RechargeDto rechargeDto) {
+    public String getRechargeList(RechargeDto rechargeDto) {
         //参数验空
         try {
             RechargeExcution rechargeExcution = rechargeService.findRechargeList(rechargeDto);
@@ -65,18 +65,18 @@ public class RechargeController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/addCharge",
-    method = RequestMethod.POST,
+    method = RequestMethod.GET,
     produces = {"text/json;charset=UTF-8"})
     @ResponseBody
     public ModelAndView addCharge() {
         ModelAndView mv = new ModelAndView();
         HttpSession session = this.getRequest().getSession();
         try {
-            LandFallInfo landfall = (LandFallInfo) session.getAttribute("user");
+            /*LandFallInfo landfall = (LandFallInfo) session.getAttribute("user");
             int employid = landfall.getEmployees_id();
             String employname = landfall.getEmployees_name();
             mv.addObject("data", employid);
-            mv.addObject("datas", employname);
+            mv.addObject("datas", employname);*/
             mv.setViewName("recharge/addCharge");
         } catch (Exception e) {
             RechargeExcution rechargeExcution = new RechargeExcution(RechargeEnum.FAIL, e.getMessage());

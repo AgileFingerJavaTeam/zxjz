@@ -13,7 +13,7 @@ public class CreditAndPayment {
     private String accountBalance;
     private Double creditTotal;//授信总额
     private Double creditBalance;//授信余额
-    private String PaymentDays;//账期
+    private String paymentDays;//账期
     private Double debt;
 
     public int getUserId() {
@@ -89,11 +89,11 @@ public class CreditAndPayment {
     }
 
     public String getPaymentDays() {
-        return PaymentDays;
+        return paymentDays;
     }
 
     public void setPaymentDays(String paymentDays) {
-        PaymentDays = paymentDays;
+        this.paymentDays = paymentDays;
     }
 
     public Double getDebt() {
@@ -116,7 +116,7 @@ public class CreditAndPayment {
                 ", accountBalance='" + accountBalance + '\'' +
                 ", creditTotal=" + creditTotal +
                 ", creditBalance=" + creditBalance +
-                ", PaymentDays='" + PaymentDays + '\'' +
+                ", paymentDays='" + paymentDays + '\'' +
                 ", debt=" + debt +
                 '}';
     }

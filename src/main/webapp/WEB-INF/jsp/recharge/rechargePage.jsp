@@ -122,10 +122,10 @@ $($.Admin.rechargePage.id).datagrid({
 	pageList:[10,20,30,50],
 	columns:[[
 	          {field:'ck',checkbox:true},    
-	          {field:'merchants_name',title:'商户名称',align:'center',width:100,sortable:'true'},
-	          {field:'recharge_time',title:'充值时间',align:'center',width:70,sortable:'true'},
-	          {field:'recharge_mode_name',title:'充值方式',align:'center',width:70,sortable:'true'},
-	          {field:'amount_of_recharge',title:'充值金额',align:'center',width:70,sortable:'true'}
+	          {field:'merchantsName',title:'商户名称',align:'center',width:100,sortable:'true'},
+	          {field:'rechargeTime',title:'充值时间',align:'center',width:70,sortable:'true'},
+	          {field:'rechargeModeName',title:'充值方式',align:'center',width:70,sortable:'true'},
+	          {field:'amountOfRecharge',title:'充值金额',align:'center',width:70,sortable:'true'}
 	      ]],
     onDblClickRow: function(row){ 
     	

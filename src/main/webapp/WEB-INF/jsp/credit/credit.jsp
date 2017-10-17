@@ -133,15 +133,15 @@ $($.Admin.creditPayment.id).datagrid({
 	pageList:[10,20,30,50,50,50,50,50,50],
 	columns:[[
 	          {field:'ck',checkbox:true},    
-	          {field:'merchants_name',title:'商户名称',align:'center',width:100,sortable:'true'},
-	          {field:'text',title:'所属行业',align:'center',width:100,sortable:'true'},
+	          {field:'merchantsName',title:'商户名称',align:'center',width:100,sortable:'true'},
+	          {field:'jobId',title:'所属行业',align:'center',width:100,sortable:'true'},
 	          {field:'head',title:'负责人',align:'center',width:100,sortable:'true'},
 	          {field:'phone',title:'电话',align:'center',width:100,sortable:'true'},
-	          {field:'account_balance',title:'账户余额',align:'center',width:100,sortable:'true'},
-	          {field:'credit_total',title:'授信总额',align:'center',width:100,sortable:'true'},
-	          {field:'credit_balance',title:'授信余额',align:'center',width:100,sortable:'true'},
+	          {field:'accountBalance',title:'账户余额',align:'center',width:100,sortable:'true'},
+	          {field:'creditTotal',title:'授信总额',align:'center',width:100,sortable:'true'},
+	          {field:'creditBalance',title:'授信余额',align:'center',width:100,sortable:'true'},
 	          {field:'debt',title:'欠款金额',align:'center',width:100,sortable:'true'},
-	          {field:'payment_days',title:'账期',align:'center',width:100,sortable:'true'}
+	          {field:'paymentDays',title:'账期',align:'center',width:100,sortable:'true'}
 	      ]],
     onDblClickRow: function(row){ 
     	
