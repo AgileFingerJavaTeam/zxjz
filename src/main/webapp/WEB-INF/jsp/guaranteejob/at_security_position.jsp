@@ -209,8 +209,8 @@ $($.Admin.atSecurityPosition.id).datagrid({
   	  //显示图片1
 	function showImage1(value,row,index){
 		var html='<div style="padding:10px">';
-		if (row.page_url!='' || row.page_url!=null){
-			html+='<img src="TP/'+row.page_url+'" style="width:60px; height:50px">';
+		if (row.pageUrl!='' || row.pageUrl!=null){
+			html+='<img src="TP/'+row.pageUrl+'" style="width:60px; height:50px">';
 		} else {
 			html+='<img src="TP/default_category.png" style="width:60px; height:50px">';
 		}
@@ -220,8 +220,8 @@ $($.Admin.atSecurityPosition.id).datagrid({
 	  //显示图片2
 	function showImage2(value,row,index){
 		var html='<div style="padding:10px">';
-		if (row.first_page_carousel_url!='' || row.first_page_carousel_url!=null){
-			html+='<img src="TP/'+row.first_page_carousel_url+'" style="width:60px; height:50px">';
+		if (row.firstPageCarouselUrl!='' || row.firstPageCarouselUrl!=null){
+			html+='<img src="TP/'+row.firstPageCarouselUrl+'" style="width:60px; height:50px">';
 		} else {
 			html+='<img src="TP/default_category.png" style="width:60px; height:50px">';
 		}
@@ -231,8 +231,8 @@ $($.Admin.atSecurityPosition.id).datagrid({
 	  //显示图片3
 	function showImage3(value,row,index){
 		var html='<div style="padding:10px">';
-		if (row.main_page_url!='' || row.main_page_url!=null){
-			html+='<img src="TP/'+row.main_page_url+'" style="width:60px; height:50px">';
+		if (row.mainPageUrl!='' || row.mainPageUrl!=null){
+			html+='<img src="TP/'+row.mainPageUrl+'" style="width:60px; height:50px">';
 		} else {
 			html+='<img src="TP/default_category.png" style="width:60px; height:50px">';
 		}

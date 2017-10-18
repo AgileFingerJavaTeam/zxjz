@@ -112,10 +112,10 @@
 
     <!--安童 添加精品职位数据 -->
     <insert id="addSecurityPosition">
-        <selectKey resultType="int" keyProperty="recruiting_id"
+     <!-- <selectKey resultType="int" keyProperty="recruiting_id"
                    order="AFTER">
         SELECT @@IDENTITY AS recruiting_id
-        </selectKey>
+        </selectKey>-->
         INSERT INTO zx_recruitment_information
         (recruiting_id,release_time,refresh_time,post_name,post_classification,details_page_category,whether_on_homepage_guarantee,good_begin_time,good_end_time,whether_on_homepage_recommend,recommend_begin_time,recommend_end_time,work_date,work_time,work_location,position_longitude,position_latitude,work_content,settlement_method,salary_treatment,commission,benefits,gender_requirements,other_requirements,recruitment,people_num,hiring_expiration_date,recruitment_status,view_count,collection_count,reported,up_down_frame,releases_user_id)
         VALUES
@@ -123,10 +123,10 @@
     </insert>
     <!--安童 添加精品职位数据 -->
     <insert id="addSecurityPosition2">
-        <selectKey resultType="int" keyProperty="recruiting_id"
+   <!--   <selectKey resultType="int" keyProperty="recruiting_id"
                    order="AFTER">
         SELECT @@IDENTITY AS recruiting_id
-        </selectKey>
+        </selectKey>-->
         INSERT INTO
         zx_recruitment_additional_information
         (recruiting_id,main_title,subtitle,short_description,page_url,first_page_carousel_url,main_page_url,details_page_introduction)
