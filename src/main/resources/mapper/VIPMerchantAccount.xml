@@ -1,0 +1,61 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zxjz.dao.VIPMerchantAccountDao">
+    <!--郭阳  获取VIP企业账号信息-->
+    <select id="findVIPMerchantList" resultType="VIPMerchantAccount">
+        SELECT mer.*,indu_cat.text as industry_name FROM zx_merchants_account mer LEFT JOIN zx_industry_category indu_cat ON mer.job_id=indu_cat.value
+        <where>
+            merchants_level='签约VIP'
+            <if test="hzn_vipMersearch_content!=null and hzn_vipMersearch_content!=''">
+                AND CONCAT_WS(',',merchants_name,indu_cat.text,head,phone,vip_start,vip_end,merchants_state) LIKE '%${hzn_vipMersearch_content}%'
+            </if>
+        </where>
+        <if test="sort!=null and sort!='' and order!=null and order!=''">
+            ORDER BY ${sort} ${order}
+        </if>
+        limit #{offset},#{rows}
+    </select>
+
+
+    <!--郭阳   获取VIP企业账号信息数量-->
+    <select id="total" resultType="int">
+        SELECT count(*) FROM zx_merchants_account mer LEFT JOIN zx_industry_category indu_cat ON mer.job_id=indu_cat.value
+        <where>
+            merchants_level='签约VIP'
+            <if test="hzn_vipMersearch_content!=null and hzn_vipMersearch_content!=''">
+                AND CONCAT(merchants_name,indu_cat.text,head,phone,vip_start,vip_end,merchants_state) LIKE '%${hzn_vipMersearch_content}%'
+            </if>
+        </where>
+    </select>
+
+    <!--郭阳 新增 VIP企业账号-->
+    <update id="addVIPMerchantAccount">
+        update zx_merchants_account set merchants_level='签约VIP',vip_start=#{vip_start},vip_end=#{vip_end}
+        WHERE user_id=#{user_id}
+    </update>
+
+    <!--郭阳 模糊搜索商家名称-->
+    <select id="findMerchantName" resultType="findMerchantName">
+        select user_id,merchants_name from zx_merchants_account
+        WHERE 1=1 and merchants_level='普通'
+    </select>
+
+    <!--郭阳  获取VIP企业账号信息详情-->
+    <select id="findVIPMerchantObject" resultType="VIPMerchantAccount">
+        select * from zx_merchants_account
+        where user_id=#{id}
+    </select>
+
+    <!--郭阳 编辑 VIP企业账号-->
+    <update id="editVIPMerchant">
+        update zx_merchants_account set vip_start=#{vip_start},vip_end=#{vip_end}
+        WHERE user_id=#{user_id}
+    </update>
+
+    <!--郭阳 删除 VIP企业账号-->
+    <update id="deleteVIPMerchant">
+        update zx_merchants_account set merchants_level='普通',vip_start='0000-00-00',vip_end='0000-00-00'
+        WHERE user_id=#{user_id}
+    </update>
+</mapper>

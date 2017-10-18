@@ -2,13 +2,13 @@ package com.zxjz.dto.in;
 
 public class IndustryClassificationDto {
     private String name;
-    private String value;
+    private int value;
 
-    public String getValue() {
+    public int getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(int value) {
         this.value = value;
     }
 

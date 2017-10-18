@@ -12,7 +12,7 @@
      <table class="table_list">
 		<tr>
 		  <td align="right">确定删除这条参数吗？
-		      <input type="hidden" name="value" value="${data.value}"/>
+		      <input type="hidden" name="value" value="${data.data.value}"/>
 		  </td>
 		</tr>
          <tr>
