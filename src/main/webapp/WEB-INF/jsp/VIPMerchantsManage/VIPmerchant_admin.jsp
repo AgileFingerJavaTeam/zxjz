@@ -79,7 +79,7 @@ $.Admin.VIPMerchantAdmin = {
             $.Admin.tips('温馨提示信息', '请先选择 您要编辑的数据行','error');
             return false;
         }
-        var data = {id: get_select_row.user_id};    //此处的id 与mapper里找的id 一致
+        var data = {id: get_select_row.userId};    //此处的id 与mapper里找的id 一致
         var editVipMer_account_id = $.Admin.random_dialog();
         $(editVipMer_account_id).dialog({
             title: '编辑VIP账号',
@@ -106,7 +106,7 @@ $.Admin.VIPMerchantAdmin = {
             $.Admin.tips('温馨提示信息', '请先选择 您要删除的数据行','error');
             return false;
         }
-        var data = {id: get_select_row.user_id};     //此处的id 与mapper里找的id 一致
+        var data = {id: get_select_row.userId};     //此处的id 与mapper里找的id 一致
         var deleteVipMer_account_id = $.Admin.random_dialog();
         $(deleteVipMer_account_id).dialog({
             title: '删除VIP账号',
@@ -137,7 +137,7 @@ $($.Admin.VIPMerchantAdmin.id).datagrid({
     ctrlSelect: true,
     singleSelect: false,
     rownumbers: true,
-    idField: 'user_id',
+    idField: 'userId',
     url: "VIPMerAccount/VIPMerAccount",
     pagination:true,
 	pagePosition:'bottom',
@@ -146,13 +146,13 @@ $($.Admin.VIPMerchantAdmin.id).datagrid({
 	pageList:[10,20,30,50,100],
 	columns:[[
 	          {field:'ck',checkbox:true},    
-	          {field:'merchants_name',title:'商户名称',align:'center',width:100,sortable:'true'},
-	          {field:'industry_name',title:'所属行业',align:'center',width:100,sortable:'true'},
+	          {field:'merchantsName',title:'商户名称',align:'center',width:100,sortable:'true'},
+	          {field:'industryName',title:'所属行业',align:'center',width:100,sortable:'true'},
 	          {field:'head',title:'负责人',align:'center',width:100,sortable:'true'},
 	          {field:'phone',title:'电话',align:'center',width:100,sortable:'true'},
-	          {field:'vip_start',title:'VIP起始日期',align:'center',width:100,sortable:'true'},
-	          {field:'vip_end',title:'VIP截止日期',align:'center',width:100,sortable:'true'},
-	          {field:'merchants_state',title:'商户状态',align:'center',width:100,sortable:'true'}
+	          {field:'vipStart',title:'VIP起始日期',align:'center',width:100,sortable:'true'},
+	          {field:'vipEnd',title:'VIP截止日期',align:'center',width:100,sortable:'true'},
+	          {field:'merchantsState',title:'商户状态',align:'center',width:100,sortable:'true'}
 	      ]],
     onDblClickRow: function(row){ 
     	

@@ -12,10 +12,7 @@ import com.zxjz.exception.db.InsertInnerErrorException;
 import com.zxjz.service.SecurityPositionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Map;
@@ -228,7 +225,7 @@ public class SecurityPositionController extends BaseController{
             method = RequestMethod.POST,
             produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public String getSecurityPositionUpdate(AtSecurityPositionDto atSecurityPositionDto) {
+    public String getSecurityPositionUpdate( AtSecurityPositionDto atSecurityPositionDto) {
         //参数验空
         try {
             AtSecurityPositionExcution atSecurityPositionExcution = securityPositionService.updateSecurityPosition(atSecurityPositionDto);

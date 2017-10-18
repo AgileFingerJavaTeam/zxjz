@@ -2,6 +2,7 @@ package com.zxjz.controller;
 
 import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
+import com.zxjz.base.BaseUIResult;
 import com.zxjz.dto.excution.IndustryClassificationExcution;
 import com.zxjz.dto.excution.KeywordSearchExcution;
 import com.zxjz.dto.in.IndustryClassificationDto;
@@ -32,8 +33,8 @@ public class IndustryClassificationController extends BaseController{
      * @return
      */
     @RequestMapping(value = "showIndustryPage",
-            method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            method = RequestMethod.GET,
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
     public ModelAndView showIndustryPage() {
         ModelAndView mv = new ModelAndView();
@@ -46,23 +47,23 @@ public class IndustryClassificationController extends BaseController{
     }
 
     /**
-     * 查询参数信息s
-     * @param industryClassificationDto
+     * 查询参数信息
+     * @param
      * @return
      */
     @RequestMapping(value = "getIndustryList",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult getKeyWord(@RequestBody IndustryClassificationDto industryClassificationDto){
+    public String getKeyWord(){
         //参数验空
         try{
             IndustryClassificationExcution findListIndustryClassification = industryClassificationService.findListIndustryClassification();
-            return new BaseAPIResult(1,findListIndustryClassification);
+            return BaseUIResult.returnJsonEasyUI(findListIndustryClassification);
         } catch (Exception e){
             logger.error(e.getMessage(),e);
             IndustryClassificationExcution industryClassificationExcution = new IndustryClassificationExcution(e.getMessage(), IndustryClassificationEnum.FIND_ERROR);
-            return new BaseAPIResult(0,industryClassificationExcution);
+            return BaseUIResult.returnJsonEasyUI(industryClassificationExcution);
         }
 
     }
@@ -89,17 +90,17 @@ public class IndustryClassificationController extends BaseController{
      */
     @RequestMapping(value = "addIndustry",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult addIndustry(@RequestBody IndustryClassificationDto industryClassificationDto){
+    public String addIndustry(IndustryClassificationDto industryClassificationDto){
         //参数验空
         try{
             IndustryClassificationExcution insertIndustry = industryClassificationService.insertIndustry(industryClassificationDto);
-            return new BaseAPIResult(1,insertIndustry);
+            return BaseUIResult.returnJsonMSG(1,insertIndustry,"添加成功!");
         } catch (Exception e){
             logger.error(e.getMessage(),e);
             IndustryClassificationExcution industryClassificationExcution = new IndustryClassificationExcution(e.getMessage(), IndustryClassificationEnum.RETURN_FAIL);
-            return new BaseAPIResult(0,industryClassificationExcution);
+            return BaseUIResult.returnJsonMSG(0,industryClassificationExcution,"添加失败!");
         }
 
     }
@@ -110,7 +111,7 @@ public class IndustryClassificationController extends BaseController{
      */
     @RequestMapping(value ="/showeditInfo")//数据传输功能地址
     @ResponseBody
-    public ModelAndView showeditInfo(@RequestBody IndustryClassificationDto industryClassificationDto){
+    public ModelAndView showeditInfo(IndustryClassificationDto industryClassificationDto){
         ModelAndView mv = new ModelAndView();
         try{
             IndustryClassificationExcution findIndustryCategory = industryClassificationService.findIndustryCategory(industryClassificationDto);
@@ -129,17 +130,17 @@ public class IndustryClassificationController extends BaseController{
      */
     @RequestMapping(value = "editIndustry",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult editIndustry(@RequestBody IndustryClassificationDto industryClassificationDto){
+    public String editIndustry(IndustryClassificationDto industryClassificationDto){
         //参数验空
         try{
-            IndustryClassificationExcution findIndustryCategory = industryClassificationService.findIndustryCategory(industryClassificationDto);
-            return new BaseAPIResult(1,findIndustryCategory);
+            IndustryClassificationExcution editIndustry = industryClassificationService.editIndustry(industryClassificationDto);
+            return BaseUIResult.returnJsonMSG(1,editIndustry,"修改成功!");
         } catch (Exception e){
             logger.error(e.getMessage(),e);
             IndustryClassificationExcution industryClassificationExcution = new IndustryClassificationExcution(e.getMessage(), IndustryClassificationEnum.FIND_ERROR);
-            return new BaseAPIResult(0,industryClassificationExcution);
+            return BaseUIResult.returnJsonMSG(0,industryClassificationExcution,"修改失败！");
         }
 
     }
@@ -149,12 +150,12 @@ public class IndustryClassificationController extends BaseController{
      * @return
      */
     @RequestMapping(value ="/showDelInfo")
-    public ModelAndView showDelInfo(@RequestBody IndustryClassificationDto industryClassificationDto){
+    public ModelAndView showDelInfo(IndustryClassificationDto industryClassificationDto){
         ModelAndView mv = new ModelAndView();
         try{
             IndustryClassificationExcution findIndustryCategory = industryClassificationService.findIndustryCategory(industryClassificationDto);
             mv.addObject("data",findIndustryCategory);
-            mv.setViewName("carousel/editIndustry");   //JSP路径页面
+            mv.setViewName("carousel/delIndustry");   //JSP路径页面
         }catch (Exception e){
             logger.error(e.toString(),e);
         }
@@ -168,17 +169,17 @@ public class IndustryClassificationController extends BaseController{
      */
     @RequestMapping(value = "delIndustry",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult delIndustry(@RequestBody IndustryClassificationDto industryClassificationDto){
+    public String delIndustry(IndustryClassificationDto industryClassificationDto){
         //参数验空
         try{
             IndustryClassificationExcution updateIndustry = industryClassificationService.updateIndustry(industryClassificationDto);
-            return new BaseAPIResult(1,updateIndustry);
+            return BaseUIResult.returnJsonMSG(1,updateIndustry,"删除成功!");
         } catch (Exception e){
             logger.error(e.getMessage(),e);
             IndustryClassificationExcution industryClassificationExcution = new IndustryClassificationExcution(e.getMessage(), IndustryClassificationEnum.UPDATE_FAIL);
-            return new BaseAPIResult(0,industryClassificationExcution);
+            return BaseUIResult.returnJsonMSG(1,industryClassificationExcution,"删除失败!");
         }
 
     }

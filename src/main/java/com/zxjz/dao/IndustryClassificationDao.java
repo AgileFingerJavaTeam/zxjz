@@ -32,18 +32,19 @@ public interface IndustryClassificationDao {
      * @param value
      * @return
      */
-    public int editIndustry(@Param("value") String value);
+    public int editIndustry(@Param("name") String name,
+                            @Param("value") int value);
 
     /**
      * 删除行业
      * @return
      */
-    public int updateIndustry(@Param("value") String value);
+    public int updateIndustry(@Param("value") int value);
 
     /**
      * 获取单行数据
      * @return
      */
-    public IndustryCategory findIndustryCategory(@Param("value") String value);
+    public IndustryCategory findIndustryCategory(@Param("value") int value);
 
 }

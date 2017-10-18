@@ -12,7 +12,7 @@
 	<table cellpadding="10" id="at-position-table" class="table_list">
 	
 	<tr>	
-			<td style="display:none"><input type="text" value="${data.recruitingId}" name="recruiting_id"}/></td>
+			<td style="display:none"><input type="text" value="${data.recruitingId}" name="recruiting_id"/></td>
 		 	<td style="display:none"><input type='text' id='at_merchant_edit_id' name='releases_user_id' /></td>
 		    <td style="text-align: right" width="100px">岗位名称:</td>
 			<td><input type="text" name="post_name" value="${data.postName}"
@@ -143,7 +143,7 @@
 				</td>
 			<td style="text-align: right">首页图URL:</td>
 			<td> <input type="file" name="first_page_carousel_url"
-				value="${data.firstPageCarouselUrl }" class="wu-text"
+				value="${data.firstPageCarouselUrl}" class="wu-text"
 				style="width: 250px" required /> 
 				<a href="TP/${data.firstPageCarouselUrl}" target="_blank" ><img alt="首页图URL" src="TP/${data.firstPageCarouselUrl}" width=200px height=150px></a>
 				</td>	

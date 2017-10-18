@@ -62,7 +62,7 @@ $.Admin.industry = {
             $.Admin.tips('温馨提示信息', '请先选择 您要编辑的数据行','error');
             return false;
         }
-        var data = {value: get_select_row.value};    //此处的id 与mapper里找的id 一致
+        var data = {value: get_select_row.value}; //此处的id 与mapper里找的id 一致
         var value = $.Admin.random_dialog();
         $(value).dialog({
             title: '编辑行业分类',
