@@ -8,20 +8,20 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<form action="VIPMerAccount/editVIPMerchant" class="table_form"method="post" id="editVIPMerchantAccount" enctype="multipart/form-data">
+<form action="VIPMerAccount/editVIPMerchant" class="table_form" method="post" id="editVIPMerchantAccount" enctype="multipart/form-data">
 	<table class="table_list">
 		<tr>
 			<td style="text-align:center">公司名称：</td>
              <td><input id="hzn_editVIP_name" class="wu-text easyui-combobox" readonly="readonly"
-              name="merchants_name" style="width: 250px" required value="${data.merchants_name}"></td>
-				<td><input type='text' name='user_id' value="${data.user_id}" style="display:none"/></td>
+              name="merchants_name" style="width: 250px" required value="${data.data.merchantsName}"></td>
+				<td><input type='text' name='user_id' value="${data.data.userId}" style="display:none"/></td>
 		</tr>
 		<tr>
 			<td align="right">VIP起始日期:</td>
 			<td><input class="easyui-datebox" name="vip_start" required
 				id="hzn_editVIP_sd"
 				data-options="onSelect:onSelect"
-				value="${data.vip_start}"
+				value="${data.data.vipStart}"
 				style="width: 150px"></td>
 		</tr>
 		<tr>
@@ -29,7 +29,7 @@
 			<td><input class="easyui-datebox" name="vip_end" required
 				id="hzn_editVIP_ed"
 				data-options="onSelect:onSelect"
-				value="${data.vip_end}"
+				value="${data.data.vipEnd}"
 				style="width: 150px"></td>
 		</tr>
 		<tr>
