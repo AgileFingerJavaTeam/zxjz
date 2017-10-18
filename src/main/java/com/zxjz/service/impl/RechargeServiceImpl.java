@@ -37,7 +37,7 @@ public class RechargeServiceImpl implements RechargeService{
         int rows=rechargeDto.getRows() ;
         int offset = (page - 1) * rows;
         try{
-            List<RechargeInfo> rechargelist = rechargeDao.findRechargeList(bxw_search_content,sort,order,page,rows);
+            List<RechargeInfo> rechargelist = rechargeDao.findRechargeList(bxw_search_content,sort,order,page,offset,rows);
             if (rechargelist != null) {
                 for (RechargeInfo rec : rechargelist) {
                     String rechargeTime = rec.getRechargeTime();

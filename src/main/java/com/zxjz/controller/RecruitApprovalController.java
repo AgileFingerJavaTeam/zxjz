@@ -51,7 +51,7 @@ public class RecruitApprovalController extends BaseController{
      */
     @RequestMapping(value = "/getinfoList",method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
     @ResponseBody
-    public String getinfoList(@Validated @RequestBody RecruitApprovalDto recruitApprovalDto) {
+    public String getinfoList(RecruitApprovalDto recruitApprovalDto) {
 
         try {
             RecruitApprovalExcution recruitApprovalExcution=recruitApprovalService.findApprovalList(recruitApprovalDto);
@@ -72,10 +72,10 @@ public class RecruitApprovalController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/CheckInformation",
-            method = RequestMethod.POST,
+            method = RequestMethod.GET,
             produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public ModelAndView checkInfo(@Validated @RequestBody RecruitApprovalDto recruitApprovalDto) {
+    public ModelAndView checkInfo( RecruitApprovalDto recruitApprovalDto) {
 
         ModelAndView mv = new ModelAndView();
         HttpSession session=this.getRequest().getSession();
@@ -102,7 +102,7 @@ public class RecruitApprovalController extends BaseController{
      */
     @RequestMapping(value = "/subInfo",method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
     @ResponseBody
-    public String subInfo(@Validated @RequestBody RecruitApprovalDto recruitApprovalDto) {
+    public String subInfo( RecruitApprovalDto recruitApprovalDto) {
         try {
 
                 RecruitApprovalExcution recruitApprovalExcution=recruitApprovalService.updateRefuse(recruitApprovalDto);

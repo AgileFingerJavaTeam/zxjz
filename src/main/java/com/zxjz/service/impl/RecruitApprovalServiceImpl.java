@@ -39,6 +39,10 @@ public class RecruitApprovalServiceImpl implements RecruitApprovalService {
         int rows=recruitApprovalDto.getRows();
         int page=recruitApprovalDto.getPage();
         try{
+            if(bxw_approval_status!=null||bxw_search_content!=null){
+                 rows=20;
+                 page=1;
+            }
             int offset = (page - 1) * rows;
             List<RecruitmentInfoApply> approvalList =approvalDao.findApprovalList(bxw_approval_status,bxw_search_content,sort,order,offset,rows);
             if(approvalList!=null){
@@ -60,7 +64,7 @@ public class RecruitApprovalServiceImpl implements RecruitApprovalService {
                 }
                 int total=approvalDao.findListCount(bxw_approval_status,bxw_search_content,order,sort);
                 HashMap map=new HashMap();
-                map.put("approvalList",approvalList);
+                map.put("rows",approvalList);
                 map.put("total",total);
                 return  new RecruitApprovalExcution(RecruitApprovalEnum.FIND_SUCCESS,map);
             }else {

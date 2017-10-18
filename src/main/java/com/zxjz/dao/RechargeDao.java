@@ -15,6 +15,7 @@ public interface RechargeDao {
                                                @Param("sort")String sort,
                                                @Param("order")String order,
                                                @Param("page")int page,
+                                               @Param("offset")int offset,
                                                @Param("rows")int rows);
     /*查询充值信息列表数量*/
     public int total(String bxw_search_content);

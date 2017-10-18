@@ -67,6 +67,7 @@ $.Admin.InformationApproval = {
             return false;
         }
         var data = {recruiting_id: get_select_row.recruiting_id,releases_user_id:get_select_row.releases_user_id};
+		alert(get_select_row.recruiting_id);
         var id = $.Admin.random_dialog();
         $(id).dialog({
             title: '审核信息',
@@ -105,17 +106,17 @@ $($.Admin.InformationApproval.id).datagrid({
 	pageList:[10,20,30,50,100,100,100,100],
 	columns:[[
 	          {field:'ck',checkbox:true},    
-	          {field:'merchants_name',title:'发布用户',align:'center',sortable:'true'},
-	          {field:'apply_time',title:'申请时间 ',width:100,sortable:'true'},
-	          {field:'post_name',title:'岗位名称',align:'center',width:100,sortable:'true'},
-	          {field:'work_date',title:'工作日期',align:'center',width:100,sortable:'true'},
-	          {field:'work_time',title:'工作时间',align:'center',width:100,sortable:'true'},
-	          {field:'work_location',title:'工作地点',align:'center',width:100,sortable:'true'},
-	          {field:'settlement_method',title:'结算方式',align:'center',width:100,sortable:'true'},
+	          {field:'merchantsName',title:'发布用户',align:'center',sortable:'true'},
+	          {field:'applyTime',title:'申请时间 ',width:100,sortable:'true'},
+	          {field:'postName',title:'岗位名称',align:'center',width:100,sortable:'true'},
+	          {field:'workDate',title:'工作日期',align:'center',width:100,sortable:'true'},
+	          {field:'workTime',title:'工作时间',align:'center',width:100,sortable:'true'},
+	          {field:'workLocation',title:'工作地点',align:'center',width:100,sortable:'true'},
+	          {field:'settlementMethod',title:'结算方式',align:'center',width:100,sortable:'true'},
 	          {field:'recruitment',title:'招聘人数',align:'center',width:100,sortable:'true'},
-	          {field:'audit_status',title:'审核状态',align:'center',width:100,sortable:'true'},
-	          {field:'employees_name',title:'审核人',align:'center',width:100,sortable:'true'},
-	          {field:'status_time',title:'审核时间',align:'center',width:100,sortable:'true'}
+	          {field:'auditStatus',title:'审核状态',align:'center',width:100,sortable:'true'},
+	          {field:'employeesName',title:'审核人',align:'center',width:100,sortable:'true'},
+	          {field:'statusTime',title:'审核时间',align:'center',width:100,sortable:'true'}
 	      ]],
     onDblClickRow: function(row){ 
     	
@@ -130,8 +131,12 @@ $('#bxw_chooseStatus').combobox({
     editable:false,
     onChange:function(){
     	 var onch=$('#bxw_chooseStatus').val();
+    	 var pageNumber=pageNumber;
+    	 var pageSize=pageSize;
          var bxw_statusInfo={};
          bxw_statusInfo.bxw_approval_status=onch;
+         bxw_statusInfo.page=pageNumber;
+         bxw_statusInfo.rows=pageSize;
     	 $.ajax({
              type: "POST",
              url: "approval/getinfoList",
