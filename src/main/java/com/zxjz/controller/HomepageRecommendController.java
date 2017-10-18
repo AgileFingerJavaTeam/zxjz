@@ -2,6 +2,7 @@ package com.zxjz.controller;
 
 import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
+import com.zxjz.base.BaseUIResult;
 import com.zxjz.dto.excution.HomepageRecommendExcution;
 import com.zxjz.dto.excution.SecurityPositionExcution;
 import com.zxjz.dto.in.HomepageRecommendDto;
@@ -69,13 +70,13 @@ public class HomepageRecommendController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/showWeatherHomepageRecommend",
-            method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            method = RequestMethod.GET,
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
     public ModelAndView showDelVIPMerchant(SecurityPositionDto securityPositionDto) {
         ModelAndView mv = new ModelAndView();
         try {
-            SecurityPositionExcution securityPositionExcution = securityPositionService.getSecurityPosition(securityPositionDto);
+            SecurityPositionExcution securityPositionExcution = securityPositionService.getSecurityPositionSecurity(securityPositionDto);
             mv.addObject("data", securityPositionExcution.getData());
             mv.setViewName("homepageRecommend/up_and_down");
         }
@@ -91,13 +92,13 @@ public class HomepageRecommendController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/showDowmHomepageRecommend",
-            method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            method = RequestMethod.GET,
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
     public ModelAndView showDowmHomepageRecommend(SecurityPositionDto securityPositionDto) {
         ModelAndView mv = new ModelAndView();
         try {
-            SecurityPositionExcution securityPositionExcution = securityPositionService.getSecurityPosition(securityPositionDto);
+            SecurityPositionExcution securityPositionExcution = securityPositionService.getSecurityPositionSecurity(securityPositionDto);
             mv.addObject("data", securityPositionExcution.getData());
             mv.setViewName("homepageRecommend/down");
         }
@@ -111,42 +112,46 @@ public class HomepageRecommendController extends BaseController {
      * 改变首页担保状态
      * @return
      */
-    @RequestMapping(value ="/upOrDownHomepageRecommend", produces = "text/json;charset=UTF-8")
+    @RequestMapping(value = "/upOrDownHomepageRecommend",
+            method = RequestMethod.POST,
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult upOrDownHomepageRecommend(@RequestBody HomepageRecommendDto homepageRecommendDto){
+    public String upOrDownHomepageRecommend(HomepageRecommendDto homepageRecommendDto){
         //参数验空
         try {
             HomepageRecommendExcution homepageRecommendExcution = homepageRecommendService.updateOrHomepageRecommend(homepageRecommendDto);
-            return new BaseAPIResult(1, homepageRecommendExcution);
+            return BaseUIResult.returnJsonMSG(1,homepageRecommendExcution,"修改成功");
         }catch (UpdateInnerErrorException e) {
             logger.error(e.getMessage(), e);
             HomepageRecommendExcution homepageRecommendExcution = new HomepageRecommendExcution(HomepageRecommendEnum.FAIL,e.getMessage());
-            return new BaseAPIResult(0,homepageRecommendExcution);
+            return BaseUIResult.returnJsonMSG(0,homepageRecommendExcution,"修改失败");
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             HomepageRecommendExcution homepageRecommendExcution = new HomepageRecommendExcution(HomepageRecommendEnum.INNER_ERROR,e.getMessage());
-            return new BaseAPIResult(0,homepageRecommendExcution);
+            return BaseUIResult.returnJsonMSG(0,homepageRecommendExcution,"修改失败");
         }
     }
     /**
      * 关闭首页担保状态
      * @return
      */
-    @RequestMapping(value ="/downHomepageRecommend", produces = "text/json;charset=UTF-8")
+    @RequestMapping(value = "/downHomepageRecommend",
+            method = RequestMethod.POST,
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult downHomepageRecommend(@RequestBody HomepageRecommendDto homepageRecommendDto){
+    public String downHomepageRecommend(HomepageRecommendDto homepageRecommendDto){
         //参数验空
         try {
             HomepageRecommendExcution homepageRecommendExcution = homepageRecommendService.updateCloseHomepageRecommend(homepageRecommendDto);
-            return new BaseAPIResult(1, homepageRecommendExcution);
+            return BaseUIResult.returnJsonMSG(1,homepageRecommendExcution,"修改成功");
         }catch (UpdateInnerErrorException e) {
             logger.error(e.getMessage(), e);
             HomepageRecommendExcution homepageRecommendExcution = new HomepageRecommendExcution(HomepageRecommendEnum.FAIL,e.getMessage());
-            return new BaseAPIResult(0,homepageRecommendExcution);
+            return BaseUIResult.returnJsonMSG(0,homepageRecommendExcution,"修改失败");
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             HomepageRecommendExcution homepageRecommendExcution = new HomepageRecommendExcution(HomepageRecommendEnum.INNER_ERROR,e.getMessage());
-            return new BaseAPIResult(0,homepageRecommendExcution);
+            return BaseUIResult.returnJsonMSG(0,homepageRecommendExcution,"修改失败");
         }
     }
 }

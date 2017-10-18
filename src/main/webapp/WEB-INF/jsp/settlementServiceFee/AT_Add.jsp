@@ -69,8 +69,8 @@
 	    fitColumns: true,
 	    fit: true,   
 	    url:"Settlement/getMerchantsName",    
-	    idField: 'user_id',    
-	    textField: 'merchants_name',
+	    idField: 'userId',
+	    textField: 'merchantsName',
 	    pagination:true,
 		pagePosition:'bottom',
 		/* remoteSort:false, */  //商户名称的  前台排序 
@@ -78,7 +78,7 @@
 		pageSize:20,
 		pageList:[10,20,30,50,100],
 	    columns: [[                                                                          //商户名称的  前台排序 
-	        {field:'merchants_name',title:'商户名称',halign:'center',align:'center',width:100/* ,sortable:true */},      
+	        {field:'merchantsName',title:'商户名称',halign:'center',align:'center',width:100/* ,sortable:true */},
 	    ]],
 	    onSelect:function(){changeFun()}
 	  })
@@ -100,9 +100,8 @@
                     		 if(data == '0'){
                     			 $('input#withdrawal_serial_number').val(1);
                     		 }else{
-                    			 var obj = new Function("return" + data)();//转换后的JSON对象  
-                     		    console.log(obj.withlist); 
-                    			 $('input#withdrawal_serial_number').val(obj.withlist+1);
+
+                    			 $('input#withdrawal_serial_number').val(data.withlist+1);
                     		 }
                     	}
                      })

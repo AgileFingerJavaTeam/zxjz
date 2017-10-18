@@ -23,6 +23,12 @@ public interface SecurityPositionService {
     public SecurityPositionExcution getSecurityPositionList2(SecurityPositionDto securityPositionDto);
 
     /**
+     * 详情list
+     * @param securityPositionDto
+     * @return
+     */
+    public SecurityPositionExcution getSecurityPositionSecurity(SecurityPositionDto securityPositionDto);
+    /**
      * 详情
      * @param securityPositionDto
      * @return
@@ -73,7 +79,12 @@ public interface SecurityPositionService {
      * @return
      */
     public SecurityPositionExcution findSearch(SecurityPositionDto securityPositionDto);
-
+    /**
+     * 是否上推荐/担保模糊查询
+     * @param securityPositionDto
+     * @return
+     */
+    public SecurityPositionExcution findSearch2(SecurityPositionDto securityPositionDto);
     /**
      * 状态筛选
      * @param securityPositionDto

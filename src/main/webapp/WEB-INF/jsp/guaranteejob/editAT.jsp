@@ -12,16 +12,16 @@
 	<table cellpadding="10" id="at-position-table" class="table_list">
 	
 	<tr>	
-			<td style="display:none"><input type="text" value="${data.recruiting_id}" name="recruiting_id"}/></td>
+			<td style="display:none"><input type="text" value="${data.recruitingId}" name="recruiting_id"}/></td>
 		 	<td style="display:none"><input type='text' id='at_merchant_edit_id' name='releases_user_id' /></td>
 		    <td style="text-align: right" width="100px">岗位名称:</td>
-			<td><input type="text" name="post_name" value="${data.post_name}"
+			<td><input type="text" name="post_name" value="${data.postName}"
 			 class="easyui-textbox easyui-validatebox"
 				style="width: 250px" /></td>
 			
 			<td style="text-align: right" width="100px">简介:</td>
 			<td><input type="text" name="short_description" class="easyui-textbox easyui-validatebox"
-				style="width: 250px" value="${data.short_description}" required /></td>	
+				style="width: 250px" value="${data.shortDescription}" required /></td>
 		</tr>
 		<tr>
 			<td style="text-align:right">岗位分类:</td>
@@ -29,35 +29,35 @@
              	 name="station_name"  style="width: 125px"  data-options=" 
 					url:'securityPosition/SaddATT',
 					method:'get',
-					valueField:'station_id',
-					textField:'station_name',
+					valueField:'stationId',
+					textField:'stationName',
 					panelHeight:'auto'">
 				<input  class="wu-text easyui-combobox" id="edit_post_classification"
               	name="post_classification" 
               	 style="width: 125px" required data-options="
-              		valueField:'station_id',
-					textField:'station_name',
+              		valueField:'stationId',
+					textField:'stationName',
 					panelHeight:'auto'
              		 ">
 			</td>
               
 			<td style="text-align: right">工作内容:</td>
 			<td><input type="text" name="work_content" class="easyui-textbox easyui-validatebox"
-				value="${data.work_content}"
+				value="${data.workContent}"
 				style="width: 250px" required /></td>
 		</tr>
 		<tr>
 			<td style="text-align: right">工作日期:</td>
 			<td><input type="text" name="work_date" class="easyui-textbox easyui-validatebox"
-				value="${data.work_date}" style="width: 250px" required /></td>
+				value="${data.workDate}" style="width: 250px" required /></td>
 			<td style="text-align: right">工作时间:</td>
 			<td><input type="text" name="work_time" class="easyui-textbox easyui-validatebox"
-				value="${data.work_time}" style="width: 250px" required /></td>
+				value="${data.workTime}" style="width: 250px" required /></td>
 		</tr>
 		<tr>
 			<td style="text-align: right">工作地点:</td>
 			<td>
-			<input id="at_location" name="work_location" class="easyui-textbox" style="width:250px" value="${data.work_location}"
+			<input id="at_location" name="work_location" class="easyui-textbox" style="width:250px" value="${data.workLocation}"
 			 data-options="
 			prompt: '地图',
 			iconWidth: 22,
@@ -81,17 +81,17 @@
 			</td>
 			<td style="text-align: right">工资待遇:</td>
 			<td><input type="text" name="salary_treatment" class="easyui-textbox easyui-validatebox easyui-numberspinner"
-				value="${data.salary_treatment}"
+				value="${data.salaryTreatment}"
 				style="width: 250px" required /></td>
 		</tr>
 		<tr style="display: none;">
 			<td style="text-align: right">工作地点经度:</td>
 			<td><input type="hidden" name="position_longitude" class="wu-text"
-			     value="${data.position_longitude}"  id='at_position_longitude'
+			     value="${data.positionLongitude}"  id='at_position_longitude'
 				style="width: 250px" required /></td>
 			<td style="text-align: right">工作地点纬度:</td>
 			<td><input type="hidden" name="position_latitude" class="wu-text" 
-			    id='at_position_latitude' value="${data.position_latitude}"
+			    id='at_position_latitude' value="${data.positionLatitude}"
 				style="width: 250px" required /></td>
 		</tr> 
 		<tr>
@@ -107,15 +107,15 @@
 			<td><select id="cc_sex" class="easyui-combobox"
 				name="gender_requirements" style="width: 250px;" required >
 					<option value="不限"
-						<c:if test="${data.gender_requirements=='不限'}">selected="selected"</c:if>>不限</option>
+						<c:if test="${data.genderRequirements=='不限'}">selected="selected"</c:if>>不限</option>
 					<option value="男"
-						<c:if test="${data.gender_requirements=='男'}">selected="selected"</c:if>>男</option>
+						<c:if test="${data.genderRequirements=='男'}">selected="selected"</c:if>>男</option>
 					<option value="女"
-						<c:if test="${data.gender_requirements=='女'}">selected="selected"</c:if>>女</option>
+						<c:if test="${data.genderRequirements=='女'}">selected="selected"</c:if>>女</option>
 			</select></td>
 			<td style="text-align: right">其他要求:</td>
 			<td><input type="text" name="other_requirements" class="easyui-textbox easyui-validatebox"
-				style="width: 250px" value="${data.other_requirements}" required /></td>
+				style="width: 250px" value="${data.otherRequirements}" required /></td>
 		</tr>
 		<tr>
 			<td style="text-align: right">招聘人数:</td>
@@ -125,44 +125,44 @@
 			<td><input class="easyui-datetimebox"
 				name="hiring_expiration_date"
 				data-options="required:true,showSeconds:false" style="width: 250px"
-				value="${data.hiring_expiration_date}" required></td>
+				value="${data.hiringExpirationDate}" required></td>
 		</tr>
 		<tr>
 			<td style="text-align: right">主标题:</td>
 			<td><input type="text" name="main_title" class="easyui-textbox easyui-validatebox"
-				style="width: 250px" value="${data.main_title }" required /></td>
+				style="width: 250px" value="${data.mainTitle }" required /></td>
 			<td style="text-align: right">副标题:</td>
 			<td><input type="text" name="subtitle" class="easyui-textbox easyui-validatebox"
 				style="width: 250px" value="${data.subtitle}" required /></td>
 		</tr>
 		<tr>
 			<td style="text-align: right">封页图URL:</td>
-			<td> <input type="file" name="page_url" value="${data.page_url}"
+			<td> <input type="file" name="page_url" value="${data.pageUrl}"
 				class="wu-text" style="width: 250px" required /> 
-				<a href="TP/${data.page_url}" target="_blank" ><img alt="封页图URL" src="TP/${data.page_url}" width=200px height=150px></a>
+				<a href="TP/${data.pageUrl}" target="_blank" ><img alt="封页图URL" src="TP/${data.pageUrl}" width=200px height=150px></a>
 				</td>
 			<td style="text-align: right">首页图URL:</td>
 			<td> <input type="file" name="first_page_carousel_url"
-				value="${data.first_page_carousel_url }" class="wu-text"
+				value="${data.firstPageCarouselUrl }" class="wu-text"
 				style="width: 250px" required /> 
-				<a href="TP/${data.first_page_carousel_url}" target="_blank" ><img alt="首页图URL" src="TP/${data.first_page_carousel_url}" width=200px height=150px></a>
+				<a href="TP/${data.firstPageCarouselUrl}" target="_blank" ><img alt="首页图URL" src="TP/${data.firstPageCarouselUrl}" width=200px height=150px></a>
 				</td>	
 		</tr>
 		<tr>
 			
 			<td style="text-align: right">详情页主图URL:</td>
 			<td> <input type="file" name="main_page_url"
-				value="${data.main_page_url}" class="wu-text" style="width: 250px"
+				value="${data.mainPageUrl}" class="wu-text" style="width: 250px"
 				required /> 
-				<a href="TP/${data.main_page_url}" target="_blank" ><img alt="详情页主图URL" src="TP/${data.main_page_url}" width=200px height=150px></a>
+				<a href="TP/${data.mainPageUrl}" target="_blank" ><img alt="详情页主图URL" src="TP/${data.mainPageUrl}" width=200px height=150px></a>
 				</td>
 			<td style="text-align: right">上架状态:</td>
 			<td><select id="cc_recruit" class="easyui-combobox"
 				name="up_down_frame" style="width: 250px;" required >
 					<option value="1"
-						<c:if test="${data.up_down_frame=='1'}">selected="selected"</c:if>>上架</option>
+						<c:if test="${data.upDownFrame=='1'}">selected="selected"</c:if>>上架</option>
 					<option value="0"
-						<c:if test="${data.up_down_frame=='0'}">selected="selected"</c:if>>下架</option>
+						<c:if test="${data.upDownFrame=='0'}">selected="selected"</c:if>>下架</option>
 			</select></td>	
 		</tr>
 		<tr>
@@ -171,7 +171,7 @@
 			<textarea rows="3" style="width:200px;height:100px" id="sn-textarea-intrduction" 
 			name="details_page_introduction" class="easyui-validatebox" 
 			data-options="required:true,validType:'length[1,1000000]'" 
-			invalidMessage="最大长度不能超过1000000""></textarea>
+			invalidMessage="最大长度不能超过1000000"></textarea>
 			</td>
 		</tr>
 		<tr>
@@ -242,15 +242,15 @@ $("#edit_station_name").combobox({
        
 	},
 	onLoadSuccess:function(){
-		$('#edit_station_name').combobox('setValue','${data.p_post_classification}');
+		$('#edit_station_name').combobox('setValue','${data.pPostClassification}');
 	}
 });	  
 $("#edit_post_classification").combobox({	    	
 	onLoadSuccess:function(){
 		var aaa=$('#edit_station_name').combobox('getValue');
-		$('#edit_post_classification').combobox('setValue','${data.post_classification}');
-		if('${data.p_post_classification}'==aaa){
-			$('#edit_post_classification').combobox('setValue','${data.post_classification}');
+		$('#edit_post_classification').combobox('setValue','${data.postClassification}');
+		if('${data.pPostClassification}'==aaa){
+			$('#edit_post_classification').combobox('setValue','${data.postClassification}');
 		}else{
 			$('#edit_post_classification').combobox('clear');
 		}
@@ -268,5 +268,5 @@ $("#edit_post_classification").combobox({
 	       this.sync();  
 	   }});  
 	});
-	KindEditor.html('#sn-textarea-intrduction',"${data.details_page_introduction}");
+	KindEditor.html('#sn-textarea-intrduction',"${data.detailsPageIntroduction}");
 </script>

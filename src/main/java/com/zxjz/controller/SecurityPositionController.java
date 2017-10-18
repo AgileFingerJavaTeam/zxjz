@@ -68,17 +68,17 @@ public class SecurityPositionController extends BaseController{
      */
     @RequestMapping(value = "/getSecurityPositionList2",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult getSecurityPositionList2(SecurityPositionDto securityPositionDto) {
+    public String getSecurityPositionList2(SecurityPositionDto securityPositionDto) {
         //参数验空
         try {
-            SecurityPositionExcution securityPositionExcution = securityPositionService.getSecurityPositionList2(securityPositionDto);
-            return new BaseAPIResult(1,securityPositionExcution);
+            SecurityPositionExcution securityPositionExcution = securityPositionService.getSecurityPositionList(securityPositionDto);
+            return BaseUIResult.returnJsonEasyUI(securityPositionExcution);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             SecurityPositionExcution securityPositionExcution = new SecurityPositionExcution(SecurityPositionEnum.INNER_ERROR,e.getMessage());
-            return new BaseAPIResult(0,securityPositionExcution);
+            return BaseUIResult.returnJsonEasyUI(securityPositionExcution);
         }
     }
 
@@ -86,14 +86,17 @@ public class SecurityPositionController extends BaseController{
      * 系统参数详情页面
      * @return
      */
-    @RequestMapping(value = "/showSecurity")
+    @RequestMapping(value = "/showSecurity",
+            method = RequestMethod.GET,
+            produces = {"text/json;charset=UTF-8"})
+    @ResponseBody
     public ModelAndView showSecurity(SecurityPositionDto securityPositionDto) {
         ModelAndView mv = new ModelAndView();
         try {
             SecurityPositionExcution securityPositionExcution = securityPositionService.getSecurityPosition(securityPositionDto);
             Map<String,Object> map = (Map<String,Object>)securityPositionExcution.getData();
-            mv.addObject("info",map.get("atCollection"));
-            mv.addObject("info1",map.get("maps"));
+            mv.addObject("data",map.get("data"));
+            mv.addObject("info",map.get("info"));
             mv.setViewName("guaranteejob/showSecurity");
         } catch (Exception e) {
             logger.error(e.toString(), e);
@@ -120,18 +123,18 @@ public class SecurityPositionController extends BaseController{
      * 添加框查看 遍历商户名称
      */
     @RequestMapping(value = "/SaddAT",
-            method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            method = RequestMethod.GET,
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult findListMarchantName() {
+    public String findListMarchantName() {
         //参数验空
         try {
             SecurityPositionExcution securityPositionExcution = securityPositionService.findListMarchantName();
-            return new BaseAPIResult(1,securityPositionExcution);
+            return BaseUIResult.returnJson(securityPositionExcution);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             SecurityPositionExcution securityPositionExcution = new SecurityPositionExcution(SecurityPositionEnum.INNER_ERROR,e.getMessage());
-            return new BaseAPIResult(0,securityPositionExcution);
+            return BaseUIResult.returnJson(securityPositionExcution);
         }
     }
 
@@ -139,34 +142,34 @@ public class SecurityPositionController extends BaseController{
    * 添加框查看 遍历商户名称
    */
     @RequestMapping(value = "/SaddATT",
-            method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            method = RequestMethod.GET,
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult findListStation() {
+    public String findListStation() {
         //参数验空
         try {
             SecurityPositionExcution securityPositionExcution = securityPositionService.findListStation();
-            return new BaseAPIResult(1,securityPositionExcution);
+            return BaseUIResult.returnJson(securityPositionExcution);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             SecurityPositionExcution securityPositionExcution = new SecurityPositionExcution(SecurityPositionEnum.INNER_ERROR,e.getMessage());
-            return new BaseAPIResult(0,securityPositionExcution);
+            return BaseUIResult.returnJson(securityPositionExcution);
         }
     }
 
     @RequestMapping(value = "/SaddATT2",
-            method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            method = RequestMethod.GET,
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult findListTwoLevelStation(@RequestBody SecurityPositionDto securityPositionDto) {
+    public String findListTwoLevelStation(SecurityPositionDto securityPositionDto) {
         //参数验空
         try {
             SecurityPositionExcution securityPositionExcution = securityPositionService.findListTwoLevelStation(securityPositionDto);
-            return new BaseAPIResult(1,securityPositionExcution);
+            return BaseUIResult.returnJson(securityPositionExcution);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             SecurityPositionExcution securityPositionExcution = new SecurityPositionExcution(SecurityPositionEnum.INNER_ERROR,e.getMessage());
-            return new BaseAPIResult(0,securityPositionExcution);
+            return BaseUIResult.returnJson(securityPositionExcution);
         }
     }
 
@@ -177,22 +180,22 @@ public class SecurityPositionController extends BaseController{
      */
     @RequestMapping(value = "/getSecurityPositionAdd",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult SecurityPositionAdd(@RequestBody AtSecurityPositionDto atSecurityPositionDto) {
+    public String SecurityPositionAdd(AtSecurityPositionDto atSecurityPositionDto) {
         //参数验空
         try {
             AtSecurityPositionExcution atSecurityPositionExcution = securityPositionService.insertSecurityPosition(atSecurityPositionDto);
-            return new BaseAPIResult(1,atSecurityPositionExcution);
+            return BaseUIResult.returnJsonMSG(1,atSecurityPositionExcution,"添加成功");
         }catch (InsertInnerErrorException e) {
             logger.error(e.getMessage(), e);
             AtSecurityPositionExcution atSecurityPositionExcution = new AtSecurityPositionExcution(SecurityPositionEnum.FAIL,e.getMessage());
-            return new BaseAPIResult(0,atSecurityPositionExcution);
+            return BaseUIResult.returnJsonMSG(0,atSecurityPositionExcution,"添加失败");
         }
          catch (Exception e) {
             logger.error(e.getMessage(), e);
              AtSecurityPositionExcution atSecurityPositionExcution = new AtSecurityPositionExcution(SecurityPositionEnum.INNER_ERROR,e.getMessage());
-             return new BaseAPIResult(0,atSecurityPositionExcution);
+             return BaseUIResult.returnJsonMSG(0,atSecurityPositionExcution,"添加失败");
         }
     }
 
@@ -200,7 +203,10 @@ public class SecurityPositionController extends BaseController{
      * 系统参数详情页面
      * @return
      */
-    @RequestMapping(value = "/editAT")
+    @RequestMapping(value = "/editAT",
+            method = RequestMethod.GET,
+            produces = {"text/json;charset=UTF-8"})
+    @ResponseBody
     public ModelAndView editAT(SecurityPositionDto securityPositionDto) {
         ModelAndView mv = new ModelAndView();
         try {
@@ -220,22 +226,22 @@ public class SecurityPositionController extends BaseController{
      */
     @RequestMapping(value = "/getSecurityPositionUpdate",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult getSecurityPositionUpdate(@RequestBody AtSecurityPositionDto atSecurityPositionDto) {
+    public String getSecurityPositionUpdate(AtSecurityPositionDto atSecurityPositionDto) {
         //参数验空
         try {
             AtSecurityPositionExcution atSecurityPositionExcution = securityPositionService.updateSecurityPosition(atSecurityPositionDto);
-            return new BaseAPIResult(1,atSecurityPositionExcution);
+            return BaseUIResult.returnJsonMSG(1,atSecurityPositionExcution,"修改成功");
         }catch (InsertInnerErrorException e) {
             logger.error(e.getMessage(), e);
             AtSecurityPositionExcution atSecurityPositionExcution = new AtSecurityPositionExcution(SecurityPositionEnum.FAIL,e.getMessage());
-            return new BaseAPIResult(0,atSecurityPositionExcution);
+            return BaseUIResult.returnJsonMSG(0,atSecurityPositionExcution,"修改失败");
         }
         catch (Exception e) {
             logger.error(e.getMessage(), e);
             AtSecurityPositionExcution atSecurityPositionExcution = new AtSecurityPositionExcution(SecurityPositionEnum.INNER_ERROR,e.getMessage());
-            return new BaseAPIResult(0,atSecurityPositionExcution);
+            return BaseUIResult.returnJsonMSG(0,atSecurityPositionExcution,"修改失败");
         }
     }
 
@@ -255,17 +261,17 @@ public class SecurityPositionController extends BaseController{
 	 */
     @RequestMapping(value = "/search",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult search(SecurityPositionDto securityPositionDto) {
+    public String search(SecurityPositionDto securityPositionDto) {
         //参数验空
         try {
             SecurityPositionExcution securityPositionExcution = securityPositionService.findSearch(securityPositionDto);
-            return new BaseAPIResult(1,securityPositionExcution);
+            return BaseUIResult.returnJsonEasyUI(securityPositionExcution);
         }catch (Exception e) {
             logger.error(e.getMessage(), e);
             SecurityPositionExcution securityPositionExcution = new SecurityPositionExcution(SecurityPositionEnum.INNER_ERROR,e.getMessage());
-            return new BaseAPIResult(0,securityPositionExcution);
+            return BaseUIResult.returnJsonEasyUI(securityPositionExcution);
         }
     }
 
@@ -274,17 +280,17 @@ public class SecurityPositionController extends BaseController{
      */
     @RequestMapping(value = "/StatusSearch",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult StatusSearch(SecurityPositionDto securityPositionDto) {
+    public String StatusSearch(SecurityPositionDto securityPositionDto) {
         //参数验空
         try {
             SecurityPositionExcution securityPositionExcution = securityPositionService.findStatusSearch(securityPositionDto);
-            return new BaseAPIResult(1,securityPositionExcution);
+            return BaseUIResult.returnJsonEasyUI(securityPositionExcution);
         }catch (Exception e) {
             logger.error(e.getMessage(), e);
             SecurityPositionExcution securityPositionExcution = new SecurityPositionExcution(SecurityPositionEnum.INNER_ERROR,e.getMessage());
-            return new BaseAPIResult(0,securityPositionExcution);
+            return BaseUIResult.returnJsonEasyUI(securityPositionExcution);
         }
     }
     /*
@@ -292,17 +298,17 @@ public class SecurityPositionController extends BaseController{
      */
     @RequestMapping(value = "/StatusSearch2",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult StatusSearch2(SecurityPositionDto securityPositionDto) {
+    public String StatusSearch2(SecurityPositionDto securityPositionDto) {
         //参数验空
         try {
-            SecurityPositionExcution securityPositionExcution = securityPositionService.findStatusSearch2(securityPositionDto);
-            return new BaseAPIResult(1,securityPositionExcution);
+            SecurityPositionExcution securityPositionExcution = securityPositionService.findStatusSearch(securityPositionDto);
+            return BaseUIResult.returnJsonEasyUI(securityPositionExcution);
         }catch (Exception e) {
             logger.error(e.getMessage(), e);
             SecurityPositionExcution securityPositionExcution = new SecurityPositionExcution(SecurityPositionEnum.INNER_ERROR,e.getMessage());
-            return new BaseAPIResult(0,securityPositionExcution);
+            return BaseUIResult.returnJsonEasyUI(securityPositionExcution);
         }
     }
 }

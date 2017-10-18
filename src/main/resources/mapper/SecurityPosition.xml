@@ -39,16 +39,33 @@
         LEFT JOIN zx_merchants_account c
         ON a.releases_user_id=c.user_id
         <where>
+            a.details_page_category='担保'
+            <if test="statusSearch!=null and statusSearch!=''">
+                AND up_down_frame=#{statusSearch}
+            </if>
+            <if test="search!=null and search!=''">
+                AND CONCAT(b.recruiting_id,b.main_title,b.subtitle,c.merchants_name) LIKE '%${search}%'
+            </if>
+        </where>
+    </select>
+    <!--安童 是否上首页担保后台显示总数 -->
+    <select id="findSecurityPositionListCount2"  resultType="int">
+        SELECT count(*)
+        FROM zx_recruitment_information a
+        LEFT JOIN zx_recruitment_additional_information b
+        ON a.recruiting_id=b.recruiting_id
+        LEFT JOIN zx_merchants_account c
+        ON a.releases_user_id=c.user_id
+        <where>
             1=1
             <if test="statusSearch!=null and statusSearch!=''">
                 AND up_down_frame=#{statusSearch}
             </if>
             <if test="search!=null and search!=''">
-                AND CONCAT(b.recruiting_id,b.main_title,b.subtitle) LIKE '%${search}%'
+                AND CONCAT(b.recruiting_id,b.main_title,b.subtitle,c.merchants_name) LIKE '%${search}%'
             </if>
         </where>
     </select>
-
     <!--安童 详情list -->
     <select id="findSecurityPositionSecurity" resultType="AtCollection">
         SELECT *
@@ -198,11 +215,23 @@
         ON a.recruiting_id=b.recruiting_id
         LEFT JOIN zx_merchants_account c
         ON a.releases_user_id=c.user_id
-        WHERE CONCAT_WS(',',b.recruiting_id,b.main_title,b.subtitle,c.merchants_name)
+        WHERE a.details_page_category='担保'
+        AND  CONCAT_WS(',',b.recruiting_id,b.main_title,b.subtitle,c.merchants_name)
         LIKE '%${search}%'
         limit #{offset},#{rows}
     </select>
-
+    <!--安童 是否上推荐/担保模糊查询 -->
+    <select id="findSearch2"  resultType="AtCollection">
+        SELECT *
+        FROM zx_recruitment_information a
+        LEFT JOIN zx_recruitment_additional_information b
+        ON a.recruiting_id=b.recruiting_id
+        LEFT JOIN zx_merchants_account c
+        ON a.releases_user_id=c.user_id
+        WHERE  CONCAT_WS(',',b.recruiting_id,b.main_title,b.subtitle,c.merchants_name)
+        LIKE '%${search}%'
+        limit #{offset},#{rows}
+    </select>
     <!--安童 状态筛选 -->
     <select id="findStatusSearch" resultType="AtCollection">
         SELECT *
