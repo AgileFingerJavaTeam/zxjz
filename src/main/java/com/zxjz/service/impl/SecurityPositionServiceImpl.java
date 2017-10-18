@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -95,7 +96,7 @@ public class SecurityPositionServiceImpl implements SecurityPositionService {
             int offset=(page-1)*rows;
         try{
             List<AtCollection> list = securityPositionDao.findListCollection2(offset,rows);
-            int total = securityPositionDao.findSecurityPositionListCount(StatusSearch,search);
+            int total = securityPositionDao.findSecurityPositionListCount2(StatusSearch,search);
             SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
             if(list != null){
                 for (AtCollection mer : list) {
@@ -126,9 +127,20 @@ public class SecurityPositionServiceImpl implements SecurityPositionService {
                 }
             }
             HashMap map = new HashMap();
-            map.put("list",list);
+            map.put("rows",list);
             map.put("total",total);
             return new SecurityPositionExcution(SecurityPositionEnum.COLLECTION_SUCCESS,map);
+        }catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new BaseException(e.getMessage());
+        }
+    }
+
+    public SecurityPositionExcution getSecurityPositionSecurity(SecurityPositionDto securityPositionDto) {
+            int id = securityPositionDto.getId();
+        try {
+            AtCollection atCollection=securityPositionDao.findSecurityPositionSecurity(id);
+            return new SecurityPositionExcution(SecurityPositionEnum.COLLECTION_SUCCESS,atCollection);
         }catch (Exception e) {
             logger.error(e.getMessage(), e);
             throw new BaseException(e.getMessage());
@@ -142,8 +154,8 @@ public class SecurityPositionServiceImpl implements SecurityPositionService {
             int post_calssification=atCollection.getPostClassification();
             Map maps=securityPositionDao.findSecurityPositionSecurity1(post_calssification);
             HashMap map = new HashMap();
-            map.put("atCollection",atCollection);
-            map.put("maps",maps);
+            map.put("data",atCollection);
+            map.put("info",maps);
             return new SecurityPositionExcution(SecurityPositionEnum.COLLECTION_SUCCESS,map);
         }catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -199,6 +211,7 @@ public class SecurityPositionServiceImpl implements SecurityPositionService {
         FileUtils.copyInputStreamToFile(in, file);
         return realName;
     }
+    @Transactional
     public AtSecurityPositionExcution insertSecurityPosition(AtSecurityPositionDto atSecurityPositionDto) {
                  int releases_user_id = atSecurityPositionDto.getReleases_user_id();
                  String post_name = atSecurityPositionDto.getPost_name();
@@ -363,7 +376,7 @@ public class SecurityPositionServiceImpl implements SecurityPositionService {
         html = buffer.toString();
         return html;
     }
-
+    @Transactional
     public SecurityPositionExcution findSecurityPositionHref(SecurityPositionDto securityPositionDto) {
         try {
             int id = securityPositionDto.getId();
@@ -372,11 +385,11 @@ public class SecurityPositionServiceImpl implements SecurityPositionService {
             int parentPostClassification = i;
             int p_post_classification = securityPositionDao.findParentPostClassification(parentPostClassification);
             atCollection.setpPostClassification(p_post_classification);
+            return new SecurityPositionExcution(SecurityPositionEnum.UPDATE_PSW_SUCCESS,atCollection);
         }catch (Exception e) {
             logger.error(e.getMessage(), e);
             throw new BaseException(e.getMessage());
         }
-            return null;
     }
 
     public AtSecurityPositionExcution updateSecurityPosition(AtSecurityPositionDto atSecurityPositionDto) {
@@ -519,14 +532,14 @@ public class SecurityPositionServiceImpl implements SecurityPositionService {
     public SecurityPositionExcution findSearch(SecurityPositionDto securityPositionDto) {
                String StatusSearch = securityPositionDto.getStatusSearch();
                String search = securityPositionDto.getSearch();
-               int page = securityPositionDto.getPage();
-               int rows = securityPositionDto.getRows();
-        try{
+               int page = (securityPositionDto.getPage() != 0) ? securityPositionDto.getPage() : 1;
+               int rows = (securityPositionDto.getRows() !=0) ? securityPositionDto.getRows() :20;
+               try{
                int offset=(page-1)*rows;
                List<AtCollection> list = securityPositionDao.findSearch(offset,rows,search);
                int total = securityPositionDao.findSecurityPositionListCount(StatusSearch,search);
                HashMap map = new HashMap();
-               map.put("list",list);
+               map.put("rows",list);
                map.put("total",total);
                return new SecurityPositionExcution(SecurityPositionEnum.COLLECTION_SUCCESS,map);
         }catch (Exception e) {
@@ -535,17 +548,36 @@ public class SecurityPositionServiceImpl implements SecurityPositionService {
                return null;
     }
 
+    public SecurityPositionExcution findSearch2(SecurityPositionDto securityPositionDto) {
+        String StatusSearch = securityPositionDto.getStatusSearch();
+        String search = securityPositionDto.getSearch();
+        int page = (securityPositionDto.getPage() != 0) ? securityPositionDto.getPage() : 1;
+        int rows = (securityPositionDto.getRows() !=0) ? securityPositionDto.getRows() :20;
+        try{
+            int offset=(page-1)*rows;
+            List<AtCollection> list = securityPositionDao.findSearch2(offset,rows,search);
+            int total = securityPositionDao.findSecurityPositionListCount2(StatusSearch,search);
+            HashMap map = new HashMap();
+            map.put("rows",list);
+            map.put("total",total);
+            return new SecurityPositionExcution(SecurityPositionEnum.COLLECTION_SUCCESS,map);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public SecurityPositionExcution findStatusSearch(SecurityPositionDto securityPositionDto) {
             String StatusSearch = securityPositionDto.getStatusSearch();
             String search = securityPositionDto.getSearch();
-            int page = securityPositionDto.getPage();
-            int rows = securityPositionDto.getRows();
+        int page = (securityPositionDto.getPage() != 0) ? securityPositionDto.getPage() : 1;
+        int rows = (securityPositionDto.getRows() !=0) ? securityPositionDto.getRows() :20;
         try{
             int offset=(page-1)*rows;
             List<AtCollection> list = securityPositionDao.findStatusSearch(offset,rows,StatusSearch);
             int total = securityPositionDao.findSecurityPositionListCount(StatusSearch,search);
             HashMap map = new HashMap();
-            map.put("list",list);
+            map.put("rows",list);
             map.put("total",total);
             return new SecurityPositionExcution(SecurityPositionEnum.COLLECTION_SUCCESS,map);
         }catch (Exception e) {
@@ -557,14 +589,14 @@ public class SecurityPositionServiceImpl implements SecurityPositionService {
     public SecurityPositionExcution findStatusSearch2(SecurityPositionDto securityPositionDto) {
         String StatusSearch = securityPositionDto.getStatusSearch();
         String search = securityPositionDto.getSearch();
-        int page = securityPositionDto.getPage();
-        int rows = securityPositionDto.getRows();
+        int page = (securityPositionDto.getPage() != 0) ? securityPositionDto.getPage() : 1;
+        int rows = (securityPositionDto.getRows() !=0) ? securityPositionDto.getRows() :20;
         try{
             int offset=(page-1)*rows;
             List<AtCollection> list = securityPositionDao.findStatusSearch2(offset,rows,StatusSearch);
-            int total = securityPositionDao.findSecurityPositionListCount(StatusSearch,search);
+            int total = securityPositionDao.findSecurityPositionListCount2(StatusSearch,search);
             HashMap map = new HashMap();
-            map.put("list",list);
+            map.put("rows",list);
             map.put("total",total);
             return new SecurityPositionExcution(SecurityPositionEnum.COLLECTION_SUCCESS,map);
         }catch (Exception e) {

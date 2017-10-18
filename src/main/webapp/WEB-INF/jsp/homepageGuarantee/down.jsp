@@ -12,7 +12,7 @@
 	<table class="table_list">
 		<tr>
 			<td>确认该职位改变首页担保状态？</td>
-				<td style="display:none"><input type='text' value="${data.recruiting_id}" name='recruiting_id' id="hzn_idd"/></td>
+				<td style="display:none"><input type='text' value="${data.recruitingId}" name='recruiting_id' id="hzn_idd"/></td>
 		</tr>
 		<tr>
 			<td colspan="4">

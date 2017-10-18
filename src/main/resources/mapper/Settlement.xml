@@ -35,6 +35,8 @@
         FROM zx_merchant_funds_platform_settlement_record a
         LEFT JOIN zx_merchants_account b
         ON a.user_id=b.user_id
+        LEFT JOIN zx_clearing_fee_mode c
+        ON a.classification_of_settlement_expenses = c.clearing_fee_mode
         WHERE CONCAT_WS(',',b.merchants_name,a.settlement_time,a.classification_of_settlement_expenses,a.settlement_amount) LIKE '%${search}%'
         limit #{offset},#{rows}
     </select>
@@ -81,7 +83,7 @@
     </select>
     <!-- 安童 查找商户资金信息表 -->
     <select id="findIsEverUserId3" resultType="Settlement">
-        SELECT MAX (current_account_number)+1 AS current
+        SELECT MAX(current_account_number)+1 AS current
         FROM zx_merchant_funds_current_account
         WHERE user_id=#{user_id}
     </select>

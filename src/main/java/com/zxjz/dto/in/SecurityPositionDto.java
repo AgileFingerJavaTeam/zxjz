@@ -14,7 +14,6 @@ public class SecurityPositionDto {
 
 
 
-
     public int getP_station_id() {
         return p_station_id;
     }
@@ -71,7 +70,7 @@ public class SecurityPositionDto {
                 ", page=" + page +
                 ", rows=" + rows +
                 ", search='" + search + '\'' +
-                ", StatusSearch='" + statusSearch + '\'' +
+                ", statusSearch='" + statusSearch + '\'' +
                 '}';
     }
 }

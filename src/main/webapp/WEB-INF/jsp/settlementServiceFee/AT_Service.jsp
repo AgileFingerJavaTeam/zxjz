@@ -40,7 +40,7 @@ $.Admin.ATService = {
              $.Admin.tips('温馨提示信息', '请先选择 您要查看的数据行','error');
              return false;
          }
-         var data = {id: get_select_row.user_id, ob:get_select_row.withdrawal_serial_number,uid:get_select_row.employees_id};
+         var data = {id: get_select_row.userId, ob:get_select_row.withdrawalSerialNumber,uid:get_select_row.employeesId};
          var id = $.Admin.random_dialog();
         $(id).dialog({
             title: '查看单据',
@@ -112,7 +112,7 @@ $($.Admin.ATService.id).datagrid({
     ctrlSelect: true,
     singleSelect: false,
     rownumbers: true,
-    idField: 'user_id',
+    idField: 'userId',
     url: "Settlement/SettlementJspList",
     pagination:true,
 	pagePosition:'bottom',
@@ -122,10 +122,10 @@ $($.Admin.ATService.id).datagrid({
 	pageList:[10,20,30,50,100],
 	columns:[[
 	          {field:'ck',checkbox:true},    
-	          {field:'merchants_name',title:'商户名称',align:'center',width:100,sortable:true,},
-	          {field:'settlement_time',title:'收费时间',align:'center',width:100,sortable:true,},
-	          {field:'clearing_fee_name',title:'费用分类',align:'center',width:100,sortable:true,},
-	          {field:'settlement_amount',title:'收费金额',align:'center',width:100,sortable:true,},
+	          {field:'merchantsName',title:'商户名称',align:'center',width:100,sortable:true,},
+	          {field:'settlementTime',title:'收费时间',align:'center',width:100,sortable:true,},
+	          {field:'clearingFeeName',title:'费用分类',align:'center',width:100,sortable:true,},
+	          {field:'settlementAmount',title:'收费金额',align:'center',width:100,sortable:true,},
 	      ]],
     onDblClickRow: function(row){ 
     	

@@ -11,6 +11,18 @@ import java.util.Map;
 public class BaseUIResult {
 
 
+    public static String returnJson(BaseAPIExcution baseAPIExcution) {
+        ObjectMapper mapper = new ObjectMapper();
+        String result = "";
+        try {
+            result=mapper.writeValueAsString(baseAPIExcution.getData());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
     public static String returnJsonEasyUI(BaseAPIExcution baseAPIExcution) {
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> map = new HashMap<String, Object>();

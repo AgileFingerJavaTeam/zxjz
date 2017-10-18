@@ -8,7 +8,7 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<form action="securityPosition/getSecurityPositionAdd" class="table_form" method="post" id="getSecurityPositionAdd" enctype="multipart/form-data">
+<form action="securityPosition/getSecurityPositionAdd" class="table_form" method="post" id="getSecurityPositionAdd"  enctype="multipart/form-data">
 	<table cellpadding="10" id="at-position-table" class="table_list">
 		<tr>
 		 	<td style="display:none"><input type='text' id='at_merchant_id' name='releases_user_id' /></td>
@@ -17,8 +17,8 @@
               name="merchants_name"  style="width: 250px" required  data-options="
 					url:'securityPosition/SaddAT',
 					method:'get',
-					valueField:'user_id',
-					textField:'merchants_name',
+					valueField:'userId',
+					textField:'merchantsName',
 					panelHeight:'auto'">
 		   </td>
 		    <td style="text-align: right" width="120px">岗位名称:</td>
@@ -31,13 +31,13 @@
               name="station_name"  style="width: 125px" required  data-options="
 					url:'securityPosition/SaddATT',
 					method:'get',
-					valueField:'station_id',
-					textField:'station_name',
+					valueField:'stationId',
+					textField:'stationName',
 					panelHeight:'auto'">
 				<input  class="wu-text easyui-combobox" id="post_classification"
               name="post_classification" style="width: 125px" required data-options="
-              		valueField:'station_id',
-					textField:'station_name',
+              		valueField:'stationId',
+					textField:'stationName',
 					panelHeight:'auto'
              		 ">
               
@@ -149,7 +149,7 @@
 		<tr>
 			<td style="text-align: right">详情页介绍:</td>
 			<td colspan="3">
-				<textarea rows="3" style="width:200px;height:100px" id="sn-textarea-intrduction" name="details_page_introduction" class="easyui-validatebox" data-options="required:true,validType:'length[1,1000000]'" invalidMessage="最大长度不能超过1000000""></textarea>  
+				<textarea rows="3" style="width:200px;height:100px" id="sn-textarea-intrduction" name="details_page_introduction" class="easyui-validatebox" data-options="required:true,validType:'length[1,1000000]'" invalidMessage="最大长度不能超过1000000"></textarea>
 			</td>
 		</tr>
 		<tr>

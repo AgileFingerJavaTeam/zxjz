@@ -67,7 +67,7 @@ $.Admin.hznHomepageRecommend = {
             $.Admin.tips('温馨提示信息', '请先选择 您要更改的数据行','error');
             return false;
         }
-        var data = {id: get_select_row.recruiting_id};     //此处的id 与mapper里找的id 一致
+        var data = {id: get_select_row.recruitingId};     //此处的id 与mapper里找的id 一致
         var account_id = $.Admin.random_dialog();
         $(account_id).dialog({
             title: '首页推荐',
@@ -94,7 +94,7 @@ $.Admin.hznHomepageRecommend = {
             $.Admin.tips('温馨提示信息', '请先选择 您要更改的数据行','error');
             return false;
         }
-        var data = {id: get_select_row.recruiting_id};     //此处的id 与mapper里找的id 一致
+        var data = {id: get_select_row.recruitingId};     //此处的id 与mapper里找的id 一致
         var account_id = $.Admin.random_dialog();
         $(account_id).dialog({
             title: '首页推荐',
@@ -121,7 +121,7 @@ $.Admin.hznHomepageRecommend = {
             $.Admin.tips('温馨提示信息', '请先选择 您要查看的数据行','error');
             return false;
         }
-        var data = {id: get_select_row.recruiting_id};
+        var data = {id: get_select_row.recruitingId};
         var id = $.Admin.random_dialog();
         $(id).dialog({
             title: '职位详情',
@@ -153,7 +153,7 @@ $($.Admin.hznHomepageRecommend.id).datagrid({
     ctrlSelect: true,
     singleSelect: false,
     rownumbers: true,
-    idField: 'recruiting_id',
+    idField: 'recruitingId',
     url: "securityPosition/getSecurityPositionList2",
     pagination:true,
 	pagePosition:'bottom',
@@ -162,7 +162,7 @@ $($.Admin.hznHomepageRecommend.id).datagrid({
 	pageList:[10,20,30,50,100],
 	columns:[[
 	          {field:'ck',checkbox:true},    
-	          {field:'merchants_name',title:'商户名称',align:'center',width:100},
+	          {field:'merchantsName',title:'商户名称',align:'center',width:100},
 /* 	          {field:'release_time',title:'发布时间',align:'center',width:100},
 	          {field:'refresh_time',title:'刷新时间',align:'center',width:100},
 	          {field:'post_name',title:'岗位名称',align:'center',width:100},
@@ -193,16 +193,16 @@ $($.Admin.hznHomepageRecommend.id).datagrid({
 	          {field:'first_page_carousel_url',title:'首页图URL（用于App首页轮播的图片）衣服',align:'center',width:100,formatter:showImage2},
 	          {field:'main_page_url',title:'详情页主图URL',align:'center',width:100,formatter:showImage3},
 	          {field:'reported',title:'是否被举报',align:'center',width:100}, */
-	          {field:'main_title',title:'主标题',align:'center',width:100},
+	          {field:'mainTitle',title:'主标题',align:'center',width:100},
 	          {field:'subtitle',title:'副标题',align:'center',width:100},
-	          {field:'short_description',title:'简介',align:'center',width:100},
+	          {field:'shortDescription',title:'简介',align:'center',width:100},
 	         
 	         // {field:'details_page_introduction',title:'详情页介绍',align:'center',width:100},
 	       /*    {field:'user_id',title:'商户ID',align:'center',width:100}, */
-	          {field:'up_down_frame',title:'上架状态',align:'center',width:100},
-	          {field:'recommend_begin_time',title:'推荐开始日期',align:'center',width:100},
-	          {field:'recommend_end_time',title:'推荐结束日期',align:'center',width:100},
-	          {field:'whether_on_homepage_recommend',title:'是否上首页推荐',align:'center',width:100},
+	          {field:'upDownFrame',title:'上架状态',align:'center',width:100},
+	          {field:'recommendBeginTime',title:'推荐开始日期',align:'center',width:100},
+	          {field:'recommendEndTime',title:'推荐结束日期',align:'center',width:100},
+	          {field:'whetherOnHomepageRecommend',title:'是否上首页推荐',align:'center',width:100},
 	          
 	      ]],
     onDblClickRow: function(row){ 
@@ -255,12 +255,12 @@ $($.Admin.hznHomepageRecommend.id).datagrid({
     		 
     $('#hznRecommendStatusSearch').on('change',function(){
      	var a=$('#hznRecommendStatusSearch').val();
-    	var StatusSearch={};
-    	StatusSearch.StatusSearch=a;
+    	var statusSearch={};
+    	statusSearch.statusSearch=a;
           $.ajax({
         	  type:'post',
               title: '状态筛选',
-              data:StatusSearch,
+              data:statusSearch,
               url: "securityPosition/StatusSearch2",
               datatype:'json',
               success:function(search_list){

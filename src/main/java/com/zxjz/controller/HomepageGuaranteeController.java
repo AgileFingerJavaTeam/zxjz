@@ -2,6 +2,7 @@ package com.zxjz.controller;
 
 import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
+import com.zxjz.base.BaseUIResult;
 import com.zxjz.dto.excution.HomepageGuaranteeExcution;
 import com.zxjz.dto.excution.SecurityPositionExcution;
 import com.zxjz.dto.in.HomepageGuaranteeDto;
@@ -48,18 +49,57 @@ public class HomepageGuaranteeController extends BaseController {
      */
     @RequestMapping(value = "/getSecurityPositionList",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult getSecurityPositionList(@RequestBody SecurityPositionDto securityPositionDto) {
+    public String getSecurityPositionList(SecurityPositionDto securityPositionDto) {
         //参数验空
         try {
             SecurityPositionExcution securityPositionExcution = securityPositionService.getSecurityPositionList(securityPositionDto);
-            return new BaseAPIResult(1, securityPositionExcution);
+            return BaseUIResult.returnJsonEasyUI(securityPositionExcution);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             SecurityPositionExcution securityPositionExcution = new SecurityPositionExcution(SecurityPositionEnum.INNER_ERROR,e.getMessage());
-            return new BaseAPIResult(0, securityPositionExcution);
+            return BaseUIResult.returnJsonEasyUI(securityPositionExcution);
         }
+    }
+    /**
+     * 显示改变首页担保状态页面
+     * @return
+     */
+    @RequestMapping(value = "/showWeatherHomepageGuarantee",
+            method = RequestMethod.GET,
+            produces = {"text/json;charset=UTF-8"})
+    @ResponseBody
+    public ModelAndView showDelVIPMerchant(SecurityPositionDto securityPositionDto){
+        ModelAndView mv = new ModelAndView();
+        try {
+            SecurityPositionExcution securityPositionExcution=securityPositionService.getSecurityPositionSecurity(securityPositionDto);
+            mv.addObject("data", securityPositionExcution.getData());
+            mv.setViewName("homepageGuarantee/up_and_down");
+        } catch (Exception e) {
+            logger.error(e.toString(),e);
+        }
+        return mv;
+    }
+
+    /**
+     * 显示关闭首页担保状态页面
+     * @return
+     */
+    @RequestMapping(value = "/showDowmHomepageGuarantee",
+            method = RequestMethod.GET,
+            produces = {"text/json;charset=UTF-8"})
+    @ResponseBody
+    public ModelAndView showDowmHomepageGuarantee(SecurityPositionDto securityPositionDto){
+        ModelAndView mv = new ModelAndView();
+        try {
+            SecurityPositionExcution securityPositionExcution=securityPositionService.getSecurityPositionSecurity(securityPositionDto);
+            mv.addObject("data", securityPositionExcution.getData());
+            mv.setViewName("homepageGuarantee/down");
+        } catch (Exception e) {
+            logger.error(e.toString(),e);
+        }
+        return mv;
     }
 
     /**
@@ -68,21 +108,21 @@ public class HomepageGuaranteeController extends BaseController {
      */
     @RequestMapping(value = "/upOrDownHomepageGuarantee",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult upOrDownHomepageGuarantee(@RequestBody HomepageGuaranteeDto homepageGuaranteeDto){
+    public String upOrDownHomepageGuarantee(HomepageGuaranteeDto homepageGuaranteeDto){
         //参数验空
         try {
             HomepageGuaranteeExcution homepageGuaranteeExcution = homepageGuaranteeService.updateOrDownHomepageGuarantee(homepageGuaranteeDto);
-            return new BaseAPIResult(1, homepageGuaranteeExcution);
+            return BaseUIResult.returnJsonMSG(1,homepageGuaranteeExcution,"修改成功");
         }catch (UpdateInnerErrorException e) {
             logger.error(e.getMessage(), e);
             HomepageGuaranteeExcution homepageGuaranteeExcution = new HomepageGuaranteeExcution(HomepageGuaranteeEnum.FAIL,e.getMessage());
-            return new BaseAPIResult(0, homepageGuaranteeExcution);
+            return BaseUIResult.returnJsonMSG(0,homepageGuaranteeExcution,"修改失败");
         }
         catch (Exception e) {
             HomepageGuaranteeExcution homepageGuaranteeExcution = new HomepageGuaranteeExcution(HomepageGuaranteeEnum.INNER_ERROR,e.getMessage());
-            return new BaseAPIResult(0, homepageGuaranteeExcution);
+            return BaseUIResult.returnJsonMSG(0,homepageGuaranteeExcution,"修改失败");
         }
     }
 
@@ -92,22 +132,22 @@ public class HomepageGuaranteeController extends BaseController {
      */
     @RequestMapping(value = "/downHomepageGuarantee",
             method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult downHomepageGuarantee(@RequestBody HomepageGuaranteeDto homepageGuaranteeDto){
+    public String downHomepageGuarantee(HomepageGuaranteeDto homepageGuaranteeDto){
         //参数验空
         try {
             HomepageGuaranteeExcution homepageGuaranteeExcution = homepageGuaranteeService.updatedownHomepageGuarantee(homepageGuaranteeDto);
-            return new BaseAPIResult(1, homepageGuaranteeExcution);
+            return BaseUIResult.returnJsonMSG(1,homepageGuaranteeExcution,"修改成功");
         }catch (UpdateInnerErrorException e) {
             logger.error(e.getMessage(), e);
             HomepageGuaranteeExcution homepageGuaranteeExcution = new HomepageGuaranteeExcution(HomepageGuaranteeEnum.FAIL,e.getMessage());
-            return new BaseAPIResult(0, homepageGuaranteeExcution);
+            return BaseUIResult.returnJsonMSG(0,homepageGuaranteeExcution,"修改失败");
         }
         catch (Exception e) {
             logger.error(e.getMessage(), e);
             HomepageGuaranteeExcution homepageGuaranteeExcution = new HomepageGuaranteeExcution(HomepageGuaranteeEnum.INNER_ERROR,e.getMessage());
-            return new BaseAPIResult(0, homepageGuaranteeExcution);
+            return BaseUIResult.returnJsonMSG(0,homepageGuaranteeExcution,"修改失败");
         }
     }
 

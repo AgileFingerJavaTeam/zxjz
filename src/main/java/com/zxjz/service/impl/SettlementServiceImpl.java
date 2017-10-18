@@ -53,7 +53,7 @@ public class SettlementServiceImpl implements SettlementService {
                }
            }
            HashMap map = new HashMap();
-           map.put("infoList",infoList);
+           map.put("rows",infoList);
            map.put("total",total);
            return new SettlementExcution(SettlementEnum.COLLECTION_SUCCESS,map);
        } catch (Exception e) {
@@ -64,14 +64,14 @@ public class SettlementServiceImpl implements SettlementService {
 
     public SettlementExcution findSearch(SettlementDto settlementDto) {
             String search = settlementDto.getSearch();
-            int rows = settlementDto.getRows();
-            int page = settlementDto.getPage();
+        int page = (settlementDto.getPage() != 0) ? settlementDto.getPage() : 1;
+        int rows = (settlementDto.getRows() !=0) ? settlementDto.getRows() :20;
             int offset=(page-1)*rows;
         try{
             List<Settlement> infoList=settlementDao.findSearch(rows,offset,search);
             int total = settlementDao.findSettlementCount(search);
             HashMap map = new HashMap();
-            map.put("infoList",infoList);
+            map.put("rows",infoList);
             map.put("total",total);
             return new SettlementExcution(SettlementEnum.COLLECTION_SUCCESS,map);
         } catch (Exception e) {
@@ -218,7 +218,7 @@ public class SettlementServiceImpl implements SettlementService {
             List<Settlement> infoList=settlementDao.findMerchantsName(rows,offset,q);
             int total = settlementDao.findSettlementCount(search);
             HashMap map =new HashMap();
-            map.put("infoList",infoList);
+            map.put("rows",infoList);
             map.put("total",total);
             return new SettlementExcution(SettlementEnum.COLLECTION_SUCCESS,map);
         } catch (Exception e) {
