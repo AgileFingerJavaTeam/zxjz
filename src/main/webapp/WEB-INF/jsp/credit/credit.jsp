@@ -92,7 +92,7 @@ $.Admin.creditPayment = {
         $.Admin.tips('温馨提示信息', '请先选择 您要编辑的数据行','error');
         return false;
     }
-    var data = {user_id: get_select_row.user_id};
+    var data = {user_id: get_select_row.userId};
     var id = $.Admin.random_dialog();
     $(id).dialog({
         title: '账期',

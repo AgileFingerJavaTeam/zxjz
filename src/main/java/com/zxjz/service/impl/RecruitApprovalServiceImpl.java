@@ -101,7 +101,7 @@ public class RecruitApprovalServiceImpl implements RecruitApprovalService {
 
     public RecruitApprovalExcution findApprovalByID(RecruitApprovalDto recruitApprovalDto) {
         int recruiting_id=recruitApprovalDto.getRecruiting_id();
-
+        int releases_user_id=recruitApprovalDto.getReleases_user_id();
 
         try{
             RecruitmentInfoApply findApprovalByID=approvalDao.findApprovalByID(recruiting_id);

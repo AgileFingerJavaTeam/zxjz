@@ -81,9 +81,11 @@ public class RecruitApprovalController extends BaseController{
         HttpSession session=this.getRequest().getSession();
         try {
             RecruitApprovalExcution info =recruitApprovalService.findApprovalByID(recruitApprovalDto);
-            LandFallInfo landfall=(LandFallInfo) session.getAttribute("user");
+            /*LandFallInfo landfall=(LandFallInfo) session.getAttribute("user");
             int employid=landfall.getEmployees_id();
-            String employname=  landfall.getEmployees_name();
+            String employname=  landfall.getEmployees_name();*/
+            int employid=2;
+            String employname="安童";
             mv.addObject("id",employid);
             mv.addObject("name",employname);
             mv.addObject("data", info);
