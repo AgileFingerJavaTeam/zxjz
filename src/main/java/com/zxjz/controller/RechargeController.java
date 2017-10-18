@@ -91,17 +91,19 @@ public class RechargeController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/findRechargePage",
-            method = RequestMethod.POST,
+            method = RequestMethod.GET,
             produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public ModelAndView findRechargePage(@RequestBody RechargeDto rechargeDto) {
+    public ModelAndView findRechargePage( RechargeDto rechargeDto) {
         ModelAndView mv = new ModelAndView();
         HttpSession session = this.getRequest().getSession();
         try {
             RechargeExcution rechargeExcution = rechargeService.findRechargePage(rechargeDto);
-            LandFallInfo landfall = (LandFallInfo) session.getAttribute("user");
+            /*LandFallInfo landfall = (LandFallInfo) session.getAttribute("user");
             int employid = landfall.getEmployees_id();
-            String employname = landfall.getEmployees_name();
+            String employname = landfall.getEmployees_name();*/
+            int employid=4;
+            String employname="郭阳";
             mv.addObject("id", employid);
             mv.addObject("name", employname);
             mv.addObject("data", rechargeExcution.getData());
@@ -120,7 +122,7 @@ public class RechargeController extends BaseController {
      */
     @RequestMapping(value = "/getMerchantsName", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
     @ResponseBody
-    public String checkauth(@RequestBody RechargeDto rechargeDto) {
+    public String checkauth(RechargeDto rechargeDto) {
         //参数验空
         try {
             RechargeExcution rechargeExcution = rechargeService.checkauth(rechargeDto);
@@ -139,15 +141,15 @@ public class RechargeController extends BaseController {
      */
     @RequestMapping(value = "/getChargeMethod",method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
     @ResponseBody
-    public String getChargeMethod(RechargeDto rechargeDto) {
+    public String getRechargeMethod(RechargeDto rechargeDto) {
         //参数验空
         try {
-            RechargeExcution rechargeExcution = rechargeService.findRechargeList(rechargeDto);
-            return BaseUIResult.returnJsonEasyUI(rechargeExcution);
+            RechargeExcution rechargeExcution = rechargeService.getChargeMethod(rechargeDto);
+            return BaseUIResult.returnJson(rechargeExcution);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             RechargeExcution rechargeExcution = new RechargeExcution(RechargeEnum.FAIL, e.getMessage());
-            return BaseUIResult.returnJsonEasyUI(rechargeExcution);
+            return BaseUIResult.returnJson(rechargeExcution);
         }
     }
         /**
@@ -163,11 +165,11 @@ public class RechargeController extends BaseController {
         public String getNum (RechargeDto rechargeDto){
             try {
                 RechargeExcution rechargeExcution = rechargeService.getNum(rechargeDto);
-                return BaseUIResult.returnJsonEasyUI(rechargeExcution);
+                return BaseUIResult.returnJson(rechargeExcution);
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);
                 RechargeExcution rechargeExcution = new RechargeExcution(RechargeEnum.FAIL, e.getMessage());
-                return BaseUIResult.returnJsonEasyUI(rechargeExcution);
+                return BaseUIResult.returnJson(rechargeExcution);
             }
         }
 

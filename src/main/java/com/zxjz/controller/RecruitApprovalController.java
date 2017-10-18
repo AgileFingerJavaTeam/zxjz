@@ -9,6 +9,8 @@ import com.zxjz.dto.excution.RecruitmentExcution;
 import com.zxjz.dto.in.RecruitApprovalDto;
 import com.zxjz.entity.LandFallInfo;
 import com.zxjz.enums.RecruitApprovalEnum;
+import com.zxjz.exception.UpdateDatabaseException;
+import com.zxjz.exception.db.InsertInnerErrorException;
 import com.zxjz.service.CityService;
 import com.zxjz.service.RecruitApprovalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +77,7 @@ public class RecruitApprovalController extends BaseController{
             method = RequestMethod.GET,
             produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public ModelAndView checkInfo( RecruitApprovalDto recruitApprovalDto) {
+    public ModelAndView checkInfo(RecruitApprovalDto recruitApprovalDto) {
 
         ModelAndView mv = new ModelAndView();
         HttpSession session=this.getRequest().getSession();
@@ -98,7 +100,7 @@ public class RecruitApprovalController extends BaseController{
     }
 
     /**
-     * 编辑系统参数
+     * 提交审核结果
      *
      * @return
      */
@@ -108,12 +110,19 @@ public class RecruitApprovalController extends BaseController{
         try {
 
                 RecruitApprovalExcution recruitApprovalExcution=recruitApprovalService.updateRefuse(recruitApprovalDto);
-                 return BaseUIResult.returnJsonEasyUI(recruitApprovalExcution);
-
+                 return BaseUIResult.returnJsonMSG(1,recruitApprovalExcution,"更改成功");
+        }catch (InsertInnerErrorException e) {
+            logger.error(e.getMessage(), e);
+            RecruitApprovalExcution recruitApprovalExcution = new RecruitApprovalExcution(RecruitApprovalEnum.FIND_FAIL,e.getMessage());
+            return BaseUIResult.returnJsonMSG(0,recruitApprovalExcution,"添加失败");
+        }catch (UpdateDatabaseException e) {
+            logger.error(e.getMessage(), e);
+            RecruitApprovalExcution recruitApprovalExcution = new RecruitApprovalExcution(RecruitApprovalEnum.FIND_FAIL,e.getMessage());
+            return BaseUIResult.returnJsonMSG(0,recruitApprovalExcution,"更改失败");
         }catch (Exception e) {
             logger.error(e.getMessage(), e);
             RecruitApprovalExcution recruitApprovalExcution = new RecruitApprovalExcution(RecruitApprovalEnum.FIND_FAIL,e.getMessage());
-            return BaseUIResult.returnJsonEasyUI(recruitApprovalExcution);
+            return BaseUIResult.returnJsonMSG(0,recruitApprovalExcution,"更改失败");
         }
     }
 

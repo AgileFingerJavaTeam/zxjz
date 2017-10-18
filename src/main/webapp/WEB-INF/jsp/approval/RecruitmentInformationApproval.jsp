@@ -97,7 +97,7 @@ $($.Admin.InformationApproval.id).datagrid({
     ctrlSelect: true,
     singleSelect: false,
     rownumbers: true,
-    idField: 'recruiting_id',
+    idField: 'recruitingId',
     url: "approval/getinfoList",
     pagination:true,
 	pagePosition:'bottom',

@@ -13,38 +13,38 @@
          <tr >
              <th width="130" >商户名称：</th>
              <td >
-            	  <input type="text"   name="user_id" value="${data.merchants_name}" id="merchants_name" class="easyui-textbox easyui-validatebox" data-options="readonly:true"/>
+            	  <input type="text"   name="user_id" value="${data.merchantsName}" id="merchants_name" class="easyui-textbox easyui-validatebox" data-options="readonly:true"/>
              </td> 
              <th width="130">充值流水号：</th>
              <td >
-                  <input type="text"  name="recharge_sequence_number" value="${data.recharge_sequence_number}"  class="easyui-textbox easyui-validatebox" data-options="readonly:true"/>
+                  <input type="text"  name="recharge_sequence_number" value="${data.rechargeSequenceNumber}"  class="easyui-textbox easyui-validatebox" data-options="readonly:true"/>
              </td>          
          </tr>
 
          <tr>
              <th width="130">充值时间：</th>
              <td >
-			         <input  id="admiDivisionCode"  name="recharge_time" value="${data.recharge_time}" class="easyui-datetimebox" data-options="readonly:true" />  
+			         <input  id="admiDivisionCode"  name="recharge_time" value="${data.rechargeTime}" class="easyui-datetimebox" data-options="readonly:true" />
              </td> 
              <th width="130">充值方式：</th>
              <td >
-                  <input type="text" id="chargemethod"  name="recharge_mode_name" value="${data.recharge_mode_name}"  class="easyui-textbox easyui-validatebox" data-options="readonly:true"/>
+                  <input type="text" id="chargemethod"  name="recharge_mode_name" value="${data.rechargeModeName}"  class="easyui-textbox easyui-validatebox" data-options="readonly:true"/>
              </td>            
          </tr>   
          <tr>
              <th width="130">充值金额：</th>
              <td >
-			         <input  id="admiDivisionCode"  name="amount_of_recharge" value="${data.amount_of_recharge}"  class="easyui-textbox easyui-validatebox" data-options="readonly:true" />  
+			         <input  id="admiDivisionCode"  name="amount_of_recharge" value="${data.amountOfRecharge}"  class="easyui-textbox easyui-validatebox" data-options="readonly:true" />
              </td> 
              <th width="130">说明：</th>
              <td >
-                  <input type="text"  name="declare" class="easyui-textbox easyui-validatebox" value="${data.recharge_declare}" data-options="readonly:true" />
+                  <input type="text"  name="declare" class="easyui-textbox easyui-validatebox" value="${data.rechargeDeclare}" data-options="readonly:true" />
              </td>            
          </tr>   
          <tr>
              <th width="130">支付平台流水号：</th>
              <td >
-			         <input    name="payment_platform_flow_number" class="easyui-textbox easyui-validatebox" value="${data.payment_platform_flow_number}" data-options="readonly:true" />  
+			         <input    name="payment_platform_flow_number" class="easyui-textbox easyui-validatebox" value="${data.paymentPlatformFlowNumber}" data-options="readonly:true" />
              </td> 
              <th width="130">操作员：</th>
              <td >
@@ -65,8 +65,8 @@
 $("#chargemethod").combobox({    
 	  url:"Recharge/getChargeMethod",
 	  method : "post",  
-	  valueField: 'recharge_mode_name',  
-	  textField: 'recharge_mode_name',
+	  valueField: 'rechargeModeName',
+	  textField: 'rechargeModeName',
 	  }) 	  
 </script>
 

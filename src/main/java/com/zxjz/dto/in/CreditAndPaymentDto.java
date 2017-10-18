@@ -7,8 +7,8 @@ public class CreditAndPaymentDto {
     private int offset;
     private int rows;
     private int user_id;
-    private  int credit_total;
-    private int payment_days;
+    private  double credit_total;
+    private String payment_days;
     private  int page;
 
     public int getPage() {
@@ -67,19 +67,19 @@ public class CreditAndPaymentDto {
         this.user_id = user_id;
     }
 
-    public int getCredit_total() {
+    public double getCredit_total() {
         return credit_total;
     }
 
-    public void setCredit_total(int credit_total) {
+    public void setCredit_total(double credit_total) {
         this.credit_total = credit_total;
     }
 
-    public int getPayment_days() {
+    public String getPayment_days() {
         return payment_days;
     }
 
-    public void setPayment_days(int payment_days) {
+    public void setPayment_days(String payment_days) {
         this.payment_days = payment_days;
     }
 

@@ -15,12 +15,20 @@ public class RechargeDto {
     private int merchants_id;
     private String recharge_time;
     private int recharge_mode;
-    private double amount_of_recharge;
+    private String amount_of_recharge;
     private int payment_platform_flow_number;
     private String declare;
     private int operating_staff_id;
     private int serial_number;
-    private double actual_amount;
+    private String actual_amount;
+
+    public String getActual_amount() {
+        return actual_amount;
+    }
+
+    public void setActual_amount(String actual_amount) {
+        this.actual_amount = actual_amount;
+    }
 
     public String getBxw_search_content() {
         return bxw_search_content;
@@ -110,13 +118,7 @@ public class RechargeDto {
         this.recharge_mode = recharge_mode;
     }
 
-    public double getAmount_of_recharge() {
-        return amount_of_recharge;
-    }
 
-    public void setAmount_of_recharge(double amount_of_recharge) {
-        this.amount_of_recharge = amount_of_recharge;
-    }
 
     public int getPayment_platform_flow_number() {
         return payment_platform_flow_number;
@@ -150,12 +152,12 @@ public class RechargeDto {
         this.serial_number = serial_number;
     }
 
-    public double getActual_amount() {
-        return actual_amount;
+    public String getAmount_of_recharge() {
+        return amount_of_recharge;
     }
 
-    public void setActual_amount(double actual_amount) {
-        this.actual_amount = actual_amount;
+    public void setAmount_of_recharge(String amount_of_recharge) {
+        this.amount_of_recharge = amount_of_recharge;
     }
 
     @Override

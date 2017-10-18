@@ -49,7 +49,7 @@ public class CreditController extends BaseController {
         }
    }
     @RequestMapping(value = "/editcredit",
-            method = RequestMethod.POST,
+            method = RequestMethod.GET,
             produces = {"text/json;charset=UTF-8"})
     @ResponseBody
     public ModelAndView editcredit(CreditAndPaymentDto creditAndPaymentDto) {
@@ -69,7 +69,7 @@ public class CreditController extends BaseController {
 
 
     @RequestMapping(value = "/payment",
-            method = RequestMethod.POST,
+            method = RequestMethod.GET,
             produces = {"text/json;charset=UTF-8"})
     @ResponseBody
     public ModelAndView payment(CreditAndPaymentDto creditAndPaymentDto) {
@@ -93,12 +93,12 @@ public class CreditController extends BaseController {
     public String subedit(CreditAndPaymentDto creditAndPaymentDto){
         try {
             CreditAndPaymentExcution creditAndPaymentExcution = creditAndPaymentService.subCredit(creditAndPaymentDto);
-            return BaseUIResult.returnJsonEasyUI(creditAndPaymentExcution);
+            return BaseUIResult.returnJsonMSG(1,creditAndPaymentExcution,"提交成功");
         }catch (Exception e){
             logger.error(e.getMessage(), e);
             CreditAndPaymentExcution creditAndPaymentExcution =new CreditAndPaymentExcution(CreditEnum.FAIL,e.getMessage());
 
-            return BaseUIResult.returnJsonEasyUI(creditAndPaymentExcution);
+            return BaseUIResult.returnJsonMSG(0,creditAndPaymentExcution,"提交失败");
         }
     }
 
@@ -109,11 +109,11 @@ public class CreditController extends BaseController {
     public String subpayment(CreditAndPaymentDto creditAndPaymentDto){
         try {
             CreditAndPaymentExcution creditAndPaymentExcution = creditAndPaymentService.subPayment(creditAndPaymentDto);
-            return BaseUIResult.returnJsonEasyUI(creditAndPaymentExcution);
+            return BaseUIResult.returnJsonMSG(1,creditAndPaymentExcution,"提交成功");
         }catch (Exception e){
             logger.error(e.getMessage(), e);
             CreditAndPaymentExcution creditAndPaymentExcution =new CreditAndPaymentExcution(CreditEnum.FAIL,e.getMessage());
-            return BaseUIResult.returnJsonEasyUI(creditAndPaymentExcution);
+            return BaseUIResult.returnJsonMSG(0,creditAndPaymentExcution,"提交失败");
         }
     }
 }
