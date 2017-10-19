@@ -40,6 +40,10 @@ $.Admin.rechargePage = {
 	 'Bxw_SearchRecharge' : function(){
 		var search_content=$('#bxw_searchrecharge').val();
         var bxw_searchInfo={};
+         var page=1;
+         var  rows=20;
+         bxw_searchInfo.page=page;
+         bxw_searchInfo.rows=rows;
         bxw_searchInfo.bxw_search_content=search_content;
       $.ajax({
    	  type:'POST',

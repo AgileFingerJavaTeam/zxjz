@@ -98,7 +98,6 @@ $("#chargemethod").combobox({
 	  
 	  	function aaa(){
 		  var merchants_id=$('#merchants_name').val();
-		  alert(merchants_id);
 		  $.ajax({  
 			    type: "POST",  
 			    url: "Recharge/getNum",  

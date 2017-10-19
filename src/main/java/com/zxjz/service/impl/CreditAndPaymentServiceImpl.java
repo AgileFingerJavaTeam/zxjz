@@ -34,6 +34,9 @@ public class CreditAndPaymentServiceImpl implements CreditAndPaymentService {
         String sort=creditAndPaymentDto.getSort();
         String order=creditAndPaymentDto.getOrder();
         String bxw_search_content=creditAndPaymentDto.getBxw_search_content();
+        /*HashMap maps=new HashMap();
+        maps.put("bxw_search_content",bxw_search_content);
+        System.out.println(maps.toString());*/
         int page=creditAndPaymentDto.getPage();
         try{
             int offset = (page - 1) * rows;

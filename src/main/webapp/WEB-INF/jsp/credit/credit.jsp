@@ -41,7 +41,11 @@ $.Admin.creditPayment = {
   	 'Bxw_SearchCredit' : function(){
   		var search_content=$('#bxw_searchcredit').val();
           var bxw_searchInfo={};
+          var page=1;
+          var  rows=20;
           bxw_searchInfo.bxw_search_content=search_content;
+          bxw_searchInfo.page=page;
+          bxw_searchInfo.rows=rows;
         $.ajax({
      	  type:'POST',
      	  data: bxw_searchInfo,
