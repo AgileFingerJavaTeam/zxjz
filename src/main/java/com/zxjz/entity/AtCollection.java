@@ -1,5 +1,7 @@
 package com.zxjz.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 /**
  * Created by Administrator on 2017/10/10 0010.
  */
@@ -25,13 +27,14 @@ public class AtCollection {
     private String positionLatitude;
     private String workContent;
     private String settlementMethod;
-    private int salaryTreatment;
+    private double salaryTreatment;
     private String commission;
     private String benefits;
     private String genderRequirements;
     private String otherRequirements;
-    private String recruitment;
+    private int recruitment;
     private int peopleNum;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private String hiringExpirationDate;
     private String recruitmentStatus;
     private int viewCount;
@@ -218,12 +221,16 @@ public class AtCollection {
         this.settlementMethod = settlementMethod;
     }
 
-    public int getSalaryTreatment() {
+    public double getSalaryTreatment() {
         return salaryTreatment;
     }
 
-    public void setSalaryTreatment(int salaryTreatment) {
+    public void setSalaryTreatment(double salaryTreatment) {
         this.salaryTreatment = salaryTreatment;
+    }
+
+    public void setRecruitment(int recruitment) {
+        this.recruitment = recruitment;
     }
 
     public String getCommission() {
@@ -258,12 +265,8 @@ public class AtCollection {
         this.otherRequirements = otherRequirements;
     }
 
-    public String getRecruitment() {
+    public int getRecruitment() {
         return recruitment;
-    }
-
-    public void setRecruitment(String recruitment) {
-        this.recruitment = recruitment;
     }
 
     public int getPeopleNum() {

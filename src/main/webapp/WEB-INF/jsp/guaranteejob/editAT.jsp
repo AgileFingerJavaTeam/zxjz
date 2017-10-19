@@ -16,9 +16,7 @@
 		 	<td style="display:none"><input type='text' id='at_merchant_edit_id' name='releases_user_id' /></td>
 		    <td style="text-align: right" width="100px">岗位名称:</td>
 			<td><input type="text" name="post_name" value="${data.postName}"
-			 class="easyui-textbox easyui-validatebox"
-				style="width: 250px" /></td>
-			
+			 class="easyui-textbox easyui-validatebox" style="width: 250px" /></td>
 			<td style="text-align: right" width="100px">简介:</td>
 			<td><input type="text" name="short_description" class="easyui-textbox easyui-validatebox"
 				style="width: 250px" value="${data.shortDescription}" required /></td>
@@ -130,7 +128,7 @@
 		<tr>
 			<td style="text-align: right">主标题:</td>
 			<td><input type="text" name="main_title" class="easyui-textbox easyui-validatebox"
-				style="width: 250px" value="${data.mainTitle }" required /></td>
+				style="width: 250px" value="${data.mainTitle}" required /></td>
 			<td style="text-align: right">副标题:</td>
 			<td><input type="text" name="subtitle" class="easyui-textbox easyui-validatebox"
 				style="width: 250px" value="${data.subtitle}" required /></td>

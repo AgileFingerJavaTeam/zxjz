@@ -18,8 +18,8 @@
 	        <input id="lonlat" name="lonlat" type="text" maxlength="10">纬度：
 	        <input id="lonlat2" name="lonlat2" type="text" maxlength="9"><br>
 	        <div style="text-align:center">
-		        <input type="button" id="confirm_map" value="确认" class="easyui-linkbutton">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        <input type="reset" id="axax1" value="重置">
+		        <input type="button" id="confirm_map" value="确认" class="easyui-linkbutton" style="width: 70px; height: 40px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		        <input type="reset" id="axax1" value="重置" class="easyui-linkbutton" style="width: 70px; height: 40px;">
 			</div>
 		</div>		
         </form>
