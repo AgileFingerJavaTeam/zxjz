@@ -224,10 +224,10 @@ public class MerchantsController extends BaseController {
     @ResponseBody
     public String check(@RequestBody MerchantsUpgradeDto merchantsUpgradeDto) {
         try {
-            HttpSession session = this.getRequest().getSession();
+/*            HttpSession session = this.getRequest().getSession();
             LandFallInfo user = (LandFallInfo) session.getAttribute("user");
             int id = user.getEmployees_id();
-            merchantsUpgradeDto.setId(id);
+            merchantsUpgradeDto.setId(id);*/
             MerchantsUpgradeExcution merchantsUpgradeExcution = merchantsInfoService.confirmCheck(merchantsUpgradeDto);
             return  BaseUIResult.returnJsonEasyUI(merchantsUpgradeExcution);
         }catch (Exception e) {

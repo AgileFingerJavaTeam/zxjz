@@ -10,13 +10,14 @@ import com.zxjz.service.LoginService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
-
+@Service
 public class LoginServiceImpl implements LoginService{
 
     //日志对象
@@ -32,7 +33,7 @@ public class LoginServiceImpl implements LoginService{
             LandFallInfo findAccountInfo = loginDao.findAccountInfo(employees_num);
             if (findAccountInfo == null){
                 return new LoginExcution(LoginEnum.ACCOUNTNUM_IS_NO);
-            }else if (!findAccountInfo.getLoginPassword().equals(loginDto.getEmployees_num())){
+            }else if (!findAccountInfo.getLoginPassword().equals(loginDto.getLogin_password())){
                 return new LoginExcution(LoginEnum.PAW_MISTAKE);
             }
             List<EmployeeRightsInfo> findMenuList = loginDao.findMenuList(employees_num);
@@ -48,7 +49,6 @@ public class LoginServiceImpl implements LoginService{
      */
     public HttpServletRequest getRequest() {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-
         return request;
     }
 }
