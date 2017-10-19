@@ -174,16 +174,18 @@ public class RechargeController extends BaseController {
         }
 
 
-        @RequestMapping(value = "/subform", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
-        @ResponseBody
+    @RequestMapping(value = "/subform",
+            method = RequestMethod.POST,
+            produces = {"text/json;charset=UTF-8"})
+    @ResponseBody
         public String saveSubForm (RechargeDto rechargeDto){
             try {
                 RechargeExcution rechargeExcution = rechargeService.saveSubForm(rechargeDto);
-                return BaseUIResult.returnJsonEasyUI(rechargeExcution);
+                return BaseUIResult.returnJsonMSG(1,rechargeExcution,"成功");
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);
                 RechargeExcution rechargeExcution = new RechargeExcution(RechargeEnum.FAIL, e.getMessage());
-                return BaseUIResult.returnJsonEasyUI(rechargeExcution);
+                return BaseUIResult.returnJsonMSG(0,rechargeExcution,"失败");
             }
         }
 }
