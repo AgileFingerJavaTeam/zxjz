@@ -38,6 +38,7 @@ public class LoginServiceImpl implements LoginService{
             }
             List<EmployeeRightsInfo> findMenuList = loginDao.findMenuList(employees_num);
             session.setAttribute("list",findMenuList);
+            session.setAttribute("user",findAccountInfo);
         } catch (Exception e) {
             logger.error(e.toString(), e);
         }
