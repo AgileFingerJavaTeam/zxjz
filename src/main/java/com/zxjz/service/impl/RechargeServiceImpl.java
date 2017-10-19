@@ -130,15 +130,16 @@ public class RechargeServiceImpl implements RechargeService{
         int recharge_sequence_number=rechargeDto.getRecharge_sequence_number();
         String recharge_time=rechargeDto.getRecharge_time();
         int recharge_mode=rechargeDto.getRecharge_mode();
-        double amount_of_recharge=rechargeDto.getAmount_of_recharge();
+        String amount_of_recharge = rechargeDto.getAmount_of_recharge();
         int payment_platform_flow_number=rechargeDto.getPayment_platform_flow_number();
         String declare=rechargeDto.getDeclare();
         int operating_staff_id=rechargeDto.getOperating_staff_id();
         HashMap map=new HashMap();
-        double actual_amount=rechargeDto.getActual_amount();
+        String actual_amount=rechargeDto.getActual_amount();
         int serial_number=rechargeDto.getSerial_number();
         try{
-            int recharge = (int) rechargeDao.insertRecharge(user_id,recharge_sequence_number,recharge_time,recharge_mode,amount_of_recharge,payment_platform_flow_number,declare,operating_staff_id);//商户 充值记录插入数据
+            double amount_of_recharges=Double.parseDouble(amount_of_recharge);
+            int recharge = (int) rechargeDao.insertRecharge(user_id,recharge_sequence_number,recharge_time,recharge_mode,amount_of_recharges,payment_platform_flow_number,declare,operating_staff_id);//商户 充值记录插入数据
             if(recharge>0){
                 List<CurrentAccountInfo> accountinfo=(List<CurrentAccountInfo>)rechargeDao.findForList(user_id);//查询流水账user_id是否存在
                 if(accountinfo==null){
@@ -151,11 +152,13 @@ public class RechargeServiceImpl implements RechargeService{
                                 map.put("is_back", receive.getIs_back());//是否回收为否
                                 map.put("actual_amount", receive.getActual_amount());//应收金额
                                 map.put("serial_number", receive.getSerial_number());//应收款序号
-                                     if(amount_of_recharge>actual_amount){//充值金额大于应收金额
+
+                                    double actual_amounts=Double.parseDouble(actual_amount);
+                                     if(amount_of_recharges>actual_amounts){//充值金额大于应收金额
                                     int info=(int)rechargeDao.updateReceivable(user_id,serial_number);//是否回收为是
-                                    amount_of_recharge=amount_of_recharge-actual_amount;//剩余充值金额
+                                    amount_of_recharges=amount_of_recharges-actual_amounts;//剩余充值金额
                                 }else{
-                                    int info=(int)rechargeDao.updateReceivablePart(user_id,serial_number,actual_amount,amount_of_recharge);//是否回收为部分收回
+                                    int info=(int)rechargeDao.updateReceivablePart(user_id,serial_number,actual_amounts,amount_of_recharges);//是否回收为部分收回
                                 }
                             }
                         }
@@ -163,7 +166,7 @@ public class RechargeServiceImpl implements RechargeService{
                         if(credit!=null){
                             if(credit.getCreditBalance()==credit.getCreditTotal()){//授信余额=授信总额
 
-                                int upcredit=(int) rechargeDao.updateCredit(user_id,amount_of_recharge );//更新账户余额
+                                int upcredit=(int) rechargeDao.updateCredit(user_id,amount_of_recharges);//更新账户余额
                                 if(upcredit>0){
                                    return new RechargeExcution(RechargeEnum.UPDATE_SUCCESS);
                                 }else{
@@ -171,10 +174,11 @@ public class RechargeServiceImpl implements RechargeService{
                                 }
                             }else{//授信余额不等于授信总额
                                 int debt = (int) (credit.getCreditTotal()-credit.getCreditBalance()); //求欠款金额
-                                if(amount_of_recharge>=debt){//充值金额>欠款金额
-                                    amount_of_recharge=amount_of_recharge-debt;//还完欠款的剩余充值金额
+
+                                if(amount_of_recharges>=debt){//充值金额>欠款金额
+                                    amount_of_recharges=amount_of_recharges-debt;//还完欠款的剩余充值金额
                                     map.put("amount_of_recharge", amount_of_recharge);
-                                    int upcredit=(int) rechargeDao.updateCredit(user_id,amount_of_recharge);//计算账户余额
+                                    int upcredit=(int) rechargeDao.updateCredit(user_id,amount_of_recharges);//计算账户余额
                                     if(upcredit>0){
                                         return new RechargeExcution(RechargeEnum.UPDATE_SUCCESS);
                                     }else{
@@ -182,7 +186,7 @@ public class RechargeServiceImpl implements RechargeService{
                                     }
                                 }
                                 else{//充值金额<欠款金额
-                                    int upcreditbalance=(int)rechargeDao.upcreditbalance(user_id,amount_of_recharge);//授信余额=授信余额+充值金额
+                                    int upcreditbalance=(int)rechargeDao.upcreditbalance(user_id,amount_of_recharges);//授信余额=授信余额+充值金额
                                     if(upcreditbalance>0){
                                         return new RechargeExcution(RechargeEnum.UPDATE_SUCCESS);
                                     }else{
@@ -207,11 +211,12 @@ public class RechargeServiceImpl implements RechargeService{
                                 map.put("actual_amount", receive.getActual_amount());//应收金额
                                 map.put("serial_number", receive.getSerial_number());//应收款序号
 
-                                if(amount_of_recharge>actual_amount){//充值金额大于应收金额
+                                double actual_amounts=Double.parseDouble(actual_amount);
+                                if(amount_of_recharges>actual_amounts){//充值金额大于应收金额
                                     int info=(int)rechargeDao.updateReceivable(user_id,serial_number);//是否回收为是
-                                    amount_of_recharge=amount_of_recharge-actual_amount;//剩余充值金额
+                                    amount_of_recharges=amount_of_recharges-actual_amounts;//剩余充值金额
                                 }else{
-                                    int info=(int)rechargeDao.updateReceivablePart(user_id,serial_number,actual_amount,amount_of_recharge);//是否回收为部分收回
+                                    int info=(int)rechargeDao.updateReceivablePart(user_id,serial_number,actual_amounts,amount_of_recharges);//是否回收为部分收回
                                 }
                             }
                         }
@@ -219,7 +224,7 @@ public class RechargeServiceImpl implements RechargeService{
                         if(credit!=null){
                             if(credit.getCreditBalance()==credit.getCreditTotal()){//授信余额=授信总额
 
-                                int upcredit=(int) rechargeDao.updateCredit(user_id,amount_of_recharge );//更新账户余额
+                                int upcredit=(int) rechargeDao.updateCredit(user_id,amount_of_recharges );//更新账户余额
                                 if(upcredit>0){
                                     return new RechargeExcution(RechargeEnum.UPDATE_SUCCESS);
                                 }else{
@@ -228,10 +233,10 @@ public class RechargeServiceImpl implements RechargeService{
                             }else{//授信余额不等于授信总额
                                 int debt = (int) (credit.getCreditTotal()-credit.getCreditBalance()); //求欠款金额
 
-                                if(amount_of_recharge>=debt){//充值金额>欠款金额
-                                    amount_of_recharge=amount_of_recharge-debt;//还完欠款的剩余充值金额
+                                if(amount_of_recharges>=debt){//充值金额>欠款金额
+                                    amount_of_recharges=amount_of_recharges-debt;//还完欠款的剩余充值金额
                                     map.put("amount_of_recharge", amount_of_recharge);
-                                    int upcredit=(int) rechargeDao.updateCredit(user_id,amount_of_recharge);//计算账户余额
+                                    int upcredit=(int) rechargeDao.updateCredit(user_id,amount_of_recharges);//计算账户余额
                                     if(upcredit>0){
                                         return new RechargeExcution(RechargeEnum.UPDATE_SUCCESS);
                                     }else{
@@ -239,7 +244,7 @@ public class RechargeServiceImpl implements RechargeService{
                                     }
                                 }
                                 else{//充值金额<欠款金额
-                                    int upcreditbalance=(int)rechargeDao.upcreditbalance(user_id,amount_of_recharge);//授信余额=授信余额+充值金额
+                                    int upcreditbalance=(int)rechargeDao.upcreditbalance(user_id,amount_of_recharges);//授信余额=授信余额+充值金额
                                     if(upcreditbalance>0){
                                         return new RechargeExcution(RechargeEnum.UPDATE_SUCCESS);
                                     }else{

@@ -111,7 +111,7 @@ public class CreditAndPaymentServiceImpl implements CreditAndPaymentService {
 
     public CreditAndPaymentExcution subCredit(CreditAndPaymentDto creditAndPaymentDto) {
         int user_id=creditAndPaymentDto.getUser_id();
-        int credit_total=creditAndPaymentDto.getCredit_total();
+        double credit_total=creditAndPaymentDto.getCredit_total();
         try {
             int subCredit = creditDao.submitCredit(user_id, credit_total);
             if(subCredit>0){
@@ -128,7 +128,7 @@ public class CreditAndPaymentServiceImpl implements CreditAndPaymentService {
 
     public CreditAndPaymentExcution subPayment(CreditAndPaymentDto creditAndPaymentDto) {
         int  user_id=creditAndPaymentDto.getUser_id();
-        int paymnet_days=creditAndPaymentDto.getPayment_days();
+        String paymnet_days=creditAndPaymentDto.getPayment_days();
         try{
             int subPayment=creditDao.submitPayment(user_id,paymnet_days);
             if(subPayment>0){

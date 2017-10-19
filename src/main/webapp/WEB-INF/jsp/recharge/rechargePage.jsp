@@ -83,7 +83,7 @@ $.Admin.rechargePage = {
             $.Admin.tips('温馨提示信息', '请先选择 您要编辑的数据行','error');
             return false;
         }
-        var data = {user_id: get_select_row.user_id,recharge_sequence_number:get_select_row.recharge_sequence_number};
+        var data = {user_id: get_select_row.userId,recharge_sequence_number:get_select_row.rechargeSequenceNumber};
         var id = $.Admin.random_dialog();
         $(id).dialog({
             title: '详情',

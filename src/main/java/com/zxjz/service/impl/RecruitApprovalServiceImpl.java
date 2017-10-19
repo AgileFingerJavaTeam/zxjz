@@ -7,6 +7,8 @@ import com.zxjz.dto.excution.RecruitApprovalExcution;
 import com.zxjz.dto.in.RecruitApprovalDto;
 import com.zxjz.entity.RecruitmentInfoApply;
 import com.zxjz.enums.RecruitApprovalEnum;
+import com.zxjz.exception.UpdateDatabaseException;
+import com.zxjz.exception.db.InsertInnerErrorException;
 import com.zxjz.exception.db.QueryInnerErrorException;
 import com.zxjz.service.RecruitApprovalService;
 import org.slf4j.LoggerFactory;
@@ -101,7 +103,7 @@ public class RecruitApprovalServiceImpl implements RecruitApprovalService {
 
     public RecruitApprovalExcution findApprovalByID(RecruitApprovalDto recruitApprovalDto) {
         int recruiting_id=recruitApprovalDto.getRecruiting_id();
-
+        int releases_user_id=recruitApprovalDto.getReleases_user_id();
 
         try{
             RecruitmentInfoApply findApprovalByID=approvalDao.findApprovalByID(recruiting_id);
@@ -161,12 +163,13 @@ public class RecruitApprovalServiceImpl implements RecruitApprovalService {
         int people_num=recruitApprovalDto.getPeople_num();
         String hiring_expiration_date=recruitApprovalDto.getHiring_expiration_date();
         int city=recruitApprovalDto.getCity();
-        if(result.equals("1")){
+        String stat_res=recruitApprovalDto.getStat_res();
+        if(stat_res.equals("1")){
             int updateRefuse=approvalDao.updateRefuse(recruiting_id,releases_user_id,dismissed_reason,employid);
             if(updateRefuse>0){
                 return  new RecruitApprovalExcution(RecruitApprovalEnum.UP_SUCCESS,null);
             }else{
-                throw new UnsupportedOperationException("更改失败");
+                throw new UpdateDatabaseException("更改失败");
             }
         }else{
             int updatePass=approvalDao.updatePass(recruiting_id,releases_user_id,employid);
@@ -175,7 +178,7 @@ public class RecruitApprovalServiceImpl implements RecruitApprovalService {
                 if(addMessage>0){
                     return  new RecruitApprovalExcution(RecruitApprovalEnum.ADD_SUCCESS,null);
                 }else{
-                    throw new UnsupportedOperationException("添加失败");
+                    throw new InsertInnerErrorException("添加失败");
                 }
             }else{
                 throw new UnsupportedOperationException("更改失败");

@@ -19,7 +19,7 @@ public interface CreditDao {
     /*显示授信与账期*/
     public  CreditAndPayment updateCredit(int user_id);
     /*提交授信*/
-    public int submitCredit(@Param("user_id")int user_id,@Param("credit_total")int credit_total);
+    public int submitCredit(@Param("user_id")int user_id,@Param("credit_total")double credit_total);
     /*提交账期*/
-    public int submitPayment(@Param("user_id")int user_id,@Param("payment_days")int payment_days);
+    public int submitPayment(@Param("user_id")int user_id,@Param("payment_days")String payment_days);
 }

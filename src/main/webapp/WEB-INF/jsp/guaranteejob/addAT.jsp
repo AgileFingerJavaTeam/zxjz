@@ -125,10 +125,10 @@
 		<tr>
 			<td style="text-align: right">主标题:</td>
 			<td><input type="text" name="main_title" class="easyui-textbox easyui-validatebox"
-				style="width: 250px" required /></td>
+					   style="width: 250px" required /></td>
 			<td style="text-align: right">副标题:</td>
 			<td><input type="text" name="subtitle" class="easyui-textbox easyui-validatebox"
-				style="width: 250px" required /></td>
+					   style="width: 250px" required /></td>
 		</tr>
 		<tr>
 			<td style="text-align: right">简介:</td>

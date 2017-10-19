@@ -328,6 +328,7 @@ public class SecurityPositionServiceImpl implements SecurityPositionService {
                 map.put("state","暂停");
             }
             int total = securityPositionDao.addSecurityPosition(map);
+            map.put("recruiting_id",recruiting_id);
             int total1 = securityPositionDao.addSecurityPosition2(map);
             if (total > 0 && total1 > 0) {
                 return new AtSecurityPositionExcution(SecurityPositionEnum.ADD_JOB_SUCCESS,null);
@@ -376,7 +377,6 @@ public class SecurityPositionServiceImpl implements SecurityPositionService {
         html = buffer.toString();
         return html;
     }
-    @Transactional
     public SecurityPositionExcution findSecurityPositionHref(SecurityPositionDto securityPositionDto) {
         try {
             int id = securityPositionDto.getId();
@@ -391,7 +391,6 @@ public class SecurityPositionServiceImpl implements SecurityPositionService {
             throw new BaseException(e.getMessage());
         }
     }
-
     public AtSecurityPositionExcution updateSecurityPosition(AtSecurityPositionDto atSecurityPositionDto) {
         int recruiting_id = atSecurityPositionDto.getRecruiting_id();
         String up_down_frame = atSecurityPositionDto.getUp_down_frame();
@@ -501,18 +500,21 @@ public class SecurityPositionServiceImpl implements SecurityPositionService {
             }
             int total = securityPositionDao.SecurityPositionUpdate(map);
             if(page_url !=null){
+                map.put("recruiting_id",recruiting_id);
                 int total2 = securityPositionDao.SecurityPositionUpdate2(map);
                 if(total2 ==0){
                     throw new InsertInnerErrorException("更改失败");
                 }
             }
             if(first_page_carousel_url !=null){
+                map.put("recruiting_id",recruiting_id);
                 int total3 = securityPositionDao.SecurityPositionUpdate3(map);
                 if(total3==0){
                     throw new InsertInnerErrorException("更改失败");
                 }
             }
             if(main_page_url!=null){
+                map.put("recruiting_id",recruiting_id);
                 int total4 = securityPositionDao.SecurityPositionUpdate4(map);
                 if(total4==0){
                     throw new InsertInnerErrorException("更改失败");
