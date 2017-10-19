@@ -27,7 +27,7 @@
 		<div class="myapp-login-logo-block  tpl-login-max">
 			<div class="myapp-login-logo-text">
 			<div class="myapp-login-logo-text">
-			员工 管理<span> 系统</span> <i class="am-icon-skyatlas"></i>
+			职信 管理<span> 系统</span> <i class="am-icon-skyatlas"></i>
 			</div>
 		</div>
 		<div class="login-font">
