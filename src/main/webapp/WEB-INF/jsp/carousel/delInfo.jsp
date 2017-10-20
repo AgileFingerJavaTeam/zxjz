@@ -12,7 +12,7 @@
      <table class="table_list">
 		<tr>
 		  <td align="right">确定删除这条数据吗？
-		      <td><input type="hidden" name="carousel_figure_id" value="${data.carousel_figure_id}" />
+		      <td><input type="hidden" name="carousel_figure_id" value="${data.carouselFigureId}" />
 		  </td>
 		</tr>
          <tr>

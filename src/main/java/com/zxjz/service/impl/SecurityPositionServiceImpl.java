@@ -43,13 +43,14 @@ public class SecurityPositionServiceImpl implements SecurityPositionService {
 
     public SecurityPositionExcution getSecurityPositionList(SecurityPositionDto securityPositionDto) {
             String StatusSearch = securityPositionDto.getStatusSearch();
+            String statusSearchT = securityPositionDto.getStatusSearchT();
             String search = securityPositionDto.getSearch();
             int page=securityPositionDto.getPage();
             int rows=securityPositionDto.getRows();
             int offset=(page-1)*rows;
         try{
             List<AtCollection> list = securityPositionDao.findListCollection(offset,rows);
-            int total = securityPositionDao.findSecurityPositionListCount(StatusSearch,search);
+            int total = securityPositionDao.findSecurityPositionListCount(StatusSearch,search,statusSearchT);
             SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
          if(list != null){
              for (AtCollection mer : list) {
@@ -560,12 +561,13 @@ public class SecurityPositionServiceImpl implements SecurityPositionService {
     public SecurityPositionExcution findSearch(SecurityPositionDto securityPositionDto) {
                String StatusSearch = securityPositionDto.getStatusSearch();
                String search = securityPositionDto.getSearch();
+               String statusSearch = securityPositionDto.getStatusSearchT();
                int page = (securityPositionDto.getPage() != 0) ? securityPositionDto.getPage() : 1;
                int rows = (securityPositionDto.getRows() !=0) ? securityPositionDto.getRows() :20;
                try{
                int offset=(page-1)*rows;
                List<AtCollection> list = securityPositionDao.findSearch(offset,rows,search);
-               int total = securityPositionDao.findSecurityPositionListCount(StatusSearch,search);
+               int total = securityPositionDao.findSecurityPositionListCount(StatusSearch,search,statusSearch);
                HashMap map = new HashMap();
                map.put("rows",list);
                map.put("total",total);
@@ -598,12 +600,13 @@ public class SecurityPositionServiceImpl implements SecurityPositionService {
     public SecurityPositionExcution findStatusSearch(SecurityPositionDto securityPositionDto) {
             String StatusSearch = securityPositionDto.getStatusSearch();
             String search = securityPositionDto.getSearch();
+            String statusSearchT = securityPositionDto.getStatusSearchT();
         int page = (securityPositionDto.getPage() != 0) ? securityPositionDto.getPage() : 1;
         int rows = (securityPositionDto.getRows() !=0) ? securityPositionDto.getRows() :20;
         try{
             int offset=(page-1)*rows;
-            List<AtCollection> list = securityPositionDao.findStatusSearch(offset,rows,StatusSearch);
-            int total = securityPositionDao.findSecurityPositionListCount(StatusSearch,search);
+            List<AtCollection> list = securityPositionDao.findStatusSearch(offset,rows,StatusSearch,statusSearchT);
+            int total = securityPositionDao.findSecurityPositionListCount(StatusSearch,search,statusSearchT);
             HashMap map = new HashMap();
             map.put("rows",list);
             map.put("total",total);

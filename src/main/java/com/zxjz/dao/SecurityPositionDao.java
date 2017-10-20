@@ -35,7 +35,7 @@ public interface SecurityPositionDao  {
      * @param search
      * @return
      */
-    public int findSecurityPositionListCount(@Param("statusSearch")String statusSearch,@Param("search")String search);
+    public int findSecurityPositionListCount(@Param("statusSearch")String statusSearch,@Param("search")String search,@Param("statusSearchT")String statusSearchT);
 
     /**
      * 是否上首页担保后台显示总数
@@ -150,7 +150,7 @@ public interface SecurityPositionDao  {
      * @param statusSearch
      * @return
      */
-    public List<AtCollection> findStatusSearch(@Param("offset")int offset , @Param("rows")int rows,@Param("statusSearch")String statusSearch);
+    public List<AtCollection> findStatusSearch(@Param("offset")int offset , @Param("rows")int rows,@Param("statusSearch")String statusSearch,@Param("statusSearchT")String statusSearchT);
     /**
      * 否上首页推荐/担保 状态筛选
      * @param offset

@@ -67,7 +67,7 @@
          </tr>
 			 <tr style="display:none" >
 				<td align="right">轮播图分类:</td>
-				<td><select id="" class="easyui-combobox" 
+				<td><select  class="easyui-combobox"
 					name="carousel_figure_type" style="width:200; panelHeight:100"
 					required>
 						<option value="1"
@@ -83,7 +83,7 @@
 		<tr>
 			<td align="right">轮播图片:</td>
 			<td><input id="carouselFile" style="width: 124px" runat="server"
-				name="image"  value="${data.picture_url}"
+				name="image"  value="${data.pictureUrl}"
 				type="file" /></td>
 		</tr>
 		<tr>
@@ -111,9 +111,9 @@
 				data-options="
 						url:'CarouselManage/findTitle',
 						method:'get',
-						valueField:'recruiting_id',
-						textField:'post_name',
-						groupField:'company_name',
+						valueField:'recruitingId',
+						textField:'postName',
+						groupField:'companyName',
 						panelHeight:'auto',									
 					"></td>
 		</tr>
@@ -121,7 +121,7 @@
 		<tr style="display:none" >
 
 			<td align="right">是否担保职位:</td>
-			<td><select id="" class="easyui-combobox"
+			<td><select  class="easyui-combobox"
 				name="is_good_position" style="panelHeight: 100; width: 50px"
 				required>
 					<option value="是"
@@ -144,7 +144,7 @@
 		</tr>
 		<tr style="display:none" >
 			<td align="right">状态:</td>
-			<td><select id="" class="easyui-combobox" name="state"
+			<td><select  class="easyui-combobox" name="state"
 				style="width: 200, panelHeight:100" required>
 					<option value="有效"
 						<c:if test="${data.state=='有效'}">selected="selected"</c:if>>有效</option>
