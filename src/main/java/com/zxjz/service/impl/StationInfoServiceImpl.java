@@ -4,13 +4,12 @@ import com.zxjz.base.BaseException;
 import com.zxjz.dao.StationDao;
 import com.zxjz.dto.excution.StationInfoExcution;
 import com.zxjz.dto.in.StationDto;
-import com.zxjz.entity.StationInfo;
+import com.zxjz.entity.Station;
 import com.zxjz.enums.StationInfoEnum;
 import com.zxjz.exception.db.InsertInnerErrorException;
 import com.zxjz.exception.db.QueryInnerErrorException;
 import com.zxjz.exception.db.UpdateInnerErrorException;
 import com.zxjz.service.StationInfoService;
-import com.zxjz.util.PageData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +35,7 @@ public class StationInfoServiceImpl implements StationInfoService {
         int rows = stationDto.getRows();
         int offset=(page-1)*rows;
         try {
-            List<StationInfo> stationInfoList = stationDao.findParentJobTypeList(offset,rows);
+            List<Station> stationInfoList = stationDao.findParentJobTypeList(offset,rows);
             if (stationInfoList == null){
                 throw new QueryInnerErrorException("查询父类职位列表失败");
             }
@@ -82,7 +81,7 @@ public class StationInfoServiceImpl implements StationInfoService {
     public StationInfoExcution findParentJobInfo(StationDto stationDto) {
         int id = stationDto.getId();
         try {
-            StationInfo parentJobInfo = stationDao.findParentJobInfo(id);
+            Station parentJobInfo = stationDao.findParentJobInfo(id);
             if (parentJobInfo == null){
                 throw new QueryInnerErrorException("查询父类岗位类型信息失败");
             }
@@ -127,13 +126,15 @@ public class StationInfoServiceImpl implements StationInfoService {
         try {
             int childCount = stationDao.findCount(station_id);
             if (childCount != 0){
-                return new StationInfoExcution(StationInfoEnum.FIND_CHILD_COUNT_FAIL);
+                throw  new QueryInnerErrorException("该父类下面有子类不能删除");
             }
             int isDelete = stationDao.updateParentJobState(station_id);
             if (isDelete == 0){
                 throw new UpdateInnerErrorException("更新父类岗位状态失败（删除父类失败）");
             }
             return new StationInfoExcution(StationInfoEnum.DELETE_PARENT_JOB_SUCCESS);
+        }catch (QueryInnerErrorException e2){
+            throw e2;
         }catch (UpdateInnerErrorException e1){
             throw e1;
         }catch (Exception e){
@@ -148,13 +149,14 @@ public class StationInfoServiceImpl implements StationInfoService {
      * @return
      */
     public StationInfoExcution findChildJobList(StationDto stationDto) {
-        int pstationName = stationDto.getPstationName();
+        int pstationId = stationDto.getPstationId();
+        String pstationName = stationDto.getPstationName();
         int page = stationDto.getPage();
         int rows = stationDto.getRows();
         int offset=(page-1)*rows;
         try {
-            List<StationInfo> stationInfoList = stationDao.findChildJobType(pstationName,offset,rows);
-            int childCount = stationDao.findChildJobCount(pstationName);
+            List<Station> stationInfoList = stationDao.findChildJobType(pstationId,offset,rows);
+            int childCount = stationDao.findChildJobCount(pstationId);
             HashMap map = new HashMap();
             map.put("rows",stationInfoList);
             map.put("total",childCount);
@@ -171,7 +173,7 @@ public class StationInfoServiceImpl implements StationInfoService {
      */
     public StationInfoExcution findParentJob(StationDto stationDto) {
         try {
-            List<StationInfo> pageDataList = stationDao.findParentJobInfo();
+            List<Station> pageDataList = stationDao.findParentJobList();
             if (pageDataList == null){
                 throw new QueryInnerErrorException("查询父类信息失败");
             }
@@ -213,12 +215,12 @@ public class StationInfoServiceImpl implements StationInfoService {
      */
     public StationInfoExcution findChildJobInfo(StationDto stationDto) {
         int id = stationDto.getId();
-        int p_station_id = stationDto.getP_station_id();
         try {
-            StationInfo childJobInfo = stationDao.findChildJobInfo(id);
+            Station childJobInfo = stationDao.findChildJobInfo(id);
             if (childJobInfo == null){
                 throw new QueryInnerErrorException("查询子类岗位信息失败");
             }
+            int p_station_id = childJobInfo.getpStationId();
             String parentJobName = stationDao.findParentJobName(p_station_id);
             if (parentJobName == null){
                 throw new QueryInnerErrorException("查询父类岗位名称失败");
@@ -226,7 +228,7 @@ public class StationInfoServiceImpl implements StationInfoService {
             HashMap map = new HashMap();
             map.put("childJobInfo",childJobInfo);
             map.put("parentJobName",parentJobName);
-            return new StationInfoExcution(StationInfoEnum.FIND_FAIL,map);
+            return new StationInfoExcution(StationInfoEnum.FIND_SUCCESS,map);
         }catch (QueryInnerErrorException e1){
             throw e1;
         }catch (Exception e){
@@ -242,10 +244,10 @@ public class StationInfoServiceImpl implements StationInfoService {
      */
     public StationInfoExcution editChildJobType(StationDto stationDto) {
         String station_name = stationDto.getStation_name();
-        int pstation_name = stationDto.getPstationName();
+        int pstation_id = stationDto.getPstationId();
         int station_id = stationDto.getStation_id();
         try {
-            int isEdit = stationDao.editChildJobInfo(station_name,pstation_name,station_id);
+            int isEdit = stationDao.editChildJobInfo(station_name,pstation_id,station_id);
             if (isEdit == 0){
                 throw new UpdateInnerErrorException("编辑子类岗位失败");
             }

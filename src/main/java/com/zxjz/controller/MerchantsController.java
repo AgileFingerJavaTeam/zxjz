@@ -158,7 +158,7 @@ public class MerchantsController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/showApplyVipPage",
-            method = RequestMethod.POST,
+            method = RequestMethod.GET,
             produces = {"text/json;charset=UTF-8"})
     public ModelAndView showApplyVipPage() {
         ModelAndView mv = new ModelAndView();
@@ -180,12 +180,12 @@ public class MerchantsController extends BaseController {
             method = RequestMethod.POST,
             produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public String findApplyVipShopInfo(@RequestBody MerchantsUpgradeDto merchantsUpgradeDto) {
+    public String findApplyVipShopInfo(MerchantsUpgradeDto merchantsUpgradeDto) {
         try {
             MerchantsUpgradeExcution merchantsUpgradeExcution = merchantsInfoService.findApplyVipShopList(merchantsUpgradeDto);
             return  BaseUIResult.returnJsonEasyUI( merchantsUpgradeExcution);
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            logger.error(e.getMessage(),e);
             MerchantsUpgradeExcution merchantsUpgradeExcution = new MerchantsUpgradeExcution(MerchantsUpgradeEnum.FIND_FAIL, e.getMessage());
             return  BaseUIResult.returnJsonEasyUI( merchantsUpgradeExcution);
         }
@@ -197,11 +197,11 @@ public class MerchantsController extends BaseController {
      * @param merchantsUpgradeDto
      * @return
      */
-    @RequestMapping(value = "/showAuditPage",
-            method = RequestMethod.POST,
+    @RequestMapping(value = "/showCheckPage",
+            method = RequestMethod.GET,
             produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public ModelAndView showAuditPage(@RequestBody MerchantsUpgradeDto merchantsUpgradeDto) {
+    public ModelAndView showAuditPage(MerchantsUpgradeDto merchantsUpgradeDto) {
         ModelAndView mv = new ModelAndView();
         try {
             MerchantsUpgradeExcution applyInfo = merchantsInfoService.showAuditPage(merchantsUpgradeDto);
@@ -222,18 +222,18 @@ public class MerchantsController extends BaseController {
             method = RequestMethod.POST,
             produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public String check(@RequestBody MerchantsUpgradeDto merchantsUpgradeDto) {
+    public String check(MerchantsUpgradeDto merchantsUpgradeDto) {
         try {
             HttpSession session = this.getRequest().getSession();
             LandFallInfo user = (LandFallInfo) session.getAttribute("user");
             int id = user.getEmployees_id();
             merchantsUpgradeDto.setId(id);
             MerchantsUpgradeExcution merchantsUpgradeExcution = merchantsInfoService.confirmCheck(merchantsUpgradeDto);
-            return  BaseUIResult.returnJsonEasyUI(merchantsUpgradeExcution);
+            return  BaseUIResult.returnJsonMSG(1,merchantsUpgradeExcution,"审核成功");
         }catch (Exception e) {
             logger.error(e.getMessage(), e);
             MerchantsUpgradeExcution merchantsUpgradeExcution = new MerchantsUpgradeExcution(MerchantsUpgradeEnum.CONFIRM_CHECK_FAIL, e.getMessage());
-            return  BaseUIResult.returnJsonEasyUI(merchantsUpgradeExcution);
+            return  BaseUIResult.returnJsonMSG(0,merchantsUpgradeExcution,"审核失败");
         }
     }
 
@@ -246,14 +246,14 @@ public class MerchantsController extends BaseController {
             method = RequestMethod.POST,
             produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult findCheckEmployer(){
+    public String findCheckEmployer(){
         try {
             MerchantsUpgradeExcution merchantsUpgradeExcution = merchantsInfoService.findCheckEmployer();
-            return new BaseAPIResult(1,merchantsUpgradeExcution);
+            return BaseUIResult.returnJson(merchantsUpgradeExcution);
         }catch (Exception e){
             logger.error(e.getMessage(),e);
             MerchantsUpgradeExcution merchantsUpgradeExcution = new MerchantsUpgradeExcution(MerchantsUpgradeEnum.FIND_CHECK_EMPLOYER_FAIL);
-            return new BaseAPIResult(0,merchantsUpgradeExcution);
+            return BaseUIResult.returnJson(merchantsUpgradeExcution);
         }
     }
 }

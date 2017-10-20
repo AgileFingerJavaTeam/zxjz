@@ -6,10 +6,19 @@ public class StationDto {
     private String station_name;
     private int id;
     private int station_id;
-    private int pstationName;
+    private String pstationName;
+    private int pstationId;
     private int p_station_id;
     private String pid;
     private String pname;
+
+    public int getP_station_id() {
+        return p_station_id;
+    }
+
+    public void setP_station_id(int p_station_id) {
+        this.p_station_id = p_station_id;
+    }
 
     public String getPid() {
         return pid;
@@ -67,21 +76,22 @@ public class StationDto {
         this.station_id = station_id;
     }
 
-    public int getPstationName() {
+    public String getPstationName() {
         return pstationName;
     }
 
-    public void setPstationName(int pstationName) {
+    public void setPstationName(String pstationName) {
         this.pstationName = pstationName;
     }
 
-    public int getP_station_id() {
-        return p_station_id;
+    public int getPstationId() {
+        return pstationId;
     }
 
-    public void setP_station_id(int p_station_id) {
-        this.p_station_id = p_station_id;
+    public void setPstationId(int pstationId) {
+        this.pstationId = pstationId;
     }
+
 
     @Override
     public String toString() {
@@ -91,9 +101,10 @@ public class StationDto {
                 ", station_name='" + station_name + '\'' +
                 ", id=" + id +
                 ", station_id=" + station_id +
-                ", pstationName=" + pstationName +
+                ", pstationName='" + pstationName + '\'' +
+                ", pstationId=" + pstationId +
                 ", p_station_id=" + p_station_id +
-                ", pid=" + pid +
+                ", pid='" + pid + '\'' +
                 ", pname='" + pname + '\'' +
                 '}';
     }

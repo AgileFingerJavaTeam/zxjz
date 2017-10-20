@@ -12,8 +12,8 @@
      <table class="table_list">
      	<tr>
         	<th width="70">职位类型名称：</th>
-            <td ><input type="hidden" name="station_id" value="${data.station_id}"/>
-                 <input type="text"  name="station_name" value="${data.station_name}"  class="easyui-textbox easyui-validatebox"  data-options="required:true,width:'100%'"/>
+            <td ><input type="hidden" name="station_id" value="${data.data.stationId}"/>
+                 <input type="text"  name="station_name" value="${data.data.stationName}"  class="easyui-textbox easyui-validatebox"  data-options="required:true,width:'100%'"/>
             </td>
         </tr>
         <tr>

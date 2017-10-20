@@ -2,7 +2,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zxjz.dao.StationDao">
-    <select id="findParentJobTypeList"  resultType="StationInfo">
+    <select id="findParentJobTypeList"  resultType="Station">
         SELECT *
         FROM zx_station
         WHERE p_station_id = 0 AND is_delete=0
@@ -20,7 +20,7 @@
         VALUES (0,#{station_name});
     </insert>
     <!--查询父类职位信息-->
-    <select id="findParentJobInfo" resultType="StationInfo">
+    <select id="findParentJobInfo" resultType="Station">
         SELECT *
         FROM `zx_station`
         where station_id=#{id}
@@ -35,21 +35,21 @@
     <select id="findCount"  resultType="int">
         SELECT COUNT(*)
         FROM zx_station
-        WHERE p_station_id = #{station_id}
+        WHERE p_station_id = #{station_id} AND is_delete = 0
     </select>
     <!--更新父类职位类型状态（标记删除）-->
-    <update id="delDetails" >
+    <update id="updateParentJobState" >
         UPDATE  zx_station
         SET  is_delete = 1
         WHERE station_id=#{station_id}
     </update>
     <!--查询子类岗位类型-->
-    <select id="findChildJobType"  resultType="StationInfo">
+    <select id="findChildJobType"  resultType="Station">
         select * from zx_station
         <where>
             p_station_id > 0 and is_delete=0
-            <if test="pstationName!=null and pstationName!=''">
-                AND p_station_id =#{pstationName}
+            <if test="pstationId!=null and pstationId!=''">
+                AND p_station_id =#{pstationId}
             </if>
         </where>
         limit #{offset},#{rows}
@@ -59,13 +59,13 @@
         SELECT count(*) FROM zx_station
         <where>
             p_station_id > 0 and is_delete=0
-            <if test="pstationName!=null and pstationName!=''">
-                AND p_station_id =#{pstationName}
+            <if test="pstationId!=null and pstationId!=''">
+                AND p_station_id =#{pstationId}
             </if>
         </where>
     </select>
     <!--查询父类职位列表-->
-    <select id="getPInfo"  resultType="StationInfo">
+    <select id="findParentJobList"  resultType="Station">
         SELECT station_id,station_name
         FROM zx_station
         WHERE p_station_id = 0 and is_delete = 0
@@ -76,7 +76,7 @@
         VALUES (#{p_station_id},#{station_name});
     </insert>
     <!--查询子类岗位信息-->
-    <select id="findChildJobInfo"  resultType="StationInfo">
+    <select id="findChildJobInfo"  resultType="Station">
         SELECT *
         FROM `zx_station`
         WHERE station_id=#{id}
@@ -96,7 +96,7 @@
     <!--编辑子类岗位信息-->
     <update id="editChildJobInfo" >
         UPDATE zx_station
-        SET  station_name = #{station_name},p_station_id=#{pstation_name}
+        SET  station_name = #{station_name},p_station_id=#{pstation_id}
         WHERE station_id=#{station_id}
     </update>
 </mapper>

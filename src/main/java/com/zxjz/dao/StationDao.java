@@ -14,7 +14,7 @@ public interface StationDao {
      * @param
      * @return
      */
-    public List<StationInfo> findParentJobTypeList(@Param("offset")int offset,@Param("rows")int rows);
+    public List<Station> findParentJobTypeList(@Param("offset")int offset,@Param("rows")int rows);
 
     /**
      * 获取父类职位条数
@@ -34,7 +34,7 @@ public interface StationDao {
      * @param id
      * @return
      */
-    public StationInfo findParentJobInfo(@Param("id") int id);
+    public Station findParentJobInfo(@Param("id") int id);
 
     /**
      * 更新父类职位信息
@@ -59,25 +59,25 @@ public interface StationDao {
 
     /**
      * 查询子类岗位类型
-     * @param pstationName
+     * @param pstationId
      * @param offset
      * @param rows
      * @return
      */
-    public List<StationInfo> findChildJobType (@Param("pstationName")int pstationName,@Param("offset")int offset,@Param("rows")int rows);
+    public List<Station> findChildJobType (@Param("pstationId")int pstationId,@Param("offset")int offset,@Param("rows")int rows);
 
     /**
      * 查询子类岗位条数
-     * @param pstationName
+     * @param pstationId
      * @return
      */
-    public int findChildJobCount (@Param("pstationName")int pstationName);
+    public int findChildJobCount (@Param("pstationId")int pstationId);
 
     /**
      * 查询父类职位信息
      * @return
      */
-    public List<StationInfo> findParentJobInfo();
+    public List<Station> findParentJobList();
 
     /**
      * 新增子类岗位类型
@@ -92,7 +92,7 @@ public interface StationDao {
      * @param id
      * @return
      */
-    public StationInfo findChildJobInfo (@Param("id")int id);
+    public Station findChildJobInfo (@Param("id")int id);
 
     /**
      * 查询此子类岗位的父级职位名称
@@ -111,9 +111,9 @@ public interface StationDao {
     /**
      * 编辑子类岗位信息
      * @param station_name
-     * @param pstation_name
+     * @param pstation_id
      * @param station_id
      * @return
      */
-    public int editChildJobInfo(@Param("station_name")String station_name,@Param("pstation_name")int pstation_name,@Param("station_id")int station_id);
+    public int editChildJobInfo(@Param("station_name")String station_name,@Param("pstation_id")int pstation_id,@Param("station_id")int station_id);
 }

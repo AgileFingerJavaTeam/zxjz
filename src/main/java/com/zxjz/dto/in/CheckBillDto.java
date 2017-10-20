@@ -12,9 +12,18 @@ public class CheckBillDto {
      private int references_the_internal_serial_number1;
      private int work_id;
      private int recruitId;
+     private int merId;
      private String q;
      private String reference_bill_classification;
      private String merchants_name;
+
+    public int getMerId() {
+        return merId;
+    }
+
+    public void setMerId(int merId) {
+        this.merId = merId;
+    }
 
     public String getReference_bill_classification() {
         return reference_bill_classification;
