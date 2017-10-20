@@ -48,8 +48,8 @@
              </td> 
              <th width="130">操作员：</th>
              <td >
-             	<input type="hidden"  value="${id}">
-                  <input type="text"  name="employees_name" class="easyui-textbox easyui-validatebox" value="${name}"data-options="readonly:true" />
+             	<input type="hidden"  value="${data.employeesId}">
+                  <input type="text"  name="employees_name" class="easyui-textbox easyui-validatebox" value="${data.employeesName}"data-options="readonly:true" />
              </td>            
          </tr>       
         <tr>

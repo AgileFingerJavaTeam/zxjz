@@ -150,16 +150,16 @@ public class RechargeServiceImpl implements RechargeService{
                         if(receivable!=null){		//有未回收的记录
                             for(int i=0;i<receivable.size();i++){		//遍历未回收的记录
                                 MerchantFundsReceivableInfo receive=receivable.get(i);	//逐条取得记录
-                                double actual_amount=Double.parseDouble(receive.getActual_amount());//类型转换
+                                double actual_amount=Double.parseDouble(receive.getActualAmount());//类型转换
                                 if(amount_of_recharge>actual_amount){//充值金额大于应收金额
-                                    int info=rechargeDao.updateReceivable(user_id,receive.getSerial_number());//是否回收为是
+                                    int info=rechargeDao.updateReceivable(user_id,receive.getSerialNumber());//是否回收为是
                                    if(info>0){
                                        amount_of_recharge=amount_of_recharge-actual_amount;//剩余充值金额
                                    }else {
                                        throw new UpdateDatabaseException("更改失败");
                                    }
                                 }else{
-                                    int info=rechargeDao.updateReceivablePart(user_id, receive.getSerial_number(),actual_amount, amount_of_recharge);//是否回收为部分收回
+                                    int info=rechargeDao.updateReceivablePart(user_id, receive.getSerialNumber(),actual_amount, amount_of_recharge);//是否回收为部分收回
                                     if(info<1){
                                         throw new UpdateDatabaseException("更改失败");
                                     }

@@ -45,7 +45,8 @@
 	             </td>
 	             <th >操作员：</th>
 	             <td >
-	                  <input type="text"  name="operating_staff_id" value="11"  class="easyui-textbox easyui-validatebox" readonly/>
+					 <input type="hidden"  name="operating_staff_id" value="${id}"  class="easyui-textbox easyui-validatebox" readonly/>
+	                   <input type="text"  name="operating_staff_Name" value="${name}"  class="easyui-textbox easyui-validatebox" readonly/>
 	             </td>                           
          </tr> 
          <tr>
