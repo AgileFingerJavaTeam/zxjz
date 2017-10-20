@@ -10,7 +10,9 @@ import com.zxjz.enums.RecruitApprovalEnum;
 import com.zxjz.exception.UpdateDatabaseException;
 import com.zxjz.exception.db.InsertInnerErrorException;
 import com.zxjz.exception.db.QueryInnerErrorException;
+import com.zxjz.exception.db.UpdateInnerErrorException;
 import com.zxjz.service.RecruitApprovalService;
+import org.apache.ibatis.annotations.Update;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,41 +71,18 @@ public class RecruitApprovalServiceImpl implements RecruitApprovalService {
                 map.put("rows",approvalList);
                 map.put("total",total);
                 return  new RecruitApprovalExcution(RecruitApprovalEnum.FIND_SUCCESS,map);
-            }else {
-                throw   new QueryInnerErrorException("查询失败");
             }
-        }catch (QueryInnerErrorException  q) {
-            throw q;
         }catch (Exception  e){
             logger.error(e.getMessage(),e);
             throw new BaseException(e.getMessage());
         }
 
+        return null;
     }
 
-    /*public RecruitApprovalExcution findTotal(RecruitApprovalDto recruitApprovalDto) {
-        String bxw_approval_status=recruitApprovalDto.getBxw_approval_status();
-        String bxw_search_content=recruitApprovalDto.getBxw_search_content();
-        String sort=recruitApprovalDto.getSort();
-        String  order=recruitApprovalDto.getOrder();
-        try{
-            int total=approvalDao.findListCount(bxw_approval_status,bxw_search_content,order,sort);
-            if(total>0){
-                return  new RecruitApprovalExcution(RecruitApprovalEnum.FIND_SUCCESS,total);
-            }else{
-                throw   new QueryInnerErrorException("查询失败");
-            }
-        }catch (QueryInnerErrorException  q) {
-            throw q;
-        }catch (Exception  e){
-            logger.error(e.getMessage(),e);
-            throw new BaseException(e.getMessage());
-        }
-    }*/
 
     public RecruitApprovalExcution findApprovalByID(RecruitApprovalDto recruitApprovalDto) {
         int recruiting_id=recruitApprovalDto.getRecruiting_id();
-        int releases_user_id=recruitApprovalDto.getReleases_user_id();
 
         try{
             RecruitmentInfoApply findApprovalByID=approvalDao.findApprovalByID(recruiting_id);
@@ -164,25 +143,34 @@ public class RecruitApprovalServiceImpl implements RecruitApprovalService {
         String hiring_expiration_date=recruitApprovalDto.getHiring_expiration_date();
         int city=recruitApprovalDto.getCity();
         String stat_res=recruitApprovalDto.getStat_res();
-        if(stat_res.equals("1")){
-            int updateRefuse=approvalDao.updateRefuse(recruiting_id,releases_user_id,dismissed_reason,employid);
-            if(updateRefuse>0){
-                return  new RecruitApprovalExcution(RecruitApprovalEnum.UP_SUCCESS,null);
-            }else{
-                throw new UpdateDatabaseException("更改失败");
-            }
-        }else{
-            int updatePass=approvalDao.updatePass(recruiting_id,releases_user_id,employid);
-            if(updatePass>0){
-                int addMessage=approvalDao.addMessage(recruiting_id,salary_treatment,releases_user_id,post_name,post_classification,details_page_category,work_date,work_time,work_location,position_longitude,position_latitude,work_content,settlement_method,commission,benefits,gender_requirements,recruitment,people_num,hiring_expiration_date,city);
-                if(addMessage>0){
-                    return  new RecruitApprovalExcution(RecruitApprovalEnum.ADD_SUCCESS,null);
-                }else{
-                    throw new InsertInnerErrorException("添加失败");
+        try {
+            if (stat_res.equals("1")) {
+                int updateRefuse = approvalDao.updateRefuse(recruiting_id, releases_user_id, dismissed_reason, employid);
+                if (updateRefuse > 0) {
+                    return new RecruitApprovalExcution(RecruitApprovalEnum.UP_SUCCESS, null);
+                } else {
+                    throw new UpdateDatabaseException("更改失败");
                 }
-            }else{
-                throw new UnsupportedOperationException("更改失败");
+            } else {
+                int updatePass = approvalDao.updatePass(recruiting_id, releases_user_id, employid);
+                if (updatePass > 0) {
+                    int addMessage = approvalDao.addMessage(recruiting_id, salary_treatment, releases_user_id, post_name, post_classification, details_page_category, work_date, work_time, work_location, position_longitude, position_latitude, work_content, settlement_method, commission, benefits, gender_requirements, recruitment, people_num, hiring_expiration_date, city);
+                    if (addMessage > 0) {
+                        return new RecruitApprovalExcution(RecruitApprovalEnum.ADD_SUCCESS, null);
+                    } else {
+                        throw new InsertInnerErrorException("添加失败");
+                    }
+                } else {
+                    throw new UnsupportedOperationException("更改失败");
+                }
             }
+        }catch (InsertInnerErrorException  i){
+            throw i;
+        }catch (UpdateInnerErrorException u){
+            throw u;
+        }catch (Exception  e){
+            logger.error(e.getMessage(),e);
+            throw new BaseException(e.getMessage());
         }
 
     }
