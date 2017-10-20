@@ -90,7 +90,6 @@ $("#chargemethod").combobox({
 	  valueField: 'rechargeModeName',
 	  textField: 'rechargeModeName',
 	  onSelect:function(chargemethodlist){
-	      alert(chargemethodlist.rechargeMode);
 		 $('#chargemethodnum').val(chargemethodlist.rechargeMode);
 	  }
 	  }) ;
