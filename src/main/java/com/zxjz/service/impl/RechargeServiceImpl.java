@@ -66,8 +66,8 @@ public class RechargeServiceImpl implements RechargeService{
 
 
     public RechargeExcution findRechargePage(RechargeDto rechargeDto) {
-        int use_id=rechargeDto.getUser_id();
-        int recharge_sequence_number=rechargeDto.getRecharge_sequence_number();
+        int use_id=Integer.parseInt(rechargeDto.getUser_id());
+        int recharge_sequence_number=Integer.parseInt(rechargeDto.getRecharge_sequence_number());
         try{
             RechargeInfo info = rechargeDao.findRechargePage(use_id,recharge_sequence_number);
             return new RechargeExcution(RechargeEnum.SUCCESS,info);
@@ -108,7 +108,7 @@ public class RechargeServiceImpl implements RechargeService{
     }
 
     public RechargeExcution getNum(RechargeDto rechargeDto) {
-        int merchants_id=rechargeDto.getMerchants_id();
+        int merchants_id=Integer.parseInt(rechargeDto.getMerchants_id());
         try{
             RechargeInfo rechargeid	= rechargeDao.findUserId(merchants_id);
             if(rechargeid!=null){
@@ -126,147 +126,90 @@ public class RechargeServiceImpl implements RechargeService{
     }
 
     public RechargeExcution saveSubForm(RechargeDto rechargeDto) {
-        int user_id=rechargeDto.getUser_id();
-        int recharge_sequence_number=rechargeDto.getRecharge_sequence_number();
+        int user_id=Integer.parseInt(rechargeDto.getUser_id());
+        int recharge_sequence_number=Integer.parseInt(rechargeDto.getRecharge_sequence_number());
         String recharge_time=rechargeDto.getRecharge_time();
-        int recharge_mode=rechargeDto.getRecharge_mode();
-        double amount_of_recharge=rechargeDto.getAmount_of_recharge();
-        int payment_platform_flow_number=rechargeDto.getPayment_platform_flow_number();
+        int recharge_mode=Integer.parseInt(rechargeDto.getRecharge_mode());
+        double amount_of_recharge = Double.parseDouble(rechargeDto.getAmount_of_recharge());
+        int payment_platform_flow_number=Integer.parseInt(rechargeDto.getPayment_platform_flow_number());
         String declare=rechargeDto.getDeclare();
-        int operating_staff_id=rechargeDto.getOperating_staff_id();
+        int operating_staff_id=Integer.parseInt(rechargeDto.getOperating_staff_id());
         HashMap map=new HashMap();
-        double actual_amount=rechargeDto.getActual_amount();
-        int serial_number=rechargeDto.getSerial_number();
         try{
-            int recharge = (int) rechargeDao.insertRecharge(user_id,recharge_sequence_number,recharge_time,recharge_mode,amount_of_recharge,payment_platform_flow_number,declare,operating_staff_id);//商户 充值记录插入数据
-            if(recharge>0){
-                List<CurrentAccountInfo> accountinfo=(List<CurrentAccountInfo>)rechargeDao.findForList(user_id);//查询流水账user_id是否存在
+            int recharge =rechargeDao.insertRecharge(user_id,recharge_sequence_number,recharge_time, recharge_mode,amount_of_recharge, payment_platform_flow_number, declare, operating_staff_id);//商户 充值记录插入数据
+            if(recharge>0){//插入数据成功
+                List<CurrentAccountInfo> accountinfo=rechargeDao.findForList(user_id);//查询流水账user_id是否存在
+                int  addaccount=0;
                 if(accountinfo==null){
-                    int addaccount=(int) rechargeDao.insertAccount(user_id,recharge_sequence_number);//商户插入流水账记录，序号 设为1
+                        addaccount=rechargeDao.insertAccount(user_id,recharge_sequence_number);//商户插入流水账记录，序号 设为1
+                    }else {
+                        addaccount=rechargeDao.insertAccounts(user_id,recharge_sequence_number,amount_of_recharge);//商户插入流水账记录，序号 设为最大值1
+                    }
                     if(addaccount>0){
-                        List<MerchantFundsReceivableInfo> receivable=(List<MerchantFundsReceivableInfo>) rechargeDao.findRList(user_id);//查询该商户应收款未回收的记录
-                        if(receivable!=null){
+                        List<MerchantFundsReceivableInfo> receivable=rechargeDao.findRList(user_id);//查询该商户应收款未回收的记录
+                        if(receivable!=null){		//有未回收的记录
                             for(int i=0;i<receivable.size();i++){		//遍历未回收的记录
                                 MerchantFundsReceivableInfo receive=receivable.get(i);	//逐条取得记录
-                                map.put("is_back", receive.getIs_back());//是否回收为否
-                                map.put("actual_amount", receive.getActual_amount());//应收金额
-                                map.put("serial_number", receive.getSerial_number());//应收款序号
-                                     if(amount_of_recharge>actual_amount){//充值金额大于应收金额
-                                    int info=(int)rechargeDao.updateReceivable(user_id,serial_number);//是否回收为是
-                                    amount_of_recharge=amount_of_recharge-actual_amount;//剩余充值金额
-                                }else{
-                                    int info=(int)rechargeDao.updateReceivablePart(user_id,serial_number,actual_amount,amount_of_recharge);//是否回收为部分收回
-                                }
-                            }
-                        }
-                        CreditAndPayment credit=(CreditAndPayment) rechargeDao.findCredit(user_id);//查询该商户资金基本信息
-                        if(credit!=null){
-                            if(credit.getCreditBalance()==credit.getCreditTotal()){//授信余额=授信总额
-
-                                int upcredit=(int) rechargeDao.updateCredit(user_id,amount_of_recharge );//更新账户余额
-                                if(upcredit>0){
-                                   return new RechargeExcution(RechargeEnum.UPDATE_SUCCESS);
-                                }else{
-                                    throw new UpdateDatabaseException("修改失败");
-                                }
-                            }else{//授信余额不等于授信总额
-                                int debt = (int) (credit.getCreditTotal()-credit.getCreditBalance()); //求欠款金额
-                                if(amount_of_recharge>=debt){//充值金额>欠款金额
-                                    amount_of_recharge=amount_of_recharge-debt;//还完欠款的剩余充值金额
-                                    map.put("amount_of_recharge", amount_of_recharge);
-                                    int upcredit=(int) rechargeDao.updateCredit(user_id,amount_of_recharge);//计算账户余额
-                                    if(upcredit>0){
-                                        return new RechargeExcution(RechargeEnum.UPDATE_SUCCESS);
-                                    }else{
-                                        throw new UpdateDatabaseException("修改失败");
-                                    }
-                                }
-                                else{//充值金额<欠款金额
-                                    int upcreditbalance=(int)rechargeDao.upcreditbalance(user_id,amount_of_recharge);//授信余额=授信余额+充值金额
-                                    if(upcreditbalance>0){
-                                        return new RechargeExcution(RechargeEnum.UPDATE_SUCCESS);
-                                    }else{
-                                        throw new UpdateDatabaseException("修改失败");
-                                    }
-                                }
-                            }
-                        }else{
-                            throw new QueryInnerErrorException("查询失败");
-                        }
-                    }else {
-                        throw new InsertInnerErrorException("流水账记录插入失败");
-                    }
-                }else {
-                    int addaccounts=(int) rechargeDao.insertAccounts(user_id,recharge_sequence_number);//商户插入流水账记录，序号 设为1
-                    if(addaccounts>0){
-                        List<MerchantFundsReceivableInfo> receivable=(List<MerchantFundsReceivableInfo>) rechargeDao.findRList(user_id);//查询该商户应收款未回收的记录
-                        if(receivable!=null){
-                            for(int i=0;i<receivable.size();i++){		//遍历未回收的记录
-                                MerchantFundsReceivableInfo receive=receivable.get(i);	//逐条取得记录
-                                map.put("is_back", receive.getIs_back());//是否回收为否
-                                map.put("actual_amount", receive.getActual_amount());//应收金额
-                                map.put("serial_number", receive.getSerial_number());//应收款序号
-
+                                double actual_amount=Double.parseDouble(receive.getActualAmount());//类型转换
                                 if(amount_of_recharge>actual_amount){//充值金额大于应收金额
-                                    int info=(int)rechargeDao.updateReceivable(user_id,serial_number);//是否回收为是
-                                    amount_of_recharge=amount_of_recharge-actual_amount;//剩余充值金额
+                                    int info=rechargeDao.updateReceivable(user_id,receive.getSerialNumber());//是否回收为是
+                                   if(info>0){
+                                       amount_of_recharge=amount_of_recharge-actual_amount;//剩余充值金额
+                                   }else {
+                                       throw new UpdateDatabaseException("更改失败");
+                                   }
                                 }else{
-                                    int info=(int)rechargeDao.updateReceivablePart(user_id,serial_number,actual_amount,amount_of_recharge);//是否回收为部分收回
+                                    int info=rechargeDao.updateReceivablePart(user_id, receive.getSerialNumber(),actual_amount, amount_of_recharge);//是否回收为部分收回
+                                    if(info<1){
+                                        throw new UpdateDatabaseException("更改失败");
+                                    }
                                 }
                             }
                         }
-                        CreditAndPayment credit=(CreditAndPayment) rechargeDao.findCredit(user_id);//查询该商户资金基本信息
-                        if(credit!=null){
-                            if(credit.getCreditBalance()==credit.getCreditTotal()){//授信余额=授信总额
-
-                                int upcredit=(int) rechargeDao.updateCredit(user_id,amount_of_recharge );//更新账户余额
-                                if(upcredit>0){
-                                    return new RechargeExcution(RechargeEnum.UPDATE_SUCCESS);
-                                }else{
-                                    throw new UpdateDatabaseException("修改失败");
-                                }
-                            }else{//授信余额不等于授信总额
-                                int debt = (int) (credit.getCreditTotal()-credit.getCreditBalance()); //求欠款金额
-
-                                if(amount_of_recharge>=debt){//充值金额>欠款金额
-                                    amount_of_recharge=amount_of_recharge-debt;//还完欠款的剩余充值金额
-                                    map.put("amount_of_recharge", amount_of_recharge);
-                                    int upcredit=(int) rechargeDao.updateCredit(user_id,amount_of_recharge);//计算账户余额
+                        CreditAndPayment credit=rechargeDao.findCredit(user_id);//查询该商户资金基本信息
+                            if(credit!=null){
+                                if(credit.getCreditBalance()==credit.getCreditTotal()){//授信余额=授信总额
+                                    int upcredit=rechargeDao.updateCredit(user_id,amount_of_recharge);//更新账户余额
                                     if(upcredit>0){
-                                        return new RechargeExcution(RechargeEnum.UPDATE_SUCCESS);
+                                        return new RechargeExcution(RechargeEnum.SUCCESS);
                                     }else{
-                                        throw new UpdateDatabaseException("修改失败");
+                                        throw new UpdateDatabaseException("更改失败");
                                     }
-                                }
-                                else{//充值金额<欠款金额
-                                    int upcreditbalance=(int)rechargeDao.upcreditbalance(user_id,amount_of_recharge);//授信余额=授信余额+充值金额
-                                    if(upcreditbalance>0){
-                                        return new RechargeExcution(RechargeEnum.UPDATE_SUCCESS);
-                                    }else{
-                                        throw new UpdateDatabaseException("修改失败");
+                                }else{//授信余额不等于授信总额
+                                    int debt = (int) (credit.getCreditTotal()-credit.getCreditBalance()); //求欠款金额
+                                    if(amount_of_recharge>=debt){//充值金额>欠款金额
+                                        amount_of_recharge=amount_of_recharge-debt;//还完欠款的剩余充值金额
+                                        int upcredit=rechargeDao.updateCredit(user_id,amount_of_recharge);//计算账户余额
+                                        if(upcredit>0){
+                                            return new RechargeExcution(RechargeEnum.SUCCESS);
+                                        }else{
+                                            throw new UpdateDatabaseException("更改失败");
+                                        }
+                                    }
+                                    else{//充值金额<欠款金额
+                                        int upcreditbalance=rechargeDao.upcreditbalance(user_id,amount_of_recharge);//授信余额=授信余额+充值金额
+                                        if(upcreditbalance>0){
+                                            return new RechargeExcution(RechargeEnum.SUCCESS);
+                                        }else{
+                                            throw new UpdateDatabaseException("更改失败");
+                                        }
                                     }
                                 }
                             }
-                        }else{
-                            throw new QueryInnerErrorException("查询失败");
-                        }
-                    }else {
+                }else {
                         throw new InsertInnerErrorException("流水账记录插入失败");
                     }
-                }
-            }else {
-                throw new InsertInnerErrorException("商户充值记录数据保存失败");
+            }else{
+                throw new InsertInnerErrorException("商户充值记录插入数据失败");
             }
-        }catch (QueryInnerErrorException q) {
-            throw q;
-        }catch (InsertInnerErrorException i) {
+        }catch (InsertInnerErrorException i){
             throw i;
-        }catch (UpdateDatabaseException u) {
+        }catch (UpdateDatabaseException u){
             throw u;
         }catch (Exception e) {
             logger.error(e.getMessage(), e);
             throw new BaseException(e.getMessage());
         }
-
+        return null;
     }
 }

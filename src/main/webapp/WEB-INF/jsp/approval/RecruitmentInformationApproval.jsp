@@ -66,8 +66,8 @@ $.Admin.InformationApproval = {
             $.Admin.tips('温馨提示信息', '请先选择 您要编辑的数据行','error');
             return false;
         }
-        var data = {recruiting_id: get_select_row.recruiting_id,releases_user_id:get_select_row.releases_user_id};
-		alert(get_select_row.recruiting_id);
+        var data = {recruiting_id: get_select_row.recruitingId,releases_user_id:get_select_row.releasesUserId};
+
         var id = $.Admin.random_dialog();
         $(id).dialog({
             title: '审核信息',
@@ -97,7 +97,7 @@ $($.Admin.InformationApproval.id).datagrid({
     ctrlSelect: true,
     singleSelect: false,
     rownumbers: true,
-    idField: 'recruiting_id',
+    idField: 'recruitingId',
     url: "approval/getinfoList",
     pagination:true,
 	pagePosition:'bottom',

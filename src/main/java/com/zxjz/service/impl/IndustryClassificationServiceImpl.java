@@ -34,7 +34,7 @@ public class IndustryClassificationServiceImpl implements IndustryClassification
         List<IndustryClassification> findListIndustryClassification = industryClassificationDao.getListIndustryClassification();
         int total = industryClassificationDao.total();
         Map map = new HashMap();
-        map.put("findListIndustryClassification",findListIndustryClassification);
+        map.put("rows",findListIndustryClassification);
         map.put("total",total);
         return new IndustryClassificationExcution(map,IndustryClassificationEnum.FIND_SUCCESS);
     }
@@ -60,8 +60,9 @@ public class IndustryClassificationServiceImpl implements IndustryClassification
      * @return
      */
     public IndustryClassificationExcution editIndustry(IndustryClassificationDto industryClassificationDto) {
-        String value = industryClassificationDto.getValue();
-        int editIndustry = industryClassificationDao.editIndustry(value);
+        String name = industryClassificationDto.getName();
+        int value = industryClassificationDto.getValue();
+        int editIndustry = industryClassificationDao.editIndustry(name,value);
         if (editIndustry > 0){
             return new IndustryClassificationExcution(IndustryClassificationEnum.UPDATE_SUCCESS);
         }else {
@@ -75,7 +76,7 @@ public class IndustryClassificationServiceImpl implements IndustryClassification
      * @return
      */
     public IndustryClassificationExcution updateIndustry(IndustryClassificationDto industryClassificationDto) {
-        String value = industryClassificationDto.getValue();
+        int value = industryClassificationDto.getValue();
         int updateIndustry = industryClassificationDao.updateIndustry(value);
         if (updateIndustry > 0){
             return new IndustryClassificationExcution(IndustryClassificationEnum.UPDATE_SUCCESS);
@@ -85,12 +86,12 @@ public class IndustryClassificationServiceImpl implements IndustryClassification
     }
 
     public IndustryClassificationExcution findIndustryCategory(IndustryClassificationDto industryClassificationDto) {
-        String value = industryClassificationDto.getValue();
+        int value = industryClassificationDto.getValue();
         IndustryCategory findIndustryCategory = industryClassificationDao.findIndustryCategory(value);
         if (findIndustryCategory == null){
             return new IndustryClassificationExcution(IndustryClassificationEnum.FIND_ERROR);
         }else {
-            return new IndustryClassificationExcution(IndustryClassificationEnum.FIND_SUCCESS);
+            return new IndustryClassificationExcution(findIndustryCategory,IndustryClassificationEnum.FIND_SUCCESS);
         }
     }
 }

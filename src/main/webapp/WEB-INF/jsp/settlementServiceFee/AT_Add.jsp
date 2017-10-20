@@ -47,7 +47,7 @@
 		</tr>
 		<tr>
 			<td style="text-align: right">操作员:</td>
-			<td><input type="text"  value="${name}" style="width: 87%;height:25px;line-height: 25px;border-radius:5px; padding: 0px; margin: 0px; border:1px solid #DBDBDB ; background-color: #eee;" readonly/></td>
+			<td><input type="text" name="employees_name"  value="${name}" style="width: 87%;height:25px;line-height: 25px;border-radius:5px; padding: 0px; margin: 0px; border:1px solid #DBDBDB ; background-color: #eee;" readonly/></td>
 			<td style="display:none"><input type="text" name="employees_id" value="${id}"  readonly/></td>
 			<td colspan="2">
 				<button type="button" class="table_form_close_dialog "
@@ -68,7 +68,7 @@
 	    panelWidth:null,
 	    fitColumns: true,
 	    fit: true,   
-	    url:"Settlement/getMerchantsName",    
+	    url:"Settlement/getMerchantsName",
 	    idField: 'userId',
 	    textField: 'merchantsName',
 	    pagination:true,

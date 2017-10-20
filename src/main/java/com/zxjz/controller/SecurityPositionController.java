@@ -12,10 +12,8 @@ import com.zxjz.exception.db.InsertInnerErrorException;
 import com.zxjz.service.SecurityPositionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Map;
@@ -221,17 +219,45 @@ public class SecurityPositionController extends BaseController{
 
     /**
      * 编辑
-     * @param atSecurityPositionDto
+     * @param
      * @return
      */
     @RequestMapping(value = "/getSecurityPositionUpdate",
             method = RequestMethod.POST,
             produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public String getSecurityPositionUpdate(AtSecurityPositionDto atSecurityPositionDto) {
+    public String getSecurityPositionUpdate(@RequestParam(value = "recruiting_id", required = true) Integer recruiting_id,
+                                            @RequestParam(value = "post_name", required = false) String post_name,
+                                            @RequestParam(value = "post_classification", required = true) Integer post_classification,
+                                            @RequestParam(value = "work_date", required = true) String work_date,
+                                            @RequestParam(value = "work_time", required = true) String work_time,
+                                            @RequestParam(value = "work_location", required = true) String work_location,
+                                            @RequestParam(value = "position_longitude", required = true) String position_longitude,
+                                            @RequestParam(value = "position_latitude", required = true) String position_latitude,
+                                            @RequestParam(value = "work_content", required = true) String work_content,
+                                            @RequestParam(value = "salary_treatment", required = true) double salary_treatment,
+                                            @RequestParam(value = "commission", required = true) double commission,
+                                            @RequestParam(value = "benefits", required = true) double benefits,
+                                            @RequestParam(value = "gender_requirements", required = true) String gender_requirements,
+                                            @RequestParam(value = "other_requirements", required = true) String other_requirements,
+                                            @RequestParam(value = "recruitment", required = true) int recruitment,
+                                            @RequestParam(value = "hiring_expiration_date", required = true) String hiring_expiration_date,
+                                            @RequestParam(value = "main_title", required = true) String main_title,
+                                            @RequestParam(value = "subtitle", required = true) String subtitle,
+                                            @RequestParam(value = "short_description", required = true) String short_description,
+                                            @RequestParam(value = "page_url", required = false) MultipartFile page_url,
+                                            @RequestParam(value = "first_page_carousel_url", required = false) MultipartFile first_page_carousel_url,
+                                            @RequestParam(value = "main_page_url", required = false) MultipartFile main_page_url,
+                                            @RequestParam(value = "details_page_introduction", required = true) String details_page_introduction,
+                                            @RequestParam(value = "releases_user_id", required = true) Integer releases_user_id,
+                                            @RequestParam(value = "up_down_frame", required = true) String up_down_frame
+    ) {
         //参数验空
         try {
-            AtSecurityPositionExcution atSecurityPositionExcution = securityPositionService.updateSecurityPosition(atSecurityPositionDto);
+            AtSecurityPositionExcution atSecurityPositionExcution = securityPositionService.updateSecurityPosition(recruiting_id,
+            post_name,post_classification,work_date,work_time,work_location,position_longitude,position_latitude,work_content,salary_treatment,commission,benefits,
+            gender_requirements,other_requirements,recruitment,hiring_expiration_date,main_title,subtitle,short_description,page_url,first_page_carousel_url,
+            main_page_url,details_page_introduction,releases_user_id,up_down_frame);
             return BaseUIResult.returnJsonMSG(1,atSecurityPositionExcution,"修改成功");
         }catch (InsertInnerErrorException e) {
             logger.error(e.getMessage(), e);

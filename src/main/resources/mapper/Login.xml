@@ -1,0 +1,30 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.LoginDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+
+    <!--郭阳 查询账号密码-->
+    <select id="findAccountInfo" resultType="LandFallInfo">
+        SELECT *
+        FROM zx_employee_basic_information
+        WHERE employees_num = #{employees_num}
+    </select>
+
+    <!--郭阳 查询员工权限菜单-->
+    <select id="findMenuList" resultType="EmployeeRightsInfo">
+        SELECT staff_goup.permission_grouping_id, staff_goup.permission_grouping_name,
+        staff_group_menu.menu_id, staff_menu.menu_name
+        FROM zx_employee_basic_information employee_infor
+        LEFT JOIN zx_staff_authority_group staff_goup
+        ON employee_infor.permission_grouping_id = staff_goup.permission_grouping_id
+        LEFT JOIN zx_staff_grouping_menu_permissions staff_group_menu
+        ON employee_infor.permission_grouping_id = staff_group_menu.permission_grouping_id
+        LEFT JOIN zx_staff_function_menu staff_menu
+        ON staff_group_menu.menu_id = staff_menu.menu_id
+        WHERE employees_num = #{employees_num}
+    </select>
+
+</mapper>

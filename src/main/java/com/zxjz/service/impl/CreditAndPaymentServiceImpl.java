@@ -34,6 +34,9 @@ public class CreditAndPaymentServiceImpl implements CreditAndPaymentService {
         String sort=creditAndPaymentDto.getSort();
         String order=creditAndPaymentDto.getOrder();
         String bxw_search_content=creditAndPaymentDto.getBxw_search_content();
+        /*HashMap maps=new HashMap();
+        maps.put("bxw_search_content",bxw_search_content);
+        System.out.println(maps.toString());*/
         int page=creditAndPaymentDto.getPage();
         try{
             int offset = (page - 1) * rows;
@@ -111,7 +114,7 @@ public class CreditAndPaymentServiceImpl implements CreditAndPaymentService {
 
     public CreditAndPaymentExcution subCredit(CreditAndPaymentDto creditAndPaymentDto) {
         int user_id=creditAndPaymentDto.getUser_id();
-        int credit_total=creditAndPaymentDto.getCredit_total();
+        double credit_total=creditAndPaymentDto.getCredit_total();
         try {
             int subCredit = creditDao.submitCredit(user_id, credit_total);
             if(subCredit>0){
@@ -128,7 +131,7 @@ public class CreditAndPaymentServiceImpl implements CreditAndPaymentService {
 
     public CreditAndPaymentExcution subPayment(CreditAndPaymentDto creditAndPaymentDto) {
         int  user_id=creditAndPaymentDto.getUser_id();
-        int paymnet_days=creditAndPaymentDto.getPayment_days();
+        String paymnet_days=creditAndPaymentDto.getPayment_days();
         try{
             int subPayment=creditDao.submitPayment(user_id,paymnet_days);
             if(subPayment>0){

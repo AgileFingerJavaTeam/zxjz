@@ -12,7 +12,7 @@
 	<table class="table_list">
 		<tr>
 			<td>确认删除这个公司VIP权限么？</td>
-				<td style="display:none"><input type='text' value="${data.user_id}" name='user_id'/></td>
+				<td style="display:none"><input type='text' value="${data.data.userId}" name='user_id'/></td>
 		</tr>
 		<tr>
 			<td colspan="4">

@@ -17,8 +17,8 @@
               data-options="
 					url:'VIPMerAccount/findMerchantName',
 					method:'get',
-					valueField:'user_id',
-					textField:'merchants_name',
+					valueField:'userId',
+					textField:'merchantsName',
 					panelHeight:'auto',										
 				"></td>
 				<td style="display:none"><input type='text' id='merchant_id' name='user_id' /></td>

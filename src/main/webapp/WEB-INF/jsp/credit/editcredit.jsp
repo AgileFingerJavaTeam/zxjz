@@ -8,26 +8,26 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<form action="money/subcredit"id="form1" class="table_form" method="post">			
+<form action="money/subcredit"id="form1" class="table_form" method="post">
      <table class="table_list">
          <tr >
              <th width="100" >商户名称：</th>
              <td >
-             	<input type="hidden" name="user_id" value="${data.user_id}"/>
-            	<input type="text"  id="bxw_btn" name="merchants_name" value="${data.merchants_name}"  id="employees_num" class="easyui-textbox easyui-validatebox" data-options="readonly:true, width:'100%',events:{change: function(){ aaa() }} "/>
+             	<input type="hidden" name="user_id" value="${data.userId}"/>
+            	<input type="text"  id="bxw_btn" name="merchants_name" value="${data.merchantsName}"  id="employees_num" class="easyui-textbox easyui-validatebox" data-options="readonly:true, width:'100%',events:{change: function(){ aaa() }} "/>
              </td>           
          </tr>
          <tr>
          	 <th width="100">账户余额：</th>
              <td >
-                  <input type="text"  name="account_balance" value="${data.account_balance}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
+                  <input type="text"  name="account_balance" value="${data.accountBalance}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
              </td>
          </tr>
          <tr>
              <th width="100">授信总额：</th>
              <td >
               
-			         <input   value="${data.credit_total}" name="credit_total" class="easyui-textbox easyui-validatebox" data-options="required:true,width:'100%'"/>  
+			         <input   value="${data.creditTotal}" name="credit_total" class="easyui-textbox easyui-validatebox" data-options="required:true,width:'100%'"/>
 			    	
 
              </td>            
@@ -36,7 +36,7 @@
              <th width="100">授信余额：</th>
              <td >
               
-			         <input   value="${data.credit_balance}" name="credit_balance" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>  
+			         <input   value="${data.creditBalance}" name="credit_balance" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
 			    	
 
              </td>            
@@ -54,7 +54,7 @@
              <th width="100">账期：</th>
              <td >
               
-			         <input  value="${data.payment_days}" name="payment_days" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>  
+			         <input  value="${data.paymentDays}" name="payment_days" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
 			    	
 
              </td>            

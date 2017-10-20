@@ -30,6 +30,7 @@ public class CommonController extends BaseController{
     @ResponseBody
     public Object getSonMenu(AuthRoleDto authRoleDto){
            HttpSession authSession = this.getRequest().getSession();
+
         try {
            AuthRoleExcution authRoleExcution = authRoleService.AuthRole(authRoleDto);
            List<AuthRole> list = (List<AuthRole>) authRoleExcution.getData();

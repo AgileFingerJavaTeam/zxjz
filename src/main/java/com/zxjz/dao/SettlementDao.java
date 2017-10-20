@@ -22,7 +22,10 @@ public interface SettlementDao {
      * 显示总数
      */
     public int findSettlementCount(@Param("search")String search);
-
+    /**
+     * 显示总数商户名称表
+     */
+    public int findSettlementCount2(@Param("search")String search);
     /**
      * 模糊查询
      * @param rows

@@ -39,7 +39,7 @@
     </select>
 
     <!--设置授信与账期-->
-    <select id="CreditAndPayment" resultType="CreditAndPayment">
+    <select id="updateCredit" resultType="CreditAndPayment">
         SELECT a.user_id, a.merchants_name,c.account_balance,c.credit_total,c.credit_balance,c.Payment_days from zx_merchants_account a
         LEFT JOIN zx_merchants_money_basic c
         on a.user_id=c.user_id

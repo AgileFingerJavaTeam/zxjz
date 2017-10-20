@@ -40,6 +40,10 @@ $.Admin.rechargePage = {
 	 'Bxw_SearchRecharge' : function(){
 		var search_content=$('#bxw_searchrecharge').val();
         var bxw_searchInfo={};
+         var page=1;
+         var  rows=20;
+         bxw_searchInfo.page=page;
+         bxw_searchInfo.rows=rows;
         bxw_searchInfo.bxw_search_content=search_content;
       $.ajax({
    	  type:'POST',
@@ -83,7 +87,7 @@ $.Admin.rechargePage = {
             $.Admin.tips('温馨提示信息', '请先选择 您要编辑的数据行','error');
             return false;
         }
-        var data = {user_id: get_select_row.user_id,recharge_sequence_number:get_select_row.recharge_sequence_number};
+        var data = {user_id: get_select_row.userId,recharge_sequence_number:get_select_row.rechargeSequenceNumber};
         var id = $.Admin.random_dialog();
         $(id).dialog({
             title: '详情',

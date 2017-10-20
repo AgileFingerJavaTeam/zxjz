@@ -41,7 +41,11 @@ $.Admin.creditPayment = {
   	 'Bxw_SearchCredit' : function(){
   		var search_content=$('#bxw_searchcredit').val();
           var bxw_searchInfo={};
+          var page=1;
+          var  rows=20;
           bxw_searchInfo.bxw_search_content=search_content;
+          bxw_searchInfo.page=page;
+          bxw_searchInfo.rows=rows;
         $.ajax({
      	  type:'POST',
      	  data: bxw_searchInfo,
@@ -62,7 +66,7 @@ $.Admin.creditPayment = {
             $.Admin.tips('温馨提示信息', '请先选择 您要编辑的数据行','error');
             return false;
         }
-        var data = {user_id: get_select_row.user_id};
+        var data = {user_id: get_select_row.userId};
         var id = $.Admin.random_dialog();
         $(id).dialog({
             title: '授信总额',
@@ -92,7 +96,7 @@ $.Admin.creditPayment = {
         $.Admin.tips('温馨提示信息', '请先选择 您要编辑的数据行','error');
         return false;
     }
-    var data = {user_id: get_select_row.user_id};
+    var data = {user_id: get_select_row.userId};
     var id = $.Admin.random_dialog();
     $(id).dialog({
         title: '账期',

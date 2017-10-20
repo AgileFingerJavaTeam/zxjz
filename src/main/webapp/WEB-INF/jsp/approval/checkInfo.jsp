@@ -12,58 +12,58 @@
      <table class="table_list">
          <tr >
              <th width="100" >发布用户：</th>
-             <td ><input type="hidden" name="recruiting_id" value="${data.recruiting_id}"/>
-                  <input type="hidden"  name="releases_user_id" value="${data.releases_user_id}"/>
-            	  <input type="text"  name="merchants_name" value="${data.releases_user_id}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
+             <td ><input type="hidden" name="recruiting_id" value="${data.data.recruitingId}"/>
+                  <input type="hidden"  name="releases_user_id" value="${data.data.releasesUserId}"/>
+            	  <input type="text"  name="merchants_name" value="${data.data.merchantsName}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
              </td>
              <th width="70">申请序号：</th>
              <td >
-                  <input type="text"  name="apply_num" value="${data.apply_num}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
+                  <input type="text"  name="apply_num" value="${data.data.applyNum}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
              </td>
          </tr>
          <tr>
              <th width="70">申请时间：</th>
              <td >
-                  <input type="text"  name="apply_time" value="${data.apply_time}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
+                  <input type="text"  name="apply_time" value="${data.data.applyTime}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
              </td>
              <th width="70">岗位名称：</th>
              <td >
-                  <input type="text"  name="post_name" value="${data.post_name}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
-                  <input type="hidden"  name="details_page_category" value="${data.details_page_category}"/>
+                  <input type="text"  name="post_name" value="${data.data.postName}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
+                  <input type="hidden"  name="details_page_category" value="${data.data.detailsPageCategory}"/>
              </td>
          </tr>
          <tr>
              <th width="70">岗位分类：</th>
              <td >
-             <input type="hidden"  name="post_classification" value="${data.post_classification}"/>
-                  <input type="text"  name="station_name" value="${data.station_name}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
+             <input type="hidden"  name="post_classification" value="${data.data.postClassification}"/>
+                  <input type="text"  name="station_name" value="${data.data.stationName}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
              </td>
             <th width="70">工作日期：</th>
              <td >
-                  <input type="text"  name="work_date" value="${data.work_date}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
+                  <input type="text"  name="work_date" value="${data.data.workDate}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
              </td>
          </tr>
          <tr>
              
              <th width="70">工作时间：</th>
              <td >
-                  <input type="text"  name="work_time" value="${data.work_time}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
+                  <input type="text"  name="work_time" value="${data.data.workTime}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
              </td>
              
              
              
              <th width="70">工作内容：</th>
              <td >
-                  <input type="text"  name="work_content" value="${data.work_content}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
+                  <input type="text"  name="work_content" value="${data.data.workContent}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
              </td>
          </tr>
          <tr>
              <th width="70" >工作地点：</th>
               <td colspan="3">
-              	<input type="hidden"  name="city" value="${data.city}"/>
-               	<input type="hidden" id="long"  name="position_longitude" value="${data.position_longitude}"/>
-				<input type="hidden" id="lat"  name="position_latitude" value="${data.position_latitude}"/>
-             	<input type="text"   name="work_location" value="${data.work_location}" class="easyui-textbox easyui-validatebox"  style="width:90%" data-options="readonly:true">
+              	<input type="hidden"  name="city" value="${data.data.city}"/>
+               	<input type="hidden" id="long"  name="position_longitude" value="${data.data.positionLongitude}"/>
+				<input type="hidden" id="lat"  name="position_latitude" value="${data.data.positionLatitude}"/>
+             	<input type="text"   name="work_location" value="${data.data.workLocation}" class="easyui-textbox easyui-validatebox"  style="width:90%" data-options="readonly:true">
             	<a id="btn"></a>
        
              </td>           
@@ -71,47 +71,47 @@
          <tr>
          	 <th width="70">结算方式：</th>
              <td >
-                  <input type="text"  name="settlement_method" value="${data.settlement_method}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
+                  <input type="text"  name="settlement_method" value="${data.data.settlementMethod}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
              </td>
             
              <th width="70">工资待遇：</th>
              <td >
-                  <input type="text"  name="salary_treatment" value="${data.salary_treatment}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
+                  <input type="text"  name="salary_treatment" value="${data.data.salaryTreatment}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
              </td>
             
          </tr>
          <tr>
               <th width="70">提成：</th>
              <td >
-                  <input type="text"  name="commission" value="${data.commission}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
+                  <input type="text"  name="commission" value="${data.data.commission}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
              </td>
              <th width="70">福利：</th>
              <td >
-                  <input type="text"  name="benefits" value="${data.benefits}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
+                  <input type="text"  name="benefits" value="${data.data.benefits}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
              </td>
              
          </tr>
          <tr>
              <th width="70">性别要求：</th>
              <td >
-                  <input type="text"  name="gender_requirements" value="${data.gender_requirements}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
+                  <input type="text"  name="gender_requirements" value="${data.data.genderRequirements}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
              </td>
 			 <th width="70">招聘人数：</th>
              <td >
-             <input type="hidden"  name="people_num" value="${data.people_num}"/>
-                  <input type="text"  name="recruitment" value="${data.recruitment}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
+             <input type="hidden"  name="people_num" value="${data.data.peopleNum}"/>
+                  <input type="text"  name="recruitment" value="${data.data.recruitment}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
              </td>
          </tr>
          <tr>
 
              <th width="90">招聘到期时间：</th>
              <td >
-                  <input type="text"  name="hiring_expiration_date" value="${data.hiring_expiration_date}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
+                  <input type="text"  name="hiring_expiration_date" value="${data.data.hiringExpirationDate}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
              </td>
               <th width="70">审核状态：</th>
              <td >
              <input type="hidden" class="stat_res" name="stat_res" value="0"/>
-                  <input type="text"  name="audit_status" id="asd" value="${data.audit_status}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
+                  <input type="text"  name="audit_status" id="asd" value="${data.data.auditStatus}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
              </td>
          </tr>
          <tr>
@@ -119,18 +119,18 @@
              <th width="70">审核人：</th>
              <td >
             	<input type=hidden value="${id}" name="employid">
-                  <input type="text" id="auditorman" name="auditor" value="${name}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>             		
+                  <input type="text" id="auditorman" name="auditor" value="${name}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
              </td>
             <th width="70">审核时间：</th>
              <td >
-                  <input type="text"  name="status_time" value="${data.status_time}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
+                  <input type="text"  name="status_time" value="${data.data.statusTime}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
              </td>
          </tr>
          <tr>
           
              <th width="70">驳回原因：</th>
              <td colspan="3">
-                  <input type="text" id="reason"   name="dismissed_reason" value="${data.dismissed_reason}" class="easyui-textbox easyui-validatebox"  data-options="readonly:false,width:'100%'"/>
+                  <input type="text" id="reason"   name="dismissed_reason" value="${data.data.dismissedReason}" class="easyui-textbox easyui-validatebox"  data-options="readonly:false,width:'100%'"/>
              </td>
          </tr>
         <tr>
@@ -150,7 +150,7 @@
 		if(a!='待审核'){
 			$('.bxw_reject').hide();
 			$('.bxw_pass').hide();
-			$('#auditorman').textbox().textbox("setValue","${data.employees_name}");
+			$('#auditorman').textbox().textbox("setValue","${data.data.employeesName}");
 		}	
 		
 		$('#btn').linkbutton({    

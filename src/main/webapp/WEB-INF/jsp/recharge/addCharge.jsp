@@ -8,7 +8,7 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<form action="Recharge/subform" class="table_form" method="post">			
+<form action="Recharge/subform" id="formsub" class="table_form" method="post">
      <table class="table_list">
          <tr >
 	             <th width="160" >商户名称：</th>
@@ -24,7 +24,7 @@
 	             </td>
 	              <th width="100">充值时间：</th>
 	             <td >
-				         <input  id="admiDivisionCode"  name="recharge_time" value="now" class="easyui-datetimebox" data-options="required:true" />  
+				         <input  id="rechargeTime"  name="recharge_time" value="now" class="easyui-datetimebox" data-options="required:true" />
 	             </td>   
 		 </tr>
 		 <tr>
@@ -35,17 +35,18 @@
 	             </td> 
 	             <th >充值金额：</th>
 	             <td >
-				         <input  id="admiDivisionCode"  name="amount_of_recharge" class="easyui-textbox easyui-validatebox" data-options="required:true" />  
+				         <input  id="rechargeAmount"  name="amount_of_recharge" class="easyui-textbox easyui-validatebox" data-options="required:true" />
 	             </td>
 		 </tr>
 		 <tr>
 	             <th >支付平台流水号：</th>
 	             <td >
-				         <input  name="payment_platform_flow_number" class="easyui-textbox easyui-validatebox"  />  
+				         <input  name="payment_platform_flow_number" class="easyui-textbox easyui-validatebox"  />
 	             </td>
 	             <th >操作员：</th>
 	             <td >
-	                  <input type="text"  name="operating_staff_id" value="${datas}"  class="easyui-textbox easyui-validatebox" readonly/>
+					 <input type="hidden"  name="operating_staff_id" value="${id}"  class="easyui-textbox easyui-validatebox" readonly/>
+	                   <input type="text"  name="operating_staff_Name" value="${name}"  class="easyui-textbox easyui-validatebox" readonly/>
 	             </td>                           
          </tr> 
          <tr>
@@ -71,25 +72,25 @@ $("#merchants_name").combogrid({
 	    fitColumns: true,
 	    fit: true,   
 	    url:"Recharge/getMerchantsName",    
-	    idField: 'user_id',    
-	    textField: 'merchants_name',
+	    idField: 'userId',
+	    textField: 'merchantsName',
 	    pagination:true,
 		pagePosition:'bottom',
 		pageNumber:1,
 		pageSize:20,
 		pageList:[10,20,30,50,100],
 	    columns: [[    
-	        {field:'merchants_name',title:'商户名称',halign:'center',align:'center',width:100,sortable:true},      
+	        {field:'merchantsName',title:'商户名称',halign:'center',align:'center',width:100,sortable:true},
 	    ]],
 	    onSelect:function(){ aaa()}
 	  })
 $("#chargemethod").combobox({    
 	  url:"Recharge/getChargeMethod",
 	  method : "post",  
-	  valueField: 'recharge_mode_name',  
-	  textField: 'recharge_mode_name',
+	  valueField: 'rechargeModeName',
+	  textField: 'rechargeModeName',
 	  onSelect:function(chargemethodlist){
-		 $('#chargemethodnum').val(chargemethodlist.recharge_mode);
+		 $('#chargemethodnum').val(chargemethodlist.rechargeMode);
 	  }
 	  }) ;
 	  
@@ -102,11 +103,19 @@ $("#chargemethod").combobox({
 			    url: "Recharge/getNum",  
 			    data: {'merchants_id':merchants_id},  
 			    dataType: "json",  
-			    success: function(num){//调用成功  
+			    success: function(num){//调用成功
 					$('#sequence_number').textbox("setValue",num);
 			    },  
 			 });
   		}
+
+  		$("#formsub").click(
+  		    function () {
+				var array=$("#formsub").serializeArray();
+				console.log(array);
+            }
+		);
+
 </script>
 
 

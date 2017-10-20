@@ -8,12 +8,13 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<form action="IndustryManage/editIndustry" class="table_form"method="post" id="editCarousel" enctype="multipart/form-data">
+<form action="IndustryManage/editIndustry" class="table_form" method="post" id="editCarousel" enctype="multipart/form-data">
 	<table class="table_list">
 	       <tr>
 				<th align="right">行业名称:</th>
-				<td><input type="text" name="name" value="${data.text}" class="easyui-textbox easyui-validatebox"  data-options="required:true,width:'100%'">
-				    <input type="hidden" name="value" value="${data.value}"/>
+				<td>
+					<input type="text" name="name" value="${data.data.text}" class="easyui-textbox easyui-validatebox"  data-options="required:true,width:'100%'">
+				    <input type="hidden" name="value" value="${data.data.value}"/>
 				</td>
 	       </tr>
 	       <tr>

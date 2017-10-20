@@ -1,0 +1,50 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.AuthManagementDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+    <!--郭阳 查询角色信息-->
+    <select id="getInfoList" resultType="AuthManagement">
+        SELECT *
+        FROM zx_staff_authority_group WHERE is_delete = 0
+    </select>
+    <select id="getInfoAuthList" resultType="AuthMenu">
+        SELECT *
+        FROM zx_staff_grouping_menu_permissions
+        WHERE permission_grouping_id = #{permission_grouping_id}
+    </select>
+    <select id="getMenuInfo" resultType="String">
+        SELECT menu_name
+        FROM zx_staff_function_menu
+        WHERE menu_id = #{menu_id}
+    </select>
+
+    <!--郭阳 获取参数条数 -->
+    <select id="total" resultType="int">
+        SELECT COUNT(*)
+        FROM zx_staff_authority_group staff_group
+        LEFT JOIN zx_staff_grouping_menu_permissions staff_permissions
+        ON staff_group.permission_grouping_id = staff_permissions.permission_grouping_id
+        LEFT JOIN zx_staff_function_menu staff_menu
+        ON staff_permissions.menu_id = staff_menu.menu_id
+        WHERE is_delete = 0
+    </select>
+
+    <!-- 添加权限分组名称 -->
+    <insert id="addAuthManagement">
+        INSERT INTO zx_staff_authority_group (permission_grouping_name) VALUES (#{permission_grouping_name});
+        <selectKey resultType="int" keyProperty="permission_grouping_id" order="AFTER">
+            select @@IDENTITY as permission_grouping_id
+        </selectKey>
+    </insert>
+
+    <!-- 添加菜单名称 -->
+    <insert id="addAuthMenu">
+        INSERT INTO zx_staff_grouping_menu_permissions
+        (permission_grouping_id,authority_serial_number,menu_id)
+        values (#{permission_grouping_id},(SELECT authority_serial_number FROM (SELECT CASE MAX(authority_serial_number) IS NULL WHEN 1 THEN 1 ELSE (MAX(authority_serial_number)+1) END authority_serial_number FROM zx_staff_grouping_menu_permissions WHERE permission_grouping_id=#{permission_grouping_id}) temp),#{k})
+    </insert>
+
+</mapper>
