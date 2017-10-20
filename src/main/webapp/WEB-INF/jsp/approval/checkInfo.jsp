@@ -119,7 +119,7 @@
              <th width="70">审核人：</th>
              <td >
             	<input type=hidden value="${id}" name="employid">
-                  <input type="text" id="auditorman" name="auditor" value="${name}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>             		
+                  <input type="text" id="auditorman" name="auditor" value="${name}" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
              </td>
             <th width="70">审核时间：</th>
              <td >

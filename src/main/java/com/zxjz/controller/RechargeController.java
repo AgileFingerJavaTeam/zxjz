@@ -72,11 +72,11 @@ public class RechargeController extends BaseController {
         ModelAndView mv = new ModelAndView();
         HttpSession session = this.getRequest().getSession();
         try {
-            /*LandFallInfo landfall = (LandFallInfo) session.getAttribute("user");
-            int employid = landfall.getEmployees_id();
-            String employname = landfall.getEmployees_name();
-            mv.addObject("data", employid);
-            mv.addObject("datas", employname);*/
+            LandFallInfo landfall = (LandFallInfo) session.getAttribute("user");
+            int employid = landfall.getEmployeesId();
+            String employname = landfall.getEmployeesName();
+            mv.addObject("id", employid);
+            mv.addObject("name", employname);
             mv.setViewName("recharge/addCharge");
         } catch (Exception e) {
             RechargeExcution rechargeExcution = new RechargeExcution(RechargeEnum.FAIL, e.getMessage());
@@ -99,13 +99,11 @@ public class RechargeController extends BaseController {
         HttpSession session = this.getRequest().getSession();
         try {
             RechargeExcution rechargeExcution = rechargeService.findRechargePage(rechargeDto);
-            /*LandFallInfo landfall = (LandFallInfo) session.getAttribute("user");
-            int employid = landfall.getEmployees_id();
-            String employname = landfall.getEmployees_name();*/
-            int employid=4;
-            String employname="郭阳";
+           /* LandFallInfo landfall = (LandFallInfo) session.getAttribute("user");
+            int employid = landfall.getEmployeesId();
+            String employname = landfall.getEmployeesName();
             mv.addObject("id", employid);
-            mv.addObject("name", employname);
+            mv.addObject("name", employname);*/
             mv.addObject("data", rechargeExcution.getData());
             mv.setViewName("recharge/findrecharge");
         } catch (Exception e) {
@@ -174,16 +172,18 @@ public class RechargeController extends BaseController {
         }
 
 
-        @RequestMapping(value = "/subform", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
-        @ResponseBody
+    @RequestMapping(value = "/subform",
+            method = RequestMethod.POST,
+            produces = {"text/json;charset=UTF-8"})
+    @ResponseBody
         public String saveSubForm (RechargeDto rechargeDto){
             try {
                 RechargeExcution rechargeExcution = rechargeService.saveSubForm(rechargeDto);
-                return BaseUIResult.returnJsonEasyUI(rechargeExcution);
+                return BaseUIResult.returnJsonMSG(1,rechargeExcution,"成功");
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);
                 RechargeExcution rechargeExcution = new RechargeExcution(RechargeEnum.FAIL, e.getMessage());
-                return BaseUIResult.returnJsonEasyUI(rechargeExcution);
+                return BaseUIResult.returnJsonMSG(0,rechargeExcution,"失败");
             }
         }
 }

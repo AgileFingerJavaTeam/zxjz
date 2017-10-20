@@ -52,7 +52,7 @@ public interface RechargeDao {
     /*修改授信余额等信息*/
     public  int upcreditbalance(@Param("user_id")int user_id,@Param("amount_of_recharge")double amount_of_recharge);
     /*添加到流水账，序号不为1*/
-    public  int insertAccounts(@Param("user_id")int user_id,@Param("recharge_sequence_number")int recharge_sequence_number);
+    public  int insertAccounts(@Param("user_id")int user_id,@Param("recharge_sequence_number")int recharge_sequence_number,@Param("amount_of_recharge") double amount_of_recharge);
 
 
 }

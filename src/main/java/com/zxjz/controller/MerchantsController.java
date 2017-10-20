@@ -1,3 +1,4 @@
+/*
 package com.zxjz.controller;
 
 import com.zxjz.base.BaseAPIResult;
@@ -39,12 +40,14 @@ public class MerchantsController extends BaseController {
     private MerchantsInfoService merchantsInfoService;
 
 
-    /**
+    */
+/**
      * 升级账户
      *
      * @param merchantsUpgradeDto
      * @return
-     */
+     *//*
+
     @RequestMapping(value = "/Premium",
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
@@ -68,12 +71,14 @@ public class MerchantsController extends BaseController {
 
     }
 
-    /**
+    */
+/**
      * 变更负责人
      *
      * @param merchantsChangeHeadDto
      * @return
-     */
+     *//*
+
     @RequestMapping(value = "/changeHead",
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
@@ -93,12 +98,14 @@ public class MerchantsController extends BaseController {
         }
     }
 
-    /**
+    */
+/**
      * 获取商家个人信息
      *
      * @param merchantsInfoDto
      * @return
-     */
+     *//*
+
     @RequestMapping(value = "/getEmpolyerInfo",
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
@@ -118,12 +125,14 @@ public class MerchantsController extends BaseController {
         }
     }
 
-    /**
+    */
+/**
      * 确认员工爽约
      *
      * @param merchantsAffirmStudentBreakPromiseDto
      * @return
-     */
+     *//*
+
     @RequestMapping(value = "/affirmStuBaa",
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
@@ -152,11 +161,13 @@ public class MerchantsController extends BaseController {
         }
     }
 
-    /**
+    */
+/**
      * 显示商户申请VIP页面
      *
      * @return
-     */
+     *//*
+
     @RequestMapping(value = "/showApplyVipPage",
             method = RequestMethod.POST,
             produces = {"text/json;charset=UTF-8"})
@@ -170,12 +181,14 @@ public class MerchantsController extends BaseController {
         return mv;
     }
 
-    /**
+    */
+/**
      * 查询申请VIP商户信息
      *
      * @param merchantsUpgradeDto
      * @return
-     */
+     *//*
+
     @RequestMapping(value = "/GetApplyVipInfo",
             method = RequestMethod.POST,
             produces = {"text/json;charset=UTF-8"})
@@ -191,12 +204,14 @@ public class MerchantsController extends BaseController {
         }
     }
 
-    /**
+    */
+/**
      * 显示审核页面
      *
      * @param merchantsUpgradeDto
      * @return
-     */
+     *//*
+
     @RequestMapping(value = "/showAuditPage",
             method = RequestMethod.POST,
             produces = {"text/json;charset=UTF-8"})
@@ -213,21 +228,26 @@ public class MerchantsController extends BaseController {
         return mv;
     }
 
-    /**
+    */
+/**
      * 审核
      * @param merchantsUpgradeDto
      * @return
-     */
+     *//*
+
     @RequestMapping(value = "/audit",
             method = RequestMethod.POST,
             produces = {"text/json;charset=UTF-8"})
     @ResponseBody
     public String check(@RequestBody MerchantsUpgradeDto merchantsUpgradeDto) {
         try {
-/*            HttpSession session = this.getRequest().getSession();
+            HttpSession session = this.getRequest().getSession();
             LandFallInfo user = (LandFallInfo) session.getAttribute("user");
+
+
             int id = user.getEmployees_id();
-            merchantsUpgradeDto.setId(id);*/
+            merchantsUpgradeDto.setId(id);
+
             MerchantsUpgradeExcution merchantsUpgradeExcution = merchantsInfoService.confirmCheck(merchantsUpgradeDto);
             return  BaseUIResult.returnJsonEasyUI(merchantsUpgradeExcution);
         }catch (Exception e) {
@@ -237,11 +257,13 @@ public class MerchantsController extends BaseController {
         }
     }
 
-    /**
+    */
+/**
      * 查询员工列表
      * @param
      * @return
-     */
+     *//*
+
     @RequestMapping(value = "/getAccEm",
             method = RequestMethod.POST,
             produces = {"text/json;charset=UTF-8"})
@@ -257,3 +279,4 @@ public class MerchantsController extends BaseController {
         }
     }
 }
+*/

@@ -8,7 +8,7 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<form action="Recharge/subform" class="table_form" method="post">			
+<form action="Recharge/subform" id="formsub" class="table_form" method="post">
      <table class="table_list">
          <tr >
 	             <th width="160" >商户名称：</th>
@@ -45,7 +45,8 @@
 	             </td>
 	             <th >操作员：</th>
 	             <td >
-	                  <input type="text"  name="operating_staff_id" value="datas"  class="easyui-textbox easyui-validatebox" readonly/>
+					 <input type="hidden"  name="operating_staff_id" value="${id}"  class="easyui-textbox easyui-validatebox" readonly/>
+	                   <input type="text"  name="operating_staff_Name" value="${name}"  class="easyui-textbox easyui-validatebox" readonly/>
 	             </td>                           
          </tr> 
          <tr>
@@ -89,8 +90,7 @@ $("#chargemethod").combobox({
 	  valueField: 'rechargeModeName',
 	  textField: 'rechargeModeName',
 	  onSelect:function(chargemethodlist){
-	      console.log(chargemethodlist);
-		 $('#chargemethodnum').val(chargemethodlist.recharge_mode);
+		 $('#chargemethodnum').val(chargemethodlist.rechargeMode);
 	  }
 	  }) ;
 	  
@@ -108,6 +108,14 @@ $("#chargemethod").combobox({
 			    },  
 			 });
   		}
+
+  		$("#formsub").click(
+  		    function () {
+				var array=$("#formsub").serializeArray();
+				console.log(array);
+            }
+		);
+
 </script>
 
 
