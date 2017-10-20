@@ -12,22 +12,22 @@
      <table class="table_list">
          <tr>
              <th>参数编号：</th>
-             <td ><input type="text" name="serial_number" value="${data.serial_number}" class="easyui-textbox easyui-validatebox" data-options="required:true,width:'100%'"/></td>
+             <td ><input type="text" name="serial_number" value="${data.data.serialNumber}" class="easyui-textbox easyui-validatebox" data-options="required:true,width:'100%'"/></td>
          </tr>
      
          <tr>
              <th width="70">参数名：</th>
-             <td ><input type="hidden" name="parameter_id" value="${data.parameter_id}"/>
-                  <input type="text"  name="parameter_name" value="${data.parameter_name}" class="easyui-textbox easyui-validatebox" data-options="required:true,width:'100%'"/>
+             <td ><input type="hidden" name="parameter_id" value="${data.data.parameterId}"/>
+                  <input type="text"  name="parameter_name" value="${data.data.parameterName}" class="easyui-textbox easyui-validatebox" data-options="required:true,width:'100%'"/>
              </td>
          </tr>
          <tr>
              <th>参数描述：</th>
-             <td ><input type="text" name="parameter_description" value="${data.parameter_description}" class="easyui-textbox easyui-validatebox" data-options="required:true,width:'100%'"/></td>
+             <td ><input type="text" name="parameter_description" value="${data.data.parameterDescription}" class="easyui-textbox easyui-validatebox" data-options="required:true,width:'100%'"/></td>
          </tr>
          <tr>
              <th>参数值：</th>
-             <td ><input type="text" name="parameter" value="${data.parameter}" class="easyui-textbox easyui-validatebox" data-options="required:true,width:'100%'"/></td>
+             <td ><input type="text" name="parameter" value="${data.data.parameter}" class="easyui-textbox easyui-validatebox" data-options="required:true,width:'100%'"/></td>
         </tr>
         <tr>
             <td colspan="4">

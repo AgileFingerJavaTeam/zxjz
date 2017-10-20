@@ -3,11 +3,29 @@ package com.zxjz.dto.in;
 public class MerchantsUpgradeDto {
     private int id;
     private int userId;
+    private int user_id;
     private int page;
     private int rows;
     private int employees_name;
+    private String employeesName;
     private String srt_approval_status1;
     private String srt_search_content1;
+
+    public String getEmployeesName() {
+        return employeesName;
+    }
+
+    public void setEmployeesName(String employeesName) {
+        this.employeesName = employeesName;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
 
     public int getEmployees_name() {
         return employees_name;

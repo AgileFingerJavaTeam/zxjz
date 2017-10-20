@@ -1,7 +1,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zxjz.dao.MerchantsInfoDao">
+<mapper namespace="com.zxjz.dao.MerchantsUpgadeDao">
     <!--目的:为dao接口方法提供sql语句配置
         即针对dao接口中的方法编写我们的sql语句-->
 
@@ -18,7 +18,8 @@
 
     <!--查询申请VIP商户信息（后台管理）-->
     <select id="findApplyVipList"  resultType="MerchantsUpgrade">
-        SELECT *,ma.merchants_name FROM zx_merchants_upgrade  mu
+        SELECT *,ma.merchants_name
+        FROM zx_merchants_upgrade  mu
         LEFT JOIN zx_merchants_account ma  ON mu.user_id = ma.user_id
         <where>
             1=1
@@ -33,23 +34,29 @@
     <!--查询申请VIP商户总数-->
     <select id="findApplyVipCount"  resultType="int">
         SELECT count(*)
-        FROM zx_merchants_upgrade
+        FROM zx_merchants_upgrade mu
+        LEFT JOIN zx_merchants_account ma  ON mu.user_id = ma.user_id
+        <where>
+            1=1
+            <if test="srt_approval_status1!=null and srt_approval_status1!=''">
+                AND is_dispose =#{srt_approval_status1}
+            </if>
+            <if test="srt_search_content1!=null and srt_search_content1!=''">
+                AND CONCAT_WS(',',ma.merchants_name,apply_time,operating_time) LIKE '%${srt_search_content1}%'
+            </if>
+        </where>
     </select>
     <!--获取受理人姓名-->
-    <select id="findAem"  resultType="String">
+    <select id="findAcceptEmployer"  resultType="String">
         SELECT employees_name
-        FROM zx_merchants_upgrade mu
-        LEFT JOIN zx_employee_basic_information ebi
-        ON mu.accept_employees=ebi.employees_id
-        where user_id=#{user_id}
+        FROM zx_employee_basic_information
+        where employees_id=#{acceptEmployeesId}
     </select>
     <!--查询操作人姓名-->
-    <select id="findOem"  resultType="String">
+    <select id="findOperatingEmployer"  resultType="String">
         SELECT employees_name
-        FROM zx_merchants_upgrade mu
-        LEFT JOIN zx_employee_basic_information ebi
-        ON mu.operating_staff=ebi.employees_id
-        where user_id=#{user_id}
+        FROM zx_employee_basic_information
+        where employees_id=#{OperatingStaffId}
     </select>
     <!--查询申请VIP商户信息-->
     <select id="findEmInfo" resultType="MerchantsUpgrade">
@@ -62,7 +69,7 @@
         WHERE user_id=#{user_id}
     </update>
     <!--查询员工列表-->
-    <select id="findEmployees"  resultType="MerchantsUpgrade">
+    <select id="findEmployerList"  resultType="MerchantsUpgrade">
         SELECT employees_name,employees_id
         FROM `zx_employee_basic_information`;
     </select>

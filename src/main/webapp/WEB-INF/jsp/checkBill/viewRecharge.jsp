@@ -11,37 +11,37 @@
      <table class="table_list">
          <tr>
              <th>商户名称：</th>
-             <td ><input type="text"  value="${payInfo.merchants_name}" class="easyui-textbox easyui-validatebox"  readonly="readonly" data-options="width:'100%' "/></td>
+             <td ><input type="text"  value="${payInfo.data.merchantsName}" class="easyui-textbox easyui-validatebox"  readonly="readonly" data-options="width:'100%' "/></td>
          </tr>
          <tr>
              <th>充值序号：</th>
              <td >
-                  <input type="text"  value="${payInfo.recharge_sequence_number}" class="easyui-textbox easyui-validatebox" readonly="readonly" data-options="width:'100%'"/>
+                  <input type="text"  value="${payInfo.data.rechargeSequenceNumber}" class="easyui-textbox easyui-validatebox" readonly="readonly" data-options="width:'100%'"/>
              </td>
          </tr>
          <tr>
              <th>充值方式：</th>
-             <td ><input type="text"  value="${payInfo.recharge_mode_name}" class="easyui-textbox easyui-validatebox" readonly="readonly" data-options="width:'100%'"/></td>
+             <td ><input type="text"  value="${payInfo.data.rechargeModeName}" class="easyui-textbox easyui-validatebox" readonly="readonly" data-options="width:'100%'"/></td>
          </tr>
          <tr>
              <th>充值时间：</th>
-             <td ><input type="text"  value="${payInfo.recharge_time}" class="easyui-textbox easyui-validatebox easyui-datetimebox" showSeconds="false" readonly="readonly" data-options="width:'100%'"/></td>
+             <td ><input type="text"  value="${payInfo.data.rechargeTime}" class="easyui-textbox easyui-validatebox easyui-datetimebox" showSeconds="false" readonly="readonly" data-options="width:'100%'"/></td>
         </tr>
         <tr>
              <th>充值金额：</th>
-             <td ><input type="text"  value="${payInfo.amount_of_recharge}" class="easyui-textbox easyui-validatebox easyui-numberbox" precision="2"readonly="readonly" data-options="width:'100%'"/></td>
+             <td ><input type="text"  value="${payInfo.data.amountOfRecharge}" class="easyui-textbox easyui-validatebox easyui-numberbox" precision="2"readonly="readonly" data-options="width:'100%'"/></td>
         </tr>
          <tr>
              <th>支付平台流水号：</th>
-             <td ><input type="text"  value="${payInfo.payment_platform_flow_number}" class="easyui-textbox easyui-validatebox" readonly="readonly" data-options="width:'100%'"/></td>
+             <td ><input type="text"  value="${payInfo.data.paymentPlatformFlowNumber}" class="easyui-textbox easyui-validatebox" readonly="readonly" data-options="width:'100%'"/></td>
         </tr>
          <tr>
              <th>操作员工：</th>
-             <td ><input type="text"  value="${payInfo.employees_name}" class="easyui-textbox easyui-validatebox" readonly="readonly" data-options="width:'100%'"/></td>
+             <td ><input type="text"  value="${payInfo.data.employeesName}" class="easyui-textbox easyui-validatebox" readonly="readonly" data-options="width:'100%'"/></td>
         </tr>
         <tr>
              <th>充值说明：</th>
-             <td ><input type="text"  value="${payInfo.recharge_declare}" class="easyui-textbox easyui-validatebox" readonly="readonly" readonly="readonly" data-options="width:'100%'"/></td>
+             <td ><input type="text"  value="${payInfo.data.rechargeDeclare}" class="easyui-textbox easyui-validatebox" readonly="readonly" readonly="readonly" data-options="width:'100%'"/></td>
         </tr>
         <tr>
             <td colspan="4">

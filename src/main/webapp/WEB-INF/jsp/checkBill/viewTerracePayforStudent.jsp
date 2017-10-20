@@ -11,45 +11,45 @@
      <table class="table_list">
          <tr>
              <th>商户名称：</th>
-             <td ><input type="text"  value="${PaymentInfo.merchants_name}" class="easyui-textbox easyui-validatebox"  readonly="readonly" data-options="width:'100%' "/></td>
+             <td ><input type="text"  value="${PaymentInfo.data.merchantsName}" class="easyui-textbox easyui-validatebox"  readonly="readonly" data-options="width:'100%' "/></td>
          </tr>
          <tr>
              <th>应收款序号：</th>
              <td >
-                  <input type="text"  value="${PaymentInfo.serial_number}" class="easyui-textbox easyui-validatebox" readonly="readonly" data-options="width:'100%'"/>
+                  <input type="text"  value="${PaymentInfo.data.serialNumber}" class="easyui-textbox easyui-validatebox" readonly="readonly" data-options="width:'100%'"/>
              </td>
          </tr>
          <tr>
              <th>欠款时间：</th>
-             <td ><input type="text"  value="${PaymentInfo.arrears_time}" class="easyui-textbox easyui-validatebox easyui-datetimebox" showSeconds="false" readonly="readonly" data-options="width:'100%'"/></td>
+             <td ><input type="text"  value="${PaymentInfo.data.arrearsTime}" class="easyui-textbox easyui-validatebox easyui-datetimebox" showSeconds="false" readonly="readonly" data-options="width:'100%'"/></td>
         </tr>
         <tr>
              <th>结算序号：</th>
-             <td ><input type="text"  value="${PaymentInfo.clear_num}" class="easyui-textbox easyui-validatebox " readonly="readonly" data-options="width:'100%'"/></td>
+             <td ><input type="text"  value="${PaymentInfo.data.clearNum}" class="easyui-textbox easyui-validatebox " readonly="readonly" data-options="width:'100%'"/></td>
         </tr>
          <tr>
              <th>应收款金额：</th>
-             <td ><input type="text"  value="${PaymentInfo.deductedS}" class="easyui-textbox easyui-validatebox easyui-numberbox" precision="2" readonly="readonly" data-options="width:'100%'"/></td>
+             <td ><input type="text"  value="${PaymentInfo.data.deductedS}" class="easyui-textbox easyui-validatebox easyui-numberbox" precision="2" readonly="readonly" data-options="width:'100%'"/></td>
         </tr>
          <tr>
              <th>实扣款金额：</th>
-             <td ><input type="text"  value="${PaymentInfo.deductedI}" class="easyui-textbox easyui-validatebox easyui-numberbox" precision="2" readonly="readonly" data-options="width:'100%'"/></td>
+             <td ><input type="text"  value="${PaymentInfo.data.deductedI}" class="easyui-textbox easyui-validatebox easyui-numberbox" precision="2" readonly="readonly" data-options="width:'100%'"/></td>
         </tr>
         <tr>
              <th>应收金额：</th>
-             <td ><input type="text"  value="${PaymentInfo.actual_amount}" class="easyui-textbox easyui-validatebox easyui-numberbox" precision="2" readonly="readonly" readonly="readonly" data-options="width:'100%'"/></td>
+             <td ><input type="text"  value="${PaymentInfo.data.actualAmount}" class="easyui-textbox easyui-validatebox easyui-numberbox" precision="2" readonly="readonly" readonly="readonly" data-options="width:'100%'"/></td>
         </tr>
         <tr>
              <th>是否收回：</th>
-             <td ><input type="text"  value="${PaymentInfo.is_back}" class="easyui-textbox easyui-validatebox" readonly="readonly" readonly="readonly" data-options="width:'100%'"/></td>
+             <td ><input type="text"  value="${PaymentInfo.data.isBack}" class="easyui-textbox easyui-validatebox" readonly="readonly" readonly="readonly" data-options="width:'100%'"/></td>
         </tr>
         <tr>
              <th>收回日期：</th>
-             <td ><input type="text"  value="${PaymentInfo.back_time}" class="easyui-textbox easyui-validatebox" readonly="readonly" readonly="readonly" data-options="width:'100%'"/></td>
+             <td ><input type="text"  value="${PaymentInfo.data.backTime}" class="easyui-textbox easyui-validatebox" readonly="readonly" readonly="readonly" data-options="width:'100%'"/></td>
         </tr>
         <tr>
              <th>充值序号：</th>
-             <td ><input type="text"  value="${PaymentInfo.prepaid_number}" class="easyui-textbox easyui-validatebox" readonly="readonly" readonly="readonly" data-options="width:'100%'"/></td>
+             <td ><input type="text"  value="${PaymentInfo.data.prepaidNumber}" class="easyui-textbox easyui-validatebox" readonly="readonly" readonly="readonly" data-options="width:'100%'"/></td>
         </tr>
         <tr>
             <td colspan="4">

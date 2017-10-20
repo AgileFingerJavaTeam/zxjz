@@ -43,6 +43,9 @@
             <if test="statusSearch!=null and statusSearch!=''">
                 AND up_down_frame=#{statusSearch}
             </if>
+            <if test="statusSearchT!=null and statusSearchT!=''">
+                AND recruitment_status=#{statusSearchT}
+            </if>
             <if test="search!=null and search!=''">
                 AND CONCAT(b.recruiting_id,b.main_title,b.subtitle,c.merchants_name) LIKE '%${search}%'
             </if>
@@ -244,6 +247,9 @@
             a.details_page_category='担保'
             <if test="statusSearch!=null and statusSearch!=''">
                 AND up_down_frame=#{statusSearch}
+            </if>
+            <if test="statusSearchT!=null and statusSearchT!=''">
+                AND recruitment_status=#{statusSearchT}
             </if>
         </where>
         limit #{offset},#{rows}

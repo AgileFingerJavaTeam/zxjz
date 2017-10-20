@@ -38,7 +38,7 @@ $.Admin.carousel = {
 		    } 
 		},        
         //-------搜索-------//
-        { text: '&nbsp&nbsp&nbsp&nbsp<input id="xzf_search" type="text"></input>',	
+        { text: '&nbsp;&nbsp;&nbsp;&nbsp;<input id="xzf_search" type="text"></input>',
              handler: function(e){
              }
        },
@@ -78,7 +78,7 @@ $.Admin.carousel = {
             $.Admin.tips('温馨提示信息', '请先选择 您要编辑的数据行','error');
             return false;
         }
-        var data = {carousel_figure_id: get_select_row.carousel_figure_id};    //此处的id 与mapper里找的id 一致
+        var data = {carousel_figure_id: get_select_row.carouselFigureId};    //此处的id 与mapper里找的id 一致
         var carousel_figure_id = $.Admin.random_dialog();
         $(carousel_figure_id).dialog({
             title: '编辑轮播图参数',
@@ -105,7 +105,7 @@ $.Admin.carousel = {
                 $.Admin.tips('温馨提示信息', '请先选择 您要删除的数据行','error');
                 return false;
             }
-         var data = {carousel_figure_id: get_select_row.carousel_figure_id};    //此处的id 与mapper里找的id 一致
+         var data = {carousel_figure_id: get_select_row.carouselFigureId};    //此处的id 与mapper里找的id 一致
          var carousel_figure_id = $.Admin.random_dialog();
         $(carousel_figure_id).dialog({
             title: '变更状态',
@@ -132,7 +132,7 @@ $.Admin.carousel = {
                 $.Admin.tips('温馨提示信息', '请先选择 您要删除的数据行','error');
                 return false;
             }
-         var data = {carousel_figure_id: get_select_row.carousel_figure_id};    //此处的id 与mapper里找的id 一致
+         var data = {carousel_figure_id: get_select_row.carouselFigureId};    //此处的id 与mapper里找的id 一致
          var carousel_figure_id = $.Admin.random_dialog();
         $(carousel_figure_id).dialog({
             title: '删除轮播图',
@@ -178,7 +178,7 @@ $($.Admin.carousel.id).datagrid({
     ctrlSelect: true,
     singleSelect: false,
     rownumbers: true,
-    idField: 'carousel_figure_id',
+    idField: 'carouselFigureId',
     url: "CarouselManage/getCarouselList",
     remoteSort:false,
     pagination:true,
@@ -188,24 +188,24 @@ $($.Admin.carousel.id).datagrid({
 	pageList:[10,20,30,50,100],
 		columns:[[
 	          {field:'ck',checkbox:true}, 
-	          {field:'carousel_code',title:'编号',align:'center',sortable:true,
+	          {field:'carouselCode',title:'编号',align:'center',sortable:true,
 	        	  sorter:function(a,b){
 	        		  return(a>b?1:-1);
 	        	  }
 	          },
-	          {field:'carousel_name',title:'名称',align:'center',sortable:true,},
-	          {field:'carousel_figure_type',title:'轮播图分类',align:'center',formatter:carouselKind,sortable:true},
-	          {field:'picture_url',title:'图片URL',width:100,formatter:showImage},
-	          {field:'target_type',title:'目标分类',align:'center',width:100,sortable:true,},
-	          {field:'target_id',title:'目标ID',align:'center',width:100,sortable:true,},
-	          {field:'target_url',title:'目标URL',align:'center',width:100,formatter:showUrl},
-	          {field:'is_good_position',title:'是否担保职位',halign:'center',align:'center',sortable:true,},
-	          {field:'target_parameter',title:'目标参数',align:'center',width:100,sortable:true,},
-	          {field:'start_date',title:'播放起始日期',align:'center',width:100,sortable:true,
+	          {field:'carouselName',title:'名称',align:'center',sortable:true,},
+	          {field:'carouselFigureType',title:'轮播图分类',align:'center',formatter:carouselKind,sortable:true},
+	          {field:'pictureUrl',title:'图片URL',align:'center',width:100,formatter:showImage},
+	          {field:'targetType',title:'目标分类',align:'center',width:100,sortable:true,},
+	          {field:'targetId',title:'目标ID',align:'center',width:100,sortable:true,},
+	          {field:'targetUrl',title:'目标URL',align:'center',width:100,formatter:showUrl},
+	          {field:'isGoodPosition',title:'是否担保职位',align:'center',align:'center',sortable:true,},
+	          {field:'targetParameter',title:'目标参数',align:'center',width:100,sortable:true,},
+	          {field:'startDate',title:'播放起始日期',align:'center',width:100,sortable:true,
 	        	  sorter:function(a,b){
 	        		  return(a>b?1:-1);
 	        	  }},
-	          {field:'end_date',title:'播放截止日期',align:'center',width:100,sortable:true,
+	          {field:'endDate',title:'播放截止日期',align:'center',width:100,sortable:true,
 	        		  sorter:function(a,b){
 		        		  return(a>b?1:-1);
 		        	  }},
@@ -241,8 +241,8 @@ $($.Admin.carousel.id).datagrid({
 		//显示图片
 		function showImage(value,row,index){
 			var html='<div style="padding:10px" >';
-			if (row.picture_url!='' || row.picture_url!=null){
-				html+='<img src="TP/'+row.picture_url+'" style="width:60px;height:50px" >';
+			if (row.pictureUrl!='' || row.pictureUrl!=null){
+				html+='<img src="TP/'+row.pictureUrl+'" style="width:60px;height:50px" >';
 		
 			} else {
 				html+='<img src="TP/default_category.png" style="width:60px;height:50px" >';
@@ -254,8 +254,8 @@ $($.Admin.carousel.id).datagrid({
 		//H5 超链接
 		function showUrl(value,row,index){
 			var html='<div style="padding:10px">';
-			if (row.target_url!='' || row.target_url!=null){
-				html+='<a target="_blank" href="'+row.target_url+'" style="width:60px;height:50px">'+row.target_url+'</a>';
+			if (row.targetUrl!='' || row.targetUrl!=null){
+				html+='<a target="_blank" href="'+row.targetUrl+'" style="width:60px;height:50px">'+row.targetUrl+'</a>';
 			} else {
 			}
 			html+='</div>';

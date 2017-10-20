@@ -12,7 +12,7 @@
      <table class="table_list">
          <tr>
              <td width=100% >确定删除吗？
-             <input type="hidden" name="station_id" value="${data.station_id}"/>
+             <input  type="hidden" name="station_id" value="${data.data.childJobInfo.stationId}"/>
              </td>
          </tr>
          <tr>

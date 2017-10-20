@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -38,12 +39,11 @@ public class CheckStudentsServiceImpl implements CheckStudentsService {
          String srt_filtrate = checkStudentsDto.getSrt_filtrate();
          try {
              List<CheckStudentsInfo> studentsInfoList = checkStudentsDao.findStudentsCheckInfo(offset,rows,check_state,srt_searchStu_content,srt_filtrate);
-             if (studentsInfoList == null){
-                 throw new QueryInnerErrorException("查询学生审核列表失败");
-             }
-             return new CheckStudentsExcution(CheckStudentsEnum.FIND_STUDENTS_LIST_SUCCESS,studentsInfoList);
-         }catch (QueryInnerErrorException e1){
-             throw e1;
+             int studentCount = checkStudentsDao.findStuCertificationCount(srt_filtrate,srt_searchStu_content);
+             HashMap map = new HashMap();
+             map.put("rows",studentsInfoList);
+             map.put("total",studentCount);
+             return new CheckStudentsExcution(CheckStudentsEnum.FIND_STUDENTS_LIST_SUCCESS,map);
          }catch (Exception e){
              logger.error(e.getMessage(), e);
              throw new BaseException(e.getMessage());
@@ -56,7 +56,7 @@ public class CheckStudentsServiceImpl implements CheckStudentsService {
      * @return
      */
     public CheckStudentsExcution findStudentsInfoById(CheckStudentsDto checkStudentsDto) {
-        int id = checkStudentsDto.getUser_id();
+        int id = checkStudentsDto.getId();
         try {
             CheckStudentsInfo checkStudentInfo = checkStudentsDao.findStuInfoById(id);
             if (checkStudentInfo == null){

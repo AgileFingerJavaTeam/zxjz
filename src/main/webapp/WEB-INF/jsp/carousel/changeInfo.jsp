@@ -12,8 +12,8 @@
      <table class="table_list">
 		<tr>
 		<td align="right" style="width=:30%">更改状态为:
-			<select id="" class="easyui-combobox" name="state"
-				style="width:50%" required>
+			<select id="upState" class="easyui-combobox" name="state"
+				style="width:50%" data-options="panelHeight:'auto'" required>
 					<option value="有效"
 						<c:if test="${data.state=='有效'}">selected="selected"</c:if>>有效</option>
 					<option value="暂停"
@@ -27,6 +27,6 @@
                 <button type="button" class="table_form_submit_dialog" style="float:right">确定</button>
             </td>
          </tr>
-        	<input type="hidden" name="carousel_figure_id" value="${data.carousel_figure_id}" />
+        	<input type="hidden" name="carousel_figure_id" value="${data.carouselFigureId}" />
      </table>
 </form>

@@ -46,13 +46,17 @@ $.Admin.ApplyVIP = {
 		var search_content=$('#srt_search1').val();
 		var onch=$('#srt_chooseStatus1').val();
         var srt_searchInfo1={};
+        var page=1;
+        var rows=20;
+        srt_searchInfo1.page=page;
+        srt_searchInfo1.rows=rows;
         srt_searchInfo1.srt_search_content1=search_content;
         srt_searchInfo1.srt_approval_status1=onch;
       $.ajax({
    	  type:'POST',
    	  data: srt_searchInfo1,
    	  dataType:'json',
-   	  url:"ApplyVip/GetApplyVipInfo",
+   	  url:"employer/GetApplyVipInfo",
    	  success: function(srt_return_list){
    		$('#ApplyVIP').datagrid('loadData', srt_return_list);
    	  }
@@ -66,13 +70,13 @@ $.Admin.ApplyVIP = {
             $.Admin.tips('温馨提示信息', '请先选择 您要编辑的数据行','error');
             return false;
         }
-        var data = {id:get_select_row.user_id};
+        var data = {id:get_select_row.userId};
         var id = $.Admin.random_dialog();
         $(id).dialog({
             title: '审核商家',
             iconCls: 'fa fa-edit',
             queryParams: data,
-            href: "ApplyVip/showAuditPage",
+            href: "employer/showCheckPage",
             modal: true,
             width: 400,
             onClose : function(){
@@ -97,7 +101,7 @@ $($.Admin.ApplyVIP.id).datagrid({
     singleSelect: false,
     rownumbers: true,
     idField: 'uid',
-    url: "ApplyVip/GetApplyVipInfo",
+    url: "employer/GetApplyVipInfo",
     remoteSort:false,
     pagination:true,
 	pagePosition:'bottom',
@@ -106,13 +110,13 @@ $($.Admin.ApplyVIP.id).datagrid({
 	pageList:[10,20,30,50,100],
 	columns:[[
 	          {field:'ck',checkbox:true},    
-	       //   {field:'user_id',title:'商户ID',align:'center',width:80,},
-	          {field:'merchants_name',title:'商户名称',align:'center',width:80,},
-	          {field:'apply_time',title:'申请时间',align:'center',width:80,},
-	          {field:'is_dispose',title:'是否已受理',align:'center',width:80},
-	          {field:'accept_employees',title:'受理员工',align:'center',width:80},
-	          {field:'operating_staff',title:'操作员工',align:'center',width:80},
-	          {field:'operating_time',title:'操作时间',align:'center',width:80},
+	       //   {field:'userId',title:'商户ID',align:'center',width:80,},
+	          {field:'merchantsName',title:'商户名称',align:'center',width:80,},
+	          {field:'applyTime',title:'申请时间',align:'center',width:80,},
+	          {field:'isDispose',title:'是否已受理',align:'center',width:80},
+	          {field:'acceptEmployees',title:'受理员工',align:'center',width:80},
+	          {field:'operatingStaff',title:'操作员工',align:'center',width:80},
+	          {field:'operatingTime',title:'操作时间',align:'center',width:80},
 	      ]],
     onDblClickRow: function(row){ 
     	
@@ -127,12 +131,16 @@ $($.Admin.ApplyVIP.id).datagrid({
 		onChange: function () {
              var onch=$('#srt_chooseStatus1').val();
              var srt_statusInfo={};
+             var page=1;
+             var rows=20;
+             srt_statusInfo.page=page;
+            srt_statusInfo.rows=rows;
              srt_statusInfo.srt_approval_status1=onch;
            $.ajax({
         	  type:'POST',
         	  data: srt_statusInfo,
         	  dataType:'json',
-        	  url:"ApplyVip/GetApplyVipInfo",
+        	  url:"employer/GetApplyVipInfo",
         	  success: function(srt_return_list){
         		$('#ApplyVIP').datagrid('loadData', srt_return_list);
         	  }

@@ -1,6 +1,7 @@
 package com.zxjz.dto.in;
 
 public class CheckStudentsDto {
+    private int id;
     private int user_id;
     private String srt_searchStu_content;
     private int page;
@@ -8,6 +9,14 @@ public class CheckStudentsDto {
     private String srt_filtrate;
     private int check_state;
     private String stat_res;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getStat_res() {
         return stat_res;
@@ -68,7 +77,8 @@ public class CheckStudentsDto {
     @Override
     public String toString() {
         return "CheckStudentsDto{" +
-                "user_id=" + user_id +
+                "id=" + id +
+                ", user_id=" + user_id +
                 ", srt_searchStu_content='" + srt_searchStu_content + '\'' +
                 ", page=" + page +
                 ", rows=" + rows +

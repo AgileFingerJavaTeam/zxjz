@@ -8,11 +8,19 @@ public class MerchantsUpgrade {
     private String operatingStaff;
     private String operatingTime;
     private String merchantsName;//商户名称
-    private String employees_name;//员工姓名
+    private String employeesName;//员工姓名
     private int employeesId;
+
+    public String getAcceptEmployees() {
+        return acceptEmployees;
+    }
 
     public void setAcceptEmployees(String acceptEmployees) {
         this.acceptEmployees = acceptEmployees;
+    }
+
+    public String getOperatingStaff() {
+        return operatingStaff;
     }
 
     public void setOperatingStaff(String operatingStaff) {
@@ -27,12 +35,12 @@ public class MerchantsUpgrade {
         this.employeesId = employeesId;
     }
 
-    public String getEmployees_name() {
-        return employees_name;
+    public String getEmployeesName() {
+        return employeesName;
     }
 
-    public void setEmployees_name(String employees_name) {
-        this.employees_name = employees_name;
+    public void setEmployeesName(String employeesName) {
+        this.employeesName = employeesName;
     }
 
     public String getMerchantsName() {
@@ -86,7 +94,7 @@ public class MerchantsUpgrade {
                 ", operatingStaff='" + operatingStaff + '\'' +
                 ", operatingTime='" + operatingTime + '\'' +
                 ", merchantsName='" + merchantsName + '\'' +
-                ", employees_name='" + employees_name + '\'' +
+                ", employeesName='" + employeesName + '\'' +
                 ", employeesId=" + employeesId +
                 '}';
     }

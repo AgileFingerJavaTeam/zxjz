@@ -9,17 +9,17 @@ import java.util.List;
 public interface CheckBillDao {
     /**
      * 查询账单信息
-     * @param user_id
+     * @param merId
      * @return
      */
-   public List<MerchantsBillsInfo> findBillsInfo (@Param("user_id") int user_id);
+   public List<MerchantsBillsInfo> findBillsInfo (@Param("merId") int merId);
 
     /**
      * 获取商户账单条数
-     * @param q
+     * @param
      * @return
      */
-   public int findMerBillsCount (@Param("q")String q);
+   public int findMerBillsCount (@Param("merId")int merId,@Param("q")String q);
 
     /**
      * 查询搜索时商户名称

@@ -1,6 +1,5 @@
 package com.zxjz.controller;
 
-import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
 import com.zxjz.base.BaseUIResult;
 import com.zxjz.dto.excution.CheckStudentsExcution;
@@ -69,8 +68,8 @@ public class CheckStudentController extends BaseController{
      * @param checkStudentsDto
      * @return
      */
-    @RequestMapping(value = "/showAuditStuPage",
-            method = RequestMethod.POST,
+    @RequestMapping(value = "/showCheckStuPage",
+            method = RequestMethod.GET,
             produces = {"text/json;charset=UTF-8"})
     @ResponseBody
     public ModelAndView showAuditStuPage(CheckStudentsDto checkStudentsDto){
@@ -97,14 +96,14 @@ public class CheckStudentController extends BaseController{
     public String substudentinfo(CheckStudentsDto checkStudentsDto){
         try {
             CheckStudentsExcution checkStudentsExcution = checkStudentsService.submitAudit(checkStudentsDto);
-            return  BaseUIResult.returnJsonEasyUI(checkStudentsExcution);
+            return  BaseUIResult.returnJsonMSG(1,checkStudentsExcution,"审核成功");
         }catch (UpdateInnerErrorException e){
             CheckStudentsExcution checkStudentsExcution = new CheckStudentsExcution(CheckStudentsEnum.CHECK_FAIL);
-            return  BaseUIResult.returnJsonEasyUI(checkStudentsExcution);
+            return  BaseUIResult.returnJsonMSG(0,checkStudentsExcution,"审核失败");
         }catch (Exception e){
             logger.error(e.getMessage(),e);
             CheckStudentsExcution checkStudentsExcution = new CheckStudentsExcution(CheckStudentsEnum.CHECK_FAIL,e.getMessage());
-            return  BaseUIResult.returnJsonEasyUI(checkStudentsExcution);
+            return  BaseUIResult.returnJsonMSG(0,checkStudentsExcution,"审核失败");
         }
     }
 

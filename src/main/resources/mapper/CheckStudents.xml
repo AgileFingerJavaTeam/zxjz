@@ -6,12 +6,12 @@
     即针对dao接口中的方法编写我们的sql语句-->
 
     <!--查询认证学生列表-->
-    <select id="findStuCertificationInfo"  resultType="CheckStudentsInfo">
+    <select id="findStudentsCheckInfo"  resultType="CheckStudentsInfo">
         SELECT * FROM zx_cstudents_personal_info
         <where>
-            check_state=0 OR check_state!= 'null'
+           check_state is not NULL
             <if test="srt_filtrate!=null and srt_filtrate!='' ">
-                AND check_state=#{srt_filtrate}
+                AND check_state = #{srt_filtrate}
             </if>
             <if test="srt_searchStu_content!=null and srt_searchStu_content!=''">
                 AND CONCAT_WS(',',name,id_card,stu_number) LIKE '%${srt_searchStu_content}%'
@@ -23,10 +23,9 @@
     <select id="findStuCertificationCount"    resultType="int">
         SELECT count(*) FROM zx_cstudents_personal_info
         <where>
-            1=1
-
+           check_state is not NULL
             <if test="srt_filtrate!=null and srt_filtrate!='' ">
-                AND check_state=#{srt_filtrate}
+                AND check_state = #{srt_filtrate}
             </if>
             <if test="srt_searchStu_content!=null and srt_searchStu_content!=''">
                 AND CONCAT_WS(',',name,id_card,stu_number) LIKE '%${srt_searchStu_content}%'

@@ -1,0 +1,83 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.CarouselManageDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+
+    <!--徐浙锋 获取首页轮播图全部数据 -->
+    <select id="findCarouselListAll"  resultType="CarouselInfo">
+        SELECT *
+        FROM zx_carousel_figure
+        <where>
+            state!='已删除'
+            <if test="xzf_search_content!=null and xzf_search_content!=''">
+                AND CONCAT_WS(',',carousel_code,carousel_name,carousel_figure_type,target_parameter,target_id,target_url,target_type,is_good_position,state) LIKE '%${xzf_search_content}%'
+            </if>
+        </where>
+        limit #{offset},#{rows}
+    </select>
+
+    <!--徐浙锋 获取首页轮播图数量 -->
+    <select id="findCarouselListCount" resultType="int">
+        SELECT COUNT(*)
+        FROM zx_carousel_figure
+        <where>
+            state!='已删除'
+            <if test="xzf_search_content!=null and xzf_search_content!=''">
+                AND CONCAT_WS(',',carousel_code,carousel_name,carousel_figure_type,target_parameter,target_id,target_url,target_type,is_good_position,state) LIKE '%${xzf_search_content}%'
+            </if>
+        </where>
+    </select>
+
+    <!--徐浙锋 添加首页轮播图信息 -->
+    <insert id="insertCarousel" >
+        INSERT
+        INTO zx_carousel_figure (picture_url,carousel_code,carousel_name,start_date,end_date,target_id,target_parameter,target_url,target_type,is_good_position,state)
+        VALUES (#{picture_url},#{carousel_code},#{carousel_name},#{start_date},#{end_date},#{target_id},#{target_parameter},#{target_url},#{target_type},#{is_good_position},#{state})
+    </insert>
+
+    <!-- 担保职位详情搜索 -->
+    <select id="findTitle"  resultType="AtCarouselManage">
+        <!-- SELECT recruiting_id,post_name FROM zx_recruitment_information  不加公司名称查询-->
+        <!-- 加公司名称查询如下 -->
+        SELECT recruiting_id,post_name,zx_merchants_approve.company_name
+        FROM zx_recruitment_information
+        LEFT JOIN zx_merchants_approve
+        ON zx_recruitment_information.releases_user_id=zx_merchants_approve.user_id
+    </select>
+
+    <!--徐浙锋 获取首页轮播图单条数据 -->
+    <select id="findCarouseObject"  resultType="CarouselInfo">
+        SELECT *
+        FROM zx_carousel_figure
+        WHERE carousel_figure_id = #{carousel_figure_id}
+    </select>
+
+    <!--徐浙锋 首页轮播图信息编辑 -->
+    <update id="updateCarousel">
+        UPDATE  zx_carousel_figure
+        SET carousel_code=#{carousel_code},carousel_name=#{carousel_name},target_id=#{target_id},target_parameter=#{target_parameter},target_url=#{target_url},target_type=#{target_type},is_good_position=#{is_good_position},start_date=#{start_date},end_date=#{end_date}
+        WHERE carousel_figure_id = #{carousel_figure_id}
+    </update>
+
+    <!--徐浙锋 首页轮播图信息编辑 -->
+    <update id="updateCarousel2">
+        UPDATE  zx_carousel_figure
+        SET picture_url=#{picture_url}
+        WHERE carousel_figure_id = #{carousel_figure_id}
+    </update>
+
+    <!--徐浙锋  更新信息状态 -->
+    <update id="updateChangeCarousel" >
+        update  zx_carousel_figure SET state=#{state}
+        where carousel_figure_id = #{carousel_figure_id}
+    </update>
+
+    <!--徐浙锋  删除信息 -->
+    <update id="deleteCarousel">
+        update  zx_carousel_figure SET state='已删除'
+        where carousel_figure_id = #{carousel_figure_id}
+    </update>
+</mapper>
