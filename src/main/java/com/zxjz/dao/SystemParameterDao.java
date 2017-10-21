@@ -63,6 +63,13 @@ public interface SystemParameterDao {
     public List<SystemParameter> findSystemPatameter(@Param("rows") int rows, @Param("offset") int offset, @Param("srt_search_content") String srt_search_content);
 
     /**
+     * 查询系统参数条数
+     * @param srt_search_content
+     * @return
+     */
+    public int findSysParameterCount(@Param("srt_search_content") String srt_search_content);
+
+    /**
      * 新增一条系统参数
      * @param serial_number
      * @param parameter_name

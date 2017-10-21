@@ -58,6 +58,17 @@
         </where>
         limit #{offset},#{rows}
     </select>
+    <!--查询系统参数列表条数-->
+    <select id="findSysParameterCount"  resultType="int">
+        SELECT count(*)
+        FROM zx_system_parameter
+        <where>
+            1=1
+            <if test="srt_search_content!=null and srt_search_content!=''">
+                AND CONCAT_WS(',',parameter_name,parameter_description,parameter,serial_number) LIKE '%${srt_search_content}%'
+            </if>
+        </where>
+    </select>
     <!--显示编辑系统参数时 通过Id查询本条系统参数-->
     <select id="findSystemParameterInfoById"  resultType="SystemParameter">
         SELECT * FROM `zx_system_parameter` where parameter_id=#{id}

@@ -31,20 +31,20 @@ public class CheckBillServiceImpl implements CheckBillService {
      * @return
      */
     public CheckBillExcution findBills(CheckBillDto checkBillDto) {
-        int user_id = checkBillDto.getUser_id();
+        int merId = checkBillDto.getMerId();
         String q = checkBillDto.getQ();
         try {
-            List<MerchantsBillsInfo> bills = checkBillDao.findBillsInfo(user_id);
+            List<MerchantsBillsInfo> bills = checkBillDao.findBillsInfo(merId);
             if (bills == null){
                 throw new QueryInnerErrorException("查询商户账单失败");
             }
-            int billsCount = checkBillDao.findMerBillsCount(q);
+            int billsCount = checkBillDao.findMerBillsCount(merId,q);
             if (billsCount == 0){
                 throw new QueryInnerErrorException("查询商户账单数量失败");
             }
             HashMap map = new HashMap();
-            map.put("bills",bills);
-            map.put("billsCount",billsCount);
+            map.put("rows",bills);
+            map.put("total",billsCount);
             return new CheckBillExcution(CheckBillEnum.FIND_BILL_SUCCESS,map);
         }catch (Exception e){
             logger.error(e.getMessage(), e);
@@ -72,8 +72,8 @@ public class CheckBillServiceImpl implements CheckBillService {
                 throw new QueryInnerErrorException("查询查找时商户条数失败");
             }
             HashMap map = new HashMap();
-            map.put("merchantsList",merchantsNameList);
-            map.put("merchantsCount",mechantsNameCount);
+            map.put("rows",merchantsNameList);
+            map.put("total",mechantsNameCount);
             return new CheckBillExcution(CheckBillEnum.FIND_MERCHANTS_NAME_SUCCESS,map);
         }catch (QueryInnerErrorException e1){
             throw e1;

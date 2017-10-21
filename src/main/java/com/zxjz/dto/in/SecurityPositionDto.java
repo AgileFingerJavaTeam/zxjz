@@ -10,9 +10,17 @@ public class SecurityPositionDto {
     private int page;
     private int rows;
     private String search;
-    private  String statusSearch;
+    private String statusSearch;
+    private String statusSearchT;
 
 
+    public String getStatusSearchT() {
+        return statusSearchT;
+    }
+
+    public void setStatusSearchT(String statusSearchT) {
+        this.statusSearchT = statusSearchT;
+    }
 
     public int getP_station_id() {
         return p_station_id;
@@ -71,6 +79,7 @@ public class SecurityPositionDto {
                 ", rows=" + rows +
                 ", search='" + search + '\'' +
                 ", statusSearch='" + statusSearch + '\'' +
+                ", statusSearchT='" + statusSearchT + '\'' +
                 '}';
     }
 }

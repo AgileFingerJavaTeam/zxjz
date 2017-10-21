@@ -7,6 +7,7 @@ import com.zxjz.dto.excution.SettlementExcution;
 import com.zxjz.dto.in.SettlementAddFunctionDto;
 import com.zxjz.dto.in.SettlementDto;
 import com.zxjz.entity.LandFall;
+import com.zxjz.entity.LandFallInfo;
 import com.zxjz.enums.SettlementEnum;
 import com.zxjz.exception.db.InsertInnerErrorException;
 import com.zxjz.exception.db.UpdateInnerErrorException;
@@ -98,7 +99,7 @@ public class SettlementController extends BaseController{
         ModelAndView mv = new ModelAndView();
         HttpSession session = this.getRequest().getSession();
         try{
-            LandFall land = (LandFall)session.getAttribute("user");
+            LandFallInfo land = (LandFallInfo)session.getAttribute("user");
             int id = land.getEmployeesId();
             String name = land.getEmployeesName();
             mv.addObject("id", id);

@@ -38,6 +38,7 @@ public class MerchantsInfoServiceImpl implements MerchantsInfoService {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
     @Autowired
     private MerchantsInfoDao merchantsInfoDao;
+    @Autowired
     private MerchantsUpgadeDao merchantsUpgadeDao;
 //---------获取商户个人信息
     public MerchantsInfoExcution findEmpolyerInfoById(MerchantsInfoDto merchantsInfoDto) {
@@ -145,7 +146,7 @@ public class MerchantsInfoServiceImpl implements MerchantsInfoService {
      * @return
      */
     public MerchantsUpgradeExcution showAuditPage(MerchantsUpgradeDto merchantsUpgradeDto) {
-        int user_id = merchantsUpgradeDto.getUserId();
+        int user_id = merchantsUpgradeDto.getId();
         try {
             MerchantsUpgrade merchantsUpgrade = merchantsUpgadeDao.findEmInfo(user_id);
             if (merchantsUpgrade == null){
@@ -174,22 +175,24 @@ public class MerchantsInfoServiceImpl implements MerchantsInfoService {
         String srt_search_content1 = merchantsUpgradeDto.getSrt_search_content1();
         try {
             List<MerchantsUpgrade> merchantsUpgradeList = merchantsUpgadeDao.findApplyVipList(srt_approval_status1,srt_search_content1,offset,rows);
-            int merchantsCount = merchantsUpgadeDao.findApplyVipCount();
+            int merchantsCount = merchantsUpgadeDao.findApplyVipCount(srt_approval_status1,srt_search_content1);
             for (int i=0;i<merchantsUpgradeList.size();i++){
                 MerchantsUpgrade info = merchantsUpgradeList.get(i);
-                String is_dispose = info.getIsDispose();
-                if(is_dispose.equals("已经受理")){
+//                String is_dispose = info.getIsDispose();
+//                if(is_dispose.equals("已经受理")){
                     //查询受理人姓名
-                    String acceptEmployees = merchantsUpgadeDao.findAcceptEmployer(user_id);
+                    int acceptEmployeesId = Integer.parseInt(info.getAcceptEmployees());
+                    String acceptEmployees = merchantsUpgadeDao.findAcceptEmployer(acceptEmployeesId);
                     info.setAcceptEmployees(acceptEmployees);
                     //查询操作人姓名
-                    String OperatingStaff = merchantsUpgadeDao.findOperatingEmployer(user_id);
+                    int OperatingStaffId = Integer.parseInt(info.getOperatingStaff());
+                    String OperatingStaff = merchantsUpgadeDao.findOperatingEmployer(OperatingStaffId);
                     info.setOperatingStaff(OperatingStaff);
-                }
+//            }
             }
             HashMap map = new HashMap();
-            map.put("merchantsUpgradeList",merchantsUpgradeList);
-            map.put("merchantsCount",merchantsCount);
+            map.put("rows",merchantsUpgradeList);
+            map.put("total",merchantsCount);
             return new MerchantsUpgradeExcution(MerchantsUpgradeEnum.FIND_SUCCESS,map);
         }catch (Exception e){
             logger.error(e.getMessage(), e);
@@ -205,7 +208,7 @@ public class MerchantsInfoServiceImpl implements MerchantsInfoService {
     public MerchantsUpgradeExcution confirmCheck(MerchantsUpgradeDto merchantsUpgradeDto) {
         int id = merchantsUpgradeDto.getId();
         int employees_name = merchantsUpgradeDto.getEmployees_name();
-        int user_id = merchantsUpgradeDto.getUserId();
+        int user_id = merchantsUpgradeDto.getUser_id();
         try {
             int isConfirmCheck = merchantsUpgadeDao.conrifmCheck(employees_name,id,user_id);
             if (isConfirmCheck == 0){
@@ -226,8 +229,8 @@ public class MerchantsInfoServiceImpl implements MerchantsInfoService {
      */
     public MerchantsUpgradeExcution findCheckEmployer() {
         try {
-           List<MerchantsUpgrade> merchantsUpgradeList = merchantsUpgadeDao.findEmployerList();
-           return new MerchantsUpgradeExcution(MerchantsUpgradeEnum.FIND_SUCCESS,merchantsUpgradeList);
+           List<MerchantsUpgrade> rows = merchantsUpgadeDao.findEmployerList();
+           return new MerchantsUpgradeExcution(MerchantsUpgradeEnum.FIND_SUCCESS,rows);
         }catch (Exception e) {
             logger.error(e.getMessage(), e);
             throw new BaseException(e.getMessage());

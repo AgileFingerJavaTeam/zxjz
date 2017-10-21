@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -144,7 +145,11 @@ public class SystemParameterServiceImpl implements SystemParameterService{
         String srt_search_content = findParemeterDto.getSrt_search_content();
         try {
             List<SystemParameter> systemParameterList = systemParameterDao.findSystemPatameter(rows, offset, srt_search_content);
-            return new SystemParameterExcution(SystemParameterEnum.QUERY_SUCCESS, systemParameterList);
+            int systemParameterListCount = systemParameterDao.findSysParameterCount(srt_search_content);
+            HashMap map = new HashMap();
+            map.put("rows",systemParameterList);
+            map.put("total",systemParameterListCount);
+            return new SystemParameterExcution(SystemParameterEnum.QUERY_SUCCESS, map);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             throw new BaseException(e.getMessage());
@@ -181,7 +186,7 @@ public class SystemParameterServiceImpl implements SystemParameterService{
      * @return
      */
     public SystemParameterExcution findParameterInfoById(SystemParameterDto systemParameterDto) {
-        int id = systemParameterDto.getParameter_id();
+        int id = systemParameterDto.getId();
         try {
             SystemParameter systemParameterInfo = systemParameterDao.findSystemParameterInfoById(id);
             return new SystemParameterExcution(SystemParameterEnum.QUERY_SUCCESS,systemParameterInfo);

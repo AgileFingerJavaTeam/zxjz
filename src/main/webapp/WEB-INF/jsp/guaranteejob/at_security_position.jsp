@@ -37,9 +37,12 @@ $.Admin.atSecurityPosition = {
         }
         },
         {
-          text:'状态筛选:<select style="width:70px;" id="statusSearch"><option value="">全部</option><option value="1">上架</option><option value="0">下架</option></select></div>',
+          text:'岗位状态:&nbsp;<select style="width:100px; height: 25px; border-radius: 5px;"  id="statusSearch"><option value="">全部状态</option><option value="1">上架</option><option value="0">下架</option></select></div>',
         
           },
+        {
+            text:'&nbsp;&nbsp;&nbsp;招聘状态:&nbsp;<select name="state" style="width:100px; height: 25px; border-radius: 5px;" id="statusSearchT"><option value="">全部状态</option><option value="进行中">进行中</option><option value="已经暂停">已经暂停</option><option value="已经结束">已经结束</option><option value="已经删除">已经删除</option><option value="已经下架">已经下架</option></select>',
+        },
     ],
     //添加角色
     'AddAT' : function(){
@@ -185,19 +188,20 @@ $($.Admin.atSecurityPosition.id).datagrid({
 	          {field:'recruitment',title:'招聘人数',align:'center',width:100},
 	          {field:'people_num',title:'已经报名人数',align:'center',width:100},
 	          {field:'hiring_expiration_date',title:'招聘到期时间',align:'center',width:100},
-	          {field:'recruitment_status',title:'招聘状态',align:'center',width:100},
 	          {field:'view_count',title:'浏览次数',align:'center',width:100},
 	          {field:'collection_count',title:'收藏次数',align:'center',width:100},
 	          {field:'reported',title:'是否被举报',align:'center',width:100}, */
 	          {field:'mainTitle',title:'主标题',align:'center',width:100},
 	          {field:'subtitle',title:'副标题',align:'center',width:100},
-	          {field:'shortDescription',title:'简介',align:'center',width:100},
+              {field:'recruitmentStatus',title:'招聘状态',align:'center',width:100},
+              {field:'upDownFrame',title:'上架状态',align:'center',width:100},
+	         /* {field:'shortDescription',title:'简介',align:'center',width:100},*/
 	          {field:'pageUrl',title:'封页图URL（老虎）',align:'center',width:100,formatter:showImage1},
 	          {field:'firstPageCarouselUrl',title:'首页图URL（用于App首页轮播的图片）衣服',align:'center',width:100,formatter:showImage2},
 	          {field:'mainPageUrl',title:'详情页主图URL',align:'center',width:100,formatter:showImage3},
 	         // {field:'details_page_introduction',title:'详情页介绍',align:'center',width:100},
 	       /*    {field:'user_id',title:'商户ID',align:'center',width:100}, */
-	          {field:'upDownFrame',title:'上架状态',align:'center',width:100},
+
 	      ]],
     onDblClickRow: function(row){ 
     	
@@ -276,8 +280,14 @@ $($.Admin.atSecurityPosition.id).datagrid({
     		 
     $('#statusSearch').on('change',function(){
      	var a=$('#statusSearch').val();
+     	var b=$('#statusSearchT').val();
     	var statusSearch={};
-    	statusSearch.statusSearch=a;
+    	if(b == ''){
+          statusSearch.statusSearch=a;
+		}else{
+    	  statusSearch.statusSearch=a;
+          statusSearch.statusSearchT=b;
+		}
           $.ajax({
         	  type:'post',
               title: '状态筛选',
@@ -289,5 +299,27 @@ $($.Admin.atSecurityPosition.id).datagrid({
               }
     })
     });
+
+$('#statusSearchT').on('change',function(){
+    var a=$('#statusSearch').val();
+    var b=$('#statusSearchT').val();
+    var statusSearch={};
+    if(a == ''){
+        statusSearch.statusSearchT=b;
+    }else{
+        statusSearch.statusSearch=a;
+        statusSearch.statusSearchT=b;
+    }
+    $.ajax({
+        type:'post',
+        title: '状态筛选',
+        data:statusSearch,
+        url: "securityPosition/StatusSearch",
+        datatype:'json',
+        success:function(search_list){
+            $('#at-security-position').datagrid('loadData', search_list);
+        }
+    })
+});
   
 </script>

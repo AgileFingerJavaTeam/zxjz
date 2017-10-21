@@ -29,21 +29,21 @@ public interface MerchantsUpgadeDao {
      * 查询申请VIP商户总数
      * @return
      */
-    public int findApplyVipCount();
+    public int findApplyVipCount(@Param("srt_approval_status1")String srt_approval_status1,@Param("srt_search_content1")String srt_search_content1);
 
     /**
      * 查询受理员工
-     * @param user_id
+     * @param
      * @return
      */
-    public String   findAcceptEmployer(@Param("user_id")int user_id);
+    public String   findAcceptEmployer(@Param("acceptEmployeesId")int acceptEmployeesId);
 
     /**
      * 查询操作员工
-     * @param user_id
+     * @param
      * @return
      */
-    public String  findOperatingEmployer(@Param("user_id")int user_id);
+    public String  findOperatingEmployer(@Param("OperatingStaffId")int OperatingStaffId);
 
     /**
      * 查询申请VIP商户信息

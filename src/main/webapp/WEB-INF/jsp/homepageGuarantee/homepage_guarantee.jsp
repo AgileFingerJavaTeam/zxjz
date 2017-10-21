@@ -37,7 +37,7 @@ $.Admin.hznHomepageGuarantee = {
         }
         },
         {
-          text:'状态筛选:<select style="width:70px;" id="hznGuaranteeStatusSearch"><option value="">全部</option><option value="1">上架</option><option value="0">下架</option></select></div>',
+          text:'状态筛选:<select style="width:100px; height: 25px; border-radius: 5px;" id="hznGuaranteeStatusSearch"><option value="">全部</option><option value="1">上架</option><option value="0">下架</option></select></div>',
         
           },
     ], 

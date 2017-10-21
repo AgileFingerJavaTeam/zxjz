@@ -44,7 +44,7 @@ $.Admin.MerchantApproval = {
    	  type:'POST',
    	  data: hzn_searchInfo,
    	  dataType:'json',
-   	  url:"approval/merchantAccount",
+   	  url:"MerchantApproval/merchantAccount",
    	  success: function(hzn_return_list){
    		$('#MerchantApproval').datagrid('loadData', hzn_return_list);
    	  }
@@ -57,13 +57,13 @@ $.Admin.MerchantApproval = {
             $.Admin.tips('温馨提示信息', '请先选择 您要审核的数据行','error');
             return false;
         }
-        var data = {id: get_select_row.approval_id};
+        var data = {id: get_select_row.approvalId};
         var id = $.Admin.random_dialog();
         $(id).dialog({
             title: '审核企业信息',
             iconCls: 'fa fa-video-camera',
             queryParams:data,
-            href: "approval/approvalMerchantAccount",
+            href: "MerchantApproval/approvalMerchantAccount",
             modal: true,
             width:800,
             height:500,
@@ -90,8 +90,8 @@ $($.Admin.MerchantApproval.id).datagrid({
     ctrlSelect: true,
     singleSelect: false,
     rownumbers: true,
-    idField: 'approval_id',
-    url: "approval/merchantAccount",
+    idField: 'approvalId',
+    url: "MerchantApproval/merchantAccount",
     pagination:true,
 	pagePosition:'bottom',
 	pageNumber:1,
@@ -99,14 +99,14 @@ $($.Admin.MerchantApproval.id).datagrid({
 	pageList:[10,20,30,50,100],
 	columns:[[
 	          {field:'ck',checkbox:true},    
-	          {field:'company_name',title:'商户名称',align:'center',width:100,sortable:'true'},
-	          {field:'apply_time',title:'申请时间',align:'center',width:100,sortable:'true'},
-	          {field:'industry_involved',title:'所属行业',align:'center',width:100,sortable:'true'},
+	          {field:'companyName',title:'商户名称',align:'center',width:100,sortable:'true'},
+	          {field:'applyTime',title:'申请时间',align:'center',width:100,sortable:'true'},
+	          {field:'industryInvolved',title:'所属行业',align:'center',width:100,sortable:'true'},
 	          {field:'head',title:'负责人',align:'center',width:100,sortable:'true'},
 	          {field:'phone',title:'电话',align:'center',width:100,sortable:'true'},
 	          {field:'status',title:'审核状态',align:'center',width:100,sortable:'true'},	          
-	          {field:'audit_time',title:'审核时间',align:'center',width:100,sortable:'true'},
-	          {field:'employees_name',title:'审核员工',align:'center',width:100,sortable:'true'},
+	          {field:'auditTime',title:'审核时间',align:'center',width:100,sortable:'true'},
+	          {field:'employeesName',title:'审核员工',align:'center',width:100,sortable:'true'},
 	      ]],
     onDblClickRow: function(row){ 
     	
@@ -126,7 +126,7 @@ $($.Admin.MerchantApproval.id).datagrid({
         	  type:'POST',
         	  data: hzn_statusInfo,
         	  dataType:'json',
-        	  url:"approval/merchantAccount",
+        	  url:"MerchantApproval/merchantAccount",
         	  success: function(hzn_return_list){
         		$('#MerchantApproval').datagrid('loadData', hzn_return_list);
         	  }

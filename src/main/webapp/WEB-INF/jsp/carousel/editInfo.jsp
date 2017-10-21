@@ -52,18 +52,18 @@
 <form action="CarouselManage/editCarousel" class="table_form"
 	method="post" id="addCarousel" enctype="multipart/form-data">
 	<input type="text" id="target_id" name=target_id
-		value="${data.target_id}" style="width: 249px; display: none" /> <input
+		value="${data.targetId}" style="width: 249px; display: none" /> <input
 		type="text" id="target_parameter" name=target_parameter
-		value="${data.target_parameter}" style="width: 249px; display: none" />
+		value="${data.targetParameter}" style="width: 249px; display: none" />
 	<table class="table_list">
 		<tr>
              <td>输入编号：</td>
-             <td ><input type="text" class="easyui-textbox" name="carousel_code" value="${data.carousel_code}"  required /></td>
+             <td ><input type="text" class="easyui-textbox" name="carousel_code" value="${data.carouselCode}"  required /></td>
          </tr>
          <tr>
              <td>名称：</td>
              <td >
-                  <input type="text" class="easyui-textbox"  name="carousel_name"  value="${data.carousel_name}" required />
+                  <input type="text" class="easyui-textbox"  name="carousel_name"  value="${data.carouselName}" required />
              </td>
          </tr>
 			 <%-- <tr>
@@ -83,19 +83,21 @@
 			</tr>  --%>
 		<tr>
 			<td align="right">轮播图片:</td>
-			<td><input id="carouselFile" style="width: 124px" runat="server" value="${data.picture_url}" 
-				name="image" type="file" /></td>
+			<td><input id="carouselFile" style="width: 124px" runat="server" value="${data.pictureUrl}"
+				name="image" type="file" />
+				<a href="TP/${data.pictureUrl}" target="_blank" ><img alt="轮播图片" src="TP/${data.pictureUrl}" width=130px height=100px></a>
+			</td>
 		</tr>
 		<tr>
 			<td align="right">目标分类:</td>
 			<td><select id="target_type" onchange="check()"
 				name="target_type" style="width: 180px; height:26px; border-radius:5px; padding: 0px; margin: 0px; border:1px solid #DBDBDB ;" required>
 					<option value="请选择分类"
-						<c:if test="${data.target_type=='请选择分类'}">selected="selected"</c:if>>请选择分类</option>
+						<c:if test="${data.targetType=='请选择分类'}">selected="selected"</c:if>>请选择分类</option>
 					<option value="担保职位详情"
-						<c:if test="${data.target_type=='担保职位详情'}">selected="selected"</c:if>>担保职位详情</option>
+						<c:if test="${data.targetType=='担保职位详情'}">selected="selected"</c:if>>担保职位详情</option>
 					<option value="H5"
-						<c:if test="${data.target_type=='H5'}">selected="selected"</c:if>>H5</option>
+						<c:if test="${data.targetType=='H5'}">selected="selected"</c:if>>H5</option>
 			</select> 
 			<tr id="target_url" style="display: none">
 			<td align="right">H5地址输入:</td>
@@ -111,9 +113,9 @@
 				data-options="
 						url:'CarouselManage/findTitle',
 						method:'get',
-						valueField:'recruiting_id',
-						textField:'post_name',
-						groupField:'company_name',
+						valueField:'recruitingId',
+						textField:'postName',
+						groupField:'companyName',
 						panelHeight:'auto',									
 					"></td>
 		</tr>
@@ -124,7 +126,7 @@
 				name="is_good_position" style="panelHeight: 100; width: 50px"
 				required>
 					<option value="是"
-						<c:if test="${data.is_good_position=='是'}">selected="selected"</c:if>>是</option>
+						<c:if test="${data.isGoodPosition=='是'}">selected="selected"</c:if>>是</option>
 					<%-- <option value="否"
 						<c:if test="${data.is_good_position=='否'}">selected="selected"</c:if>>否</option> --%>
 			</select></td>
@@ -148,7 +150,7 @@
 					style="float: right">关闭</button>
 				<button type="button" class="table_form_submit_file_dialog"
 					style="float: right">确定</button>
-			<input type="hidden" name="carousel_figure_id" value="${data.carousel_figure_id}" />
+			<input type="hidden" name="carousel_figure_id" value="${data.carouselFigureId}" />
 			</td>
 			
 		</tr>

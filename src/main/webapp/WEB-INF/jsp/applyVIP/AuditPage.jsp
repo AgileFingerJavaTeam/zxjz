@@ -8,12 +8,12 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<form action="ApplyVip/audit" class="table_form" method="post">
+<form action="employer/audit" class="table_form" method="post">
 	 <table class="table_list">
 	     <tr>
              <th>选择受理员工：</th>
 			 <td><input  id="srt_cbox" name="employees_name" width="100px">
-		     <input type="hidden" name="user_id" value="${data1.user_id}"/>
+		     <input type="hidden" name="user_id" value="${data1.data.userId}"/>
 			 </td>
          </tr>
 		 <tr>
@@ -29,9 +29,9 @@
 <script type="text/javascript">                                
   //绑定下拉框
  $('#srt_cbox').combobox({
-         url:'ApplyVip/getAccEm',                       
-         valueField: 'employees_id',
-         textField: 'employees_name'
+         url:'employer/getAccEm',
+         valueField: 'employeesId',
+         textField: 'employeesName'
          });                            
  $("#srt_cbox").combobox('getValues')
 </script>

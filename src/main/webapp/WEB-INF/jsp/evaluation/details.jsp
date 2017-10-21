@@ -67,7 +67,7 @@ $.Admin.GyPositionType = {
             $.Admin.tips('温馨提示信息', '请先选择 您要编辑的数据行','error');
             return false;
         }
-        var data = {id: get_select_row.station_id};
+        var data = {id: get_select_row.stationId};
         var id = $.Admin.random_dialog();
         $(id).dialog({
             title: '编辑职位类型',
@@ -94,7 +94,7 @@ $.Admin.GyPositionType = {
                 $.Admin.tips('温馨提示信息', '请先选择 您要删除的数据行','error');
                 return false;
             }
-            var data = {id: get_select_row.station_id};
+            var data = {id: get_select_row.stationId};
         var id = $.Admin.random_dialog();
         $(id).dialog({
             title: '删除职位类型',
@@ -142,7 +142,7 @@ $($.Admin.GyPositionType.id).datagrid({
     singleSelect: true,
     rownumbers: true,
     animate: true,
-    idField: 'station_id',
+    idField: 'stationId',
     url: 'GyStation/StationList',
     pagination:true,
 	pagePosition:'bottom',
@@ -151,8 +151,8 @@ $($.Admin.GyPositionType.id).datagrid({
 	pageList:[10,20,30,50,100],
 	columns:[[
 	    //      {field:'ck',checkbox:true},    
-	    //      {field:'station_id',title:'ID',align:'center'},
-	          {field:'station_name',title:'职位类型名称',width:200},
+	          {field:'stationId',title:'ID',align:'center'},
+	          {field:'stationName',title:'职位类型名称',width:200},
 	          /* {field:'status',title:'状态',align:'center',formatter:$.Admin.Role.formatter.status,width:80} */
 	      ]],
  //---------双击事件----------//
@@ -161,13 +161,18 @@ $($.Admin.GyPositionType.id).datagrid({
     //----------点击当前行时右侧联动-----------//
     onClickRow:function(index,row){
     	var get_select_row = $($.Admin.GyPositionType.id).treegrid('getSelected');
-        var data = {id: get_select_row.station_id};
-        var name = {id: get_select_row.station_name};
-        currentFirstLevelID = get_select_row.station_id;
-        currentFirstLevelName = get_select_row.station_name;
+//        var data = {id: get_select_row.stationId};
+//        var name = {id: get_select_row.stationName};
+        currentFirstLevelID = get_select_row.stationId;
+        currentFirstLevelName = get_select_row.stationName;
     	var srt_cnamestatusInfo={};
-    	srt_cnamestatusInfo.pstationName=data;
-    	srt_cnamestatusInfo.PstationName=get_select_row.station_name;
+        var page=1;
+        var rows=20;
+        srt_cnamestatusInfo.page=page;
+        srt_cnamestatusInfo.rows=rows;
+
+    	srt_cnamestatusInfo.pstationId=currentFirstLevelID;
+    	srt_cnamestatusInfo.PstationName=currentFirstLevelName;
        $.ajax({
     	  type:'POST',
     	  data: srt_cnamestatusInfo,
@@ -192,13 +197,18 @@ $($.Admin.GyPositionType.id).datagrid({
     onLoadSuccess:function(){
     	$(this).datagrid("selectRow",0);
     	var get_select_row = $($.Admin.GyPositionType.id).treegrid('getSelected');
-        var data = {id: get_select_row.station_id};
-        var name = {name: get_select_row.station_name};
+//        var data = {id: get_select_row.stationId};
+//        var name = {name: get_select_row.stationName};
     	var srt_cnamestatusInfo={};
-    	srt_cnamestatusInfo.pstationName=data;
-    	srt_cnamestatusInfo.PstationName=get_select_row.station_name;
-    	currentFirstLevelID = get_select_row.station_id;
-    	currentFirstLevelName = get_select_row.station_name;
+        var page=1;
+        var rows=20;
+        srt_cnamestatusInfo.page=page;
+        srt_cnamestatusInfo.rows=rows;
+
+    	currentFirstLevelID = get_select_row.stationId;
+    	currentFirstLevelName = get_select_row.stationName;
+        srt_cnamestatusInfo.pstationId=currentFirstLevelID;
+        srt_cnamestatusInfo.PstationName=currentFirstLevelName;
        $.ajax({
     	  type:'POST',
     	  data: srt_cnamestatusInfo,
@@ -256,13 +266,13 @@ $($.Admin.GyPositionType.id).datagrid({
     	            $.Admin.tips('温馨提示信息', '请先选择 您要编辑的数据行','error');
     	            return false;
     	        }
-    	        var data = {id: get_select_row.station_id};
+    	        var data = {id: get_select_row.stationId};
     	        var id = $.Admin.random_dialog();
     	        $(id).dialog({
     	            title: '编辑职位分类',
     	            iconCls: 'fa fa-edit',
     	            queryParams: data,
-    	            href: "GyStation/showEditDetails",
+					href:"GyStation/showChildJobEditPage",
     	            modal: true,
     	            width: 400,
     	            onClose : function(){
@@ -283,7 +293,7 @@ $($.Admin.GyPositionType.id).datagrid({
     	                $.Admin.tips('温馨提示信息', '请先选择 您要删除的数据行','error');
     	                return false;
     	            }
-    	            var data = {id: get_select_row.station_id};
+    	            var data = {id: get_select_row.stationId};
     	        var id = $.Admin.random_dialog();
     	        $(id).dialog({
     	            title: '删除职位分类',
@@ -325,7 +335,7 @@ $($.Admin.GyPositionType.id).datagrid({
     		pageList:[10,20,30,50,100],
     		columns:[[
     		   //       {field:'ck',checkbox:true},    
-    		  //      {field:'station_id',title:'ID',align:'center'},
+    		          {field:'stationId',title:'ID',align:'center'},
     		          {field:'stationName',title:'职位分类(子类)名称',width:80,},
     		      ]],
     	    onDblClickRow: function(row){ 

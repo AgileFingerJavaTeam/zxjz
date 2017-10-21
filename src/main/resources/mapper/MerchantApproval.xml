@@ -1,0 +1,65 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.MerchantApprovalDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+    <!-- 查询招聘信息列表 -->
+	<select id="findApprovalList" resultType="MerchantApprovalInfo">
+		SELECT * FROM zx_merchants_approve a
+		left join zx_employee_basic_information b ON
+		a.audit_staff=b.employees_id
+		<where>
+			1=1
+			<if test="hzn_approval_status!=null and hzn_approval_status!=''">
+				AND status=#{hzn_approval_status}
+			</if>
+			<if test="hzn_search_content!=null and hzn_search_content!=''">
+				AND CONCAT_WS(',',companyName,applyTime,industryInvolved,head,phone,status,auditTime,auditStaff) LIKE '%${hzn_search_content}%'
+			</if>
+		</where>
+		<if test="sort!=null and sort!='' and order!=null and order!=''">
+			ORDER BY ${sort} ${order}
+		</if>
+		limit #{offset},#{rows}
+	</select>
+
+	<!--查询信息数量-->
+	<select id="findListCount"  resultType="int">
+		select count(*) from zx_merchants_approve
+		<where>
+			1=1
+			<if test="hzn_approval_status!=null and hzn_approval_status!=''">
+				AND status=#{hzn_approval_status}
+			</if>
+			<if test="hzn_search_content!=null and hzn_search_content!=''">
+				AND CONCAT_WS(',',company_name,apply_time,industry_involved,head,phone,status,audit_time,audit_staff) LIKE '%${hzn_search_content}%'
+			</if>
+		</where>
+	</select>
+
+	<!--根据id查看详情-->
+	<select id="findMerchantByID" resultType="MerchantApprovalInfo">
+		select * from zx_merchants_approve a
+		left join zx_employee_basic_information b ON
+		a.audit_staff=b.employees_id
+		where a.approval_id=#{id}
+	</select>
+	<!--审核商户信息-->
+	<update id="updateRseult" >
+		update zx_merchants_approve set status=#{approval_result},audit_staff=#{employees_id},audit_time=NOW(),note=#{note}
+		WHERE approval_id=#{approval_id}
+	</update>
+	<!--  更新商家账号信息-->
+	<update id="updateMerchantMsg" >
+		update zx_merchants_account set merchants_name=#{company_name},merchants_level='普通',head=#{head},address=#{company_address},longitude=#{longitude},latitude=#{latitude},
+		job=#{job},phone=#{phone},url=#{url},merchants_state='正常'
+		WHERE user_id=#{user_id}
+	</update>
+
+	<!--更新商家头像信息-->
+	<update id="updateMerchantPortrait">
+		UPDATE zx_user_count_info SET portrait_url=#{logo_url} WHERE user_id=#{user_id}
+	</update>
+</mapper>

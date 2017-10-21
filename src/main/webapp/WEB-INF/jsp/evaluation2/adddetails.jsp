@@ -44,7 +44,7 @@
 $("#Srt_cbox").combobox({
 	panelHeight:'auto',
 	onChange: function () {		         
-         var id=$('#Srt_cbox').val();
+         var id =$('#Srt_cbox').val();
 /*          if(id!=''){
          	$('input#merchant_id').val(id);
          }	 */	   
