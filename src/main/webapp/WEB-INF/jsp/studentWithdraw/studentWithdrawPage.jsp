@@ -32,7 +32,7 @@ $.Admin.studentWithdraw = {
    		+'<option value="">全部</option><option value="1">已经受理</option><option value="0">尚未受理</option></select>',
        },
        //------------受理-------//
-       { text: '受理', iconCls: 'fa fa-search', handler: function(){
+       { text: '受理', iconCls: 'fa fa-check', handler: function(){
            $.Admin.studentWithdraw.AcceptWithdraw();
            } 
        },

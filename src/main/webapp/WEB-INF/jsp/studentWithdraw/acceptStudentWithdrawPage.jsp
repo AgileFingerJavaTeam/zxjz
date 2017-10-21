@@ -13,7 +13,7 @@
 	     <tr>
              <th>提现人：</th>
 			 <td>
-				 <input   name="user_name" value="${data.data.name}" width="100px">
+				 <input   name="user_name" value="${data.data.name}" class="easyui-textbox easyui-validatebox"  readonly="readonly" width="100px">
 				 <input type="hidden"  name="user_id" value="${data.data.userId}" width="100px">
 				 <input type="hidden"  name="status" value="${data.data.isOk}" width="100px">
 			 </td>
@@ -21,25 +21,25 @@
 		 <tr>
 			 <th>提现流水号：</th>
 			 <td>
-				 <input   name="withdraw_num" value="${data.data.withdrawNum}" width="100px">
+				 <input   name="withdraw_num" value="${data.data.withdrawNum}" class="easyui-textbox easyui-validatebox"  readonly="readonly" width="100px">
 			 </td>
 		 </tr>
 		 <tr>
 			 <th>提现时间：</th>
 			 <td>
-				 <input   name="witdrawTime" value="${data.data.withdrawTime}" width="100px">
+				 <input   name="witdrawTime" value="${data.data.withdrawTime}" class="easyui-textbox easyui-validatebox"  readonly="readonly" width="100px">
 			 </td>
 		 </tr>
 		 <tr>
 			 <th>提现金额：</th>
 			 <td>
-				 <input   name="withdrawMoney" value="${data.data.withdrawMoney}" width="100px">
+				 <input   name="withdrawMoney" value="${data.data.withdrawMoney}" class="easyui-textbox easyui-validatebox"  readonly="readonly" width="100px">
 			 </td>
 		 </tr>
 		 <tr>
 			 <th>支付宝账号：</th>
 			 <td>
-				 <input   name="aliPayId" value="${data.data.alipayId}" width="100px">
+				 <input   name="aliPayId" value="${data.data.alipayId}" class="easyui-textbox easyui-validatebox"  readonly="readonly" width="100px">
 			 </td>
 		 </tr>
 		 <tr>
