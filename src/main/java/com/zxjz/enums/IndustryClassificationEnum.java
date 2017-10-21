@@ -7,7 +7,9 @@ public enum IndustryClassificationEnum {
     RETURN_SUCCESS(2),//保存成功
     RETURN_FAIL(-2),//保存失败
     UPDATE_SUCCESS(3),//修改成功
-    UPDATE_FAIL(-3);//修改失败
+    UPDATE_FAIL(-3),//修改失败
+    DELETE_SUCCESS(4),//删除成功
+    DELETE_ERROR(-4);//删除失败
 
 
 

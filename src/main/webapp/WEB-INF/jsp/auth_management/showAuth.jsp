@@ -131,7 +131,7 @@ $($.Admin.AuthManagement.id).datagrid({
     singleSelect: false,
     rownumbers: true,
     animate: true,
-    idField: 'permission_grouping_id',
+    idField: 'permissionGroupingId',
     url: 'AuthManagement/getAuthManagement',
     /* pagination:true,
 	pagePosition:'bottom',

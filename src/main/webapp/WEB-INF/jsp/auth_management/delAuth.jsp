@@ -12,7 +12,7 @@
      <table class="table_list">
          <tr>
              <td width=100% >确定删除这条权限吗？
-             <input type="hidden" name="permission_grouping_id" value="${data.permission_grouping_id }"/>
+             <input type="hidden" name="permission_grouping_id" value="${data.data.permissionGroupingId}"/>
              </td>
          </tr>
          <tr>

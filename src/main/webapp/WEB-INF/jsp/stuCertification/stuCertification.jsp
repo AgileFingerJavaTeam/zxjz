@@ -108,7 +108,7 @@ $($.Admin.stuCertification.id).datagrid({
 	pageSize:20,
 	pageList:[10,20,30,50,100],
 	columns:[[
-	          {field:'ck',checkbox:true},    
+//	          {field:'ck',checkbox:true},
 //	          {field:'userId',title:'学生ID',align:'center',width:80,},
 	          {field:'name',title:'学生姓名',align:'center',width:80,},
 	       //   {field:'studentcardPic',title:'学生证照片',align:'center',width:80,},

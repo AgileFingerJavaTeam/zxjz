@@ -151,7 +151,7 @@ $($.Admin.GyPositionType.id).datagrid({
 	pageList:[10,20,30,50,100],
 	columns:[[
 	    //      {field:'ck',checkbox:true},    
-	          {field:'stationId',title:'ID',align:'center'},
+//	          {field:'stationId',title:'ID',align:'center'},
 	          {field:'stationName',title:'职位类型名称',width:200},
 	          /* {field:'status',title:'状态',align:'center',formatter:$.Admin.Role.formatter.status,width:80} */
 	      ]],
@@ -161,8 +161,6 @@ $($.Admin.GyPositionType.id).datagrid({
     //----------点击当前行时右侧联动-----------//
     onClickRow:function(index,row){
     	var get_select_row = $($.Admin.GyPositionType.id).treegrid('getSelected');
-//        var data = {id: get_select_row.stationId};
-//        var name = {id: get_select_row.stationName};
         currentFirstLevelID = get_select_row.stationId;
         currentFirstLevelName = get_select_row.stationName;
     	var srt_cnamestatusInfo={};
@@ -197,8 +195,6 @@ $($.Admin.GyPositionType.id).datagrid({
     onLoadSuccess:function(){
     	$(this).datagrid("selectRow",0);
     	var get_select_row = $($.Admin.GyPositionType.id).treegrid('getSelected');
-//        var data = {id: get_select_row.stationId};
-//        var name = {name: get_select_row.stationName};
     	var srt_cnamestatusInfo={};
         var page=1;
         var rows=20;
@@ -335,7 +331,7 @@ $($.Admin.GyPositionType.id).datagrid({
     		pageList:[10,20,30,50,100],
     		columns:[[
     		   //       {field:'ck',checkbox:true},    
-    		          {field:'stationId',title:'ID',align:'center'},
+//    		          {field:'stationId',title:'ID',align:'center'},
     		          {field:'stationName',title:'职位分类(子类)名称',width:80,},
     		      ]],
     	    onDblClickRow: function(row){ 

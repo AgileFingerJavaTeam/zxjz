@@ -1,0 +1,64 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zxjz.dao.StudentWithdrawDao">
+    <!--查询学生提现列表-->
+    <select id="findStudentWithdrawList" resultType="StudentWithdraw">
+        SELECT *
+        FROM zx_students_wallet_withdraw_apply zswwa
+        LEFT JOIN zx_employee_basic_information zebi
+        ON zswwa.staff_id = zebi.employees_id
+        LEFT JOIN zx_cstudents_personal_info zcpi
+        ON zswwa.user_id = zcpi.user_id
+        LEFT JOIN zx_students_wallet_base_info zswbi
+        ON zswwa.user_id = zswbi.user_id
+        <where>
+            1=1
+            <if test="selectStatus!=null and selectStatus!='' ">
+                AND is_ok = #{selectStatus}
+            </if>
+            <if test="withdraw_search!=null and withdraw_search!=''">
+                AND CONCAT_WS(',',zcpi.name,withdraw_num,withdraw_time,withdraw_money,zebi.employees_name,alipay_id) LIKE '%${withdraw_search}%'
+            </if>
+        </where>
+        limit #{offset},#{rows}
+    </select>
+    <!--查询学生提现列表条数-->
+    <select id="findStudentWithdrawCount" resultType="int">
+        SELECT COUNT(*)
+        FROM zx_students_wallet_withdraw_apply zswwa
+        LEFT JOIN zx_employee_basic_information zebi
+        ON zswwa.staff_id = zebi.employees_id
+        LEFT JOIN zx_cstudents_personal_info zcpi
+        ON zswwa.user_id = zcpi.user_id
+        LEFT JOIN zx_students_wallet_base_info zswbi
+        ON zswwa.user_id = zswbi.user_id
+        <where>
+            1=1
+            <if test="selectStatus!=null and selectStatus!='' ">
+                AND is_ok = #{selectStatus}
+            </if>
+            <if test="withdraw_search!=null and withdraw_search!=''">
+                AND CONCAT_WS(',',zcpi.name,withdraw_num,withdraw_time,withdraw_money,zebi.employees_name,alipay_id) LIKE '%${withdraw_search}%'
+            </if>
+        </where>
+    </select>
+    <!--查询审核时当条学生提现信息-->
+    <select id="findStudentWithdrawInfo" resultType="StudentWithdraw">
+        SELECT *
+        FROM zx_students_wallet_withdraw_apply zswwa
+        LEFT JOIN zx_employee_basic_information zebi
+        ON zswwa.staff_id = zebi.employees_id
+        LEFT JOIN zx_cstudents_personal_info zcpi
+        ON zswwa.user_id = zcpi.user_id
+        LEFT JOIN zx_students_wallet_base_info zswbi
+        ON zswwa.user_id = zswbi.user_id
+        WHERE zswwa.user_id = #{user_id} AND zswwa.withdraw_num = #{withdraw_num}
+    </select>
+    <!--处理当条学生提现信息-->
+    <update id="updateStudentWithdrawStatus">
+        UPDATE zx_students_wallet_withdraw_apply
+        SET is_ok = 1,staff_id = #{staff_id}
+        WHERE user_id = #{user_id} AND withdraw_num = #{withdraw_num}
+    </update>
+</mapper>
