@@ -13,14 +13,14 @@
          <tr>
         	<th width="100">权限分组名称：</th>
             <td>
-      			<input type="hidden" name="permission_grouping_id" value="${groupID}"/>
-            	<input type="text"  name="permission_grouping_name" value="${groupName}" class="easyui-textbox easyui-validatebox" data-options="required:true,width:'100%'"/>
+      			<input type="hidden" name="permission_grouping_id" value="${data.groupID}"/>
+            	<input type="text"  name="permission_grouping_name" value="${data.groupName}" class="easyui-textbox easyui-validatebox" data-options="required:true,width:'100%'"/>
             </td>
         </tr>
         <tr>
         	<th width="100">菜单名称：</th>
             <td>
-            	<input type="hidden" name="hidden_menu_id" id="hidden_menu_id" value="${menuIDs}"/>
+            	<input type="hidden" name="hidden_menu_id" id="hidden_menu_id" value="${data.menuID}"/>
             	<input class="easyui-combobox" 
             		   id="gy_menu"	
             		   value=""
@@ -28,8 +28,8 @@
 					   data-options="
 					   url:'AuthManagement/getMenuName',
 					   method:'get',
-					   valueField:'menu_id',
-					   textField:'menu_name',
+					   valueField:'menuId',
+					   textField:'menuName',
 					   panelHeight:'auto'"
 					   multiple="multiple"
 				>
@@ -61,9 +61,9 @@
 				newMenuArr[i] = parseInt(menuArr[i]);
 			}
 			for(var i = 0;i < retArrs.length;i++){
-				if ($.inArray(retArrs[i].menu_id, newMenuArr) != -1){
+				if ($.inArray(retArrs[i].menuId, newMenuArr) != -1){
 					
-					 $('#gy_menu').combobox('select',retArrs[i].menu_id);
+					 $('#gy_menu').combobox('select',retArrs[i].menuId);
 					 /* $('#gy_menu').combobox('setValues', retArrs[i].hidden_menu_id); */
 				}
 			} 
