@@ -12,18 +12,18 @@
          <tr>
              <th>工作名称：</th>
              <td >
-                 <input type="text" name="serial_number" value="${salaryInfo.post_name}" class="easyui-textbox easyui-validatebox"  readonly="readonly" data-options="width:'100%' "/>
+                 <input type="text" name="serial_number" value="${salaryInfo.postName}" class="easyui-textbox easyui-validatebox"  readonly="readonly" data-options="width:'100%' "/>
              </td>
          </tr>
          <tr>
              <th>结算序号：</th>
              <td >
-                  <input type="text"  name="parameter_name" value="${salaryInfo.settlement_num}" class="easyui-textbox easyui-validatebox" readonly="readonly" data-options="width:'100%'"/>
+                  <input type="text"  name="parameter_name" value="${salaryInfo.settlementNum}" class="easyui-textbox easyui-validatebox" readonly="readonly" data-options="width:'100%'"/>
              </td>
          </tr>
          <tr>
              <th>结算时间：</th>
-             <td ><input type="text" name="parameter" value="${salaryInfo.settlement_time}" class="easyui-textbox easyui-validatebox easyui-datetimebox" showSeconds="false" readonly="readonly" data-options="width:'100%'"/></td>
+             <td ><input type="text" name="parameter" value="${salaryInfo.settlementTime}" class="easyui-textbox easyui-validatebox easyui-datetimebox" showSeconds="false" readonly="readonly" data-options="width:'100%'"/></td>
         </tr>
         <tr>
              <th>应发金额：</th>
@@ -31,11 +31,11 @@
         </tr>
         <tr>
              <th>扣减金额：</th>
-             <td ><input type="text" name="parameter" value="${salaryInfo.wage_deductions}" class="easyui-textbox easyui-validatebox easyui-numberbox" precision="2" readonly="readonly" data-options="width:'100%'"/></td>
+             <td ><input type="text" name="parameter" value="${salaryInfo.wageDeductions}" class="easyui-textbox easyui-validatebox easyui-numberbox" precision="2" readonly="readonly" data-options="width:'100%'"/></td>
         </tr>
         <tr>
              <th>扣减原因：</th>
-             <td ><input type="text" name="parameter" value="${salaryInfo.deducting_reason}" class="easyui-textbox easyui-validatebox" readonly="readonly" data-options="width:'100%'"/></td>
+             <td ><input type="text" name="parameter" value="${salaryInfo.deductingReason}" class="easyui-textbox easyui-validatebox" readonly="readonly" data-options="width:'100%'"/></td>
         </tr>
         <tr>
              <th>奖励金额：</th>
@@ -43,11 +43,11 @@
         </tr>
         <tr>
              <th>奖励原因：</th>
-             <td ><input type="text" name="parameter" value="${salaryInfo.rewards_causation}" class="easyui-textbox easyui-validatebox" readonly="readonly" data-options="width:'100%'"/></td>
+             <td ><input type="text" name="parameter" value="${salaryInfo.rewardsCausation}" class="easyui-textbox easyui-validatebox" readonly="readonly" data-options="width:'100%'"/></td>
         </tr>
         <tr>
              <th>实发金额：</th>
-             <td ><input type="text" name="parameter" value="${salaryInfo.final_pay}" class="easyui-textbox easyui-validatebox easyui-numberbox" precision="2" readonly="readonly" data-options="width:'100%'"/></td>
+             <td ><input type="text" name="parameter" value="${salaryInfo.finalPay}" class="easyui-textbox easyui-validatebox easyui-numberbox" precision="2" readonly="readonly" data-options="width:'100%'"/></td>
         </tr>
         <tr>
             <td colspan="4">

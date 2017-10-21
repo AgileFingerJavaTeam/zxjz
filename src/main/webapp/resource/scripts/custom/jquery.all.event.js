@@ -110,6 +110,9 @@ $(document).on('click','.table_form_submit_dialog',function(){
     var type = $(form).attr("method");
     var url = $(form).attr("action");
     var data = $(form).serialize();
+    console.log("------------");
+    console.log(data);
+    console.log("------------");
     //ajax提交数据处理
     $.ajax({
         type: type,

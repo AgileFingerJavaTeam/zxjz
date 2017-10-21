@@ -12,7 +12,7 @@
      <table class="table_list">
          <tr>
              <td width=100% >确定删除这条参数吗？
-             <input type="hidden" name="parameter_id" value="${data.parameter_id}"/>
+             <input type="hidden" name="parameter_id" value="${data.data.parameterId}"/>
              </td>
          </tr>
          <tr>

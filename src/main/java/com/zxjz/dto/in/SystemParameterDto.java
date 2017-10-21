@@ -17,6 +17,24 @@ public class SystemParameterDto {
     private String serial_number;
     private String parameter_description;
     private String parameter;
+    private int id;
+    private int parameterId;
+
+    public int getParameterId() {
+        return parameterId;
+    }
+
+    public void setParameterId(int parameterId) {
+        this.parameterId = parameterId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getParameter_id() {
         return parameter_id;

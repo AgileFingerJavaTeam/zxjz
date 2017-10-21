@@ -29,8 +29,9 @@ import javax.servlet.http.HttpSession;
 public class RecruitApprovalController extends BaseController{
     @Autowired
     private RecruitApprovalService recruitApprovalService;
+
     /**
-     * 显示系统参数设置页面
+     * 显示招聘信息页面
      *
      * @return
      */
@@ -40,14 +41,14 @@ public class RecruitApprovalController extends BaseController{
         try {
             mv.setViewName("approval/RecruitmentInformationApproval");
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            logger.error(e.getMessage(), e);
         }
         return mv;
     }
 
 
     /**
-     * 查询参数信息
+     * 查询招聘列表信息
      *
      * @return
      */

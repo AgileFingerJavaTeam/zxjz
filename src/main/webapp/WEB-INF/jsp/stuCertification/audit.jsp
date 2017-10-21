@@ -12,33 +12,33 @@
  <table class="table_list">
          <tr>
              <th>学生姓名：</th>
-			 <td><input  id="Stuname" name="name" value="${data.name}" width="100%" readonly="readonly" style="border:0px"> 
-			 	<input name="user_id" value="${data.user_id}"type="hidden">
+			 <td><input  id="Stuname" name="name" value="${data.data.name}" width="100%" readonly="readonly" style="border:0px">
+			 	<input name="user_id" value="${data.data.userId}"type="hidden">
 			 </td>
          </tr>
          <tr>
              <th>学生证：</th>
-			 <td> <a href="TP/${studentcard_pic}" target="_blank" ><img alt="学生证照片" src="TP/${studentcard_pic}" width=150px height=200px></a>
-                  <input name="url" value="${studentcard_pic}" style="display:none"/>     
+			 <td> <a href="TP/${studentcard_pic}" target="_blank" ><img alt="学生证照片" src="TP/${data.data.studentcardPic}" width=150px height=200px></a>
+                  <input name="url" value="${data.data.studentcardPic}" style="display:none"/>
 			 </td>
          </tr>
          <tr>
              <th>学号：</th>
-			 <td><input  id="stu_number" name="stu_number" value="${data.stu_number}" width="100%" readonly="readonly" style="border:0px">		     
+			 <td><input  id="stu_number" name="stu_number" value="${data.data.stuNumber}" width="100%" readonly="readonly" style="border:0px">
 			 </td>
          </tr>
          <tr>
              <th>身份证：</th>
-			 <td> <a href="TP/${idcard_pic}" target="_blank" ><img alt="身份证照片" src="TP/${idcard_pic}" width=150px height=200px></a>
-                  <input name="url" value="${idcard_pic}" style="display:none"/> 
+			 <td> <a href="TP/${idcard_pic}" target="_blank" ><img alt="身份证照片" src="TP/${data.data.idcardPic}" width=150px height=200px></a>
+                  <input name="url" value="${data.data.idcardPic}" style="display:none"/>
 			 </td>
          </tr>
          <tr>
              <th>身份证号码：</th>
-			 <td><input  id="id_card" name="id_card" value="${data.id_card}" width="100%" readonly="readonly" style="border:0px">
-			     <input  type="hidden"  value="${data.check_state}"   name="check_state">
+			 <td><input  id="id_card" name="id_card" value="${data.data.idCard}" width="100%" readonly="readonly" style="border:0px">
+			     <input  type="hidden"  value="${data.data.checkState}"   name="check_state">
 			     <input type="hidden" class="stat_res" name="stat_res" value="0"/>
-			     <input  type="hidden" id="check_state" name="check_state" value="${data.check_state}" width="100%" readonly="readonly" style="border:0px">
+			     <input  type="hidden" id="check_state" name="check_state" value="${data.data.checkState}" width="100%" readonly="readonly" style="border:0px">
 			 </td>
          </tr>
          <tr>

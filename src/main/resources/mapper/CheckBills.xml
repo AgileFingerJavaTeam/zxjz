@@ -18,14 +18,14 @@
         select count(*)
         FROM  zx_merchant_funds_current_account
         <where>
-            1=1
+            user_id=#{merId}
             <if test="q!=null and q!=''">
                 and merchants_name like '%${q}%'
             </if>
         </where>
     </select>
     <!--查询搜索时商户名称-->
-    <select id="findMerName"  resultType="MerchantsBillsInfo">
+    <select id="findMerchantName"  resultType="MerchantsBillsInfo">
         SELECT user_id,merchants_name
         FROM zx_merchants_account
         <where>

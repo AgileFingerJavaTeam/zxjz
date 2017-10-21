@@ -30,12 +30,12 @@ $.Admin.Bill = {
                 $.Admin.tips('温馨提示信息', '请先选择 您要查看的数据行','error');
                 return false;
             }
-        var data = {user_id: get_select_row.user_id,reference_bill_classification: get_select_row.reference_bill_classification,references_the_internal_serial_number1: get_select_row.references_the_internal_serial_number1,merchants_name: get_select_row.merchants_name,work_id: get_select_row.work_id};
+        var data = {user_id: get_select_row.userId,reference_bill_classification: get_select_row.referenceBillClassification,references_the_internal_serial_number1: get_select_row.referencesTheInternalSerialNumber1,merchants_name: get_select_row.merchantsName,work_id: get_select_row.workId};
         var id = $.Admin.random_dialog();
         $(id).dialog({
             title: '查看账单',
             iconCls: 'fa fa-delete',
-            href: "CheckBill/findMerDetails",
+            href:"CheckBill/showBillDetails",
             modal: true,
             width:400,
             queryParams:data,
@@ -72,13 +72,13 @@ $($.Admin.Bill.id).datagrid({
 	pageList:[10,20,30,50,100],
 	columns:[[
 //	          {field:'ck',checkbox:true},    
-	          {field:'merchants_name',title:'商户名称',align:'center',width:'15%',sortable:true,},
-	          {field:'current_account_number',title:'序号',align:'center',width:'10%',sortable:true,},
-	          {field:'accounting_time',title:'记账时间',align:'center',width:'20%',sortable:true,},
-	          {field:'reference_bill_classification',title:'分类',align:'center',width:'15%',sortable:true,},
+	          {field:'merchantsName',title:'商户名称',align:'center',width:'15%',sortable:true,},
+	          {field:'currentAccountNumber',title:'序号',align:'center',width:'10%',sortable:true,},
+	          {field:'accountingTime',title:'记账时间',align:'center',width:'20%',sortable:true,},
+	          {field:'referenceBillClassification',title:'分类',align:'center',width:'15%',sortable:true,},
 	          {field:'description',title:'说明',align:'center',width:'25%',sortable:true,},
 	          {field:'amount',title:'金额',align:'center',width:'15%',sortable:true,},
-//	          {field:'references_the_internal_serial_number1',title:'票据ID',align:'center',width:'15%',sortable:true,},
+//	          {field:'referencesTheInternalSerialNumber1',title:'票据ID',align:'center',width:'15%',sortable:true,},
 	      ]],
     onDblClickRow: function(row){ 
     	
@@ -96,15 +96,15 @@ $("#srt_searchbox").combogrid({
 	    fitColumns: true,
 	    fit: true,   
 	    url:"CheckBill/findMerName",    
-	    idField: 'user_id',    
-	    textField: 'merchants_name',
+	    idField: 'userId',
+	    textField: 'merchantsName',
 	    pagination:true,
 		pagePosition:'bottom',
 		pageNumber:1,
 		pageSize:20,
 		pageList:[10,20,30,50,100],
 	    columns: [[    
-	        {field:'merchants_name',title:'商户名称',halign:'center',align:'center',width:60},      
+	        {field:'merchantsName',title:'商户名称',halign:'center',align:'center',width:60},
 	    ]],   
        onSelect:function(){selectMer()}
 	  });

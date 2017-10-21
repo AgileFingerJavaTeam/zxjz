@@ -34,6 +34,14 @@ public class SystemParameterDaoTest {
         System.out.println(systemParameter);
         System.out.println("-------------");
     }
+    //--测试查询系统参数条数
+    @Test
+    public void findSysParameterCount() throws Exception {
+        int count = systemParameterDao.findSysParameterCount(null);
+        System.out.println("--------------");
+        System.out.println(count);
+        System.out.println("---------------");
+    }
     //测试新增一条系统参数
     @Test
     public void AddSystemParameter() throws Exception {

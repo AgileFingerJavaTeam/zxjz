@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.UnsupportedEncodingException;
+
 @Controller
 @RequestMapping("/CheckBill")
 public class CheckBillController extends BaseController {
@@ -25,7 +27,9 @@ public class CheckBillController extends BaseController {
      * 显示往来对账页面
      * @return
      */
-    @RequestMapping(value = "/showBillPage")
+    @RequestMapping(value = "/showBillPage",
+            method = RequestMethod.GET,
+            produces = {"text/json;charset=UTF-8"})
     public ModelAndView showBillPage(){
         ModelAndView mv = new ModelAndView();
         try {
@@ -87,15 +91,21 @@ public class CheckBillController extends BaseController {
      * @param checkBillDto
      * @return
      */
-   @RequestMapping(value = "/findMerDetails",
-           method = RequestMethod.POST,
+   @RequestMapping(value = "/showBillDetails",
+           method = RequestMethod.GET,
            produces = {"text/json;charset=UTF-8"})
     @ResponseBody
     public ModelAndView findMerDetails(CheckBillDto checkBillDto){
         ModelAndView mv = new ModelAndView();
         String reference_bill_classification = checkBillDto.getReference_bill_classification();
         String merchants_name = checkBillDto.getMerchants_name();
-        try {
+        try{
+            reference_bill_classification = new String(reference_bill_classification.getBytes("iso-8859-1"), "UTF-8");
+            merchants_name = new String(merchants_name.getBytes("iso-8859-1"), "UTF-8");
+        }catch (UnsupportedEncodingException e) {
+           e.printStackTrace();
+        }
+       try {
             if (reference_bill_classification.equals("充值")){
                 CheckBillExcution checkBillExcution = checkBillService.findPayInfoById(checkBillDto);
                 mv.addObject("payInfo",checkBillExcution);

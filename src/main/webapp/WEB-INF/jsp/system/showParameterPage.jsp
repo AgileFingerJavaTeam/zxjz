@@ -42,6 +42,10 @@ $.Admin.SystemParameter = {
 	'Srt_Search' : function(){
 		var search_content=$('#srt_search').val();
         var srt_searchInfo={};
+        var page=1;
+        var rows=20;
+        srt_searchInfo.page=page;
+        srt_searchInfo.rows=rows;
         srt_searchInfo.srt_search_content=search_content;
       $.ajax({
    	  type:'POST',
@@ -72,7 +76,9 @@ $.Admin.SystemParameter = {
                 });
             }
         });
-    },    
+    },
+
+//---------------------------------
 
     //修改系统参数
     'EditSP' : function(){
@@ -81,7 +87,7 @@ $.Admin.SystemParameter = {
             $.Admin.tips('温馨提示信息', '请先选择 您要编辑的数据行','error');
             return false;
         }
-        var data = {id: get_select_row.parameter_id};
+        var data = {id:get_select_row.parameterId};
         var id = $.Admin.random_dialog();
         $(id).dialog({
             title: '修改系统参数',
@@ -103,12 +109,12 @@ $.Admin.SystemParameter = {
     },
     //删除系统参数
     'DelSP' : function(){
-            var get_select_row = $($.Admin.SystemParameter.id).datagrid('getSelected');
-            if(get_select_row == null){
+		var get_select_row = $($.Admin.SystemParameter.id).datagrid('getSelected');
+		if(get_select_row == null){
                 $.Admin.tips('温馨提示信息', '请先选择 您要删除的数据行','error');
                 return false;
-            }
-            var data = {id: get_select_row.parameter_id};
+		}
+        var data = {id:get_select_row.parameterId};
         var id = $.Admin.random_dialog();
         $(id).dialog({
             title: '删除系统参数',
@@ -127,8 +133,9 @@ $.Admin.SystemParameter = {
                 });
             }
         });
-    },   
-  
+    },
+
+
 },
 
 $($.Admin.SystemParameter.id).datagrid({
@@ -140,7 +147,7 @@ $($.Admin.SystemParameter.id).datagrid({
     ctrlSelect: true,
     singleSelect: false,
     rownumbers: true,
-    idField: 'uid',
+    idField: 'parameterId',
     url: "System/parameter",
     remoteSort:false,
     pagination:true,
@@ -149,14 +156,15 @@ $($.Admin.SystemParameter.id).datagrid({
 	pageSize:20,
 	pageList:[10,20,30,50,100],
 	columns:[[
-	          {field:'ck',checkbox:true},    
-	          {field:'serial_number',title:'参数编号',align:'center',width:80,sortable:true,
+//	          {field:'ck',checkbox:true},
+//              {field:'parameterId',title:'ID',align:'center',width:80},
+	          {field:'serialNumber',title:'参数编号',align:'center',width:80,sortable:true,
 	        	  sorter:function(a,b){
 	        		  return(a>b?1:-1);
 	        	  }},
-	          {field:'parameter_name',title:'参数名称',align:'center',width:80,sortable:true,},
+	          {field:'parameterName',title:'参数名称',align:'center',width:80,sortable:true,},
 	          {field:'parameter',title:'参数值',align:'center',width:80},
-	          {field:'parameter_description',title:'参数说明',align:'center',width:80},
+	          {field:'parameterDescription',title:'参数说明',align:'center',width:80},
 	      ]],
     onDblClickRow: function(row){ 
     	
@@ -180,7 +188,7 @@ $('#srt_search').textbox().textbox({ icons: [{
 		$(e.data.target).textbox('clear');
 		$.Admin.SystemParameter.Srt_Search();
 		} 
-}] })   
+}] })
 //----------排序------------------//
 
 </script>

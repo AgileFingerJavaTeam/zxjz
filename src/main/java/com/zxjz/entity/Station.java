@@ -4,10 +4,10 @@ package com.zxjz.entity;
  * Created by Administrator on 2017/10/11 0011.
  */
 public class Station {
-      private int stationId;
-      private int pStationId;
-      private String stationName;
-      private int isDelete;
+    private int stationId;
+    private int pStationId;
+    private String stationName;
+    private int isDelete;
 
     public int getStationId() {
         return stationId;

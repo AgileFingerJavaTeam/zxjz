@@ -24,7 +24,7 @@ $.Admin.stuCertification = {
         },
         //--------------筛选---------------------//
         { text: '审核状态:&nbsp&nbsp&nbsp<select id="srt_filtrate" class="easyui-combobox" name="srt_filtrate" style="width:100px;" data-options="required:true,editable:false">'+" "
-    		+'<option value="">全部</option><option value="2">审核通过</option><option value="1">审核驳回</option><option value="0">等待审核</option></select>',
+    		+'<option value="">全部</option><option value = 2>审核通过</option><option value = 1>审核驳回</option><option value = 0>等待审核</option></select>',
         },
         //--------搜索----------//
         { text: '&nbsp&nbsp&nbsp&nbsp<input id="srt_searchStu" type="text"></input>',
@@ -32,11 +32,11 @@ $.Admin.stuCertification = {
              handler: function(e){            	 
              }
         },
-       //--------------搜索图标---------------//
+        //--------------搜索图标---------------//
         {  iconCls:'icon-search',
-       	  handler: function(){
-           		$.Admin.stuCertification.srt_searchStu();
-       		} 
+            handler: function(){
+                $.Admin.stuCertification.srt_searchStu();
+            }
         },
     ],
   //查看&&审核
@@ -46,13 +46,13 @@ $.Admin.stuCertification = {
             $.Admin.tips('温馨提示信息', '请先选择 您要审核的数据行','error');
             return false;
         }
-        var data = {id:get_select_row.user_id};
+        var data = {id:get_select_row.userId};
         var id = $.Admin.random_dialog();
         $(id).dialog({
             title: '审核学生信息',
             iconCls: 'fa fa-video-camera',
             queryParams:data,
-            href: "stuCertification/showAuditStuPage",
+            href: "stuCertification/showCheckStuPage",
             modal: true,
             width:400,
             height:300,
@@ -72,6 +72,10 @@ $.Admin.stuCertification = {
 		var search_content=$('#srt_searchStu').val();
 		var onch=$('#srt_filtrate').combobox('getValue');
         var srt_searchStuInfo={};
+        var page=1;
+        var  rows=20;
+        srt_searchStuInfo.page=page;
+        srt_searchStuInfo.rows=rows;
         srt_searchStuInfo.srt_searchStu_content=search_content;
         srt_searchStuInfo.srt_filtrate=onch;
       $.ajax({
@@ -104,14 +108,14 @@ $($.Admin.stuCertification.id).datagrid({
 	pageSize:20,
 	pageList:[10,20,30,50,100],
 	columns:[[
-	          {field:'ck',checkbox:true},    
-//	          {field:'user_id',title:'学生ID',align:'center',width:80,},
+//	          {field:'ck',checkbox:true},
+//	          {field:'userId',title:'学生ID',align:'center',width:80,},
 	          {field:'name',title:'学生姓名',align:'center',width:80,},
-	       //   {field:'studentcard_pic',title:'学生证照片',align:'center',width:80,},	     
-	          {field:'stu_number',title:'学号',align:'center',width:80},
-	       //   {field:'idcard_pic',title:'身份证照片',align:'center',width:80},
-	          {field:'id_card',title:'身份证号码',align:'center',width:80},
-	      //    {field:'operating_time',title:'操作时间',align:'center',width:80},
+	       //   {field:'studentcardPic',title:'学生证照片',align:'center',width:80,},
+	          {field:'stuNumber',title:'学号',align:'center',width:80},
+	       //   {field:'idcardPic',title:'身份证照片',align:'center',width:80},
+	          {field:'idCard',title:'身份证号码',align:'center',width:80},
+	      //    {field:'operatingTime',title:'操作时间',align:'center',width:80},
 	      ]],
     onDblClickRow: function(row){ 
     	
@@ -125,7 +129,11 @@ $("#srt_filtrate").combobox({
 	onChange: function () {
          var onch=$('#srt_filtrate').combobox('getValue');
          var srt_filtrateInfo={};
-         srt_filtrateInfo.srt_filtrate=onch;
+         var page=1;
+         var  rows=20;
+        srt_filtrateInfo.page=page;
+        srt_filtrateInfo.rows=rows;
+		srt_filtrateInfo.srt_filtrate=onch;
        $.ajax({
     	  type:'POST',
     	  data:srt_filtrateInfo,
