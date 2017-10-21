@@ -27,8 +27,8 @@
 					   data-options="
 					   url:'AuthManagement/getMenuName',
 					   method:'get',
-					   valueField:'menu_id',
-					   textField:'menu_name',
+					   valueField:'menuId',
+					   textField:'menuName',
 					   panelHeight:'auto'"
 					   multiple="multiple"
 				>

@@ -8,45 +8,45 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<form id="approval_form" action="approval/hzn_approvalMerchant" class="table_form" method="post">			
+<form id="approval_form" action="MerchantApproval/hzn_approvalMerchant" class="table_form" method="post">
      <table class="table_list" cellpadding="10px">
            <tr>
              <td style="display:none">审核记录ID：</td>
 
              <td style="display:none">
-                  <input type="text"  name="approval_id" value="${data.approval_id}" class="easyui-textbox easyui-validatebox" data-options="width:'100%'" readonly="readonly"/>
+                  <input type="text"  name="approval_id" value="${data.data.approvalId}" class="easyui-textbox easyui-validatebox" data-options="width:'100%'" readonly="readonly"/>
              </td>
              <td style="display:none">审核商家ID：</td>
 
              <td style="display:none">
-                  <input type="text"  name="user_id" value="${data.user_id}" class="easyui-textbox easyui-validatebox" data-options="width:'100%'" readonly="readonly"/>
+                  <input type="text"  name="user_id" value="${data.data.userId}" class="easyui-textbox easyui-validatebox" data-options="width:'100%'" readonly="readonly"/>
              </td>
              </tr> 
             <tr>
              <td style="text-align:right" width="120px;">申请序号：</td>
              <td><input class="easyui-textbox" name="approval_num" readonly="readonly"
 				data-options="required:true,showSeconds:false"
-				value="${data.approval_num}" style="width: 250px" required ></td>
+				value="${data.data.approvalNum}" style="width: 250px" required ></td>
 			<td style="text-align:right" width="120px;">公司名称：</td>
              <td><input class="easyui-textbox" name="company_name" readonly="readonly"
 				data-options="readonly:true,required:true,showSeconds:false"
-				value="${data.company_name}" style="width: 250px" required ></td>	
+				value="${data.data.companyName}" style="width: 250px" required ></td>
             </tr>
          <tr>
 	          <td style="text-align:right">申请时间：</td>
 	             <td><input class="easyui-textbox" name="apply_time" readonly="readonly"
 					data-options="required:true,showSeconds:false"
-					value="${data.apply_time}" style="width: 250px" required ></td>	
+					value="${data.data.applyTime}" style="width: 250px" required ></td>
 			  <td style="text-align:right">负责人：</td>
 	             <td><input class="easyui-textbox" name="head" readonly="readonly"
 					data-options="required:true,showSeconds:false"
-					value="${data.head}" style="width: 250px" required ></td>	
+					value="${data.data.head}" style="width: 250px" required ></td>
          </tr>
           <tr>
           	 <td style="text-align:right">公司地址：</td>
 	             <td><input class="easyui-textbox" name="company_address" readonly="readonly"
 	             	 id="hzn_company_address" 
-					value="${data.company_address}" style="width: 220px" required >
+					value="${data.data.companyAddress}" style="width: 220px" required >
 					<a  class="easyui-linkbutton" 
 					plain="true"
 					iconCls="icon-search"
@@ -54,37 +54,37 @@
 			 <td style="text-align:right">所属行业：</td>
 	             <td><input class="easyui-textbox" name="industry_involved" readonly="readonly"
 					data-options="required:true,showSeconds:false"
-					value="${data.industry_involved}" style="width: 250px" required ></td>		
+					value="${data.data.industryInvolved}" style="width: 250px" required ></td>
          </tr>
          <tr style="display:none">
              <th width="100">经度：</th>
              <td >
-                  <input type="text" id="hzn_company_longitude" name="longitude" value="${data.longitude}" class="easyui-textbox easyui-validatebox" readonly="readonly" data-options="width:'100%'"/>
+                  <input type="text" id="hzn_company_longitude" name="longitude" value="${data.data.longitude}" class="easyui-textbox easyui-validatebox" readonly="readonly" data-options="width:'100%'"/>
              </td>
              <th width="70">纬度：</th>
              <td >
-                  <input type="text" id="hzn_company_latitude" name="latitude" value="${data.latitude}" class="easyui-textbox easyui-validatebox" readonly="readonly" data-options="width:'100%'"/>
+                  <input type="text" id="hzn_company_latitude" name="latitude" value="${data.data.latitude}" class="easyui-textbox easyui-validatebox" readonly="readonly" data-options="width:'100%'"/>
              </td>
          </tr>
          <tr>
           	 <td style="text-align:right">职位：</td>
 	             <td><input class="easyui-textbox" name="job" readonly="readonly"
 					data-options="required:true,showSeconds:false"
-					value="${data.job}" style="width: 250px" required ></td>
+					value="${data.data.job}" style="width: 250px" required ></td>
 			 <td style="text-align:right">电话：</td>
 	             <td><input class="easyui-textbox" name="phone" readonly="readonly"
 					data-options="required:true,showSeconds:false"
-					value="${data.phone}" style="width: 250px" required ></td>		
+					value="${data.data.phone}" style="width: 250px" required ></td>
          </tr>
          <tr>
           	 <td style="text-align:right">审核状态：</td>
 	             <td><input class="easyui-textbox" name="status" readonly="readonly"
 					data-options="required:true,showSeconds:false"
-					value="${data.status}" style="width: 250px" required ></td>
+					value="${data.data.status}" style="width: 250px" required ></td>
 			<td style="text-align:right">审核时间：</td>
 	             <td><input class="easyui-textbox" name="audit_time" readonly="readonly"
-					data-options="required:true,showSeconds:false"
-					value="${data.audit_time}" style="width: 250px" required ></td>				
+					data-options="showSeconds:false"
+					value="${data.data.auditTime}" style="width: 250px" ></td>
          </tr>
           <tr>
           <!-- dddddddddddd -->
@@ -97,23 +97,23 @@
 					value="${name}" style="width: 250px;height:25px;line-height: 25px;border-radius:5px; padding: 0px; margin: 0px; border:1px solid #DBDBDB ;" required >
 					 <input  id="two" name=""  readonly="readonly"
 					data-options="required:true,showSeconds:false"
-					value="${data.employees_name}" style="width: 250px;height:25px;line-height: 25px;border-radius:5px; padding: 0px; margin: 0px; border:1px solid #DBDBDB ;" required >
+					value="${data.data.employeesName}" style="width: 250px;height:25px;line-height: 25px;border-radius:5px; padding: 0px; margin: 0px; border:1px solid #DBDBDB ;" required >
 					</td>
 				 <td style="text-align:right">驳回原因：</td>
 	             <td><input id="refuse_reason" class="easyui-textbox" name="note" 
 					data-options="showSeconds:false"
-					value="${data.note}" style="width: 250px" ></td>		
+					value="${data.data.note}" style="width: 250px" ></td>
          </tr>
          <tr>
          	 <td style="text-align:right" >企业营业<br>执照图片：</td>
              <td align="center">
-                  <a href="TP/${data.url}" target="_blank" ><img alt="营业执照" src="TP/${data.url}" width=150px height=200px></a>
-                  <input name="url" value="${data.url}" style="display:none"/>
+                  <a href="TP/${data.data.url}" target="_blank" ><img alt="营业执照" src="TP/${data.data.url}" width=150px height=200px></a>
+                  <input name="url" value="${data.data.url}" style="display:none"/>
              </td>
              <td style="text-align:right" >企业logo图片：</td>
              <td align="center">
-                  <a href="TP/${data.logo_url}" target="_blank" ><img alt="企业logo" src="TP/${data.logo_url}" width=150px height=200px></a>
-                  <input name="logo_url" value="${data.logo_url}" style="display:none"/>
+                  <a href="TP/${data.data.logoUrl}" target="_blank" ><img alt="企业logo" src="TP/${data.data.logoUrl}" width=150px height=200px></a>
+                  <input name="logo_url" value="${data.data.logoUrl}" style="display:none"/>
              </td>
          </tr>  
 		<input class="approval_result" name="approval_result" value="result" style="display:none"/>        
@@ -147,7 +147,7 @@
     		    height: 550,    
     		    closed: false,    
     		    cache: false,    
-    		    href: 'approval/showMerchantMapPage',    
+    		    href: 'MerchantApproval/showMerchantMapPage',
     		    modal: true   
     		}); 
 		});
@@ -162,6 +162,7 @@
     	 } 
     	 $("input.approval_result").val("审核驳回");
      });
+
      $("button.hzn_adopt").on('click',function(){
 
     	 $("input.approval_result").val("审核通过");

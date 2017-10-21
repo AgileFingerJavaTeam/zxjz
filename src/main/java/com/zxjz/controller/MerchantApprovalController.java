@@ -1,22 +1,20 @@
 package com.zxjz.controller;
 
-import com.zxjz.base.BaseAPIResult;
 import com.zxjz.base.BaseController;
 import com.zxjz.base.BaseUIResult;
-import com.zxjz.dto.excution.CityExcution;
+import com.zxjz.dto.excution.MerchantApprovalExcution;
 import com.zxjz.dto.excution.RecruitApprovalExcution;
-import com.zxjz.dto.excution.RecruitmentExcution;
+import com.zxjz.dto.in.MerchantApprovalDto;
 import com.zxjz.dto.in.RecruitApprovalDto;
 import com.zxjz.entity.LandFallInfo;
+import com.zxjz.enums.MerchantApprovalEnum;
 import com.zxjz.enums.RecruitApprovalEnum;
 import com.zxjz.exception.UpdateDatabaseException;
 import com.zxjz.exception.db.InsertInnerErrorException;
-import com.zxjz.service.CityService;
+import com.zxjz.service.MerchantApprovalService;
 import com.zxjz.service.RecruitApprovalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,21 +23,21 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/approval")
-public class RecruitApprovalController extends BaseController{
+@RequestMapping("/MerchantApproval")
+public class MerchantApprovalController extends BaseController{
     @Autowired
-    private RecruitApprovalService recruitApprovalService;
+    private MerchantApprovalService merchantApprovalService;
 
     /**
      * 显示招聘信息页面
      *
      * @return
      */
-    @RequestMapping(value = "/showinfoPage")
-    public ModelAndView showParameterPage() {
+    @RequestMapping(value = "/showMerchantAccountPage")
+    public ModelAndView showMerchantAccountPage() {
         ModelAndView mv = new ModelAndView();
         try {
-            mv.setViewName("approval/RecruitmentInformationApproval");
+            mv.setViewName("approval/merchant_approval");
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
@@ -52,45 +50,42 @@ public class RecruitApprovalController extends BaseController{
      *
      * @return
      */
-    @RequestMapping(value = "/getinfoList",method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
+    @RequestMapping(value = "/merchantAccount",method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
     @ResponseBody
-    public String getinfoList(RecruitApprovalDto recruitApprovalDto) {
+    public String getinfoList(MerchantApprovalDto merchantApprovalDto) {
 
         try {
-            RecruitApprovalExcution recruitApprovalExcution=recruitApprovalService.findApprovalList(recruitApprovalDto);
-            return BaseUIResult.returnJsonEasyUI(recruitApprovalExcution);
+            MerchantApprovalExcution merchantApprovalExcution=merchantApprovalService.findApprovalList(merchantApprovalDto);
+            return BaseUIResult.returnJsonEasyUI(merchantApprovalExcution);
         }catch (Exception e) {
             logger.error(e.getMessage(), e);
-            RecruitApprovalExcution recruitApprovalExcution = new RecruitApprovalExcution(RecruitApprovalEnum.FIND_FAIL,e.getMessage());
-            return BaseUIResult.returnJsonEasyUI(recruitApprovalExcution);
+            MerchantApprovalExcution merchantApprovalExcution = new MerchantApprovalExcution(MerchantApprovalEnum.FIND_FAIL,e.getMessage());
+            return BaseUIResult.returnJsonEasyUI(merchantApprovalExcution);
         }
 
     }
-
-
 
     /**
      * 显示审核信息页面
      *
      * @return
      */
-    @RequestMapping(value = "/CheckInformation",
+    @RequestMapping(value = "/approvalMerchantAccount",
             method = RequestMethod.GET,
             produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public ModelAndView checkInfo(RecruitApprovalDto recruitApprovalDto) {
-
+    public ModelAndView editPS(MerchantApprovalDto merchantApprovalDto) {
         ModelAndView mv = new ModelAndView();
         HttpSession session=this.getRequest().getSession();
         try {
-            RecruitApprovalExcution info =recruitApprovalService.findApprovalByID(recruitApprovalDto);
+            MerchantApprovalExcution info =merchantApprovalService.findApprovalByID(merchantApprovalDto);
             LandFallInfo landfall=(LandFallInfo) session.getAttribute("user");
             int id=landfall.getEmployeesId();
             String name=  landfall.getEmployeesName();
             mv.addObject("id",id);
             mv.addObject("name",name);
             mv.addObject("data", info);
-            mv.setViewName("approval/checkInfo");
+            mv.setViewName("approval/approvalMerchant");
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             RecruitApprovalExcution recruitApprovalExcution = new RecruitApprovalExcution(RecruitApprovalEnum.FIND_FAIL,e.getMessage());
@@ -99,22 +94,18 @@ public class RecruitApprovalController extends BaseController{
     }
 
     /**
-     * 提交审核结果
+     * 审核商家账号详细信息
      *
      * @return
      */
-    @RequestMapping(value = "/subInfo",method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
+    @RequestMapping(value = "/hzn_approvalMerchant",method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
     @ResponseBody
-    public String subInfo( RecruitApprovalDto recruitApprovalDto) {
-        try {
+    public String approvalMerchant(MerchantApprovalDto merchantApprovalDto) {
 
-                RecruitApprovalExcution recruitApprovalExcution=recruitApprovalService.updateRefuse(recruitApprovalDto);
-                 return BaseUIResult.returnJsonMSG(1,recruitApprovalExcution,"更改成功");
-        }catch (InsertInnerErrorException e) {
-            logger.error(e.getMessage(), e);
-            RecruitApprovalExcution recruitApprovalExcution = new RecruitApprovalExcution(RecruitApprovalEnum.FIND_FAIL,e.getMessage());
-            return BaseUIResult.returnJsonMSG(0,recruitApprovalExcution,"添加失败");
-        }catch (UpdateDatabaseException e) {
+        try {
+           MerchantApprovalExcution merchantApprovalExcution=merchantApprovalService.result(merchantApprovalDto);
+            return BaseUIResult.returnJsonMSG(1,merchantApprovalExcution,"更改成功");
+        } catch (UpdateDatabaseException e) {
             logger.error(e.getMessage(), e);
             RecruitApprovalExcution recruitApprovalExcution = new RecruitApprovalExcution(RecruitApprovalEnum.FIND_FAIL,e.getMessage());
             return BaseUIResult.returnJsonMSG(0,recruitApprovalExcution,"更改失败");
@@ -125,19 +116,22 @@ public class RecruitApprovalController extends BaseController{
         }
     }
 
+
     /**
-     * 地图页面
+     * 显示审核商家地址地图
      *
      * @return
      */
-    @RequestMapping(value = "/Map")
-    public ModelAndView Map() {
+    @RequestMapping(value = "/showMerchantMapPage")
+    public ModelAndView showMerchantMapPage() {
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("approval/map");
+        try {
+            mv.setViewName("approval/hzn_map");
+        } catch (Exception e) {
+            logger.error(e.toString(), e);
+        }
         return mv;
     }
-
-
 
 
 
