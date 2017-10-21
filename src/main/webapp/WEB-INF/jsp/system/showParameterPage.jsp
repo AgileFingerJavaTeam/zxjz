@@ -156,8 +156,8 @@ $($.Admin.SystemParameter.id).datagrid({
 	pageSize:20,
 	pageList:[10,20,30,50,100],
 	columns:[[
-	          {field:'ck',checkbox:true},
-              {field:'parameterId',title:'ID',align:'center',width:80},
+//	          {field:'ck',checkbox:true},
+//              {field:'parameterId',title:'ID',align:'center',width:80},
 	          {field:'serialNumber',title:'参数编号',align:'center',width:80,sortable:true,
 	        	  sorter:function(a,b){
 	        		  return(a>b?1:-1);

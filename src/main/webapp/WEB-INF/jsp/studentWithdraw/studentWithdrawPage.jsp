@@ -8,75 +8,71 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<table id="ApplyVIP"></table>
+<table id="studentWithdraw"></table>
 <script>
-$.Admin.ApplyVIP = {
+$.Admin.studentWithdraw = {
     //组件ID
-    'id' : '#ApplyVIP',
+    'id' : '#studentWithdraw',
     //工具栏
     'tools' : [  
-               
 
-        
         //--------搜索----------//
-        { text: '&nbsp&nbsp&nbsp&nbsp<input id="srt_search1" type="text"></input>',
-        	// iconCls:'icon-clear',
+        { text: '&nbsp&nbsp&nbsp&nbsp<input id="withdraw_search" type="text"></input>',
              handler: function(e){
-            	 
              }
-       },
-       //--------------搜索图标---------------//
+		},
+       //-------搜索图标--------//
        {  iconCls:'icon-search',
        	  handler: function(){
-           		$.Admin.ApplyVIP.Srt_search1();
+           		$.Admin.studentWithdraw.withdraw_search();
        		} 
        },
-     //--------------审核---------------------//
-       { text: '审核状态:&nbsp&nbsp&nbsp<select id="srt_chooseStatus1" class="easyui-combobox" name="srt_approval_status1" style="width:100px;" data-options="required:true,editable:false">'+" "
-   		+'<option value="">全部</option><option value="已经受理">已经受理</option><option value="尚未受理">尚未受理</option></select>',
+       //------------筛选-------//
+       { text: '审核状态:&nbsp&nbsp&nbsp<select id="manageStatus" class="easyui-combobox" name="selectStatus" style="width:100px;" data-options="required:true,editable:false">'+" "
+   		+'<option value="">全部</option><option value="1">已经受理</option><option value="0">尚未受理</option></select>',
        },
-       //----------------受理-------------------//
+       //------------受理-------//
        { text: '受理', iconCls: 'fa fa-search', handler: function(){
-           $.Admin.ApplyVIP.AcceptApply();
+           $.Admin.studentWithdraw.AcceptWithdraw();
            } 
        },
     ],
   //搜索
-	'Srt_search1' : function(){
-		var search_content=$('#srt_search1').val();
-		var onch=$('#srt_chooseStatus1').val();
+	'withdraw_search' : function(){
+		var search_content=$('#withdraw_search').val();
+		var onch=$('#manageStatus').val();
         var srt_searchInfo1={};
         var page=1;
         var rows=20;
         srt_searchInfo1.page=page;
         srt_searchInfo1.rows=rows;
-        srt_searchInfo1.srt_search_content1=search_content;
-        srt_searchInfo1.srt_approval_status1=onch;
+        srt_searchInfo1.withdraw_search=search_content;
+        srt_searchInfo1.manageStatus=onch;
       $.ajax({
    	  type:'POST',
    	  data: srt_searchInfo1,
    	  dataType:'json',
-   	  url:"employer/GetApplyVipInfo",
+   	  url:"StudentWithdraw/findStudentWithdrawList",
    	  success: function(srt_return_list){
-   		$('#ApplyVIP').datagrid('loadData', srt_return_list);
+   		$('#studentWithdraw').datagrid('loadData', srt_return_list);
    	  }
       }); 
 	},
    
-    //受理商户升级VIP申请
-    'AcceptApply' : function(){
-        var get_select_row = $($.Admin.ApplyVIP.id).datagrid('getSelected');
+    //受理
+    'AcceptWithdraw' : function(){
+        var get_select_row = $($.Admin.studentWithdraw.id).datagrid('getSelected');
         if(get_select_row == null){
             $.Admin.tips('温馨提示信息', '请先选择 您要编辑的数据行','error');
             return false;
         }
-        var data = {id:get_select_row.userId};
+        var data = {user_id:get_select_row.userId,withdraw_num:get_select_row.withdrawNum};
         var id = $.Admin.random_dialog();
         $(id).dialog({
-            title: '审核商家',
+            title: '受理申请',
             iconCls: 'fa fa-edit',
             queryParams: data,
-            href: "employer/showCheckPage",
+            href: "StudentWithdraw/showAcceptStudentWithdrawPage",
             modal: true,
             width: 400,
             onClose : function(){
@@ -91,17 +87,17 @@ $.Admin.ApplyVIP = {
         });
     },
 },
-$($.Admin.ApplyVIP.id).datagrid({
+$($.Admin.studentWithdraw.id).datagrid({
 	title: '当前位置：系统中心 > 系统设置 > 系统参数管理',
     border: false,
-    toolbar: $.Admin.ApplyVIP.tools,
+    toolbar: $.Admin.studentWithdraw.tools,
     fitColumns: true,
     fit: true,
     ctrlSelect: true,
     singleSelect: false,
     rownumbers: true,
     idField: 'uid',
-    url: "employer/GetApplyVipInfo",
+    url: "StudentWithdraw/findStudentWithdrawList",
     remoteSort:false,
     pagination:true,
 	pagePosition:'bottom',
@@ -110,13 +106,13 @@ $($.Admin.ApplyVIP.id).datagrid({
 	pageList:[10,20,30,50,100],
 	columns:[[
 //	          {field:'ck',checkbox:true},
-	       //   {field:'userId',title:'商户ID',align:'center',width:80,},
-	          {field:'merchantsName',title:'商户名称',align:'center',width:80,},
-	          {field:'applyTime',title:'申请时间',align:'center',width:80,},
-	          {field:'isDispose',title:'是否已受理',align:'center',width:80},
-	          {field:'acceptEmployees',title:'受理员工',align:'center',width:80},
-	          {field:'operatingStaff',title:'操作员工',align:'center',width:80},
-	          {field:'operatingTime',title:'操作时间',align:'center',width:80},
+	       //   {field:'userId',title:'学生ID',align:'center',width:80,},
+	          {field:'name',title:'提现人',align:'center',width:80,},
+	          {field:'withdrawNum',title:'提现流水号',align:'center',width:80,},
+	          {field:'withdrawTime',title:'提现时间',align:'center',width:80},
+	          {field:'withdrawMoney',title:'提现金额',align:'center',width:80},
+	          {field:'alipayId',title:'支付宝账号',align:'center',width:80},
+	          {field:'employeesName',title:'处理人员',align:'center',width:80},
 	      ]],
     onDblClickRow: function(row){ 
     	
@@ -127,33 +123,33 @@ $($.Admin.ApplyVIP.id).datagrid({
 });
 
 	//----------筛选框------------//
-	$("#srt_chooseStatus1").combobox({
+	$("#manageStatus").combobox({
 		onChange: function () {
-             var onch=$('#srt_chooseStatus1').val();
+             var onch=$('#manageStatus').val();
              var srt_statusInfo={};
              var page=1;
              var rows=20;
              srt_statusInfo.page=page;
-            srt_statusInfo.rows=rows;
-             srt_statusInfo.srt_approval_status1=onch;
+             srt_statusInfo.rows=rows;
+             srt_statusInfo.selectStatus=onch;
            $.ajax({
         	  type:'POST',
         	  data: srt_statusInfo,
         	  dataType:'json',
-        	  url:"employer/GetApplyVipInfo",
+        	  url:"StudentWithdraw/findStudentWithdrawList",
         	  success: function(srt_return_list){
-        		$('#ApplyVIP').datagrid('loadData', srt_return_list);
+        		$('#studentWithdraw').datagrid('loadData', srt_return_list);
         	  }
            });  
        
 		}
 	});
 	//-----取消搜索插件----------//
-	  $('#srt_search1').textbox().textbox({ icons: [{ 
+	  $('#withdraw_search').textbox().textbox({ icons: [{
 			iconCls: 'icon-clear',
 			handler: function (e) { 
 				$(e.data.target).textbox('clear');
-				$.Admin.ApplyVIP.Srt_search1();
+				$.Admin.studentWithdraw.withdraw_search();
 				} 
 		}] })    
 		
