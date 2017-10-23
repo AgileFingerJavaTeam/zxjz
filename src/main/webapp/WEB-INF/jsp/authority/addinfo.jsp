@@ -25,7 +25,7 @@
          <tr>
              <th width="100">权限分组：</th>
              <td >
-			         <input  id="admiDivisionCode" value="${data.permission_grouping_name}" name="permission_grouping_name" style="width:100%" data-options="required:true" />  
+			         <input  id="admiDivisionCode" value="${data.data.permissionGroupingName}" name="permission_grouping_name" style="width:100%" data-options="required:true" />
              </td>            
          </tr>       
         <tr>
@@ -41,8 +41,8 @@
   $("#admiDivisionCode").combobox({    
   url:"authority/checkauth",
   method : "post",  
-  valueField: 'permission_grouping_name',  
-  textField: 'permission_grouping_name',
+  valueField: 'permissionGroupingName',
+  textField: 'permissionGroupingName',
   })  
   
   	  
@@ -56,7 +56,7 @@
 		    success: function(response){//调用成功  
 		    	con = "";
 		    	$.each(response, function(index, item){
-		    		con = item.employees_num;   
+		    		con = item.employeesNum;
 		    		var a=$('#bxw_btn').val();
 					if(a==con){
 						alert('员工编号已存在')

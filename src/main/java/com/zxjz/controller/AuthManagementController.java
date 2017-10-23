@@ -5,7 +5,6 @@ import com.zxjz.base.BaseUIResult;
 import com.zxjz.dto.excution.AuthManagementExcution;
 import com.zxjz.dto.in.AuthManagementDto;
 import com.zxjz.dto.in.MvAuthDto;
-import com.zxjz.entity.AuthManagement;
 import com.zxjz.enums.IndustryClassificationEnum;
 import com.zxjz.service.AuthManagementService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -14,7 +14,7 @@
              
              <td >
              	确认删除吗？
-             	<input type="hidden" name="employees_id" value="${data.employees_id}"/>
+             	<input type="hidden" name="employees_id" value="${data.data.employeesId}"/>
             	
              </td>           
          </tr>

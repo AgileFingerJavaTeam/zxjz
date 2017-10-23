@@ -13,21 +13,21 @@
          <tr >
              <th width="100" >员工编号：</th>
              <td >
-             	<input type="hidden" name="employees_id" value="${data.employees_id}"/>
-            	<input type="text"  id="bxw_btn" name="employees_num" value="${data.employees_num}"  id="employees_num" class="easyui-textbox easyui-validatebox" data-options="required:true, width:'100%',events:{change: function(){ aaa() }} "/>
+             	<input type="hidden" name="employees_id" value="${data.data.employeesId}"/>
+            	<input type="text"  id="bxw_btn" name="employees_num" value="${data.data.employeesNum}"  id="employees_num" class="easyui-textbox easyui-validatebox" data-options="required:true, width:'100%',events:{change: function(){ aaa() }} "/>
              </td>           
          </tr>
          <tr>
          	 <th width="100">员工姓名：</th>
              <td >
-                  <input type="text"  name="employees_name" value="${data.employees_name}" class="easyui-textbox easyui-validatebox" data-options="required:true,width:'100%'"/>
+                  <input type="text"  name="employees_name" value="${data.data.employeesName}" class="easyui-textbox easyui-validatebox" data-options="required:true,width:'100%'"/>
              </td>
          </tr>
          <tr>
              <th width="100">权限分组：</th>
              <td >
               
-			         <input  id="admiDivisionCode" value="${data.permission_grouping_name}" name="permission_grouping_name" style="width:100%" data-options="required:true" />  
+			         <input  id="admiDivisionCode" value="${data.data.permissionGroupingName}" name="permission_grouping_name" style="width:100%" data-options="required:true" />
 			    	
 
              </td>            
@@ -45,8 +45,8 @@
 	  $("#admiDivisionCode").combobox({    
 	  url:"authority/checkauth",
 	  method : "post",  
-	  valueField: 'permission_grouping_name',  
-	  textField: 'permission_grouping_name',
+	  valueField: 'permissionGroupingName',
+	  textField: 'permissionGroupingName',
 	  })  
 	/* 检验员工编号是否重复 */
 		function aaa(){
