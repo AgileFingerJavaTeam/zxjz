@@ -22,7 +22,7 @@ $.Admin.InformationApproval = {
     'id' : '#InformationApproval',
     //工具栏
     'tools' : [
-        { text: '查看', iconCls: 'fa fa-edit', handler: function(){
+        { text: '读取', iconCls: 'fa fa-edit', handler: function(){
             $.Admin.InformationApproval.UpdateStatus();
         }
         },
@@ -61,6 +61,13 @@ $.Admin.InformationApproval = {
 
         var get_select_row = $($.Admin.InformationApproval.id).datagrid('getSelected');
         var data = {user_id: get_select_row.userId}
+        if(get_select_row.isLook=="是"){
+            $.messager.show({
+                title:'消息',
+                msg:'已读的消息不能更改'
+            })
+           return false;
+		};
         var id = $.Admin.random_dialog();
         $(id).dialog({
             title: '审核信息',
