@@ -21,7 +21,11 @@ $.Admin.InformationApproval = {
     //组件ID
     'id' : '#InformationApproval',
     //工具栏
-    'tools' : [           
+    'tools' : [
+        { text: '查看', iconCls: 'fa fa-edit', handler: function(){
+            $.Admin.InformationApproval.UpdateStatus();
+        }
+        },
 
          { text: '<input id="bxw_search" type="text"></input>',
              handler: function(e){
@@ -39,20 +43,43 @@ $.Admin.InformationApproval = {
   //搜索
 	 'Bxw_Search' : function(){
 		var search_content=$('#bxw_search').val();
-		var onch=$("#bxw_chooseStatus").val();
         var bxw_searchInfo={};
         bxw_searchInfo.bxw_search_content=search_content;
-        bxw_searchInfo.bxw_approval_status=onch;
       $.ajax({
    	  type:'POST',
    	  data: bxw_searchInfo,
    	  dataType:'json',
-   	  url:"approval/getinfoList",
+   	  url:"StuMsg/getStuMsg",
    	  success: function(bxw_return_list){
    		$('#InformationApproval').datagrid('loadData', bxw_return_list);
    	  }
       }); 
 	},
+
+
+    'UpdateStatus' : function(){
+
+        var get_select_row = $($.Admin.InformationApproval.id).datagrid('getSelected');
+        var data = {user_id: get_select_row.userId}
+        var id = $.Admin.random_dialog();
+        $(id).dialog({
+            title: '审核信息',
+            iconCls: 'fa fa-edit',
+            queryParams: data,
+            href: "StuMsg/updateStatusPage",
+            modal: true,
+            width: 500,
+            onClose : function(){
+                $(this).dialog("destroy");
+            },
+            onOpen : function(){
+                var top = $(this).offset().top-$(this).position().top;
+                $(this).dialog('resize',{
+                    top: (top/6)+'px'
+                });
+            }
+        });
+    }
 
 }
 $($.Admin.InformationApproval.id).datagrid({
@@ -66,6 +93,7 @@ $($.Admin.InformationApproval.id).datagrid({
     rownumbers: true,
     idField: 'userId',
     url: "StuMsg/getStuMsg",
+	remoteSort:false,
     pagination:true,
 	pagePosition:'bottom',
 	pageNumber:1,
@@ -79,9 +107,9 @@ $($.Admin.InformationApproval.id).datagrid({
 	          {field:'phone',title:'绑定手机号',align:'center',width:100,sortable:'true'},
 	          {field:'school',title:'学校',align:'center',width:100,sortable:'true'},
 	          {field:'state',title:'状态',align:'center',width:50,sortable:'true'},
-	          {field:'isLook',title:'操作',align:'center',width:100,sortable:'true', formatter: function(value,row,index){
+	          {field:'isLook',title:'是否读取',align:'center',width:100,sortable:'true', formatter: function(value,row,index){
                   if (value=="否"){
-                      return '<button onclick="editUser('+index+')">未读</button>';
+                      return '未读';
                   } else {
                       return '已读';
                   }
@@ -107,28 +135,6 @@ $('#bxw_search').textbox().textbox({ icons: [{
 }] });
 
 
-function editUser(index){
-    var row =  $('#InformationApproval').datagrid('selectRow',index);
-   /* var get_select_row = $($.Admin.InformationApproval.id).datagrid('getSelected');*/
-    var data = {user_id: row.userId}
-    var id = $.Admin.random_dialog();
-    $(id).dialog({
-        title: '审核信息',
-        iconCls: 'fa fa-edit',
-        queryParams: data,
-        href: "StuMsg/updateStatusPage",
-        modal: true,
-        width: 500,
-        onClose : function(){
-            $(this).dialog("destroy");
-        },
-        onOpen : function(){
-            var top = $(this).offset().top-$(this).position().top;
-            $(this).dialog('resize',{
-                top: (top/6)+'px'
-            });
-        }
-    });
-}
+
 
 </script>

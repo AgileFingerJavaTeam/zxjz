@@ -92,6 +92,7 @@ $($.Admin.MerchantApproval.id).datagrid({
     rownumbers: true,
     idField: 'approvalId',
     url: "MerchantApproval/merchantAccount",
+    remoteSort:false,
     pagination:true,
 	pagePosition:'bottom',
 	pageNumber:1,

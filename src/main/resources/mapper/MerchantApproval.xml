@@ -19,9 +19,6 @@
 				AND CONCAT_WS(',',companyName,applyTime,industryInvolved,head,phone,status,auditTime,auditStaff) LIKE '%${hzn_search_content}%'
 			</if>
 		</where>
-		<if test="sort!=null and sort!='' and order!=null and order!=''">
-			ORDER BY ${sort} ${order}
-		</if>
 		limit #{offset},#{rows}
 	</select>
 

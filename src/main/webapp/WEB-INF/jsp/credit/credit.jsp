@@ -130,6 +130,7 @@ $($.Admin.creditPayment.id).datagrid({
     rownumbers: true,
     idField: 'user_id',
     url: "money/getcreditList",
+    remoteSort:false,
     pagination:true,
 	pagePosition:'bottom',
 	pageNumber:1,

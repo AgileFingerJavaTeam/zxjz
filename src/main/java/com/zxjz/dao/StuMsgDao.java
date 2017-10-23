@@ -9,9 +9,10 @@ import java.util.List;
 public interface StuMsgDao {
 
 public List<StuMsg> findStuMsg(@Param("offset")int offset,
-                               @Param("rows")int rows);
+                               @Param("rows")int rows,
+                               @Param("bxw_search_content")String bxw_search_content);
 
-public int findMsgNum();
+public int findMsgNum(@Param("bxw_search_content")String bxw_search_content);
 
 
 public int updateStatus(int user_id);
