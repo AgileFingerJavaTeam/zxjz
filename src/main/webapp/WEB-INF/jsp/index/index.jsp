@@ -28,7 +28,7 @@
     <script type="text/javascript"  src="scripts/custom/jquery.admin.js"></script>
     <link rel="stylesheet" type="text/css" href="css/main.css" >
     <script type="text/javascript"  src="scripts/custom/main.js"></script> 
-    <script type="text/javascript"  src="scripts/custom/utils.js"></script> 
+    <script type="text/javascript"  src="scripts/custom/utils.js"></script>
     <!-- kindeditor -->
     <link rel="stylesheet" type="text/css" href="scripts/kindeditor/themes/default/default.css" >
     <script type="text/javascript"  src="scripts/kindeditor/kindeditor-all.js"></script>

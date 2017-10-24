@@ -1,0 +1,79 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.AtMarchantFindDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+      <select id="getMarchantList" resultType="AtMarchantFind">
+          SELECT *
+          FROM zx_merchants_account a
+          LEFT JOIN zx_user_count_info b
+          ON a.user_id = b.user_id
+          <where>
+              <if test="at_marchant_search!=null and at_marchant_search!=''">
+                  AND CONCAT_WS(',',a.merchants_name,a.head,a.merchants_state,b.bound_phone,b.state) LIKE '%${at_marchant_search}%'
+              </if>
+          </where>
+          limit #{offset},#{rows}
+      </select>
+
+    <select id="findCarouselListCount" resultType="int">
+        SELECT COUNT(*)
+        FROM zx_merchants_account a
+        LEFT JOIN zx_user_count_info b
+        ON a.user_id = b.user_id
+        <where>
+            <if test="at_marchant_search!=null and at_marchant_search!=''">
+                AND CONCAT_WS(',',a.merchants_name,a.head,a.merchants_state,b.bound_phone,b.state) LIKE '%${at_marchant_search}%'
+            </if>
+        </where>
+    </select>
+
+
+    <select id="getMarchantIsLook" resultType="AtMarchantFind">
+        SELECT *
+        FROM zx_merchants_account a
+        LEFT JOIN zx_user_count_info b
+        ON a.user_id = b.user_id
+        WHERE a.user_id = #{id}
+    </select>
+
+    <update id="editMarchant">
+        UPDATE zx_user_count_info
+        SET  is_look = '是'
+        WHERE user_id = #{id}
+    </update>
+
+
+    <select id="getMarchantListTimeSearch" resultType="AtMarchantFind">
+        SELECT *
+        FROM zx_merchants_account a
+        LEFT JOIN zx_user_count_info b
+        ON a.user_id = b.user_id
+        <where>
+            <if test="at_marchant_search!=null and at_marchant_search!=''">
+                AND CONCAT_WS(',',a.merchants_name,a.head,a.merchants_state,b.bound_phone,b.state) LIKE '%${at_marchant_search}%'
+            </if>
+            <if test="start_time!=null and start_time!=''">
+                AND b.registration_time BETWEEN #{start_time} AND #{end_time}
+            </if>
+        </where>
+        limit #{offset},#{rows}
+    </select>
+
+    <select id="findCarouselListCount2" resultType="int">
+        SELECT COUNT(*)
+        FROM zx_merchants_account a
+        LEFT JOIN zx_user_count_info b
+        ON a.user_id = b.user_id
+        <where>
+            <if test="at_marchant_search!=null and at_marchant_search!=''">
+                AND CONCAT_WS(',',a.merchants_name,a.head,a.merchants_state,b.bound_phone,b.state) LIKE '%${at_marchant_search}%'
+            </if>
+            <if test="start_time!=null and start_time!=''">
+                AND b.registration_time BETWEEN #{start_time} AND #{end_time}
+            </if>
+        </where>
+    </select>
+</mapper>
