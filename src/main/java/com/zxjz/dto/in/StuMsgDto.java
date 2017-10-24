@@ -4,6 +4,11 @@ public class StuMsgDto {
     private  int user_id;
     private  int rows;
     private  int page;
+    private String sort;
+    private String order;
+    private  String bxw_search_content;
+    private  String start;
+    private String end;
     public int getUser_id() {
         return user_id;
     }
@@ -28,5 +33,43 @@ public class StuMsgDto {
         this.page = page;
     }
 
+    public String getBxw_search_content() {
+        return bxw_search_content;
+    }
 
+    public void setBxw_search_content(String bxw_search_content) {
+        this.bxw_search_content = bxw_search_content;
+    }
+
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) {
+        this.sort = sort;
+    }
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
+    }
+
+    public String getStart() {
+        return start;
+    }
+
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public String getEnd() {
+        return end;
+    }
+
+    public void setEnd(String end) {
+        this.end = end;
+    }
 }

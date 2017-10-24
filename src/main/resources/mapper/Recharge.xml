@@ -18,9 +18,7 @@
                 AND CONCAT_WS(',',merchants_name,recharge_time,recharge_mode_name,amount_of_recharge) LIKE '%${bxw_search_content}%'
             </if>
         </where>
-        <if test="sort!=null and sort!='' and order!=null and order!=''">
-            ORDER BY ${sort} ${order}
-        </if>
+
         limit #{offset},#{rows}
     </select>
     <!-- 查看数量 -->

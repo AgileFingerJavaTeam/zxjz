@@ -12,6 +12,14 @@
           ON pinfo.user_id=uinfo.user_id
         <where>
             1=1
+            <if test="bxw_search_content!=null and bxw_search_content!=''">
+                AND CONCAT_WS(',',reg_datetime,name,sex,phone,school,state,is_look) LIKE '%${bxw_search_content}%'
+            </if>
+
+            <if test="start!=null and start!=''">
+                AND reg_datetime BETWEEN #{start} AND #{end}
+            </if>
+
         </where>
           limit #{offset},#{rows}
     </select>
@@ -23,6 +31,12 @@
         ON pinfo.user_id=uinfo.user_id
         <where>
             1=1
+            <if test="bxw_search_content!=null and bxw_search_content!=''">
+                AND CONCAT_WS(',',reg_datetime,name,sex,phone,school,state,is_look) LIKE '%${bxw_search_content}%'
+            </if>
+            <if test="start!=null and start!=''">
+                AND reg_datetime BETWEEN #{start} AND #{end}
+            </if>
         </where>
     </select>
 

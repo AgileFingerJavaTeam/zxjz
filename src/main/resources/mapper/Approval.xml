@@ -20,9 +20,6 @@
 				AND CONCAT_WS(',',merchants_name,apply_time,post_name,work_date,work_time,work_location,settlement_method,recruitment,audit_status,employees_name,status_time) LIKE '%${bxw_search_content}%'
 			</if>
 		</where>
-		<if test="sort!=null and sort!='' and order!=null and order!=''">
-			ORDER BY ${sort} ${order}
-		</if>
 		limit #{offset},#{rows}
     </select>
 <!--查询招聘信息数量-->
