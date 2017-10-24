@@ -39,15 +39,11 @@ public class MerchantsController extends BaseController {
     @Autowired
     private MerchantsInfoService merchantsInfoService;
 
-
-
-/**
+    /**
      * 升级账户
-     *
      * @param merchantsUpgradeDto
      * @return
      */
-
     @RequestMapping(value = "/Premium",
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
@@ -71,14 +67,11 @@ public class MerchantsController extends BaseController {
 
     }
 
-
-/**
+    /**
      * 变更负责人
-     *
      * @param merchantsChangeHeadDto
      * @return
      */
-
     @RequestMapping(value = "/changeHead",
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
@@ -98,14 +91,12 @@ public class MerchantsController extends BaseController {
         }
     }
 
-
-/**
+    /**
      * 获取商家个人信息
      *
      * @param merchantsInfoDto
      * @return
      */
-
     @RequestMapping(value = "/getEmpolyerInfo",
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
@@ -125,7 +116,7 @@ public class MerchantsController extends BaseController {
         }
     }
 
-/**
+    /**
      * 确认员工爽约
      *
      * @param merchantsAffirmStudentBreakPromiseDto
@@ -160,15 +151,13 @@ public class MerchantsController extends BaseController {
         }
     }
 
-
-/**
+    /**
      * 显示商户申请VIP页面
      *
      * @return
      */
-
     @RequestMapping(value = "/showApplyVipPage",
-            method = RequestMethod.POST,
+            method = RequestMethod.GET,
             produces = {"text/json;charset=UTF-8"})
     public ModelAndView showApplyVipPage() {
         ModelAndView mv = new ModelAndView();
@@ -180,42 +169,38 @@ public class MerchantsController extends BaseController {
         return mv;
     }
 
-
-/**
+    /**
      * 查询申请VIP商户信息
      *
      * @param merchantsUpgradeDto
      * @return
      */
-
     @RequestMapping(value = "/GetApplyVipInfo",
             method = RequestMethod.POST,
             produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public String findApplyVipShopInfo(@RequestBody MerchantsUpgradeDto merchantsUpgradeDto) {
+    public String findApplyVipShopInfo(MerchantsUpgradeDto merchantsUpgradeDto) {
         try {
             MerchantsUpgradeExcution merchantsUpgradeExcution = merchantsInfoService.findApplyVipShopList(merchantsUpgradeDto);
             return  BaseUIResult.returnJsonEasyUI( merchantsUpgradeExcution);
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            logger.error(e.getMessage(),e);
             MerchantsUpgradeExcution merchantsUpgradeExcution = new MerchantsUpgradeExcution(MerchantsUpgradeEnum.FIND_FAIL, e.getMessage());
             return  BaseUIResult.returnJsonEasyUI( merchantsUpgradeExcution);
         }
     }
 
-
-/**
+    /**
      * 显示审核页面
      *
      * @param merchantsUpgradeDto
      * @return
      */
-
-    @RequestMapping(value = "/showAuditPage",
-            method = RequestMethod.POST,
+    @RequestMapping(value = "/showCheckPage",
+            method = RequestMethod.GET,
             produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public ModelAndView showAuditPage(@RequestBody MerchantsUpgradeDto merchantsUpgradeDto) {
+    public ModelAndView showAuditPage(MerchantsUpgradeDto merchantsUpgradeDto) {
         ModelAndView mv = new ModelAndView();
         try {
             MerchantsUpgradeExcution applyInfo = merchantsInfoService.showAuditPage(merchantsUpgradeDto);
@@ -227,54 +212,48 @@ public class MerchantsController extends BaseController {
         return mv;
     }
 
-
-/**
+    /**
      * 审核
      * @param merchantsUpgradeDto
      * @return
      */
-
     @RequestMapping(value = "/audit",
             method = RequestMethod.POST,
             produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public String check(@RequestBody MerchantsUpgradeDto merchantsUpgradeDto) {
+    public String check(MerchantsUpgradeDto merchantsUpgradeDto) {
         try {
             HttpSession session = this.getRequest().getSession();
             LandFallInfo user = (LandFallInfo) session.getAttribute("user");
 
-
             int id = user.getEmployeesId();
             merchantsUpgradeDto.setId(id);
-
             MerchantsUpgradeExcution merchantsUpgradeExcution = merchantsInfoService.confirmCheck(merchantsUpgradeDto);
-            return  BaseUIResult.returnJsonEasyUI(merchantsUpgradeExcution);
+            return  BaseUIResult.returnJsonMSG(1,merchantsUpgradeExcution,"审核成功");
         }catch (Exception e) {
             logger.error(e.getMessage(), e);
             MerchantsUpgradeExcution merchantsUpgradeExcution = new MerchantsUpgradeExcution(MerchantsUpgradeEnum.CONFIRM_CHECK_FAIL, e.getMessage());
-            return  BaseUIResult.returnJsonEasyUI(merchantsUpgradeExcution);
+            return  BaseUIResult.returnJsonMSG(0,merchantsUpgradeExcution,"审核失败");
         }
     }
 
-
-/**
+    /**
      * 查询员工列表
      * @param
      * @return
      */
-
     @RequestMapping(value = "/getAccEm",
             method = RequestMethod.POST,
             produces = {"text/json;charset=UTF-8"})
     @ResponseBody
-    public BaseAPIResult findCheckEmployer(){
+    public String findCheckEmployer(){
         try {
             MerchantsUpgradeExcution merchantsUpgradeExcution = merchantsInfoService.findCheckEmployer();
-            return new BaseAPIResult(1,merchantsUpgradeExcution);
+            return BaseUIResult.returnJson(merchantsUpgradeExcution);
         }catch (Exception e){
             logger.error(e.getMessage(),e);
             MerchantsUpgradeExcution merchantsUpgradeExcution = new MerchantsUpgradeExcution(MerchantsUpgradeEnum.FIND_CHECK_EMPLOYER_FAIL);
-            return new BaseAPIResult(0,merchantsUpgradeExcution);
+            return BaseUIResult.returnJson(merchantsUpgradeExcution);
         }
     }
 }

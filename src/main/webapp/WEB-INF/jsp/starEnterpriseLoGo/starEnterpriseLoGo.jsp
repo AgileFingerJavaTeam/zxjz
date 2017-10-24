@@ -17,26 +17,26 @@
         //工具栏
         'tools' : [
             { text: '编辑', iconCls: 'fa fa-edit', handler: function(){
-                $.Admin.authority.CheckInfo();
+                $.Admin.starEnterpriseLoGo.CheckInfo();
             }
             },
         ],
 
         //修改信息
         'CheckInfo' : function(){
-            var get_select_row = $($.Admin.authority.id).datagrid('getSelected');
+            var get_select_row = $($.Admin.starEnterpriseLoGo.id).datagrid('getSelected');
 
             if(get_select_row == null){
                 $.Admin.tips('温馨提示信息', '请先选择 您要编辑的数据行','error');
                 return false;
             }
-            var data = {employees_id: get_select_row.employeesId};
+            var data = {icon_id: get_select_row.iconId};
             var id = $.Admin.random_dialog();
             $(id).dialog({
-                title: '修改信息',
+                title: '修改企业Logo',
                 iconCls: 'fa fa-edit',
                 queryParams:data,
-                href: "authority/editinfo",
+                href: "StarEnterpriseLoGo/showUpdateStarLoGo",
                 modal: true,
                 width: 300,
                 onClose : function(){
@@ -53,17 +53,17 @@
 
 
     }
-    $($.Admin.authority.id).datagrid({
-        title: '当前位置：系统中心 >用户设置>用户管理',
+    $($.Admin.starEnterpriseLoGo.id).datagrid({
+        title: '当前位置：业务管理>审核管理>首页明星企业logo管理',
         border: false,
-        toolbar: $.Admin.authority.tools,
+        toolbar: $.Admin.starEnterpriseLoGo.tools,
         fitColumns: true,
         fit: true,
         ctrlSelect: true,
         singleSelect: false,
         rownumbers: true,
-        idField: 'employeesId',
-        url: "authority/getauthority",
+        idField: 'iconId',
+        url: "StarEnterpriseLoGo/StarEnterpriseLoGoLists",
         pagination:true,
         pagePosition:'bottom',
         pageNumber:1,
@@ -71,9 +71,8 @@
         pageList:[10,20,30],
         columns:[[
             {field:'ck',checkbox:true},
-            {field:'employeesNum',title:'员工编号',align:'center',width:100,sortable:'true'},
-            {field:'employeesName',title:'员工姓名',align:'center',width:100,sortable:'true'},
-            {field:'permissionGroupingName',title:'权限分组',align:'center',width:100,sortable:'true'}
+            {field:'iconId',title:'序号',align:'center',width:100,sortable:'true'},
+            {field:'pictureUrl',title:'logo',align:'center',width:100,sortable:'true',formatter:showImage1},
         ]],
         onDblClickRow: function(row){
 
@@ -82,6 +81,18 @@
             e.preventDefault();//阻止浏览器捕获右键事件
         }
     });
+
+    //显示图片1
+    function showImage1(value,row,index){
+        var html='<div style="padding:10px">';
+        if (row.pictureUrl!='' || row.pictureUrl!=null){
+            html+='< img src="TP/'+row.pictureUrl+'" style="width:60px; height:50px">';
+        } else {
+            html+='< img src="TP/default_category.png" style="width:60px; height:50px">';
+        }
+        html+='</div>';
+        return html;
+    }
 
 
 

@@ -41,9 +41,10 @@
 <script type="text/javascript">       
  $("#Srt_cbox").combobox({
 	panelHeight:'auto',
-	onChange: function () {		         
-          $('#Srt_cbox').val();   
+	onChange: function () {
+          $('#Srt_cbox').val();
 	}
-});
+
+ });
 
 </script>

@@ -1,0 +1,25 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.StarEnterpriseLoGoDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+    <select id="findStarEnterpriseLoGoList" resultType="StarEnterpriseLoGo">
+      SELECT * FROM zx_employer_star_icon WHERE state = '有效'
+    </select>
+
+    <select id="total" resultType="int">
+        SELECT COUNT(*) FROM zx_employer_star_icon WHERE state = '有效'
+    </select>
+
+    <select id="findStarEnterpriseLoGo" resultType="StarEnterpriseLoGo">
+        SELECT * FROM zx_employer_star_icon WHERE icon_id = #{icon_id}
+    </select>
+
+    <update id="updateStarLoGo">
+        UPDATE zx_employer_star_icon
+        SET picture_url = #{picture_url}
+        WHERE icon_id = #{icon_id}
+    </update>
+</mapper>
