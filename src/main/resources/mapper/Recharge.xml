@@ -18,9 +18,7 @@
                 AND CONCAT_WS(',',merchants_name,recharge_time,recharge_mode_name,amount_of_recharge) LIKE '%${bxw_search_content}%'
             </if>
         </where>
-        <if test="sort!=null and sort!='' and order!=null and order!=''">
-            ORDER BY ${sort} ${order}
-        </if>
+
         limit #{offset},#{rows}
     </select>
     <!-- 查看数量 -->
@@ -31,10 +29,9 @@
         ON zx_merchant_funds_recharge_record.user_id=zx_merchants_account.user_id
         <where>
             1=1
-            <if test="bxw_search_content!=null and bxw_search_content!=''">
-                AND CONCAT_WS(',',merchants_name,recharge_time,recharge_mode,amount_of_recharge) LIKE '%${bxw_search_content}%'
-            </if>
+
         </where>
+
     </select>
     <!-- 查看详情 -->
     <select id="findRechargePage" resultType="RechargeInfo">

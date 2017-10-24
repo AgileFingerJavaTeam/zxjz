@@ -157,7 +157,7 @@
 				<button type="button" class="table_form_close_dialog "
 					style="float: right">关闭</button>
 				<button type="button" class="table_form_submit_file_dialog"
-					style="float: right">确定</button>
+					style="float: right;">确定</button>
 			</td>
 		</tr>
 	</table>

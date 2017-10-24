@@ -119,6 +119,7 @@ $($.Admin.rechargePage.id).datagrid({
     rownumbers: true,
     idField: 'recruiting_id',
     url: "Recharge/getRechargeList",
+    remoteSort:false,
     pagination:true,
 	pagePosition:'bottom',
 	pageNumber:1,

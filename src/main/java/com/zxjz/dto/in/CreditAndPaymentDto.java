@@ -8,6 +8,7 @@ public class CreditAndPaymentDto {
     private int rows;
     private int user_id;
     private  double credit_total;
+    private  double credit_balance;
     private String payment_days;
     private  int page;
 
@@ -83,6 +84,14 @@ public class CreditAndPaymentDto {
         this.payment_days = payment_days;
     }
 
+    public double getCredit_balance() {
+        return credit_balance;
+    }
+
+    public void setCredit_balance(double credit_balance) {
+        this.credit_balance = credit_balance;
+    }
+
     @Override
     public String toString() {
         return "CreditAndPaymentDto{" +
@@ -93,7 +102,8 @@ public class CreditAndPaymentDto {
                 ", rows=" + rows +
                 ", user_id=" + user_id +
                 ", credit_total=" + credit_total +
-                ", payment_days=" + payment_days +
+                ", credit_balance=" + credit_balance +
+                ", payment_days='" + payment_days + '\'' +
                 ", page=" + page +
                 '}';
     }

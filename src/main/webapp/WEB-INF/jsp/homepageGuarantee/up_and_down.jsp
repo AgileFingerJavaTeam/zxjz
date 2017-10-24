@@ -50,6 +50,5 @@
 	            $('#hzn_good_end_time').datebox('setValue', '').datebox('showPanel');
 	        }
 	    }
-			
 
 </script>

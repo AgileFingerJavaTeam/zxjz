@@ -19,9 +19,7 @@
                 AND CONCAT_WS(',',merchants_name,text,head,phone,account_balance,credit_total,credit_balance,payment_days) LIKE '%${bxw_search_content}%'
             </if>
         </where>
-        <if test="sort!=null and sort!='' and order!=null and order!=''">
-            ORDER BY ${sort} ${order}
-        </if>
+
         limit #{offset},#{rows}
     </select>
     <!--查询列表数量-->
@@ -48,7 +46,7 @@
 
     <!-- 提交授信 -->
     <update id="submitCredit">
-        UPDATE zx_merchants_money_basic SET credit_total=#{credit_total} WHERE user_id=#{user_id}
+        UPDATE zx_merchants_money_basic SET credit_total=#{credit_total},credit_balance=#{credit_balance} WHERE user_id=#{user_id}
     </update>
 
     <!-- 提交账期 -->
