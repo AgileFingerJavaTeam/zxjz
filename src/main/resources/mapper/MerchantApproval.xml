@@ -16,7 +16,7 @@
 				AND status=#{hzn_approval_status}
 			</if>
 			<if test="hzn_search_content!=null and hzn_search_content!=''">
-				AND CONCAT_WS(',',companyName,applyTime,industryInvolved,head,phone,status,auditTime,auditStaff) LIKE '%${hzn_search_content}%'
+				AND CONCAT_WS(',',company_name,apply_time,industry_involved,head,phone,status,audit_time,audit_staff) LIKE '%${hzn_search_content}%'
 			</if>
 		</where>
 		limit #{offset},#{rows}

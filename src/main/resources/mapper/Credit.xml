@@ -46,7 +46,7 @@
 
     <!-- 提交授信 -->
     <update id="submitCredit">
-        UPDATE zx_merchants_money_basic SET credit_total=#{credit_total} WHERE user_id=#{user_id}
+        UPDATE zx_merchants_money_basic SET credit_total=#{credit_total},credit_balance=#{credit_balance} WHERE user_id=#{user_id}
     </update>
 
     <!-- 提交账期 -->

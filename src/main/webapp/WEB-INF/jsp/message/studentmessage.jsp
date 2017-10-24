@@ -58,7 +58,7 @@ $.Admin.InformationApproval = {
         },
 
     ],
-    
+
   //搜索
 	 'Bxw_Search' : function(){
 		var search_content=$('#bxw_search').val();
@@ -73,6 +73,8 @@ $.Admin.InformationApproval = {
                  return false;
              };
          };
+
+
 
 
         var bxw_searchInfo={};

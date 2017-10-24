@@ -40,7 +40,14 @@ public class StuMsgServiceImpl implements StuMsgService {
             if (bxw_search_content!=null){
                 page=1;
                 rows=20;
+                if (bxw_search_content.equals("已读")){
+                    bxw_search_content="是";
+                }
+                if (bxw_search_content.equals("未读")){
+                    bxw_search_content="否";
+                }
             }
+
             int offset = (page - 1) * rows;
             List<StuMsg> findStuMsg = stuMsgDao.findStuMsg(offset,rows,bxw_search_content,start,end);
             int total=stuMsgDao.findMsgNum(bxw_search_content,start,end);

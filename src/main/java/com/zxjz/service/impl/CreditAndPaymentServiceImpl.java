@@ -115,8 +115,9 @@ public class CreditAndPaymentServiceImpl implements CreditAndPaymentService {
     public CreditAndPaymentExcution subCredit(CreditAndPaymentDto creditAndPaymentDto) {
         int user_id=creditAndPaymentDto.getUser_id();
         double credit_total=creditAndPaymentDto.getCredit_total();
+        double credit_balance=creditAndPaymentDto.getCredit_balance();
         try {
-            int subCredit = creditDao.submitCredit(user_id, credit_total);
+            int subCredit = creditDao.submitCredit(user_id, credit_total,credit_balance);
             if(subCredit>0){
                 return  new CreditAndPaymentExcution(CreditEnum.SUCCESS);
             }else {
