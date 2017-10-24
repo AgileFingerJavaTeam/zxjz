@@ -7,6 +7,8 @@ public class StuMsgDto {
     private String sort;
     private String order;
     private  String bxw_search_content;
+    private  String start;
+    private String end;
     public int getUser_id() {
         return user_id;
     }
@@ -53,5 +55,21 @@ public class StuMsgDto {
 
     public void setOrder(String order) {
         this.order = order;
+    }
+
+    public String getStart() {
+        return start;
+    }
+
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public String getEnd() {
+        return end;
+    }
+
+    public void setEnd(String end) {
+        this.end = end;
     }
 }

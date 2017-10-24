@@ -38,13 +38,47 @@ $.Admin.InformationApproval = {
        		} 
        },
 
+        { text: '开始时间:&nbsp&nbsp&nbsp<input id="start_time"  class="easyui-datebox" type="text"></input>',
+            handler: function(e){
+            }
+        },
+        { text: '结束时间:&nbsp&nbsp&nbsp<input id="end_time"  class="easyui-datebox" type="text"></input>',
+            handler: function(e){
+            }
+        },
+        { text: '查询', iconCls: 'fa fa-search', handler: function(){
+            $.Admin.InformationApproval.Bxw_Search();
+        }
+        },
+        { text: '清空', iconCls: 'fa fa-edit', handler: function(e){
+           $('#start_time').datebox('clear');
+            $('#end_time').datebox('clear');
+            $.Admin.InformationApproval.Bxw_Search();
+        }
+        },
+
     ],
     
   //搜索
 	 'Bxw_Search' : function(){
 		var search_content=$('#bxw_search').val();
+		var start=$('#start_time').val();
+		var end=$('#end_time').val();
+         if(start!=null||start!=''){
+             if(end<start){
+                 $.messager.show({
+                     title:'消息',
+                     msg:'请填写正确的结束日期'
+                 })
+                 return false;
+             };
+         };
+
+
         var bxw_searchInfo={};
         bxw_searchInfo.bxw_search_content=search_content;
+        bxw_searchInfo.start=start;
+        bxw_searchInfo.end=end;
       $.ajax({
    	  type:'POST',
    	  data: bxw_searchInfo,
@@ -86,7 +120,9 @@ $.Admin.InformationApproval = {
                 });
             }
         });
-    }
+    },
+
+
 
 }
 $($.Admin.InformationApproval.id).datagrid({
@@ -140,7 +176,6 @@ $('#bxw_search').textbox().textbox({ icons: [{
 		$.Admin.InformationApproval.Bxw_Search();
 		} 
 }] });
-
 
 
 

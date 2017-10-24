@@ -34,14 +34,16 @@ public class StuMsgServiceImpl implements StuMsgService {
         int page = stuMsgDto.getPage();
         int rows = stuMsgDto.getRows();
         String bxw_search_content=stuMsgDto.getBxw_search_content();
+        String start=stuMsgDto.getStart();
+        String end=stuMsgDto.getEnd();
         try {
             if (bxw_search_content!=null){
                 page=1;
                 rows=20;
             }
             int offset = (page - 1) * rows;
-            List<StuMsg> findStuMsg = stuMsgDao.findStuMsg(offset,rows,bxw_search_content);
-            int total=stuMsgDao.findMsgNum(bxw_search_content);
+            List<StuMsg> findStuMsg = stuMsgDao.findStuMsg(offset,rows,bxw_search_content,start,end);
+            int total=stuMsgDao.findMsgNum(bxw_search_content,start,end);
             HashMap map=new HashMap();
             map.put("rows",findStuMsg);
             map.put("total",total);
