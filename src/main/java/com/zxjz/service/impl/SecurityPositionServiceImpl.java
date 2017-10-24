@@ -421,32 +421,6 @@ public class SecurityPositionServiceImpl implements SecurityPositionService {
                                                              @RequestParam(value = "releases_user_id", required = true) Integer releases_user_id,
                                                              @RequestParam(value = "up_down_frame", required = true) String up_down_frame
     ) {
-       /* Integer recruiting_id = atSecurityPositionDto.getRecruiting_id();
-        String up_down_frame = atSecurityPositionDto.getUp_down_frame();
-        Integer station_name = atSecurityPositionDto.getStation_name();
-        Integer releases_user_id = atSecurityPositionDto.getReleases_user_id();
-        String post_name = atSecurityPositionDto.getPost_name();
-        Integer post_classification = atSecurityPositionDto.getPost_classification();
-        String work_date = atSecurityPositionDto.getWork_date();
-        String work_time = atSecurityPositionDto.getWork_time();
-        String work_location = atSecurityPositionDto.getWork_location();
-        String position_longitude = atSecurityPositionDto.getPosition_longitude();
-        String position_latitude = atSecurityPositionDto.getPosition_latitude();
-        String work_content = atSecurityPositionDto.getWork_content();
-        double salary_treatment = atSecurityPositionDto.getSalary_treatment();
-        String commission = atSecurityPositionDto.getCommission();
-        String benefits = atSecurityPositionDto.getBenefits();
-        String gender_requirements = atSecurityPositionDto.getGender_requirements();
-        String other_requirements = atSecurityPositionDto.getOther_requirements();
-        Integer recruitment = atSecurityPositionDto.getRecruitment();
-        String hiring_expiration_date = atSecurityPositionDto.getHiring_expiration_date();
-        String main_title = atSecurityPositionDto.getMain_title();
-        String subtitle = atSecurityPositionDto.getSubtitle();
-        String short_description = atSecurityPositionDto.getShort_description();
-        MultipartFile page_url = atSecurityPositionDto.getPage_url();
-        MultipartFile first_page_carousel_url = atSecurityPositionDto.getFirst_page_carousel_url();
-        MultipartFile main_page_url = atSecurityPositionDto.getMain_page_url();
-        String details_page_introduction = atSecurityPositionDto.getDetails_page_introduction();*/
         HashMap map = new HashMap();
         map.put("up_down_frame", up_down_frame);
         map.put("post_name", post_name);
