@@ -12,7 +12,7 @@
      <table class="table_list">
      	<tr>
         	<th width="70">职位类型名称：</th>
-            <td ><input type="hidden" name="station_id" value="${data.data.stationId}"/>
+            <td ><input type="hidden" name="merchantId" value="${data.data.userId}"/>
                  <input type="text"  name="station_name" value="${data.data.stationName}"  class="easyui-textbox easyui-validatebox"  data-options="required:true,width:'100%'"/>
             </td>
         </tr>

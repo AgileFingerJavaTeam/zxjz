@@ -20,7 +20,7 @@ $.Admin.ApplyVIP = {
         
         //--------搜索----------//
         { text: '&nbsp&nbsp&nbsp&nbsp<input id="srt_search1" type="text"></input>',
-        	// iconCls:'icon-clear',
+        	 iconCls:'icon-clear',
              handler: function(e){
             	 
              }

@@ -1,0 +1,56 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zxjz.dao.AddMerchantDao">
+    <!--查询商户列表-->
+    <select id="findMerchantList" resultType="AddMerchant">
+        SELECT *
+        FROM zx_user_count_info
+        <where>
+            user_type = "商户"
+            <if test="search_content!=null and search_content!=''">
+                AND CONCAT_WS(',',bound_phone,registration_time) LIKE '%${search_content}%'
+            </if>
+        </where>
+        limit #{offset},#{rows}
+    </select>
+    <!--查询商户列表条数-->
+    <select id="findMerchantCount" resultType="int">
+        SELECT COUNT(*)
+        FROM zx_user_count_info
+        <where>
+            user_type="商户"
+            <if test="search_content!=null and search_content!=''">
+                AND CONCAT_WS(',',bound_phone,registration_time) LIKE '%${search_content}%'
+            </if>
+        </where>
+    </select>
+    <!--查询当前选择的商户信息-->
+    <select id="findMerchantInfo" resultType="AddMerchant">
+        SELECT *
+        FROM zx_user_count_info
+        WHERE user_id = #{merchantId}
+    </select>
+    <!--新增商户到用户基本信息表-->
+    <insert id="insertMerchantIntoTableUserCount">
+        INSERT INTO zx_user_count_info(bound_phone,user_type,registration_time)
+        VALUE (#{merchantPhoneNum},"商户",now())
+    </insert>
+    <!--&lt;!&ndash;查询新增商户的用户Id&ndash;&gt;-->
+    <!--<select id="findMerchantId" resultType="int">-->
+        <!--SELECT user_id-->
+        <!--FROM zx_user_count_info-->
+        <!--WHERE bound_phone = #{merchantPhoneNum}-->
+    <!--</select>-->
+    <!--&lt;!&ndash;新增商户到商户基本信息表&ndash;&gt;-->
+    <!--<insert id="insertMerchantIntoTableMerchantAccount">-->
+        <!--INSERT INTO zx_merchants_account(user_id,phone)-->
+        <!--VALUE (#{merchantId},#{merchantPhoneNum})-->
+    <!--</insert>-->
+    <!--编辑商户-->
+    <update id="editMerchant">
+        UPDATE zx_user_count_info
+        SET bound_phone = #{merchantPhoneNum},registration_time = now()
+        WHERE user_id = #{merchantId}
+    </update>
+</mapper>
