@@ -66,7 +66,7 @@ $.Admin.authority = {
             $.Admin.tips('温馨提示信息', '请先选择 您要编辑的数据行','error');
             return false;
         }
-        var data = {employees_id: get_select_row.employees_id};
+        var data = {employees_id: get_select_row.employeesId};
         var id = $.Admin.random_dialog();
         $(id).dialog({
             title: '修改信息',
@@ -96,7 +96,7 @@ $.Admin.authority = {
             $.Admin.tips('温馨提示信息', '请先选择 您要删除的数据行','error');
             return false;
         }
-        var data = {employees_id: get_select_row.employees_id};
+        var data = {employees_id: get_select_row.employeesId};
         var id = $.Admin.random_dialog();
         $(id).dialog({
             title: '删除信息',
@@ -128,7 +128,7 @@ $($.Admin.authority.id).datagrid({
     ctrlSelect: true,
     singleSelect: false,
     rownumbers: true,
-    idField: 'employees_id',
+    idField: 'employeesId',
     url: "authority/getauthority",
     pagination:true,
 	pagePosition:'bottom',
@@ -137,9 +137,9 @@ $($.Admin.authority.id).datagrid({
 	pageList:[10,20,30],
 	columns:[[
 	          {field:'ck',checkbox:true},    	         
-	          {field:'employees_num',title:'员工编号',align:'center',width:100,sortable:'true'},
-	          {field:'employees_name',title:'员工姓名',align:'center',width:100,sortable:'true'},
-	          {field:'permission_grouping_name',title:'权限分组',align:'center',width:100,sortable:'true'}
+	          {field:'employeesNum',title:'员工编号',align:'center',width:100,sortable:'true'},
+	          {field:'employeesName',title:'员工姓名',align:'center',width:100,sortable:'true'},
+	          {field:'permissionGroupingName',title:'权限分组',align:'center',width:100,sortable:'true'}
 	      ]],
     onDblClickRow: function(row){ 
     	

@@ -27,7 +27,7 @@
              <th width="100">授信总额：</th>
              <td >
               
-			         <input   value="${data.creditTotal}" name="credit_total" class="easyui-textbox easyui-validatebox" data-options="required:true,width:'100%'"/>
+			         <input id="ctotal"  value="${data.creditTotal}" name="credit_total" class="easyui-numberbox" data-options="required:true,width:'100%'"/>
 			    	
 
              </td>            
@@ -36,7 +36,7 @@
              <th width="100">授信余额：</th>
              <td >
               
-			         <input   value="${data.creditBalance}" name="credit_balance" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
+			         <input  id="crebalance"  value="${data.creditBalance}" name="credit_balance" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
 			    	
 
              </td>            
@@ -45,7 +45,7 @@
              <th width="100">欠款金额：</th>
              <td >
               
-			         <input  value="${data.debt} " name="dept" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>  
+			         <input id="debt" value="${data.debt} " name="dept" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
 			    	
 
              </td>            
@@ -68,7 +68,23 @@
      </table>
 </form>
 <script>
-	
+
+	$('.bxw_pass').click(function () {
+        var total=parseInt($('#ctotal').val());
+        var debt=parseInt($('#debt').val())
+	    if(total<debt){
+            $.messager.show({
+                title:'消息',
+                msg:'授信总额不能低于欠款额'
+            })
+	        return false;
+        }else {
+	        var balance= total-debt;
+	        alert(balance)
+            $('#crebalance').textbox('setValue',balance);
+        }
+       /* $('#crebalance').val()*/
+    })
 </script>
 
 

@@ -10,7 +10,7 @@ public class CreditAndPayment {
     private String text;//行业名称
     private String head;//负责人
     private String phone;//电话
-    private String accountBalance;
+    private double accountBalance;
     private Double creditTotal;//授信总额
     private Double creditBalance;//授信余额
     private String paymentDays;//账期
@@ -64,11 +64,11 @@ public class CreditAndPayment {
         this.phone = phone;
     }
 
-    public String getAccountBalance() {
+    public double getAccountBalance() {
         return accountBalance;
     }
 
-    public void setAccountBalance(String accountBalance) {
+    public void setAccountBalance(double accountBalance) {
         this.accountBalance = accountBalance;
     }
 

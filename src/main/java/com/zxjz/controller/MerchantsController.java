@@ -39,10 +39,8 @@ public class MerchantsController extends BaseController {
     @Autowired
     private MerchantsInfoService merchantsInfoService;
 
-
     /**
      * 升级账户
-     *
      * @param merchantsUpgradeDto
      * @return
      */
@@ -71,7 +69,6 @@ public class MerchantsController extends BaseController {
 
     /**
      * 变更负责人
-     *
      * @param merchantsChangeHeadDto
      * @return
      */
@@ -125,6 +122,7 @@ public class MerchantsController extends BaseController {
      * @param merchantsAffirmStudentBreakPromiseDto
      * @return
      */
+
     @RequestMapping(value = "/affirmStuBaa",
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
@@ -227,6 +225,7 @@ public class MerchantsController extends BaseController {
         try {
             HttpSession session = this.getRequest().getSession();
             LandFallInfo user = (LandFallInfo) session.getAttribute("user");
+
             int id = user.getEmployeesId();
             merchantsUpgradeDto.setId(id);
             MerchantsUpgradeExcution merchantsUpgradeExcution = merchantsInfoService.confirmCheck(merchantsUpgradeDto);
@@ -258,3 +257,4 @@ public class MerchantsController extends BaseController {
         }
     }
 }
+

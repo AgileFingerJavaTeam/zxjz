@@ -1,0 +1,68 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxjz.dao.AuthorityDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+    <!-- 查询员工列表 -->
+    <select id="findListAuthority" resultType="Authority">
+        SELECT * FROM zx_employee_basic_information a
+        LEFT JOIN zx_staff_authority_group b
+        ON a.permission_grouping_id=b.permission_grouping_id
+        WHERE 1=1 and a.is_delete=0
+        <if test="sort!=null and sort!='' and order!=null and order!=''">
+            ORDER BY ${sort} ${order}
+        </if>
+        limit #{offset},#{rows}
+    </select>
+
+    <!-- 查询员工列表 数量-->
+    <select id="authoritycount" resultType="int">
+        SELECT count(*) FROM zx_employee_basic_information a
+        LEFT JOIN zx_staff_authority_group b
+        ON a.permission_grouping_id=b.permission_grouping_id
+        WHERE 1=1 and a.is_delete=0
+        <if test="sort!=null and sort!='' and order!=null and order!=''">
+            ORDER BY ${sort} ${order}
+        </if>
+    </select>
+
+    <!-- 查询权限 -->
+    <select id="findListAuthInfo"  resultType="Authority">
+        select permission_grouping_name FROM zx_staff_authority_group	where 1=1
+    </select>
+
+    <!-- 查询编号-->
+    <select id="findEmployeesNum"  resultType="Authority">
+        select employees_num FROM zx_employee_basic_information where 1=1
+    </select>
+
+    <!-- 提交新增信息 -->
+    <insert id="addStaffMember">
+        INSERT INTO zx_employee_basic_information (employees_num,employees_name, login_password,permission_grouping_id)
+        SELECT #{employees_num},#{employees_name},'000000',permission_grouping_id
+        FROM zx_staff_authority_group
+        WHERE permission_grouping_name=#{permission_grouping_name}
+    </insert>
+
+    <!-- 查询员工详细信息-->
+    <select id="findAuthority" resultType="Authority">
+        SELECT * FROM zx_employee_basic_information a
+        LEFT JOIN zx_staff_authority_group b
+        ON a.permission_grouping_id=b.permission_grouping_id
+        WHERE a.employees_id=#{employees_id}
+    </select>
+
+    <!-- 提交修改信息 -->
+    <update id="updateStaffMember">
+        UPDATE zx_employee_basic_information set employees_num=#{employees_num},employees_name=#{employees_name}, permission_grouping_id=
+        (SELECT permission_grouping_id FROM zx_staff_authority_group WHERE permission_grouping_name=#{permission_grouping_name})
+        WHERE employees_id=#{employees_id}
+    </update>
+
+    <!-- 删除信息 -->
+    <update id="deleteStaffMember">
+        UPDATE zx_employee_basic_information SET is_delete=1 WHERE employees_id=#{employees_id}
+    </update>
+</mapper>

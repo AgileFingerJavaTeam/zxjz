@@ -9,7 +9,9 @@ public enum IndustryClassificationEnum {
     UPDATE_SUCCESS(3),//修改成功
     UPDATE_FAIL(-3),//修改失败
     DELETE_SUCCESS(4),//删除成功
-    DELETE_ERROR(-4);//删除失败
+    DELETE_ERROR(-4),//删除失败
+    ADD_SUCCESS(5),//添加成功
+    ADD_ERROR(-5);//添加失败
 
 
 
