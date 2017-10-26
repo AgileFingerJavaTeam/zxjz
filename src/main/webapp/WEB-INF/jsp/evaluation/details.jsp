@@ -62,11 +62,7 @@ $.Admin.GyPositionType = {
 
     //编辑角色
     'EditRole' : function(){
-        var get_select_row = $($.Admin.GyPositionType.id).treegrid('getSelected');
-        if(get_select_row == null){
-            $.Admin.tips('温馨提示信息', '请先选择 您要编辑的数据行','error');
-            return false;
-        }
+
         var data = {id: get_select_row.stationId};
         var id = $.Admin.random_dialog();
         $(id).dialog({
