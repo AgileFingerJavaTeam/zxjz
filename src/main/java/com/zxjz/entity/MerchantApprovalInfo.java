@@ -24,7 +24,7 @@ public class MerchantApprovalInfo {
     private String note;//备注
     private String portraitUrl;//头像地址
     private String logoUrl;
-
+    private String text;
     public int getEmployeesId() {
         return employeesId;
     }
@@ -193,6 +193,14 @@ public class MerchantApprovalInfo {
         this.logoUrl = logoUrl;
     }
 
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
     @Override
     public String toString() {
         return "MerchantApprovalInfo{" +
@@ -217,6 +225,7 @@ public class MerchantApprovalInfo {
                 ", note='" + note + '\'' +
                 ", portraitUrl='" + portraitUrl + '\'' +
                 ", logoUrl='" + logoUrl + '\'' +
+                ", text='" + text + '\'' +
                 '}';
     }
 }

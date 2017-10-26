@@ -27,7 +27,7 @@
              <th width="100">授信总额：</th>
              <td >
               
-			         <input id="ctotal"  value="${data.creditTotal}" name="credit_total" class="easyui-numberbox" data-options="required:true,width:'100%'"/>
+			         <input id="ctotal"  value="${data.creditTotal}" name="credit_total" class="easyui-numberbox easyui-validatebox" data-options="required:true,width:'100%'"/>
 			    	
 
              </td>            
@@ -36,7 +36,7 @@
              <th width="100">授信余额：</th>
              <td >
               
-			         <input  id="crebalance"  value="${data.creditBalance}" name="credit_balance" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
+			         <input  id="crebalance"  value="${data.creditBalance}" name="credit_balance" class="easyui-numberbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
 			    	
 
              </td>            
@@ -54,7 +54,7 @@
              <th width="100">账期：</th>
              <td >
               
-			         <input  value="${data.paymentDays}" name="payment_days" class="easyui-textbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
+			         <input  value="${data.paymentDays}" name="payment_days" class="easyui-numberbox easyui-validatebox" data-options="readonly:true,width:'100%'"/>
 			    	
 
              </td>            
@@ -80,7 +80,6 @@
 	        return false;
         }else {
 	        var balance= total-debt;
-	        alert(balance)
             $('#crebalance').textbox('setValue',balance);
         }
        /* $('#crebalance').val()*/

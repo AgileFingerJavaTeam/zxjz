@@ -104,6 +104,8 @@ public class CreditAndPayment {
         this.debt = debt;
     }
 
+
+
     @Override
     public String toString() {
         return "CreditAndPayment{" +

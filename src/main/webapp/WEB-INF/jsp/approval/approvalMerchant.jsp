@@ -54,7 +54,7 @@
 			 <td style="text-align:right">所属行业：</td>
 	             <td><input class="easyui-textbox" name="industry_involved" readonly="readonly"
 					data-options="required:true,showSeconds:false"
-					value="${data.data.industryInvolved}" style="width: 250px" required ></td>
+					value="${data.data.text}" style="width: 250px" required ></td>
          </tr>
          <tr style="display:none">
              <th width="100">经度：</th>
