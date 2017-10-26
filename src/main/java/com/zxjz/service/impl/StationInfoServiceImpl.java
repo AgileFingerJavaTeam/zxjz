@@ -149,7 +149,7 @@ public class StationInfoServiceImpl implements StationInfoService {
      * @return
      */
     public StationInfoExcution findChildJobList(StationDto stationDto) {
-        int pstationId = stationDto.getPstationId();
+        int pstationId =Integer.parseInt( stationDto.getPstationId());
         String pstationName = stationDto.getPstationName();
         int page = stationDto.getPage();
         int rows = stationDto.getRows();
@@ -244,7 +244,7 @@ public class StationInfoServiceImpl implements StationInfoService {
      */
     public StationInfoExcution editChildJobType(StationDto stationDto) {
         String station_name = stationDto.getStation_name();
-        int pstation_id = stationDto.getPstationId();
+        int pstation_id = Integer.parseInt(stationDto.getPstationId());
         int station_id = stationDto.getStation_id();
         try {
             int isEdit = stationDao.editChildJobInfo(station_name,pstation_id,station_id);

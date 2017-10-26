@@ -33,7 +33,7 @@
         <tr>
             <td colspan="4">
                	<button type="button" class="table_form_close_dialog " style="float:right" >关闭</button>
-               	<button type="button" class="table_form_submit_dialog" style="float:right">确定</button>
+               	<button type="button" class="table_form_submit_dialog srt" style="float:right">确定</button>
             </td>
         </tr>
      </table>
@@ -41,10 +41,20 @@
 <script type="text/javascript">       
  $("#Srt_cbox").combobox({
 	panelHeight:'auto',
-	onChange: function () {
-          $('#Srt_cbox').val();
+	onBlur: function () {
+         $('#Srt_cbox').val();
 	}
-
  });
+  $('.srt').click(function () {
+      var  pstationId = $('#Srt_cbox').combobox('getValue');
+      if (pstationId== "${data.data.parentJobName}"){
+         $('#Srt_cbox').textbox("setValue",${data.data.childJobInfo.pStationId})
+        return true
+      }else {
+          return true
+      }
+  })
+
+
 
 </script>

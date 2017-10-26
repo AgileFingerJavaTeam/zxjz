@@ -7,7 +7,7 @@ public class StationDto {
     private int id;
     private int station_id;
     private String pstationName;
-    private int pstationId;
+    private String pstationId;
     private int p_station_id;
     private String pid;
     private String pname;
@@ -84,14 +84,13 @@ public class StationDto {
         this.pstationName = pstationName;
     }
 
-    public int getPstationId() {
+    public String getPstationId() {
         return pstationId;
     }
 
-    public void setPstationId(int pstationId) {
+    public void setPstationId(String pstationId) {
         this.pstationId = pstationId;
     }
-
 
     @Override
     public String toString() {
