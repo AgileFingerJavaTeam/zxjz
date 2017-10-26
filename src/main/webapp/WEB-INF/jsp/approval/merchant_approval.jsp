@@ -102,7 +102,7 @@ $($.Admin.MerchantApproval.id).datagrid({
 	          {field:'ck',checkbox:true},    
 	          {field:'companyName',title:'商户名称',align:'center',width:100,sortable:'true'},
 	          {field:'applyTime',title:'申请时间',align:'center',width:100,sortable:'true'},
-	          {field:'industryInvolved',title:'所属行业',align:'center',width:100,sortable:'true'},
+	          {field:'text',title:'所属行业',align:'center',width:100,sortable:'true'},
 	          {field:'head',title:'负责人',align:'center',width:100,sortable:'true'},
 	          {field:'phone',title:'电话',align:'center',width:100,sortable:'true'},
 	          {field:'status',title:'审核状态',align:'center',width:100,sortable:'true'},	          

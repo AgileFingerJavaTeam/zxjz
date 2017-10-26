@@ -10,6 +10,8 @@
 		SELECT * FROM zx_merchants_approve a
 		left join zx_employee_basic_information b ON
 		a.audit_staff=b.employees_id
+		LEFT JOIN zx_industry_category c ON
+		a.industry_involved=c.`value`
 		<where>
 			1=1
 			<if test="hzn_approval_status!=null and hzn_approval_status!=''">
@@ -38,9 +40,11 @@
 
 	<!--根据id查看详情-->
 	<select id="findMerchantByID" resultType="MerchantApprovalInfo">
-		select * from zx_merchants_approve a
+		SELECT * FROM zx_merchants_approve a
 		left join zx_employee_basic_information b ON
 		a.audit_staff=b.employees_id
+		LEFT JOIN zx_industry_category c ON
+		a.industry_involved=c.`value`
 		where a.approval_id=#{id}
 	</select>
 	<!--审核商户信息-->

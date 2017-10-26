@@ -35,7 +35,7 @@
 	             </td> 
 	             <th >充值金额：</th>
 	             <td >
-				         <input  id="rechargeAmount"  name="amount_of_recharge" class="easyui-textbox easyui-validatebox" data-options="required:true" />
+				         <input  id="rechargeAmount"  name="amount_of_recharge" class="easyui-numberbox easyui-validatebox" data-options="required:true" />
 	             </td>
 		 </tr>
 		 <tr>
